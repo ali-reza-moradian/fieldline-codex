@@ -1,11 +1,10 @@
 // HTTP has no source version; push updatedAt has only whole-second precision.
-// Preserve any push received during a poll and a short recent-push grace window.
-// This prevents known local races without pretending the two feeds offer a
-// globally ordered log. Periodic HTTP reconciliation repairs missed changes.
+// Preserve any push received during a poll. A later-started poll may advance
+// state immediately: a healthy push feed can still lag HTTP. Neither feed
+// provides a shared version cursor, so cross-channel order is not guaranteed.
 export class FanDuelState {
-  constructor({ now = Date.now, holdMs = 2000 } = {}) {
+  constructor({ now = Date.now } = {}) {
     this.now = now;
-    this.holdMs = holdMs;
     this.sequence = 0;
     this.prices = new Map();
     this.pushes = new Map();
@@ -49,12 +48,11 @@ export class FanDuelState {
     }
     return { accepted, rejected, unknown };
   }
-  applyPoll(prices, token, { receivedAt = this.now(), catalog, preserveRecentPush = false } = {}) {
+  applyPoll(prices, token, { catalog } = {}) {
     const next = new Map(prices.filter(p => catalog.markets[p.marketId]).map(p => [p.marketId, p]));
     for (const [id, push] of this.pushes) {
       if (!catalog.markets[id]) continue;
-      if (push.sequence > token.sequence ||
-          (preserveRecentPush && receivedAt - push.receivedAt < this.holdMs)) {
+      if (push.sequence > token.sequence) {
         if (JSON.stringify(next.get(id)) !== push.signature) this.counters.pollOverwritesPrevented++;
         next.set(id, push.market);
       }

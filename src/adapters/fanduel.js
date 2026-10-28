@@ -134,7 +134,7 @@ export async function fetchFanDuelPrices(ids, { fetcher = fetchJson, signal, bat
 }
 
 export class FanDuel {
-  constructor(sink, { pollMs = 1000, verificationMs = 5000, discoveryMs = 60000,
+  constructor(sink, { pollMs = 1000, verificationMs = 1000, discoveryMs = 60000,
     fetcher = fetchJson, pushFactory = options => new FanDuelPush(options),
     clock = Date.now, pushOptions = {}, reconcileMaxAgeMs = 30000 } = {}) {
     this.sink = sink;
@@ -297,8 +297,7 @@ export class FanDuel {
       if (this.stopped || runId !== this.runId) return;
       // Validate the complete HTTP response before replacing any working state.
       normalizeFanDuel(this.catalog, result.data);
-      this.state.applyPoll(result.data, token, { receivedAt: result.receivedAt,
-        catalog: this.catalog, preserveRecentPush: this.pushReady() });
+      this.state.applyPoll(result.data, token, { catalog: this.catalog });
       this.coverage = result.coverage;
       this.hasBaseline = true;
       this.lastPollAt = this.clock();

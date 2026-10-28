@@ -84,7 +84,7 @@ function streamReader(response) {
 test("FanDuel applies distinct same-second pushes in receive order and rejects strictly older prices", () => {
   let now = Date.parse("2026-10-28T23:00:00.100Z");
   const state = new FanDuelState({ now: () => now });
-  state.applyPoll(allPrices, state.beginPoll(), { receivedAt: now, catalog, preserveRecentPush: false });
+  state.applyPoll(allPrices, state.beginPoll(), { receivedAt: now, catalog });
   state.applyPush([changedMarket(-111)], { receivedAt: now }, catalog);
   now += 100;
   state.applyPush([changedMarket(-112)], { receivedAt: now }, catalog);
@@ -97,33 +97,30 @@ test("FanDuel applies distinct same-second pushes in receive order and rejects s
 test("FanDuel push received during a price poll cannot be rolled back when that poll finishes", () => {
   let now = Date.parse("2026-10-28T23:00:00.100Z");
   const state = new FanDuelState({ now: () => now });
-  state.applyPoll(allPrices, state.beginPoll(), { receivedAt: now, catalog, preserveRecentPush: false });
+  state.applyPoll(allPrices, state.beginPoll(), { receivedAt: now, catalog });
   const pendingPoll = state.beginPoll();
   now += 100;
   state.applyPush([changedMarket(-123)], { receivedAt: now }, catalog);
   now += 5000;
-  state.applyPoll(allPrices, pendingPoll, { receivedAt: now, catalog, preserveRecentPush: false });
-  assert.equal(firstPrice(state), -123, "receive ordering protects the push even after the short HTTP hold window expires");
+  state.applyPoll(allPrices, pendingPoll, { receivedAt: now, catalog });
+  assert.equal(firstPrice(state), -123, "receive ordering protects the push even if the older HTTP request takes five seconds");
 });
 
-test("FanDuel briefly protects recent push from an untimestamped HTTP snapshot, then permits fallback recovery", () => {
+test("FanDuel lets a later-started HTTP check advance a recent pushed price without an arbitrary hold", () => {
   let now = Date.parse("2026-10-28T23:00:00.100Z");
-  const state = new FanDuelState({ now: () => now, holdMs: 2000 });
-  state.applyPoll(allPrices, state.beginPoll(), { receivedAt: now, catalog, preserveRecentPush: false });
+  const state = new FanDuelState({ now: () => now });
+  state.applyPoll(allPrices, state.beginPoll(), { receivedAt: now, catalog });
   state.applyPush([changedMarket(-124)], { receivedAt: now }, catalog);
   now += 100;
-  state.applyPoll(allPrices, state.beginPoll(), { receivedAt: now, catalog, preserveRecentPush: true });
-  assert.equal(firstPrice(state), -124);
   const recovered = structuredClone(allPrices);
   recovered[0] = changedMarket(-125);
-  now += 100;
-  state.applyPoll(recovered, state.beginPoll(), { receivedAt: now, catalog, preserveRecentPush: false });
-  assert.equal(firstPrice(state), -125, "a fresh fallback poll must be allowed to recover after the stream disconnects");
+  state.applyPoll(recovered, state.beginPoll(), { catalog });
+  assert.equal(firstPrice(state), -125, "HTTP may lead a healthy push feed and must not wait for an invented two-second priority window");
 });
 
 test("FanDuel replaces an authoritative push runner list and quarantines unknown selection IDs", () => {
   const state = new FanDuelState();
-  state.applyPoll(allPrices, state.beginPoll(), { catalog, preserveRecentPush: false });
+  state.applyPoll(allPrices, state.beginPoll(), { catalog });
   const row = changedMarket(-122);
   row.runnerDetails = row.runnerDetails.slice(0, 1);
   state.applyPush([row], { receivedAt: Date.now() }, catalog);
@@ -309,6 +306,21 @@ test("FanDuel keeps live push flowing through slow and failed HTTP reconciliatio
     assert.match(f.collector.pollError, /503/);
     sendPrice(f, -132);
     assert.equal(boardPrice(f.store), -132);
+  } finally { await f.close(); }
+});
+
+test("FanDuel catches HTTP-only changes on the default one-second cadence while push stays verified", async () => {
+  const f = await fixture({ pollMs: undefined, verificationMs: undefined });
+  try {
+    await f.start();
+    await readyPush(f);
+    sendPrice(f, -138);
+    const leadingHttp = changedMarket(-139);
+    f.setPrices((_entry, fallback) => ({ data: fallback().data.map(m => m.marketId === leadingHttp.marketId ? leadingHttp : m) }));
+    await until(() => boardPrice(f.store) === -139,
+      "a healthy but silent push feed must not delay an HTTP-only change for five seconds", 1700);
+    assert.equal(f.collector.pushReady(), true, "HTTP continues even while push is verified");
+    assert.equal(f.store.sources.fanduel.pollMs, 1000);
   } finally { await f.close(); }
 });
 

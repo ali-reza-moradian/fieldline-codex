@@ -57,7 +57,7 @@ export class Metrics {
         "Browser samples are client-reported estimates after two animation frames, corrected using /api/time. Inspect clock uncertainty.",
         "DraftKings createdTime is the provider feed timestamp, not a verified trading-engine change timestamp. Cross-host clock skew can affect it.",
         "FanDuel push updatedAt has whole-second precision. Its age is an upper-bound estimate with up to about 999ms quantization plus unmeasured provider clock skew; HTTP prices have no change timestamp.",
-        "FanDuel uses immediate push with 5-second HTTP reconciliation, or 1-second fallback polling while push is unavailable. Fallback's nominal mean waiting time is about 500ms before the request, absent failures; this is not a measured end-to-end guarantee.",
+        "FanDuel uses immediate push alongside 1-second HTTP checks, continuing HTTP if push is unavailable. Polling's nominal mean waiting time is about 500ms before the request, absent failures; this is not a measured end-to-end guarantee.",
         "Live rows with n=0 mean not measured; pregame results must not be presented as live results.",
       ],
       measurements: {},
