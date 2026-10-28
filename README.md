@@ -101,6 +101,8 @@ The [saved observation report](docs/measurements/initial-pregame.json) contains 
 
 No actual price change occurred during that 90-second observation, so it produced **zero stream-change-to-client or browser-paint samples**. Earlier standalone source inspection captured real DraftKings deltas, but those captures do not establish the finished app's end-to-end performance. Repeat the benchmark during actual price movement and from the final hosting location.
 
+A [subsequent local observation](docs/measurements/local-pregame-changes.json), 3:55:08–3:58:40 p.m. Toronto time on the same date, captured two foreground-browser DraftKings price-change samples. Backend receipt to the rendering estimate was 58.15 / 61.15 ms (p50 / p95); the DraftKings feed's `createdTime` to that estimate was 175.15 / 176.15 ms. Reported browser/server clock uncertainty was at least ±0.85 ms, and provider-clock uncertainty remains unmeasured. With only two samples these percentiles are descriptive, not a reliable performance distribution. FanDuel still had no changed-price browser samples, and neither source had in-game samples.
+
 Measurement instrumentation:
 
 1. Record source request duration, response receipt time, decoded bytes and store-processing time.
@@ -120,14 +122,16 @@ Latency choices: reuse fetch connections; maintain DraftKings' push connection; 
 
 ## Deployment
 
-`Dockerfile` and `render.yaml` are included. For Docker:
+`Dockerfile`, `railway.json` and `render.yaml` are included. For Docker:
 
 ```sh
 docker build -t fieldline .
 docker run --rm -p 3210:3210 fieldline
 ```
 
-The Docker build has not been executed in the initial local verification. The app can also run directly as a single Node web service. Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, Node 24+, health path `/healthz`. The included blueprint uses a free service in Ohio; this is deployment preparation, not proof that the region can reach both feeds.
+The Docker build has not been executed in the initial local verification. Railway is the selected first deployment target: build the included Dockerfile, run one replica, leave serverless sleeping disabled, and generate an HTTPS domain for the service's `PORT`. The image sets `HOST=0.0.0.0`; Railway supplies its listening port. The health check confirms the server is running; inspect both source states and the actual board separately before declaring the integration healthy. The trial's credits and outbound-access eligibility must be checked in the account. See [Railway's trial limits](https://docs.railway.com/pricing/free-trial).
+
+The app can also run directly as a single Node web service. Alternative Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, Node 24+, health path `/healthz`. The included blueprint uses a free service in Ohio; this is deployment preparation, not proof that the region can reach both feeds.
 
 Render's free services can sleep after 15 minutes without inbound traffic and can take about a minute to wake. They can also be suspended for unusually high outbound traffic. These limits affect a continuously ingesting demonstration. Do not present a sleeping free service as an always-on production design. See [Render's free-service limitations](https://render.com/docs/free) and [Node deployment instructions](https://render.com/docs/deploy-node-express-app).
 
