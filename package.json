@@ -11,7 +11,7 @@
     "start": "node --use-system-ca src/server.js",
     "postinstall": "node scripts/install-transport.js",
     "dev": "node --use-system-ca --watch src/server.js",
-    "test": "node --test",
+    "test": "node --test test/*.test.js",
     "probe": "node --use-system-ca scripts/probe.js",
     "diagnose": "node --use-system-ca scripts/diagnose-access.js",
     "benchmark": "node --use-system-ca scripts/benchmark.js",

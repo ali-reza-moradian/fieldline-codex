@@ -27,6 +27,7 @@ export class Metrics {
     for (const key of [
       "backendToPaintMs",
       "feedCreatedToPaintMs",
+      "pushUpdatedToPaintUpperBoundMs",
       "clockUncertaintyMs",
     ]) {
       if (
@@ -41,6 +42,7 @@ export class Metrics {
       phase: sample.phase,
       backendToPaintMs: sample.backendToPaintMs,
       feedCreatedToPaintMs: sample.feedCreatedToPaintMs,
+      pushUpdatedToPaintUpperBoundMs: sample.pushUpdatedToPaintUpperBoundMs,
       clockUncertaintyMs: sample.clockUncertaintyMs,
     });
     if (this.browser.length > 5000) this.browser.shift();
@@ -54,8 +56,8 @@ export class Metrics {
       notes: [
         "Browser samples are client-reported estimates after two animation frames, corrected using /api/time. Inspect clock uncertainty.",
         "DraftKings createdTime is the provider feed timestamp, not a verified trading-engine change timestamp. Cross-host clock skew can affect it.",
-        "FanDuel has no source-change timestamp in the observed price response. Full source-to-screen latency is unknown.",
-        "With 2 second polling, expected waiting time is about 1 second and nominal maximum about 2 seconds before request time, absent failures. This is an estimate, not a measured guarantee.",
+        "FanDuel push updatedAt has whole-second precision. Its age is an upper-bound estimate with up to about 999ms quantization plus unmeasured provider clock skew; HTTP prices have no change timestamp.",
+        "FanDuel uses immediate push with 5-second HTTP reconciliation, or 1-second fallback polling while push is unavailable. Fallback's nominal mean waiting time is about 500ms before the request, absent failures; this is not a measured end-to-end guarantee.",
         "Live rows with n=0 mean not measured; pregame results must not be presented as live results.",
       ],
       measurements: {},
@@ -77,10 +79,18 @@ export class Metrics {
               .filter((x) => x.sourceCreatedAt)
               .map((x) => x.receivedAt - x.sourceCreatedAt),
           ),
+          changedPriceFeedToBackendMs: distribution(h
+            .filter(x => x.priceChanges > 0 && x.sourceCreatedAt)
+            .map(x => x.receivedAt - x.sourceCreatedAt)),
+          changedPricePushUpdatedToBackendUpperBoundMs: distribution(h
+            .filter(x => x.priceChanges > 0 && x.kind === "push" && x.sourceUpdatedAt)
+            .map(x => x.receivedAt - x.sourceUpdatedAt)),
+          changedPriceMessages: h.filter(x => x.priceChanges > 0).length,
           backendToPaintMs: distribution(b.map((x) => x.backendToPaintMs)),
           feedCreatedToPaintMs: distribution(
             b.map((x) => x.feedCreatedToPaintMs),
           ),
+          pushUpdatedToPaintUpperBoundMs: distribution(b.map(x => x.pushUpdatedToPaintUpperBoundMs)),
           clockUncertaintyMs: distribution(b.map((x) => x.clockUncertaintyMs)),
           decodedPayloadBytes: distribution(h.map((x) => x.decodedBytes)),
         };

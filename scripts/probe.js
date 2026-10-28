@@ -4,7 +4,7 @@ import {
 } from "../src/adapters/draftkings.js";
 import {
   FD_DISCOVERY,
-  FD_PRICES,
+  fetchFanDuelPrices,
   selectFanDuelMarkets,
   normalizeFanDuel,
 } from "../src/adapters/fanduel.js";
@@ -22,15 +22,12 @@ const results = await Promise.allSettled([
       headers: { "X-Sportsbook-Region": "NJ" },
     });
     const c = selectFanDuelMarkets(r.data);
-    const p = await fetchJson(FD_PRICES, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ marketIds: Object.keys(c.markets) }),
-    });
+    const p = await fetchFanDuelPrices(Object.keys(c.markets));
     return {
       book: "fanduel",
       ...normalizeFanDuel(c, p.data),
       requestMs: p.durationMs,
+      coverage: p.coverage,
     };
   })(),
 ]);
@@ -44,6 +41,7 @@ for (const result of results) {
         quotes: r.quotes.length,
         warnings: r.warnings,
         requestMs: r.requestMs,
+        coverage: r.coverage,
       }),
     );
   } else {

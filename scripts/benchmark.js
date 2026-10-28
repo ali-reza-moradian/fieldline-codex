@@ -39,11 +39,15 @@ try {
           .find((l) => l.startsWith("data: "))
           .slice(6),
       );
+      if (!data.timing?.priceChanges) continue;
       samples.push({
         book: data.timing.book,
         backendToClientMs: Date.now() + clock.offsetMs - data.timing.receivedAt,
         sourceCreatedToClientMs: data.timing.sourceCreatedAt
           ? Date.now() + clock.offsetMs - data.timing.sourceCreatedAt
+          : null,
+        pushUpdatedToClientUpperBoundMs: data.timing.sourceUpdatedAt
+          ? Date.now() + clock.offsetMs - data.timing.sourceUpdatedAt
           : null,
         bytes: Buffer.byteLength(part),
         kind: data.timing.kind,
@@ -75,6 +79,7 @@ const result = {
           feedCreatedToClientMs: distribution(
             rows.map((s) => s.sourceCreatedToClientMs),
           ),
+          pushUpdatedToClientUpperBoundMs: distribution(rows.map(s => s.pushUpdatedToClientUpperBoundMs)),
           ssePayloadBytes: distribution(rows.map((s) => s.bytes)),
         },
       ];

@@ -6,7 +6,7 @@ This guide explains the implemented code. It is not a claim that every requireme
 
 Fieldline collects NFL odds from two sportsbooks, turns their different formats into the same structure, and shows comparable prices in one board. Each sportsbook has one collector running on the server. Every viewer shares those results, so opening ten tabs does not create ten sets of sportsbook requests.
 
-DraftKings supplies an initial list of games and prices, then pushes changes over a persistent connection. FanDuel's observed public page obtains prices by repeatedly requesting them. We use the same public price endpoint every two seconds. The server then pushes board changes to browsers immediately.
+Both books supply an initial list of games and prices, then push changes over persistent connections. FanDuel also has a backup price-request path. We check it every five seconds while push works, and every second during a push outage. The server pushes board changes to browsers immediately.
 
 The shared data lives in memory. We only need the current board for this prototype, so adding a database would add work without solving a current requirement. A restart fetches the current state again.
 
@@ -22,13 +22,15 @@ One source might call a team “CAR Panthers” and the other “Carolina Panthe
 
 A **snapshot** is a full picture of the requested state. A **delta** contains only changes to that picture. DraftKings can send a selection ID and a new price without repeating its game or market. The collector merges the change into existing state instead of replacing the whole selection with an incomplete object.
 
-FanDuel's price response is a snapshot for a batch of requested markets. A market missing from that response is removed; the app does not silently restore an old price from its discovery response.
+FanDuel's HTTP price response is a snapshot for a batch of requested markets. Its endpoint silently truncated a request for 87 markets to 80. Splitting requests into groups of at most 70 restores all 87 markets and 174 prices. Requested and returned counts are now checked explicitly. A missing market is removed and flagged; the app does not silently restore an old discovery price.
 
-A **WebSocket** is a persistent two-way connection. DraftKings uses it to push changes. **Server-sent events (SSE)** are a simpler persistent server-to-browser stream. Our board uses SSE because viewers mostly receive updates. Browsers reconnect automatically and receive a fresh full board before subsequent changes.
+FanDuel's push feed sends updated market state. Its public connection configuration is read from the site's current JavaScript, and refreshed automatically if rejected. An acknowledgement alone contains no prices, so each reconnect also requires a fresh complete baseline. Updates arriving during a slow HTTP request keep flowing and take precedence over that request's response. The source timestamps are not precise enough to guarantee perfect ordering between every push and HTTP snapshot; that limitation is explicit.
+
+A **WebSocket** is a persistent two-way connection. Both bookmakers use it to push changes. **Server-sent events (SSE)** are a simpler persistent server-to-browser stream. Our board uses SSE because viewers mostly receive updates. Browsers reconnect automatically and receive a fresh full board before subsequent changes.
 
 ## What happens when something breaks
 
-Each source has its own state and retry cycle. A failing DraftKings collector cannot stop FanDuel. Detected failures immediately mark the source stale, and stale or suspended offers cannot win Best Price. Previously known stale prices may remain visible in that source's own view with a clear label.
+Each source has its own state and retry cycle. A failing DraftKings collector cannot stop FanDuel. FanDuel can continue through a push failure using polling, or through a short polling failure using verified push. Its full-board verification expires after 30 seconds without a complete HTTP response, even if the socket still answers. When no sufficiently fresh path remains, the source becomes stale. Stale or suspended offers cannot win Best Price; previously known stale prices may remain visible with a clear label.
 
 Retries grow farther apart after repeated failures, with a small random variation to avoid synchronized bursts. HTTP errors that include Retry-After also feed that instruction into the retry delay. The DraftKings handshake/snapshot error is preserved when the socket subsequently closes, so the useful cause remains visible.
 
@@ -46,7 +48,7 @@ There are different intervals:
 
 We can time our requests and processing. For changed games in view, the browser estimates rendering time after two animation frames and corrects for its clock difference from the server. That estimate is not a physical screen measurement.
 
-DraftKings provides feed timestamps, but they do not prove the exact time its trading system changed the price. FanDuel's inspected response has no price-change timestamp. Its two-second polling interval adds roughly zero to two seconds of waiting under normal operation; that is a model, not a measured end-to-end guarantee.
+DraftKings provides feed timestamps, but they do not prove the exact time its trading system changed the price. FanDuel's push timestamp has only whole-second precision, so a reported age can include almost a second of rounding. Its HTTP response has no change timestamp. Push avoids an intentional polling wait; one-second fallback polling adds roughly zero to one second under normal operation. Those are design properties, not measured end-to-end guarantees.
 
 The saved local test captured two DraftKings changed-price rendering samples, approximately 58–61 ms after backend receipt. The first working cloud observation also received real DraftKings price changes, but its remote CLI clock was not synchronized and produced invalid negative delivery times. That exposed a measurement problem; the benchmark now calibrates its clock first. Do not reuse those invalid numbers as a speed claim. Neither source has been measured during an actual NFL game yet. Use the exact sample counts and limitations from the README.
 

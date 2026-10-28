@@ -72,9 +72,24 @@ export function createApp({
         return json(200, { now: Date.now() });
       if (req.method === "GET" && url.pathname === "/api/metrics")
         return json(200, {
+          version: process.env.RENDER_GIT_COMMIT ?? process.env.GIT_COMMIT ?? null,
           ...metrics.report(store.history, store.sources),
           viewers: clients.size,
         });
+      if (req.method === "GET" && url.pathname === "/api/health") {
+        const now = Date.now();
+        const books = Object.fromEntries(Object.entries(store.sources).map(([book, source]) => {
+          const ageMs = source.lastConfirmedAt ? now - source.lastConfirmedAt : null;
+          const complete = book !== "fanduel" || (source.coverage?.requested > 0 &&
+            source.coverage.returned === source.coverage.requested && source.coverage.missingIds?.length === 0);
+          return [book, { fresh: source.status === "healthy" && Number.isFinite(ageMs) && ageMs >= 0 && ageMs < source.staleAfterMs,
+            complete, games: source.games, quotes: source.quotes, ageMs,
+            pushVerified: source.channels?.push?.verified ?? null }];
+        }));
+        const ready = Object.values(books).every(b => b.fresh && b.complete && b.games > 0 && b.quotes > 0);
+        return json(ready ? 200 : 503, { ready, books,
+          version: process.env.RENDER_GIT_COMMIT ?? process.env.GIT_COMMIT ?? null });
+      }
       if (req.method === "GET" && url.pathname === "/healthz")
         return json(200, {
           status: "running",

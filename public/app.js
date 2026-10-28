@@ -237,6 +237,7 @@ async function syncClock() {
 function recordPaint(timing, changedGames) {
   if (
     !timing?.priceChanges ||
+    (view !== "best" && view !== timing.book) ||
     document.visibilityState !== "visible" ||
     clockUncertainty === null
   )
@@ -262,6 +263,9 @@ function recordPaint(timing, changedGames) {
           backendToPaintMs: value,
           feedCreatedToPaintMs: timing.sourceCreatedAt
             ? paintedAt - timing.sourceCreatedAt
+            : null,
+          pushUpdatedToPaintUpperBoundMs: timing.sourceUpdatedAt
+            ? paintedAt - timing.sourceUpdatedAt
             : null,
           clockUncertaintyMs: clockUncertainty,
         };

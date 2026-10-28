@@ -4,7 +4,7 @@ A small, continuously updating NFL board comparing DraftKings and FanDuel moneyl
 
 ## Current status
 
-Deployed October 28, 2026. Both public source integrations work from the development machine in the Toronto area. The app has displayed current odds for 29 DraftKings games and 28 FanDuel games; counts and availability change over time. The default run always fetches actual source data. Test fixtures are never used as a live-data fallback.
+Deployed October 28, 2026. The default run always fetches actual source data; test fixtures are never used as a live-data fallback. The FanDuel collector now retrieves all 87 discovered markets in bounded batches, producing 174 prices across 29 games in local verification. The previous 28-game / 160-price result was a silent response-truncation bug, not unavailable markets. The new public sportsbook push subscription has also been acknowledged for all 87 markets; an acknowledgement alone does not establish changed-price latency.
 
 Public app: [fieldline-codex.onrender.com](https://fieldline-codex.onrender.com).
 GitHub repository: [ali-reza-moradian/fieldline-codex](https://github.com/ali-reza-moradian/fieldline-codex).
@@ -46,14 +46,14 @@ DK_HTTP_TRANSPORT=curl npm start
 npm test
 ```
 
-`DK_HTTP_TRANSPORT=native` selects Node's HTTP client; `curl` selects the compatible client. Render defaults to `curl`; other native Node installations default to `native`. The optional HTTP integration test runs when `.venv` is installed; otherwise it is explicitly skipped. With the transport installed, all 31 tests pass, including actual local HTTP responses, rate limits, invalid JSON, cancellation, uninterrupted stream delivery during a slow snapshot refresh, and seven checks of the independent comparison harness.
+`DK_HTTP_TRANSPORT=native` selects Node's HTTP client; `curl` selects the compatible client. Render defaults to `curl`; other native Node installations default to `native`. The optional HTTP integration test runs when `.venv` is installed; otherwise it is explicitly skipped. Tests cover real local HTTP/WebSocket servers, complete multi-batch acquisition, rate limits, cancellation, subscription expiry, reconnect baselines, push/poll ordering, stale-data handling, multiple viewers and the independent comparison harness. They do not contact bookmakers.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
   DK[DraftKings snapshot + WebSocket] --> DKA[One DraftKings collector]
-  FD[FanDuel discovery + price polling] --> FDA[One FanDuel collector]
+  FD[FanDuel discovery + WebSocket + HTTP verification] --> FDA[One FanDuel collector]
   DKA --> N[Normalize games and quotes]
   FDA --> N
   N --> S[Shared in-memory board]
@@ -65,7 +65,7 @@ flowchart LR
 
 Run **one application instance** for this version. Collectors start once when the process starts, independently of viewer count. A reconnecting browser receives a complete current snapshot, followed by changed games and source status messages. Updates are serialized once before fanout. Slow viewers with more than 256 KiB queued are disconnected and can reconnect to a fresh snapshot. The prototype caps concurrent streams at 500; this is a protective bound, not a claim of load-tested capacity.
 
-SSE suits a mostly one-way board and provides built-in browser reconnection. The backend uses a WebSocket for DraftKings because that is how its public page receives changes. Keeping these as different transports is intentional. The current board fits in memory; persistence and a database are unnecessary for serving the latest state. Metrics reset on process restart.
+SSE suits a mostly one-way board and provides built-in browser reconnection. The backend uses each book's own public WebSocket price feed. The current board fits in memory; persistence and a database are unnecessary for serving the latest state. Metrics reset on process restart.
 
 ## DraftKings acquisition
 
@@ -88,15 +88,17 @@ On Render, the snapshot subprocess uses the Chrome TLS/HTTP profile supplied by 
 
 Region: **New Jersey**, the region used by the observed logged-out page. The region difference from DraftKings is disclosed in the UI. This is a comparison of these specific feeds, not a promise of identical local availability.
 
-The public NFL page first requested `api.sportsbook.fanduel.com/sbapi/content-managed-page` and then repeatedly POSTed discovered market IDs to `smp.nj.sportsbook.fanduel.com/api/sports/fixedodds/readonly/v1/getMarketPrices?priceHistory=0`.
+The public NFL page provides discovery through `api.sportsbook.fanduel.com/sbapi/content-managed-page`, HTTP price snapshots through `smp.nj.sportsbook.fanduel.com/api/sports/fixedodds/readonly/v1/getMarketPrices?priceHistory=0`, and sportsbook market-price push through `pir.nj.sportsbook.fanduel.com/graphql/realtime`. The earlier pregame network observation missed the push path. The current production web bundle independently confirms the `OnUpdateMarketPrice` subscription, including main-market runner prices, suspension, in-play status and `updatedAt`.
 
-- Refresh discovery every 60 seconds; retain only NFL full-game `MONEY_LINE`, `MATCH_HANDICAP_(2-WAY)` and `TOTAL_POINTS_(OVER/UNDER)` markets.
-- The observed pregame browser requested prices approximately every five seconds. The application requests current prices every **two seconds**, in one batch for the discovered markets. Requests never overlap. The smaller price response avoids repeatedly fetching the roughly 1.5 MB decoded content/discovery response.
-- Prices are snapshots for the requested IDs. Missing markets are removed instead of being repopulated from stale discovery odds. A response containing none of the requested markets is treated as failure. `inplay`, market suspension and runner status are preserved.
-- Polling adds approximately 0–2 seconds of waiting, averaging about 1 second for uniformly timed changes, **before** network and rendering time. This is a model of the polling cost, not a measured source-to-screen result. Retries, caching and outages can exceed that range.
-- Failures use exponential backoff with jitter and respect `Retry-After`. The UI immediately marks detected failures stale; a silent source also becomes stale after ten seconds.
+- Refresh discovery every 60 seconds; retain only NFL full-game `MONEY_LINE`, `MATCH_HANDICAP_(2-WAY)` and `TOTAL_POINTS_(OVER/UNDER)` markets. Discovery failure retains the last valid catalogue while price updates continue, with a separate bounded retry.
+- Fetch HTTP prices in batches of at most **70 market IDs**, with at most two requests in flight. A direct check requested 87 together and received only 80; 70+17 returned all 87, including seven open markets previously omitted. A failed batch aborts its sibling and cannot replace the board with a partial result. Successful omissions are exposed as incomplete coverage, and omitted prices are removed rather than filled from old discovery data.
+- Discover the public AppSync client configuration from the current FanDuel app shell and bundle. It is page configuration, not a sportsbook-account credential. The collector refreshes it after rejection with bounded retries; no personal login, cookie or fixed copied key is required.
+- Subscribe to all discovered markets and wait for every acknowledgement. Establish a complete fresh HTTP baseline after connecting/reconnecting. Push prices are then normalized and sent immediately, with no batching timer. An acknowledged socket is not treated as an initial price snapshot.
+- Reconcile over HTTP every **5 seconds** while push is verified. If push fails, use **1-second polling** with bounded concurrency and backoff. Fallback's nominal waiting cost is 0–1 second, averaging about 500 ms for uniformly timed changes, before network/rendering. Push has no intentional polling wait. Neither statement is an end-to-end measurement.
+- Keep applying pushes while HTTP is in flight. A push received after a poll starts wins over that poll's result. Recent push state is also protected for two seconds against untimestamped HTTP snapshots. Strictly older push timestamps are rejected; distinct updates in the same source second retain receive order. HTTP has no shared version cursor and push timestamps are coarse, so perfect cross-channel ordering cannot be proven. Periodic reconciliation, counters and explicit freshness limits make this tradeoff observable.
+- Monitor both TCP connectivity and AppSync protocol keepalives. Subscription errors, malformed requested data and missed deadlines trigger reconnect and fallback. A transient HTTP failure does not interrupt a verified push stream; after **30 seconds without a complete HTTP verification**, the full-board freshness lease expires. Partial responses cannot renew it. HTTP retries honor `Retry-After` and exponential backoff.
 
-No faster NFL push channel was observed in the inspected pregame page. Live NFL network behavior still needs to be checked during an actual game before claiming the same acquisition path is optimal in-game. Discovery failure currently pauses that source's price cycle until retry; separating discovery and price refresh failure handling would improve availability.
+`/api/metrics` exposes push state, acknowledgements, reconnects, accepted/duplicate/out-of-order updates, prevented polling overwrites, per-channel errors and requested/returned coverage. `/api/health` is a readiness check: both sources must be fresh, populated and complete. `/healthz` remains process liveness, so one bookmaker outage does not restart the working source.
 
 ## Matching and best price
 
@@ -142,7 +144,9 @@ Measurement instrumentation:
 5. `npm run benchmark -- URL 60` writes a report under ignored `data/`. It calibrates the CLI clock with five `/api/time` probes, selecting the lowest round trip and reporting at least half that round trip as uncertainty. CLI receive latency is explicitly separate from browser paint latency; provider-clock uncertainty remains. HTTP acquisition timing is not bookmaker-change latency.
 6. `npm run compare -- 300` observes both public implementations simultaneously using one monotonic clock. It compares identical old-to-new quote transitions, excludes initial loads and ambiguous matches, and reports unmatched changes and correlated batch counts. See the [comparison method and limitations](docs/comparison.md).
 
-Latency choices: reuse fetch connections; maintain DraftKings' push connection; fetch only main markets; poll FanDuel's price endpoint; send changed games immediately without a debounce window; use one shared collector per book; serialize fanout once. Game-level patches are larger than individual quote deltas but simplify browser consistency. A single region near the observed North American feeds is a sensible first deployment, but placement must be measured, not assumed optimal.
+FanDuel push `updatedAt` is truncated to whole seconds. Its reported source-to-backend or source-to-paint age is an upper-bound estimate with up to about 999 ms of quantization, plus unknown provider-clock skew. HTTP snapshots have no source-change timestamp. Changed-price sample counts are separate from connection confirmations and all-message processing measurements.
+
+Latency choices: reuse fetch connections; maintain both books' push connections; fetch only main markets; send changed games immediately without a debounce window; use one shared collector per book; serialize fanout once. Game-level patches are larger than individual quote deltas but simplify browser consistency. A single region near the observed North American feeds is a sensible first deployment, but placement must be measured, not assumed optimal.
 
 ## Access obstacles
 
@@ -178,7 +182,7 @@ Before submission: collect actual in-game observations and per-source rendering 
 
 - Verify in-game status, suspension, line changes and discovery behavior during a real NFL game; capture measured latency for both sources.
 - Compare MessagePack and JSON empirically, implement the binary mapping if it materially reduces latency/bandwidth, and investigate atomic snapshot/stream versioning.
-- Keep last valid discovery while retrying discovery separately; refresh when previously unknown market IDs appear.
+- Measure cross-channel ordering and reconciliation corrections during live play; inspect whether the provider exposes a stronger shared sequence/version.
 - Instrument clock skew, response cache age, true wire bytes and frontend visible-change timings more precisely; export observations to durable storage.
 - Add third-book adapters returning the same game/quote model. For multiple serving instances, move collectors into a single owned service (or use leader election) and distribute updates through a broker. Do not simply start duplicate collectors per web replica.
 - Add schema-drift alerts and a measured multi-viewer load test. AI can help propose mapping changes, but fixture checks and comparison with source pages must approve them.

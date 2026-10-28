@@ -35,7 +35,7 @@ export class OddsStore extends EventEmitter {
           transport:
             book === "draftkings"
               ? "WebSocket · JSON deltas"
-              : "HTTP · 2 second polling",
+              : "Connecting live feed · polling backup",
           region: book === "draftkings" ? "Ontario" : "New Jersey",
         },
       ]),
@@ -100,6 +100,7 @@ export class OddsStore extends EventEmitter {
       requestMs: timing.durationMs ?? null,
       sourceCreatedAt: timing.sourceCreatedAt ?? null,
       sourcePublishedAt: timing.sourcePublishedAt ?? null,
+      sourceUpdatedAt: timing.sourceUpdatedAt ?? null,
       decodedBytes: timing.decodedBytes,
       priceChanges,
       phases: [
@@ -164,6 +165,10 @@ export class OddsStore extends EventEmitter {
   confirm(book) {
     if (this.sources[book].status !== "healthy") return;
     this.sources[book].lastConfirmedAt = Date.now();
+    this.publish("status", { source: { ...this.sources[book] } });
+  }
+  details(book, patch) {
+    Object.assign(this.sources[book], patch);
     this.publish("status", { source: { ...this.sources[book] } });
   }
   failure(book, error) {
