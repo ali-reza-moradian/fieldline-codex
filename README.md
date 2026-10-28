@@ -26,6 +26,7 @@ npm start
 ```sh
 npm test          # Offline fixture, matching, recovery-state and HTTP/SSE tests
 npm run probe     # Contact both actual sources and report coverage and request time
+npm run diagnose  # Bounded DraftKings access and public regional-configuration checks
 npm run benchmark -- http://localhost:3210 60
 ```
 
@@ -124,7 +125,7 @@ Latency choices: reuse fetch connections; maintain DraftKings' push connection; 
 
 - The FanDuel HTML page returned HTTP 403 to a plain server request while the normal browser loaded it. Its public discovery API returned HTTP 400 without the page's `X-Sportsbook-Region: NJ` header and HTTP 200 with it. The price endpoint worked without account cookies.
 - DraftKings' HTML loaded directly. Its snapshot endpoint initially timed out or returned HTTP 403 to an incomplete request. A Node request with the public page's ordinary client, origin and region metadata returned HTTP 200. The WebSocket subscription worked without a personal session.
-- On Render's Ohio service, FanDuel discovery and prices work, but DraftKings' initial snapshot returns HTTP 403. Its WebSocket connects and acknowledges the subscription. Enabling or omitting the stream's `initialData` option in local probes did not yield a complete snapshot; it is not an established replacement for HTTP bootstrap. The snapshot denial remains unresolved. Reconnect errors preserve the original cause instead of replacing it with a generic disconnect message.
+- On Render's Ohio service, FanDuel discovery and prices work, but DraftKings' initial snapshot returns HTTP 403. Its WebSocket connects and acknowledges the subscription. A [bounded runtime diagnostic](docs/measurements/render-access-diagnostic.json) at 5:33 p.m. Toronto time found that the public NFL HTML page returned 200 and selected Illinois for that connection. The page-advertised Illinois snapshot also returned 403, with `AkamaiGHost` as the response server. This rules out fixing the observed failure simply by following the page-selected regional configuration; it does not establish the provider's exact blocking rule. Enabling or omitting the stream's `initialData` option in local probes did not yield a complete snapshot; it is not an established replacement for HTTP bootstrap. The snapshot denial remains unresolved. Reconnect errors preserve the original cause instead of replacing it with a generic disconnect message.
 - No CAPTCHA solver, proxy rotation, personal account credentials, TLS-verification bypass or copied anti-bot cookies are used. There is no hidden relay through the development laptop or fixture fallback on the hosted site.
 - No HTTP 429 was observed during the initial checks; retry behavior is implemented and its delay policy is tested, not claimed as a measured rate-limit recovery incident.
 

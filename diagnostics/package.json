@@ -1,0 +1,9 @@
+{
+  "name": "fieldline-browser-access-diagnostic",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@sparticuz/chromium": "153.0.0",
+    "playwright-core": "1.64.1"
+  }
+}

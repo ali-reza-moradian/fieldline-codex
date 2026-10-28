@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-10-28T21:33:04Z",
+  "environment": "Render free Node web service, Ohio; diagnostic executed immediately before the application in the runtime instance",
+  "commit": "2c20d2e",
+  "results": [
+    {
+      "label": "configured-ontario-snapshot",
+      "status": 403,
+      "host": "sportsbook-nash.draftkings.com",
+      "contentType": "text/html",
+      "server": "AkamaiGHost",
+      "bytes": 511
+    },
+    {
+      "label": "public-nfl-page",
+      "status": 200,
+      "host": "sportsbook.draftkings.com",
+      "contentType": "text/html; charset=utf-8",
+      "server": null,
+      "bytes": 2280386
+    },
+    {
+      "label": "page-selected-region",
+      "displayName": "Illinois",
+      "siteName": "dkusil",
+      "geoCodeEmbeddedResourceId": "US-IL",
+      "controlDataBff": "https://sportsbook-nash.draftkings.com/sites/US-IL-SB/api/sportscontent/controldata/",
+      "sportsDataBaseWebSocketUrl": "wss://sportsbook-ws-us-il.draftkings.com/websocket"
+    },
+    {
+      "label": "page-selected-snapshot",
+      "status": 403,
+      "host": "sportsbook-nash.draftkings.com",
+      "contentType": "text/html",
+      "server": "AkamaiGHost",
+      "bytes": 511
+    }
+  ],
+  "limits": "These observations do not establish the exact access-control rule or prove that another host would succeed. No cookies or personal credentials were supplied."
+}
