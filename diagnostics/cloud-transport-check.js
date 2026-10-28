@@ -39,7 +39,7 @@ async function check() {
       const response = await fetch(url, { headers: DK_HEADERS, signal: AbortSignal.timeout(10000) });
       const text = await response.text();
       const item = { label, status: response.status, bytes: Buffer.byteLength(text), server: response.headers.get("server") };
-      if (response.ok()) {
+      if (response.ok) {
         const data = JSON.parse(text);
         for (const key of ["events", "markets", "selections"]) item[key] = data[key]?.length;
       }

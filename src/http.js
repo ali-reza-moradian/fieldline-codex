@@ -5,6 +5,13 @@ export class UpstreamError extends Error {
     this.retryAfterMs = retryAfterMs;
   }
 }
+export function parseRetryAfter(retry) {
+  if (!retry) return 0;
+  const delay = Number.isFinite(Number(retry))
+    ? Number(retry) * 1000
+    : Date.parse(retry) - Date.now();
+  return Number.isFinite(delay) ? Math.max(0, delay) : 0;
+}
 export async function fetchJson(url, options = {}) {
   const start = performance.now();
   const response = await fetch(url, {
@@ -12,11 +19,7 @@ export async function fetchJson(url, options = {}) {
     signal: options.signal ?? AbortSignal.timeout(10000),
   });
   const retry = response.headers.get("retry-after");
-  const retryAfterMs = retry
-    ? Number.isFinite(Number(retry))
-      ? Number(retry) * 1000
-      : Math.max(0, Date.parse(retry) - Date.now())
-    : 0;
+  const retryAfterMs = parseRetryAfter(retry);
   if (!response.ok) {
     await response.body?.cancel();
     throw new UpstreamError(

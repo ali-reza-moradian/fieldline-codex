@@ -2,6 +2,7 @@ import WebSocket from "ws";
 import { randomUUID } from "node:crypto";
 import { makeGame, makeQuote } from "../model.js";
 import { fetchJson, retryDelay } from "../http.js";
+import { fetchCurlJson } from "../curl-http.js";
 
 const eventFilter =
   "$filter=leagueId eq '88808' AND clientMetadata/Subcategories/any(s: s/Id eq '4518')";
@@ -59,8 +60,11 @@ export const DK_HEADERS = {
   "x-pe-ep": "SB",
   "x-pe-loc": "CA-ON",
 };
-export async function fetchDraftKingsSnapshot() {
-  return fetchJson(DK_SNAPSHOT, { headers: DK_HEADERS });
+export async function fetchDraftKingsSnapshot({ signal } = {}) {
+  const transport = process.env.DK_HTTP_TRANSPORT || (process.env.RENDER === "true" ? "curl" : "native");
+  if (!["native", "curl"].includes(transport)) throw new Error("Unknown DK_HTTP_TRANSPORT");
+  const fetcher = transport === "curl" ? fetchCurlJson : fetchJson;
+  return fetcher(DK_SNAPSHOT, { headers: DK_HEADERS, signal });
 }
 export class DraftKingsState {
   replace(data) {
@@ -183,6 +187,7 @@ export class DraftKings {
     clearTimeout(this.retry);
     clearInterval(this.heartbeat);
     clearInterval(this.refresh);
+    this.snapshotController?.abort();
     this.ws?.terminate();
   }
   connect() {
@@ -265,6 +270,7 @@ export class DraftKings {
       clearInterval(this.heartbeat);
       clearInterval(this.refresh);
       if (this.stopped || ws !== this.ws) return;
+      this.snapshotController?.abort();
       this.sink.failure(
         "draftkings",
         ws.failureReason ??
@@ -288,8 +294,9 @@ export class DraftKings {
   async resnapshot(ws) {
     if (this.syncing || !this.subscribed || ws !== this.ws) return;
     this.syncing = true;
+    const controller = (this.snapshotController = new AbortController());
     try {
-      const result = await fetchDraftKingsSnapshot();
+      const result = await fetchDraftKingsSnapshot({ signal: controller.signal });
       if (this.stopped || ws !== this.ws || ws.readyState !== WebSocket.OPEN)
         return;
       const next = new DraftKingsState();
@@ -305,7 +312,7 @@ export class DraftKings {
         kind: "snapshot",
       });
     } catch (error) {
-      if (this.stopped || ws !== this.ws) return;
+      if (controller.signal.aborted || this.stopped || ws !== this.ws) return;
       this.fail(ws, error);
       ws.terminate();
     } finally {

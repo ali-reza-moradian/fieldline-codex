@@ -1,0 +1,49 @@
+{
+  "observedAt": "2026-10-28T22:28:37.806Z",
+  "environment": "Render free native Node service, Ohio",
+  "commit": "7393586",
+  "diagnostic": {
+    "startedAt": "2026-10-28T22:26:33.269Z",
+    "phase": "finished",
+    "results": [
+      {
+        "label": "node-ontario-snapshot",
+        "error": "response.ok is not a function"
+      },
+      {
+        "label": "node-public-content-league",
+        "error": "response.ok is not a function"
+      },
+      {
+        "label": "configured-ontario-snapshot",
+        "status": 200,
+        "server": null,
+        "bytes": 155276,
+        "elapsedMs": 170.48,
+        "events": 29,
+        "markets": 87,
+        "selections": 174
+      },
+      {
+        "label": "public-content-league",
+        "status": 200,
+        "server": null,
+        "bytes": 165166,
+        "elapsedMs": 125.39,
+        "events": 29,
+        "markets": 87,
+        "selections": 174
+      },
+      {
+        "label": "websocket",
+        "event": "subscribed",
+        "error": null
+      }
+    ],
+    "finishedAt": "2026-10-28T22:26:55.076Z"
+  },
+  "limits": [
+    "Native HTTP rows contain a diagnostic bug (Response.ok was called as a function); do not treat those rows as HTTP status evidence.",
+    "The independent Python client returned structured snapshot counts and a subscription acknowledgement. This is an access probe, not sustained collector or live-game verification."
+  ]
+}

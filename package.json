@@ -8,7 +8,8 @@
     "node": ">=24"
   },
   "scripts": {
-    "start": "node --use-system-ca diagnostics/cloud-transport-check.js",
+    "start": "node --use-system-ca src/server.js",
+    "postinstall": "node scripts/install-transport.js",
     "dev": "node --use-system-ca --watch src/server.js",
     "test": "node --test",
     "probe": "node --use-system-ca scripts/probe.js",
