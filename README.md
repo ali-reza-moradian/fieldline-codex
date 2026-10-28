@@ -6,7 +6,9 @@ A small, continuously updating NFL board comparing DraftKings and FanDuel moneyl
 
 First local version, October 28, 2026. Both public source integrations work from the development machine in the Toronto area. The app has displayed current odds for 29 DraftKings games and 28 FanDuel games; counts and availability change over time. The default run always fetches actual source data. Test fixtures are never used as a live-data fallback.
 
-**Not yet submission-ready:** public deployment and GitHub publication remain outstanding. Actual in-game NFL validation and complete source-to-screen measurement remain outstanding. A connected WebSocket, passing fixture tests, or a fast HTTP request is not proof of measured live-game latency.
+GitHub repository: [ali-reza-moradian/fieldline-codex](https://github.com/ali-reza-moradian/fieldline-codex).
+
+**Not yet submission-ready:** public deployment remains outstanding. Actual in-game NFL validation and complete source-to-screen measurement remain outstanding. A connected WebSocket, passing fixture tests, or a fast HTTP request is not proof of measured live-game latency.
 
 ## Run locally
 
@@ -129,9 +131,9 @@ docker build -t fieldline .
 docker run --rm -p 3210:3210 fieldline
 ```
 
-The Docker build has not been executed in the initial local verification. Railway is the selected first deployment target: build the included Dockerfile, run one replica, leave serverless sleeping disabled, and generate an HTTPS domain for the service's `PORT`. The image sets `HOST=0.0.0.0`; Railway supplies its listening port. The health check confirms the server is running; inspect both source states and the actual board separately before declaring the integration healthy. The trial's credits and outbound-access eligibility must be checked in the account. See [Railway's trial limits](https://docs.railway.com/pricing/free-trial).
+The Docker build has not been executed in the initial local verification. Render is the selected first deployment target, in a dedicated service for this repository. Run one instance. The health check confirms the server is running; inspect both source states and the actual board separately before declaring the integration healthy.
 
-The app can also run directly as a single Node web service. Alternative Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, Node 24+, health path `/healthz`. The included blueprint uses a free service in Ohio; this is deployment preparation, not proof that the region can reach both feeds.
+Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, Node 24+, health path `/healthz`. The included blueprint uses a free service in Ohio; this is deployment preparation, not proof that the region can reach both feeds. The Docker image and `railway.json` remain portable alternatives.
 
 Render's free services can sleep after 15 minutes without inbound traffic and can take about a minute to wake. They can also be suspended for unusually high outbound traffic. These limits affect a continuously ingesting demonstration. Do not present a sleeping free service as an always-on production design. See [Render's free-service limitations](https://render.com/docs/free) and [Node deployment instructions](https://render.com/docs/deploy-node-express-app).
 
