@@ -44,24 +44,23 @@ export function subscription(id) {
     },
   };
 }
+export const DK_HEADERS = {
+  origin: "https://sportsbook.draftkings.com",
+  referer: "https://sportsbook.draftkings.com/",
+  "content-type": "application/json charset=utf-8",
+  "x-client-feature": "leagueSubcategory",
+  "x-client-name": "web",
+  "x-client-page": "league",
+  "x-client-version": "2643.4.1.10",
+  "x-client-widget-name": "cms",
+  "x-client-widget-version": "3.1.1",
+  "x-pe-cn": "web",
+  "x-pe-cv": "2643.4.1.10",
+  "x-pe-ep": "SB",
+  "x-pe-loc": "CA-ON",
+};
 export async function fetchDraftKingsSnapshot() {
-  return fetchJson(DK_SNAPSHOT, {
-    headers: {
-      origin: "https://sportsbook.draftkings.com",
-      referer: "https://sportsbook.draftkings.com/",
-      "content-type": "application/json charset=utf-8",
-      "x-client-feature": "leagueSubcategory",
-      "x-client-name": "web",
-      "x-client-page": "league",
-      "x-client-version": "2643.4.1.10",
-      "x-client-widget-name": "cms",
-      "x-client-widget-version": "3.1.1",
-      "x-pe-cn": "web",
-      "x-pe-cv": "2643.4.1.10",
-      "x-pe-ep": "SB",
-      "x-pe-loc": "CA-ON",
-    },
-  });
+  return fetchJson(DK_SNAPSHOT, { headers: DK_HEADERS });
 }
 export class DraftKingsState {
   replace(data) {

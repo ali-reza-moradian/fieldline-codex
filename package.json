@@ -12,6 +12,7 @@
     "dev": "node --use-system-ca --watch src/server.js",
     "test": "node --test",
     "probe": "node --use-system-ca scripts/probe.js",
+    "diagnose": "node --use-system-ca scripts/diagnose-access.js",
     "benchmark": "node --use-system-ca scripts/benchmark.js"
   },
   "dependencies": {
