@@ -145,6 +145,8 @@ Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, N
 
 Render's free services can sleep after 15 minutes without inbound traffic and can take about a minute to wake. They can also be suspended for unusually high outbound traffic. These limits affect a continuously ingesting demonstration. Do not present a sleeping free service as an always-on production design. See [Render's free-service limitations](https://render.com/docs/free) and [Node deployment instructions](https://render.com/docs/deploy-node-express-app).
 
+`fly.toml` prepares a single 512 MB instance in Toronto for an alternative access test using the same Docker image. It has not yet been deployed or proven to reach DraftKings. Fly's [trial](https://fly.io/docs/about/free-trial/) is limited to two total VM hours or seven days, whichever comes first, and trial machines can stop after five minutes. It is suitable for a bounded access check, not a promise of continuous hosting through review. No paid hosting plan has been activated.
+
 Before submission: resolve DraftKings access from the hosting environment, verify both feeds and SSE in a separate browser, collect hosted pregame and actual in-game observations, and update this status section with the resulting evidence.
 
 ## With more time

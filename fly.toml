@@ -1,0 +1,33 @@
+# Prepared for a bounded Toronto-hosted access trial. Not yet a verified deployment.
+# Trial machines can stop after five minutes and have a two-hour total runtime limit.
+app = "fieldline-codex"
+primary_region = "yyz"
+kill_signal = "SIGTERM"
+kill_timeout = "10s"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  HOST = "0.0.0.0"
+  PORT = "3210"
+  NODE_ENV = "production"
+
+[http_service]
+  internal_port = 3210
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    interval = "15s"
+    timeout = "5s"
+    grace_period = "20s"
+    method = "GET"
+    path = "/healthz"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory = "512mb"
