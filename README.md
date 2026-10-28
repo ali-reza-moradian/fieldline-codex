@@ -46,7 +46,7 @@ DK_HTTP_TRANSPORT=curl npm start
 npm test
 ```
 
-`DK_HTTP_TRANSPORT=native` selects Node's HTTP client; `curl` selects the compatible client. Render defaults to `curl`; other native Node installations default to `native`. The optional HTTP integration test runs when `.venv` is installed; otherwise it is explicitly skipped. With the transport installed, all 24 tests pass, including actual local HTTP responses, rate limits, invalid JSON, cancellation and uninterrupted stream delivery during a slow snapshot refresh.
+`DK_HTTP_TRANSPORT=native` selects Node's HTTP client; `curl` selects the compatible client. Render defaults to `curl`; other native Node installations default to `native`. The optional HTTP integration test runs when `.venv` is installed; otherwise it is explicitly skipped. With the transport installed, all 31 tests pass, including actual local HTTP responses, rate limits, invalid JSON, cancellation, uninterrupted stream delivery during a slow snapshot refresh, and seven checks of the independent comparison harness.
 
 ## Architecture
 
@@ -140,6 +140,7 @@ Measurement instrumentation:
 3. Send receive/send times with each changed-game event. A foreground browser reports an estimate after two animation frames for changed games in view. Five `/api/time` probes select the lowest-RTT clock-offset estimate, refreshed every minute. Half the RTT is reported as a lower bound on timing uncertainty. Two animation frames are a rendering proxy, not hardware display instrumentation.
 4. `/api/metrics` returns counts, p50/p95/max and separate pregame/live rows. Client telemetry is diagnostic and client-reported, not trusted billing or security data. The store history is capped at 10,000 updates and browser samples at 5,000.
 5. `npm run benchmark -- URL 60` writes a report under ignored `data/`. It calibrates the CLI clock with five `/api/time` probes, selecting the lowest round trip and reporting at least half that round trip as uncertainty. CLI receive latency is explicitly separate from browser paint latency; provider-clock uncertainty remains. HTTP acquisition timing is not bookmaker-change latency.
+6. `npm run compare -- 300` observes both public implementations simultaneously using one monotonic clock. It compares identical old-to-new quote transitions, excludes initial loads and ambiguous matches, and reports unmatched changes and correlated batch counts. See the [comparison method and limitations](docs/comparison.md).
 
 Latency choices: reuse fetch connections; maintain DraftKings' push connection; fetch only main markets; poll FanDuel's price endpoint; send changed games immediately without a debounce window; use one shared collector per book; serialize fanout once. Game-level patches are larger than individual quote deltas but simplify browser consistency. A single region near the observed North American feeds is a sensible first deployment, but placement must be measured, not assumed optimal.
 

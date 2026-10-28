@@ -1,0 +1,446 @@
+{
+  "measuredAt": "2026-10-28T23:08:52.324Z",
+  "apps": {
+    "codex": "https://fieldline-codex.onrender.com",
+    "claude": "https://nfl-odds-board-hgim.onrender.com"
+  },
+  "conclusion": "No measured speed winner: neither observation captured an active price or line change. Claude has a shorter FanDuel polling interval (1000 vs 2000 ms), implying about 500 vs 1000 ms mean polling wait under uniformly timed changes and normal operation; this is not measured end-to-end latency.",
+  "method": "Concurrent public SSE streams, one observer and monotonic clock, timestamp before parsing, match identical full old-to-new transitions. Initial loads and status refreshes excluded. Kickoffs within 90 seconds on same local date/teams.",
+  "notes": [
+    "First observation interrupted by Claude deployment 4738ac6 -> f848c79; not a completed five-minute comparison.",
+    "Second observation completed a two-minute window plus 15-second matching grace without a server version change. Claude DraftKings reported a temporary down/stale state.",
+    "After the deployment, most Claude kickoff times were one minute later. Raw events were reanalyzed with the documented 90-second tolerance; no quote-change count or winner changed.",
+    "No browser-paint or actual in-game latency measured. No deployment was modified by this comparison."
+  ],
+  "observations": [
+    {
+      "startedAt": "2026-10-28T22:58:13.722Z",
+      "finishedAt": "2026-10-28T23:01:32.685Z",
+      "requestedSeconds": 300,
+      "observedSeconds": 197.694538041,
+      "interrupted": true,
+      "errors": [
+        {
+          "app": "claude",
+          "error": "Stream ended early"
+        }
+      ],
+      "versions": {
+        "claudeBefore": "4738ac6",
+        "claudeAfter": "f848c79",
+        "codexStartedAtBefore": 1793227294759,
+        "codexStartedAtAfter": 1793227294759
+      },
+      "initialCoverage": {
+        "draftkings": {
+          "codex": 174,
+          "claude": 174,
+          "shared": 174,
+          "identicalActive": 174,
+          "kickoffConflicts": [],
+          "differences": [],
+          "codexOnly": [],
+          "claudeOnly": []
+        },
+        "fanduel": {
+          "codex": 160,
+          "claude": 174,
+          "shared": 160,
+          "identicalActive": 160,
+          "kickoffConflicts": [],
+          "differences": [],
+          "codexOnly": [],
+          "claudeOnly": [
+            "fanduel|2026-11-08|CLE|NO|full_game|spread|away",
+            "fanduel|2026-11-08|CLE|NO|full_game|spread|home",
+            "fanduel|2026-11-08|ARI|SEA|full_game|total|over",
+            "fanduel|2026-11-08|ARI|SEA|full_game|total|under",
+            "fanduel|2026-11-08|DEN|CAR|full_game|total|over",
+            "fanduel|2026-11-08|DEN|CAR|full_game|total|under",
+            "fanduel|2026-11-08|DET|MIA|full_game|spread|away",
+            "fanduel|2026-11-08|DET|MIA|full_game|spread|home",
+            "fanduel|2026-11-08|DEN|CAR|full_game|moneyline|away",
+            "fanduel|2026-11-08|DEN|CAR|full_game|moneyline|home",
+            "fanduel|2026-11-08|DEN|CAR|full_game|spread|away",
+            "fanduel|2026-11-08|DEN|CAR|full_game|spread|home",
+            "fanduel|2026-11-08|NYG|PHI|full_game|total|over",
+            "fanduel|2026-11-08|NYG|PHI|full_game|total|under"
+          ]
+        }
+      },
+      "finalCoverage": {
+        "draftkings": {
+          "codex": 174,
+          "claude": 174,
+          "shared": 174,
+          "identicalActive": 174,
+          "kickoffConflicts": [],
+          "differences": [],
+          "codexOnly": [],
+          "claudeOnly": []
+        },
+        "fanduel": {
+          "codex": 160,
+          "claude": 174,
+          "shared": 160,
+          "identicalActive": 160,
+          "kickoffConflicts": [],
+          "differences": [],
+          "codexOnly": [],
+          "claudeOnly": [
+            "fanduel|2026-11-08|CLE|NO|full_game|spread|away",
+            "fanduel|2026-11-08|CLE|NO|full_game|spread|home",
+            "fanduel|2026-11-08|ARI|SEA|full_game|total|over",
+            "fanduel|2026-11-08|ARI|SEA|full_game|total|under",
+            "fanduel|2026-11-08|DEN|CAR|full_game|total|over",
+            "fanduel|2026-11-08|DEN|CAR|full_game|total|under",
+            "fanduel|2026-11-08|DET|MIA|full_game|spread|away",
+            "fanduel|2026-11-08|DET|MIA|full_game|spread|home",
+            "fanduel|2026-11-08|DEN|CAR|full_game|moneyline|away",
+            "fanduel|2026-11-08|DEN|CAR|full_game|moneyline|home",
+            "fanduel|2026-11-08|DEN|CAR|full_game|spread|away",
+            "fanduel|2026-11-08|DEN|CAR|full_game|spread|home",
+            "fanduel|2026-11-08|NYG|PHI|full_game|total|over",
+            "fanduel|2026-11-08|NYG|PHI|full_game|total|under"
+          ]
+        }
+      },
+      "sourceStatesSeen": null,
+      "summary": {
+        "draftkings": {
+          "pairedQuoteTransitions": 0,
+          "distinctBatchPairs": 0,
+          "codexFirst": 0,
+          "claudeFirst": 0,
+          "ties": 0,
+          "quoteLeadMs": {
+            "n": 0
+          },
+          "batchLeadMs": {
+            "n": 0
+          },
+          "unmatchedCodex": 0,
+          "unmatchedClaude": 0
+        },
+        "fanduel": {
+          "pairedQuoteTransitions": 0,
+          "distinctBatchPairs": 0,
+          "codexFirst": 0,
+          "claudeFirst": 0,
+          "ties": 0,
+          "quoteLeadMs": {
+            "n": 0
+          },
+          "batchLeadMs": {
+            "n": 0
+          },
+          "unmatchedCodex": 0,
+          "unmatchedClaude": 0
+        }
+      },
+      "totalPriceChangesSeen": 0,
+      "unmatched": [],
+      "excluded": [],
+      "fanDuelPollMs": {
+        "codex": 2000,
+        "claude": 1000
+      },
+      "observerEventLoopDelayMs": {
+        "mean": 10.93215973547966,
+        "p99": 12.165119,
+        "max": 55.607295
+      },
+      "reanalysis": {
+        "reason": "Permit observed one-minute kickoff differences, with 90-second maximum. Reject sources reporting down even if stale flag has not updated.",
+        "rawEventsUnchanged": true,
+        "analysisAt": "2026-10-28T23:08:52.307Z",
+        "startBoundaryPrecisionMs": 1
+      },
+      "rawLocalDirectory": "data/comparison-2026-10-28T22-58-11-335Z"
+    },
+    {
+      "startedAt": "2026-10-28T23:03:48.803Z",
+      "finishedAt": "2026-10-28T23:06:04.217Z",
+      "requestedSeconds": 120,
+      "observedSeconds": 120,
+      "interrupted": false,
+      "errors": [],
+      "versions": {
+        "claudeBefore": "f848c79",
+        "claudeAfter": "f848c79",
+        "codexStartedAtBefore": 1793227294759,
+        "codexStartedAtAfter": 1793227294759
+      },
+      "initialCoverage": {
+        "draftkings": {
+          "codex": 174,
+          "claude": 174,
+          "shared": 174,
+          "identicalActive": 168,
+          "kickoffConflicts": [
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|spread|home",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|spread|away",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|moneyline|home",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|moneyline|away",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|total|over",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|total|under",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            }
+          ],
+          "differences": [],
+          "codexOnly": [],
+          "claudeOnly": []
+        },
+        "fanduel": {
+          "codex": 160,
+          "claude": 174,
+          "shared": 160,
+          "identicalActive": 154,
+          "kickoffConflicts": [
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|total|over",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|total|under",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|spread|away",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|spread|home",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|moneyline|away",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|moneyline|home",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            }
+          ],
+          "differences": [],
+          "codexOnly": [],
+          "claudeOnly": [
+            "fanduel|2026-11-08|CLE|NO|full_game|spread|away",
+            "fanduel|2026-11-08|CLE|NO|full_game|spread|home",
+            "fanduel|2026-11-08|ARI|SEA|full_game|total|over",
+            "fanduel|2026-11-08|ARI|SEA|full_game|total|under",
+            "fanduel|2026-11-08|DEN|CAR|full_game|total|over",
+            "fanduel|2026-11-08|DEN|CAR|full_game|total|under",
+            "fanduel|2026-11-08|DET|MIA|full_game|spread|away",
+            "fanduel|2026-11-08|DET|MIA|full_game|spread|home",
+            "fanduel|2026-11-08|DEN|CAR|full_game|moneyline|away",
+            "fanduel|2026-11-08|DEN|CAR|full_game|moneyline|home",
+            "fanduel|2026-11-08|DEN|CAR|full_game|spread|away",
+            "fanduel|2026-11-08|DEN|CAR|full_game|spread|home",
+            "fanduel|2026-11-08|NYG|PHI|full_game|total|over",
+            "fanduel|2026-11-08|NYG|PHI|full_game|total|under"
+          ]
+        }
+      },
+      "finalCoverage": {
+        "draftkings": {
+          "codex": 174,
+          "claude": 174,
+          "shared": 174,
+          "identicalActive": 168,
+          "kickoffConflicts": [
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|spread|home",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|spread|away",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|moneyline|home",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|moneyline|away",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|total|over",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "draftkings|2026-11-02|CHI|SEA|full_game|total|under",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            }
+          ],
+          "differences": [],
+          "codexOnly": [],
+          "claudeOnly": []
+        },
+        "fanduel": {
+          "codex": 160,
+          "claude": 174,
+          "shared": 160,
+          "identicalActive": 154,
+          "kickoffConflicts": [
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|total|over",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|total|under",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|spread|away",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|spread|home",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|moneyline|away",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            },
+            {
+              "key": "fanduel|2026-11-02|CHI|SEA|full_game|moneyline|home",
+              "codex": "2026-11-03T01:20:00.000Z",
+              "claude": "2026-11-03T01:16:00.000Z"
+            }
+          ],
+          "differences": [],
+          "codexOnly": [],
+          "claudeOnly": [
+            "fanduel|2026-11-08|CLE|NO|full_game|spread|away",
+            "fanduel|2026-11-08|CLE|NO|full_game|spread|home",
+            "fanduel|2026-11-08|ARI|SEA|full_game|total|over",
+            "fanduel|2026-11-08|ARI|SEA|full_game|total|under",
+            "fanduel|2026-11-08|DEN|CAR|full_game|total|over",
+            "fanduel|2026-11-08|DEN|CAR|full_game|total|under",
+            "fanduel|2026-11-08|DET|MIA|full_game|spread|away",
+            "fanduel|2026-11-08|DET|MIA|full_game|spread|home",
+            "fanduel|2026-11-08|DEN|CAR|full_game|moneyline|away",
+            "fanduel|2026-11-08|DEN|CAR|full_game|moneyline|home",
+            "fanduel|2026-11-08|DEN|CAR|full_game|spread|away",
+            "fanduel|2026-11-08|DEN|CAR|full_game|spread|home",
+            "fanduel|2026-11-08|NYG|PHI|full_game|total|over",
+            "fanduel|2026-11-08|NYG|PHI|full_game|total|under"
+          ]
+        }
+      },
+      "sourceStatesSeen": {
+        "codex": {
+          "draftkings": [
+            "healthy"
+          ],
+          "fanduel": [
+            "healthy"
+          ]
+        },
+        "claude": {
+          "draftkings": [
+            "live; stale=false",
+            "down; stale=false",
+            "down; stale=true",
+            "live; stale=true"
+          ],
+          "fanduel": [
+            "polling; stale=false"
+          ]
+        }
+      },
+      "summary": {
+        "draftkings": {
+          "pairedQuoteTransitions": 0,
+          "distinctBatchPairs": 0,
+          "codexFirst": 0,
+          "claudeFirst": 0,
+          "ties": 0,
+          "quoteLeadMs": {
+            "n": 0
+          },
+          "batchLeadMs": {
+            "n": 0
+          },
+          "unmatchedCodex": 0,
+          "unmatchedClaude": 0
+        },
+        "fanduel": {
+          "pairedQuoteTransitions": 0,
+          "distinctBatchPairs": 0,
+          "codexFirst": 0,
+          "claudeFirst": 0,
+          "ties": 0,
+          "quoteLeadMs": {
+            "n": 0
+          },
+          "batchLeadMs": {
+            "n": 0
+          },
+          "unmatchedCodex": 0,
+          "unmatchedClaude": 0
+        }
+      },
+      "totalPriceChangesSeen": 0,
+      "unmatched": [],
+      "excluded": [],
+      "fanDuelPollMs": {
+        "codex": 2000,
+        "claude": 1000
+      },
+      "observerEventLoopDelayMs": {
+        "mean": 10.900488375446677,
+        "p99": 11.476991,
+        "max": 73.203711
+      },
+      "reanalysis": {
+        "reason": "Permit observed one-minute kickoff differences, with 90-second maximum. Reject sources reporting down even if stale flag has not updated.",
+        "rawEventsUnchanged": true,
+        "analysisAt": "2026-10-28T23:08:52.323Z",
+        "startBoundaryPrecisionMs": 1
+      },
+      "rawLocalDirectory": "data/comparison-2026-10-28T23-03-46-451Z"
+    }
+  ]
+}

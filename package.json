@@ -14,7 +14,8 @@
     "test": "node --test",
     "probe": "node --use-system-ca scripts/probe.js",
     "diagnose": "node --use-system-ca scripts/diagnose-access.js",
-    "benchmark": "node --use-system-ca scripts/benchmark.js"
+    "benchmark": "node --use-system-ca scripts/benchmark.js",
+    "compare": "node --use-system-ca scripts/compare-live.js"
   },
   "dependencies": {
     "ws": "^8.18.0"
