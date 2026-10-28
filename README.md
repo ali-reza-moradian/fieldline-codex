@@ -4,11 +4,14 @@ A small, continuously updating NFL board comparing DraftKings and FanDuel moneyl
 
 ## Current status
 
-First local version, October 28, 2026. Both public source integrations work from the development machine in the Toronto area. The app has displayed current odds for 29 DraftKings games and 28 FanDuel games; counts and availability change over time. The default run always fetches actual source data. Test fixtures are never used as a live-data fallback.
+Deployed October 28, 2026. Both public source integrations work from the development machine in the Toronto area. The app has displayed current odds for 29 DraftKings games and 28 FanDuel games; counts and availability change over time. The default run always fetches actual source data. Test fixtures are never used as a live-data fallback.
 
+Public app: [fieldline-codex.onrender.com](https://fieldline-codex.onrender.com).
 GitHub repository: [ali-reza-moradian/fieldline-codex](https://github.com/ali-reza-moradian/fieldline-codex).
 
-**Not yet submission-ready:** public deployment remains outstanding. Actual in-game NFL validation and complete source-to-screen measurement remain outstanding. A connected WebSocket, passing fixture tests, or a fast HTTP request is not proof of measured live-game latency.
+**Not yet submission-ready:** FanDuel is healthy on Render, but the DraftKings initial HTTP snapshot returns **403** from that host. Its WebSocket subscription opens, but a delta stream cannot reconstruct the full board without a valid initial state. The public UI marks DraftKings unavailable and continues serving FanDuel. Both sources were rechecked successfully locally after this hosted failure. Resolving hosted access, actual in-game NFL validation and complete source-to-screen measurement remain outstanding. A connected WebSocket, passing fixture tests, or a fast HTTP request is not proof of measured live-game latency.
+
+See the [plain-English walkthrough](docs/walkthrough.md) for the design, a demo sequence and questions to practice.
 
 ## Run locally
 
@@ -105,6 +108,8 @@ No actual price change occurred during that 90-second observation, so it produce
 
 A [subsequent local observation](docs/measurements/local-pregame-changes.json), 3:55:08–3:58:40 p.m. Toronto time on the same date, captured two foreground-browser DraftKings price-change samples. Backend receipt to the rendering estimate was 58.15 / 61.15 ms (p50 / p95); the DraftKings feed's `createdTime` to that estimate was 175.15 / 176.15 ms. Reported browser/server clock uncertainty was at least ±0.85 ms, and provider-clock uncertainty remains unmeasured. With only two samples these percentiles are descriptive, not a reliable performance distribution. FanDuel still had no changed-price browser samples, and neither source had in-game samples.
 
+A [Render observation](docs/measurements/render-access-check.json) saved at 4:59:29 p.m. Toronto time records FanDuel request p50 / p95 of **16.38 / 30.56 ms** and processing p50 / p95 of **1.28 / 2.46 ms**, with 207 samples accumulated since the process started at 4:52:36 p.m. The separate CLI observation ran from 4:58:29 to 4:59:29 p.m. and received no changed-price events. DraftKings had zero hosted acquisition samples because its snapshot was denied. These figures measure FanDuel request/processing time, not source-change-to-screen latency.
+
 Measurement instrumentation:
 
 1. Record source request duration, response receipt time, decoded bytes and store-processing time.
@@ -119,7 +124,8 @@ Latency choices: reuse fetch connections; maintain DraftKings' push connection; 
 
 - The FanDuel HTML page returned HTTP 403 to a plain server request while the normal browser loaded it. Its public discovery API returned HTTP 400 without the page's `X-Sportsbook-Region: NJ` header and HTTP 200 with it. The price endpoint worked without account cookies.
 - DraftKings' HTML loaded directly. Its snapshot endpoint initially timed out or returned HTTP 403 to an incomplete request. A Node request with the public page's ordinary client, origin and region metadata returned HTTP 200. The WebSocket subscription worked without a personal session.
-- No CAPTCHA solver, proxy rotation, personal account credentials, TLS-verification bypass or copied anti-bot cookies are used. Actual hosting access is unverified. A successful request from this machine does not prove a cloud host will have access.
+- On Render's Ohio service, FanDuel discovery and prices work, but DraftKings' initial snapshot returns HTTP 403. Its WebSocket connects and acknowledges the subscription. Enabling or omitting the stream's `initialData` option in local probes did not yield a complete snapshot; it is not an established replacement for HTTP bootstrap. The snapshot denial remains unresolved. Reconnect errors preserve the original cause instead of replacing it with a generic disconnect message.
+- No CAPTCHA solver, proxy rotation, personal account credentials, TLS-verification bypass or copied anti-bot cookies are used. There is no hidden relay through the development laptop or fixture fallback on the hosted site.
 - No HTTP 429 was observed during the initial checks; retry behavior is implemented and its delay policy is tested, not claimed as a measured rate-limit recovery incident.
 
 ## Deployment
@@ -131,13 +137,13 @@ docker build -t fieldline .
 docker run --rm -p 3210:3210 fieldline
 ```
 
-The Docker build has not been executed in the initial local verification. Render is the selected first deployment target, in a dedicated service for this repository. Run one instance. The health check confirms the server is running; inspect both source states and the actual board separately before declaring the integration healthy.
+The Docker build has not been executed in the initial local verification. The public app runs on Render in a dedicated service for this repository, with one instance. The health check confirms the server is running; inspect both source states and the actual board separately before declaring the integration healthy. An HTTP 200 from `/healthz` alone does not imply that both collectors work.
 
-Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, Node 24+, health path `/healthz`. The included blueprint uses a free service in Ohio; this is deployment preparation, not proof that the region can reach both feeds. The Docker image and `railway.json` remain portable alternatives.
+Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, Node 24+, health path `/healthz`. The service uses the free plan in Ohio. It was created from the public Git repository; deployments are currently triggered manually. The Docker image and `railway.json` remain portable alternatives, but neither alternative host has been verified.
 
 Render's free services can sleep after 15 minutes without inbound traffic and can take about a minute to wake. They can also be suspended for unusually high outbound traffic. These limits affect a continuously ingesting demonstration. Do not present a sleeping free service as an always-on production design. See [Render's free-service limitations](https://render.com/docs/free) and [Node deployment instructions](https://render.com/docs/deploy-node-express-app).
 
-Before submission: deploy, verify both feeds from that host, verify SSE from a separate browser, collect hosted pregame and actual in-game observations, and replace this status section with the verified public app and GitHub URLs.
+Before submission: resolve DraftKings access from the hosting environment, verify both feeds and SSE in a separate browser, collect hosted pregame and actual in-game observations, and update this status section with the resulting evidence.
 
 ## With more time
 

@@ -273,7 +273,7 @@ export class DraftKings {
       );
       this.retry = setTimeout(
         () => this.connect(),
-        retryDelay((this.failures = (this.failures || 0) + 1)),
+        retryDelay((this.failures = (this.failures || 0) + 1), ws.failureReason),
       );
     });
   }
