@@ -3,8 +3,16 @@
 // modifications, CAPTCHA solving, certificate bypass, or cross-origin bypass.
 import { chromium as playwright } from "playwright-core";
 import chromium from "@sparticuz/chromium";
+import { mkdirSync, writeFileSync } from "node:fs";
 
-const report = (data) => console.log(JSON.stringify({ diagnostic: "browser-access", ...data }));
+const observations = [];
+const report = (data) => {
+  const item = { diagnostic: "browser-access", at: new Date().toISOString(), ...data };
+  observations.push(item);
+  console.log(JSON.stringify(item));
+  mkdirSync("data", { recursive: true });
+  writeFileSync("data/cloud-access-check.json", JSON.stringify(observations));
+};
 let browser;
 let timer;
 const hardStop = setTimeout(() => {

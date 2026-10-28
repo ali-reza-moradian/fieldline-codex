@@ -8,7 +8,7 @@
     "node": ">=24"
   },
   "scripts": {
-    "start": "node --use-system-ca src/server.js",
+    "start": "node --use-system-ca scripts/run-cloud-check.js && node --use-system-ca src/server.js",
     "dev": "node --use-system-ca --watch src/server.js",
     "test": "node --test",
     "probe": "node --use-system-ca scripts/probe.js",
