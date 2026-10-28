@@ -13,6 +13,8 @@ GitHub repository: [ali-reza-moradian/fieldline-codex](https://github.com/ali-re
 
 **Still required before claiming the whole brief is verified:** actual in-game NFL validation and complete per-source change-to-screen measurement. A connected WebSocket, passing fixture tests, or a fast HTTP request is not proof of measured live-game latency. The host's free-tier sleep behavior also applies.
 
+The [fresh-deployment check](docs/measurements/render-restart-verification.json) confirms both sources recovered after restart. Two independent HTTP stream clients received the same 29-game board revision with 28 matched games, while the browser and benchmark were also connected. The temporary access-diagnostic output has been removed from the production response.
+
 See the [plain-English walkthrough](docs/walkthrough.md) for the design, a demo sequence and questions to practice.
 
 ## Run locally
@@ -128,6 +130,8 @@ A [Render observation](docs/measurements/render-access-check.json) saved at 4:59
 A [Fly Toronto observation](docs/measurements/fly-access-check.json) at 6:15:47 p.m. records 21 FanDuel pregame price requests after a cold start: request p50 / p95 **39.59 / 77.72 ms**, processing **1.81 / 4.02 ms**. Two HTTP stream clients each received a snapshot containing 28 games. DraftKings again had zero valid acquisition samples. No changed-price rendering or in-game samples were captured. The trial Machine stopped five minutes after its first start and woke for a subsequent request; the saved report separates the initial empty cold-start state from the populated board.
 
 The [first working two-source Render observation](docs/measurements/render-two-source-pregame.json), 6:35:16–6:37:16 p.m., received **two actual DraftKings price-change events** through the public SSE stream. Both sources remained healthy with 29/28 games. Backend metrics accumulated since startup included four DraftKings snapshots (acquisition p50/p95 1,612.04/6,206.23 ms, including Python startup and a cold first acquisition) and 96 FanDuel requests (16.66/92.08 ms). No FanDuel price change occurred in that observation. The remote CLI's uncalibrated clock produced negative backend-to-client values; those latency values are invalid and are retained only as diagnostic evidence. The benchmark now calibrates its clock against `/api/time` before observing. Neither browser-paint nor live-game latency was established by this run. The subsequent refresh fix prevents slow snapshots from delaying incoming stream prices.
+
+After the final restart, a [calibrated Render observation](docs/measurements/render-calibrated-pregame.json), 6:42:56–6:44:56 p.m., received another two DraftKings changed-price events. Estimated backend receipt → remote CLI delivery was **69.75 / 72.75 ms** (p50/p95, n=2), with a minimum clock uncertainty of **±25.25 ms**. Feed-created → CLI was 478.75 ms for both samples, with additional unknown provider-clock skew. These are small CLI samples, not browser-paint or in-game measurements. FanDuel remained healthy, but no changed-price event occurred in that window. The saved backend metrics include 101 FanDuel requests since restart (16.95/98.76 ms p50/p95); neither source produced a hosted browser-render sample in this observation.
 
 Measurement instrumentation:
 

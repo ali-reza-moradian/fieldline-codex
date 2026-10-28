@@ -48,7 +48,9 @@ We can time our requests and processing. For changed games in view, the browser 
 
 DraftKings provides feed timestamps, but they do not prove the exact time its trading system changed the price. FanDuel's inspected response has no price-change timestamp. Its two-second polling interval adds roughly zero to two seconds of waiting under normal operation; that is a model, not a measured end-to-end guarantee.
 
-The saved local test captured two DraftKings changed-price rendering samples, approximately 58–61 ms after backend receipt. Two samples are too few for a robust performance claim. Neither source has been measured during an actual NFL game yet. Use the exact sample counts and limitations from the README.
+The saved local test captured two DraftKings changed-price rendering samples, approximately 58–61 ms after backend receipt. The first working cloud observation also received real DraftKings price changes, but its remote CLI clock was not synchronized and produced invalid negative delivery times. That exposed a measurement problem; the benchmark now calibrates its clock first. Do not reuse those invalid numbers as a speed claim. Neither source has been measured during an actual NFL game yet. Use the exact sample counts and limitations from the README.
+
+The corrected cloud observation captured two more DraftKings changes at approximately 70–73 ms from backend receipt to the remote command-line observer, with at least ±25 ms clock uncertainty. This verifies the live delivery path, but it is still only two pregame samples and does not time browser rendering. FanDuel stayed healthy without a price change during that short window, so its change-delivery row remains unmeasured.
 
 ## Demo sequence
 

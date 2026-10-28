@@ -1,0 +1,296 @@
+{
+  "startedAt": "2026-10-28T22:42:56.644Z",
+  "finishedAt": "2026-10-28T22:44:56.834Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "seconds": 120,
+  "clockCalibration": {
+    "offsetMs": 94.75244140625,
+    "rttMs": 50.495000000000005,
+    "uncertaintyMs": 25.247500000000002,
+    "measuredAt": "2026-10-28T22:42:56.644Z"
+  },
+  "caution": "CLI times use the lowest-RTT of five server clock probes; half the RTT is a lower uncertainty bound. Provider-clock skew remains unknown. These are not browser render or full bookmaker-change latency measurements.",
+  "client": {
+    "draftkings": {
+      "backendToClientMs": {
+        "n": 2,
+        "p50": 69.75,
+        "p95": 72.75,
+        "max": 72.75
+      },
+      "feedCreatedToClientMs": {
+        "n": 2,
+        "p50": 478.75,
+        "p95": 478.75,
+        "max": 478.75
+      },
+      "ssePayloadBytes": {
+        "n": 2,
+        "p50": 4490,
+        "p95": 4490,
+        "max": 4490
+      }
+    },
+    "fanduel": {
+      "backendToClientMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "feedCreatedToClientMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "ssePayloadBytes": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      }
+    }
+  },
+  "metrics": {
+    "startedAt": 1793227294759,
+    "generatedAt": 1793227496897,
+    "sources": {
+      "draftkings": {
+        "book": "draftkings",
+        "status": "healthy",
+        "lastConfirmedAt": 1793227495903,
+        "lastDataAt": 1793227477454,
+        "lastChangeAt": 1793227379664,
+        "staleAfterMs": 25000,
+        "error": null,
+        "warnings": [],
+        "updates": 18,
+        "priceChanges": 6,
+        "games": 29,
+        "quotes": 174,
+        "transport": "WebSocket · JSON deltas",
+        "region": "Ontario",
+        "requestMs": 1399.1146630000148,
+        "decodedBytes": 155285,
+        "pollMs": null
+      },
+      "fanduel": {
+        "book": "fanduel",
+        "status": "healthy",
+        "lastConfirmedAt": 1793227495381,
+        "lastDataAt": 1793227495380,
+        "lastChangeAt": null,
+        "staleAfterMs": 10000,
+        "error": null,
+        "warnings": [],
+        "updates": 101,
+        "priceChanges": 0,
+        "games": 28,
+        "quotes": 160,
+        "transport": "HTTP · 2 second polling",
+        "region": "New Jersey",
+        "requestMs": 16.782506000017747,
+        "decodedBytes": 93228,
+        "pollMs": 2000
+      }
+    },
+    "notes": [
+      "Browser samples are client-reported estimates after two animation frames, corrected using /api/time. Inspect clock uncertainty.",
+      "DraftKings createdTime is the provider feed timestamp, not a verified trading-engine change timestamp. Cross-host clock skew can affect it.",
+      "FanDuel has no source-change timestamp in the observed price response. Full source-to-screen latency is unknown.",
+      "With 2 second polling, expected waiting time is about 1 second and nominal maximum about 2 seconds before request time, absent failures. This is an estimate, not a measured guarantee.",
+      "Live rows with n=0 mean not measured; pregame results must not be presented as live results."
+    ],
+    "measurements": {
+      "draftkings": {
+        "pregame": {
+          "acquisitionRequestMs": {
+            "n": 4,
+            "p50": 1599.03,
+            "p95": 6007.81,
+            "max": 6007.81
+          },
+          "processingMs": {
+            "n": 18,
+            "p50": 2.17,
+            "p95": 20.4,
+            "max": 20.4
+          },
+          "feedCreatedToBackendMs": {
+            "n": 14,
+            "p50": 385,
+            "p95": 741,
+            "max": 741
+          },
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 18,
+            "p50": 954,
+            "p95": 155285,
+            "max": 155285
+          }
+        },
+        "live": {
+          "acquisitionRequestMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "processingMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          }
+        }
+      },
+      "fanduel": {
+        "pregame": {
+          "acquisitionRequestMs": {
+            "n": 101,
+            "p50": 16.95,
+            "p95": 98.76,
+            "max": 396.7
+          },
+          "processingMs": {
+            "n": 101,
+            "p50": 1.84,
+            "p95": 4.73,
+            "max": 75.18
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 101,
+            "p50": 93228,
+            "p95": 93228,
+            "max": 93228
+          }
+        },
+        "live": {
+          "acquisitionRequestMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "processingMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          }
+        }
+      }
+    },
+    "viewers": 1
+  },
+  "environment": "Render Ohio; remote calibrated HTTP observer in Toronto; Chrome open on the public board",
+  "commit": "db338de",
+  "limits": [
+    "CLI timings are not browser-render measurements.",
+    "No in-game NFL validation occurred.",
+    "Snapshot acquisition duration includes Python startup and transfer; stream delivery is measured separately."
+  ]
+}

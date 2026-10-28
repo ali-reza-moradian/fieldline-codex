@@ -1,0 +1,74 @@
+{
+  "observedAt": "2026-10-28T22:42:57.844Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "commit": "db338de",
+  "environment": "Render Ohio; fresh process after deployment",
+  "startedAt": "2026-10-28T22:41:34.759Z",
+  "clients": [
+    {
+      "status": 200,
+      "revision": 63,
+      "games": 29,
+      "matched": 28,
+      "sourceStates": {
+        "draftkings": "healthy",
+        "fanduel": "healthy"
+      }
+    },
+    {
+      "status": 200,
+      "revision": 63,
+      "games": 29,
+      "matched": 28,
+      "sourceStates": {
+        "draftkings": "healthy",
+        "fanduel": "healthy"
+      }
+    }
+  ],
+  "viewers": 4,
+  "sources": {
+    "draftkings": {
+      "book": "draftkings",
+      "status": "healthy",
+      "lastConfirmedAt": 1793227375897,
+      "lastDataAt": 1793227364416,
+      "lastChangeAt": 1793227364414,
+      "staleAfterMs": 25000,
+      "error": null,
+      "warnings": [],
+      "updates": 11,
+      "priceChanges": 4,
+      "games": 29,
+      "quotes": 174,
+      "transport": "WebSocket · JSON deltas",
+      "region": "Ontario",
+      "requestMs": 2202.807141999998,
+      "decodedBytes": 954,
+      "pollMs": null
+    },
+    "fanduel": {
+      "book": "fanduel",
+      "status": "healthy",
+      "lastConfirmedAt": 1793227377380,
+      "lastDataAt": 1793227377379,
+      "lastChangeAt": null,
+      "staleAfterMs": 10000,
+      "error": null,
+      "warnings": [],
+      "updates": 42,
+      "priceChanges": 0,
+      "games": 28,
+      "quotes": 160,
+      "transport": "HTTP · 2 second polling",
+      "region": "New Jersey",
+      "requestMs": 17.064096999994945,
+      "decodedBytes": 93228,
+      "pollMs": 2000
+    }
+  },
+  "diagnosticRemoved": true,
+  "limits": [
+    "HTTP client checks confirm snapshots and source health; browser-paint and live-game timings are separate."
+  ]
+}
