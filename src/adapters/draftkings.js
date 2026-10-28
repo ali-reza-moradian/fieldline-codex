@@ -172,10 +172,11 @@ export class DraftKingsState {
 }
 
 export class DraftKings {
-  constructor(sink, { snapshotMs = 60000, socketUrl = DK_SOCKET } = {}) {
+  constructor(sink, { snapshotMs = 60000, socketUrl = DK_SOCKET, snapshotFetch = fetchDraftKingsSnapshot } = {}) {
     this.sink = sink;
     this.snapshotMs = snapshotMs;
     this.socketUrl = socketUrl;
+    this.snapshotFetch = snapshotFetch;
     this.stopped = true;
   }
   start() {
@@ -219,7 +220,7 @@ export class DraftKings {
     });
     ws.on("pong", () => {
       this.awaitingPong = false;
-      if (this.state && !this.syncing) this.sink.confirm("draftkings");
+      if (this.state) this.sink.confirm("draftkings");
     });
     ws.on("message", (raw) => {
       if (ws !== this.ws || this.stopped) return;
@@ -255,7 +256,10 @@ export class DraftKings {
             if (this.buffer.length > 10000)
               throw new Error("Stream buffer limit exceeded");
             this.buffer.push(update);
-          } else this.consume(update);
+          }
+          // A periodic snapshot must not delay prices already arriving on the
+          // stream. Keep serving the current state while buffering for its replacement.
+          if (this.state) this.consume(update);
         } else if (message.event === "unsubscribed")
           throw new Error("DraftKings subscription ended");
       } catch (error) {
@@ -296,7 +300,7 @@ export class DraftKings {
     this.syncing = true;
     const controller = (this.snapshotController = new AbortController());
     try {
-      const result = await fetchDraftKingsSnapshot({ signal: controller.signal });
+      const result = await this.snapshotFetch({ signal: controller.signal });
       if (this.stopped || ws !== this.ws || ws.readyState !== WebSocket.OPEN)
         return;
       const next = new DraftKingsState();

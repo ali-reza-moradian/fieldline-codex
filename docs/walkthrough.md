@@ -32,7 +32,9 @@ Each source has its own state and retry cycle. A failing DraftKings collector ca
 
 Retries grow farther apart after repeated failures, with a small random variation to avoid synchronized bursts. HTTP errors that include Retry-After also feed that instruction into the retry delay. The DraftKings handshake/snapshot error is preserved when the socket subsequently closes, so the useful cause remains visible.
 
-The hosted access issue is a real example: Render can subscribe to DraftKings' stream but receives HTTP 403 for the initial snapshot. A working stream alone is insufficient, because partial updates need an initial state. A second deployment in Toronto on Fly also receives HTTP 403, including for the stream handshake and public NFL page. FanDuel continues operating on both hosts. Locally both source integrations work. Do not demonstrate either hosted page as a complete two-source result until that blocker is resolved. Upgrading hosting has not been shown to fix the source-access failure.
+The hosted access issue is a real example: Render initially subscribed to DraftKings' stream but received HTTP 403 for the starting snapshot. A working stream alone was insufficient, because partial updates need an initial state. Moving to Fly in Toronto did not solve it. On Render, switching the snapshot request to a browser-compatible network client did: both sources now populate the public board. That client is a small Python helper; the app and continuous stream remain in Node. It starts a fresh anonymous session each time, so there is no copied login cookie that you must renew by hand. Errors still become stale states and use the same retry policy.
+
+Snapshots can take longer than individual stream changes. During a periodic snapshot refresh, the app now keeps processing changes against its current board while saving those changes for the replacement snapshot too. That prevents the background refresh from freezing current prices. A test deliberately holds the refresh open and verifies that a price change is still delivered immediately.
 
 ## How to talk about speed accurately
 
@@ -55,7 +57,7 @@ The saved local test captured two DraftKings changed-price rendering samples, ap
 3. Find a game present at both books. Compare moneyline, spread and total rows. Explain why different point lines are separate.
 4. Open a second tab. Both tabs share the server's collectors and receive pushed updates.
 5. Open `/api/metrics` to show source health and sample counts. A zero live sample count means “not measured.”
-6. Show the public Render page and describe its current access limitation accurately.
+6. Show the public Render page with both sources connected. Explain the snapshot transport fix, the free host's sleep limitation, and the distinction between verified pregame data and still-outstanding in-game measurements.
 
 For the remaining live-game check, observe both source pages and the board during an actual NFL game. Verify live status, suspensions and reopenings, changed prices, and changed lines. Save the measurement report with its environment, observation window and sample counts. A fixture replay can test logic but cannot replace this observation.
 

@@ -6,10 +6,12 @@ A small, continuously updating NFL board comparing DraftKings and FanDuel moneyl
 
 Deployed October 28, 2026. Both public source integrations work from the development machine in the Toronto area. The app has displayed current odds for 29 DraftKings games and 28 FanDuel games; counts and availability change over time. The default run always fetches actual source data. Test fixtures are never used as a live-data fallback.
 
-Public app (partial, FanDuel only): [fieldline-codex.onrender.com](https://fieldline-codex.onrender.com).
+Public app: [fieldline-codex.onrender.com](https://fieldline-codex.onrender.com).
 GitHub repository: [ali-reza-moradian/fieldline-codex](https://github.com/ali-reza-moradian/fieldline-codex).
 
-**Not yet submission-ready:** FanDuel is healthy on both Render (Ohio) and a Fly.io trial (Toronto), but neither host successfully acquires DraftKings odds. Render receives **403** for the initial snapshot despite an open WebSocket subscription. Fly receives **403** for the snapshot, public NFL page and WebSocket handshake. The public UI marks DraftKings unavailable and continues serving FanDuel. Both sources were rechecked successfully locally after the Render failure. Resolving hosted access, actual in-game NFL validation and complete source-to-screen measurement remain outstanding. A connected WebSocket, passing fixture tests, or a fast HTTP request is not proof of measured live-game latency.
+**Both sources now work fully in the cloud on Render.** The public board was checked with 29 DraftKings games, 28 FanDuel games and 28 matched games. DraftKings' snapshot returned HTTP 403 through Node's HTTP client on this host. A browser-compatible TLS/HTTP client fetched the same public snapshot successfully from the same Render runtime; the native Node WebSocket supplies subsequent changes. The collector needs no development-machine relay or personal sportsbook session. The historical failure reports below are retained as evidence of the investigation.
+
+**Still required before claiming the whole brief is verified:** actual in-game NFL validation and complete per-source change-to-screen measurement. A connected WebSocket, passing fixture tests, or a fast HTTP request is not proof of measured live-game latency. The host's free-tier sleep behavior also applies.
 
 See the [plain-English walkthrough](docs/walkthrough.md) for the design, a demo sequence and questions to practice.
 
@@ -32,7 +34,17 @@ npm run benchmark -- http://localhost:3210 60
 
 `HOST` defaults to `127.0.0.1`; `PORT` defaults to `3210`. Set `HOST=0.0.0.0` in a hosting environment. There are no account credentials or copied browser cookies. `npm start` uses the operating system's certificate authorities; TLS verification remains enabled.
 
-The frontend is plain JavaScript and CSS. The backend uses Node's HTTP server and the `ws` package. There is no build step. The lockfile pins dependency versions.
+The frontend is plain JavaScript and CSS. The backend uses Node's HTTP server and the `ws` package. On Render, a small Python subprocess using pinned `curl_cffi` fetches DraftKings' initial and periodic HTTP snapshots. Streaming updates stay in Node. There is no frontend build step.
+
+Render installs the optional Python transport automatically during `npm ci` into an isolated `.venv`. To use the same transport locally, install Python 3.10+ and run:
+
+```sh
+INSTALL_CURL_TRANSPORT=1 npm ci
+DK_HTTP_TRANSPORT=curl npm start
+npm test
+```
+
+`DK_HTTP_TRANSPORT=native` selects Node's HTTP client; `curl` selects the compatible client. Render defaults to `curl`; other native Node installations default to `native`. The optional HTTP integration test runs when `.venv` is installed; otherwise it is explicitly skipped. With the transport installed, all 24 tests pass, including actual local HTTP responses, rate limits, invalid JSON, cancellation and uninterrupted stream delivery during a slow snapshot refresh.
 
 ## Architecture
 
@@ -62,11 +74,13 @@ Chrome DevTools showed an initial `sportscontent/controldata/league/leagueSubcat
 - Initial full JSON snapshot: events, markets and selections.
 - Persistent stream: add/change/remove deltas. Selection changes often omit `marketId` and side, so changes merge into existing objects. Deleting an event removes its markets and selections.
 - The browser used MessagePack. Both MessagePack and JSON subscription handshakes were tested. The implemented JSON subscription received real price-only changes and event changes. JSON keeps the partial-update model inspectable and avoids an extra binary-to-domain mapping layer. The larger payload is a tradeoff; no claim is made that JSON is faster than MessagePack.
-- Subscribe before fetching the snapshot and buffer updates during acquisition. Apply buffered deltas before publishing the new state. Refresh the snapshot every 60 seconds and after reconnects. The source provides no atomic snapshot/stream cursor in the inspected path, so bootstrap consistency across independently cached snapshot and streaming data is a remaining limitation.
+- Subscribe before fetching the snapshot and buffer updates during acquisition. Apply buffered deltas before publishing the new state. Refresh the snapshot every 60 seconds and after reconnects. During a periodic refresh, continue applying incoming stream changes to the current board while also buffering them for the replacement snapshot; a slow HTTP refresh must not hold up current prices. The source provides no atomic snapshot/stream cursor in the inspected path, so bootstrap consistency across independently cached snapshot and streaming data is a remaining limitation.
 - Ping every 10 seconds; a missed pong triggers reconnect. A source is excluded from best-price calculations after 25 seconds without a connection confirmation, or immediately after a detected failure. A pong confirms the connection, not the age of an unchanged quote.
 - Unknown IDs in partial changes trigger a fresh connection and snapshot rather than silently dropping the change. Unexpected message shapes make the source stale.
 
 The stream's literal `default-token` is part of the logged-out public subscription, not a user's JWT. No personal token is stored. Public endpoint paths and client-version fields may change and need maintenance.
+
+On Render, the snapshot subprocess uses the Chrome TLS/HTTP profile supplied by pinned [`curl_cffi`](https://curl-cffi.readthedocs.io/en/latest/impersonate/_index.html). Each invocation has a fresh anonymous session, verifies certificates, caps the decoded body at 8 MiB, and exits after the single request. Node imposes a 12-second process timeout and cancels it when the collector stops or disconnects. HTTP status and `Retry-After` feed the existing source retry policy. A process per minute is a simplicity tradeoff: acquisition timing includes Python startup and decoding, so those figures are not pure network time. The continuous WebSocket path avoids this subprocess cost on each price change. No logged-in session or expiring copied browser cookie is required.
 
 ## FanDuel acquisition
 
@@ -113,13 +127,15 @@ A [Render observation](docs/measurements/render-access-check.json) saved at 4:59
 
 A [Fly Toronto observation](docs/measurements/fly-access-check.json) at 6:15:47 p.m. records 21 FanDuel pregame price requests after a cold start: request p50 / p95 **39.59 / 77.72 ms**, processing **1.81 / 4.02 ms**. Two HTTP stream clients each received a snapshot containing 28 games. DraftKings again had zero valid acquisition samples. No changed-price rendering or in-game samples were captured. The trial Machine stopped five minutes after its first start and woke for a subsequent request; the saved report separates the initial empty cold-start state from the populated board.
 
+The [first working two-source Render observation](docs/measurements/render-two-source-pregame.json), 6:35:16–6:37:16 p.m., received **two actual DraftKings price-change events** through the public SSE stream. Both sources remained healthy with 29/28 games. Backend metrics accumulated since startup included four DraftKings snapshots (acquisition p50/p95 1,612.04/6,206.23 ms, including Python startup and a cold first acquisition) and 96 FanDuel requests (16.66/92.08 ms). No FanDuel price change occurred in that observation. The remote CLI's uncalibrated clock produced negative backend-to-client values; those latency values are invalid and are retained only as diagnostic evidence. The benchmark now calibrates its clock against `/api/time` before observing. Neither browser-paint nor live-game latency was established by this run. The subsequent refresh fix prevents slow snapshots from delaying incoming stream prices.
+
 Measurement instrumentation:
 
 1. Record source request duration, response receipt time, decoded bytes and store-processing time.
 2. For DraftKings deltas, retain the source's `createdTime` and WebSocket publication time. These are feed timestamps, not verified trading-engine change timestamps. Comparisons with local time depend on clock synchronization.
 3. Send receive/send times with each changed-game event. A foreground browser reports an estimate after two animation frames for changed games in view. Five `/api/time` probes select the lowest-RTT clock-offset estimate, refreshed every minute. Half the RTT is reported as a lower bound on timing uncertainty. Two animation frames are a rendering proxy, not hardware display instrumentation.
 4. `/api/metrics` returns counts, p50/p95/max and separate pregame/live rows. Client telemetry is diagnostic and client-reported, not trusted billing or security data. The store history is capped at 10,000 updates and browser samples at 5,000.
-5. `npm run benchmark -- URL 60` writes a report under ignored `data/`. CLI receive latency is explicitly separate from browser paint latency; remote CLI measurements require synchronized clocks. HTTP acquisition timing is not bookmaker-change latency.
+5. `npm run benchmark -- URL 60` writes a report under ignored `data/`. It calibrates the CLI clock with five `/api/time` probes, selecting the lowest round trip and reporting at least half that round trip as uncertainty. CLI receive latency is explicitly separate from browser paint latency; provider-clock uncertainty remains. HTTP acquisition timing is not bookmaker-change latency.
 
 Latency choices: reuse fetch connections; maintain DraftKings' push connection; fetch only main markets; poll FanDuel's price endpoint; send changed games immediately without a debounce window; use one shared collector per book; serialize fanout once. Game-level patches are larger than individual quote deltas but simplify browser consistency. A single region near the observed North American feeds is a sensible first deployment, but placement must be measured, not assumed optimal.
 
@@ -127,10 +143,11 @@ Latency choices: reuse fetch connections; maintain DraftKings' push connection; 
 
 - The FanDuel HTML page returned HTTP 403 to a plain server request while the normal browser loaded it. Its public discovery API returned HTTP 400 without the page's `X-Sportsbook-Region: NJ` header and HTTP 200 with it. The price endpoint worked without account cookies.
 - DraftKings' HTML loaded directly. Its snapshot endpoint initially timed out or returned HTTP 403 to an incomplete request. A Node request with the public page's ordinary client, origin and region metadata returned HTTP 200. The WebSocket subscription worked without a personal session.
-- On Render's Ohio service, FanDuel discovery and prices work, but DraftKings' initial snapshot returns HTTP 403. Its WebSocket connects and acknowledges the subscription. A [bounded runtime diagnostic](docs/measurements/render-access-diagnostic.json) at 5:33 p.m. Toronto time found that the public NFL HTML page returned 200 and selected Illinois for that connection. The page-advertised Illinois snapshot also returned 403, with `AkamaiGHost` as the response server. This rules out fixing the observed failure simply by following the page-selected regional configuration; it does not establish the provider's exact blocking rule. Enabling or omitting the stream's `initialData` option in local probes did not yield a complete snapshot; it is not an established replacement for HTTP bootstrap. The snapshot denial remains unresolved. Reconnect errors preserve the original cause instead of replacing it with a generic disconnect message.
+- Initially on Render's Ohio service, FanDuel discovery and prices worked, but DraftKings' initial snapshot returned HTTP 403 through Node. Its WebSocket connected and acknowledged the subscription. A [bounded runtime diagnostic](docs/measurements/render-access-diagnostic.json) at 5:33 p.m. Toronto time found that the public NFL HTML page returned 200 and selected Illinois for that connection. The page-advertised Illinois snapshot also returned 403, with `AkamaiGHost` as the response server. Following the page-selected region alone did not fix it. Enabling or omitting the stream's `initialData` option in local probes did not yield a complete snapshot. Reconnect errors preserve the original cause instead of replacing it with a generic disconnect message.
 - No CAPTCHA solver, proxy rotation, personal account credentials, TLS-verification bypass or copied anti-bot cookies are used. There is no hidden relay through the development laptop or fixture fallback on the hosted site.
 - An [isolated cloud browser check](docs/measurements/render-browser-check.json), 5:49–5:51 p.m. Toronto time, launched a fresh headless Chromium session in the Render runtime. The public NFL page displayed `Access Denied`; no successful snapshot was observed. The optional diagnostic is retained under `diagnostics/`, separately from the app dependencies. Its temporary startup hook and result endpoint were removed after the observation. It is not a working acquisition path.
 - A separate [Fly.io Toronto trial](docs/measurements/fly-access-check.json) also failed to acquire DraftKings. A bounded command inside that Machine received HTTP 403 for both the configured Ontario snapshot and the public NFL HTML page, with `AkamaiGHost` response headers. The collector's WebSocket handshake separately received HTTP 403. Moving the same integration to Toronto did not resolve the observed access failure. A paid hosting upgrade has not been established as a remedy.
+- **Working Render solution:** a [transport comparison](docs/measurements/render-transport-check.json) at 6:26 p.m. Toronto time fetched 29 events, 87 markets and 174 selections through `curl_cffi`, using the same Ontario snapshot and no user cookies. Its WebSocket probe also subscribed successfully. This led to the small snapshot transport described above. The native probe rows in that diagnostic contain a clearly marked reporting bug; they are not used as HTTP evidence. Earlier recorded Node HTTP 403s and the functioning collector verify the before/after behavior. The precise combination of TLS, HTTP and headers responsible is not independently isolated. The same compatible client still received 403 on Fly; host choice matters too.
 - No HTTP 429 was observed during the initial checks; retry behavior is implemented and its delay policy is tested, not claimed as a measured rate-limit recovery incident.
 
 ## Deployment
@@ -142,15 +159,15 @@ docker build -t fieldline .
 docker run --rm -p 3210:3210 fieldline
 ```
 
-The Docker image built successfully using Fly's remote builder and ran on a single 512 MB Machine in Toronto on October 28. The Render service uses its native Node runtime, also with one instance. The health check confirms the server is running; inspect both source states and the actual board separately before declaring the integration healthy. An HTTP 200 from `/healthz` alone does not imply that both collectors work.
+The current Docker image, including the Python snapshot transport, built successfully using Fly's remote builder (105 MB); this build did not launch another service. Render runs its native Node/Python environment with one instance. The health check confirms the server is running; inspect both source states and the actual board separately before declaring the integration healthy. An HTTP 200 from `/healthz` alone does not imply that both collectors work.
 
-Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, Node 24+, health path `/healthz`. The service uses the free plan in Ohio. It was created from the public Git repository; deployments are currently triggered manually. Railway deployment has not been verified.
+Render settings: build `npm ci --omit=dev` (its install hook prepares the pinned Python transport), start `npm start`, `HOST=0.0.0.0`, Node 24+, Python 3.10+, health path `/healthz`. The service uses the free plan in Ohio. It was created from the public Git repository; deployments are currently triggered manually. Railway deployment has not been verified.
 
 Render's free services can sleep after 15 minutes without inbound traffic and can take about a minute to wake. They can also be suspended for unusually high outbound traffic. These limits affect a continuously ingesting demonstration. Do not present a sleeping free service as an always-on production design. See [Render's free-service limitations](https://render.com/docs/free) and [Node deployment instructions](https://render.com/docs/deploy-node-express-app).
 
-`fly.toml` configures the tested single 512 MB instance in Toronto. The trial address is [fieldline-codex.fly.dev](https://fieldline-codex.fly.dev); it is a partial deployment with the same unresolved DraftKings access requirement. Fly's [trial](https://fly.io/docs/about/free-trial/) is limited to two total VM hours or seven days, whichever comes first, and trial machines can stop after five minutes. That stop was observed during this check. It is suitable for a bounded access check, not continuous hosting through review. No payment method or paid upgrade was added as part of this work. Both trial hosts remain unsuitable as the final two-source submission.
+`fly.toml` preserves the tested single 512 MB Toronto configuration. The Fly trial did not resolve DraftKings access and is not the submission deployment; use the Render URL above. Fly's [trial](https://fly.io/docs/about/free-trial/) is limited to two total VM hours or seven days, whichever comes first, and trial machines can stop after five minutes. That stop was observed during the check. No payment method or paid upgrade was added as part of this work.
 
-Before submission: resolve DraftKings access from the hosting environment, verify both feeds and SSE in a separate browser, collect hosted pregame and actual in-game observations, and update this status section with the resulting evidence.
+Before submission: collect actual in-game observations and per-source rendering measurements, recheck both public feeds, and review the walkthrough. Both hosted source indicators and the Best Price / DraftKings / FanDuel views have been checked in Chrome.
 
 ## With more time
 

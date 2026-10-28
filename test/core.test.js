@@ -20,6 +20,7 @@ import { OddsStore } from "../src/store.js";
 import { retryDelay, UpstreamError } from "../src/http.js";
 import { Metrics, distribution } from "../src/metrics.js";
 import { createApp } from "../src/server.js";
+import { WebSocketServer } from "ws";
 
 test("DraftKings preserves an HTTP handshake failure after the socket closes", async () => {
   const upstream = createServer((req, res) => res.writeHead(403).end());
@@ -42,6 +43,50 @@ test("DraftKings preserves an HTTP handshake failure after the socket closes", a
 
 const fixture = (name) =>
   JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url)));
+test("DraftKings delivers stream changes during a slow resnapshot and replays them into the replacement", async () => {
+  const upstream = new WebSocketServer({ port: 0, host: "127.0.0.1" });
+  await once(upstream, "listening");
+  let socket, subscriptionId, release;
+  upstream.on("connection", (client) => {
+    socket = client;
+    client.on("message", (raw) => {
+      subscriptionId = JSON.parse(raw).id;
+      client.send(JSON.stringify({ id: subscriptionId, event: "subscribed" }));
+    });
+  });
+  let requests = 0;
+  const snapshotFetch = async () => {
+    if (++requests > 1) await new Promise((resolve) => { release = resolve; });
+    return { data: fixture("draftkings-snapshot"), receivedAt: Date.now(), durationMs: 1, decodedBytes: 1000 };
+  };
+  const store = new OddsStore();
+  const collector = new DraftKings(store, { socketUrl: `ws://127.0.0.1:${upstream.address().port}`, snapshotFetch });
+  try {
+    const initial = once(store, "message");
+    collector.start();
+    await initial;
+    assert.equal(store.sources.draftkings.status, "healthy");
+    const refresh = collector.resnapshot(collector.ws);
+    assert.equal(collector.syncing, true);
+    const delta = fixture("draftkings-delta");
+    delta.id = subscriptionId;
+    const pushed = once(store, "message", { signal: AbortSignal.timeout(1000) });
+    socket.send(JSON.stringify(delta));
+    await pushed;
+    const selectionId = delta.data.data.change.selections[0].id;
+    const price = () => store.datasets.draftkings.quotes.find((q) => q.sourceId === selectionId).american;
+    assert.equal(price(), -520, "the browser-facing store changes before the slow snapshot finishes");
+    assert.equal(collector.syncing, true);
+    release();
+    await refresh;
+    assert.equal(price(), -520, "the replacement snapshot cannot undo the buffered price change");
+  } finally {
+    release?.();
+    collector.stop();
+    for (const client of upstream.clients) client.terminate();
+    await new Promise((resolve) => upstream.close(resolve));
+  }
+});
 const dk = () => {
   const state = new DraftKingsState();
   state.replace(fixture("draftkings-snapshot"));
