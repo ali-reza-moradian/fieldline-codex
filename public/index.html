@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fieldline · NFL Odds</title>
+    <meta
+      name="description"
+      content="Live NFL odds comparison from DraftKings and FanDuel, with transparent source status and comparable lines."
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="/" aria-label="Fieldline home"
+        ><span class="brand-icon">↗</span> fieldline<span class="brand-dot"
+          >.</span
+        ></a
+      >
+      <div class="top-meta">
+        <span class="league-tag">NFL</span
+        ><span id="connection" role="status">Connecting…</span>
+      </div>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <div class="eyebrow">THE ODDS, SIDE BY SIDE</div>
+          <h1>NFL <span>odds board.</span></h1>
+          <p>DraftKings and FanDuel. One board, always updating.</p>
+        </div>
+        <div class="intro-stat">
+          <strong id="game-count">—</strong><span>games on the board</span
+          ><small>Full game · Includes overtime</small>
+        </div>
+      </section>
+      <section class="source-grid" aria-label="Source health">
+        <article class="source-card" id="draftkings-status"></article>
+        <article class="source-card" id="fanduel-status"></article>
+      </section>
+      <section class="board-section">
+        <div class="board-tools">
+          <div class="view-switch" role="group" aria-label="Odds source">
+            <button data-view="best" aria-pressed="true">Best Price</button
+            ><button data-view="draftkings" aria-pressed="false">
+              DraftKings</button
+            ><button data-view="fanduel" aria-pressed="false">FanDuel</button>
+          </div>
+          <div class="filters">
+            <label class="search"
+              ><span aria-hidden="true">⌕</span
+              ><input
+                id="search"
+                type="search"
+                placeholder="Find a team"
+                aria-label="Find a team" /></label
+            ><select id="game-filter" aria-label="Game status">
+              <option value="all">All games</option>
+              <option value="pregame">Pregame</option>
+              <option value="live">Live now</option>
+            </select>
+          </div>
+        </div>
+        <div class="board-caption">
+          <span
+            ><span class="green-dot"></span> Best price compares the same
+            line</span
+          ><button
+            id="policy-toggle"
+            aria-expanded="false"
+            aria-controls="policy"
+          >
+            How comparison works <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <aside id="policy" hidden>
+          <strong>A fair comparison needs the same bet.</strong>
+          <p>
+            For the same game, period, side and point line, the highest decimal
+            odds win. A spread of −3 and −3.5 are shown separately, even when
+            one has a larger payout. Ties show both books. Stale or suspended
+            prices never win.
+          </p>
+          <p>
+            These feeds represent DraftKings Ontario and FanDuel New Jersey.
+            Prices and availability can vary by region.
+          </p>
+        </aside>
+        <div class="table-head" aria-hidden="true">
+          <span>MATCHUP / TORONTO TIME</span><span>MONEYLINE</span
+          ><span>SPREAD</span><span>TOTAL</span>
+        </div>
+        <div id="board" aria-label="NFL odds comparison">
+          <div class="empty-state">
+            <span class="loading-line"></span>
+            <h2>Connecting to the books</h2>
+            <p>Current odds will appear as each source responds.</p>
+          </div>
+        </div>
+        <div id="board-summary" class="board-summary"></div>
+      </section>
+      <section class="measurement">
+        <div>
+          <div class="eyebrow">BUILT TO BE MEASURED</div>
+          <h2>Freshness you can see.</h2>
+          <p>
+            Source checks confirm the feed is responding. A price can remain
+            unchanged while the connection is healthy.
+          </p>
+        </div>
+        <div class="measurement-values">
+          <div>
+            <span>Last backend → screen estimate</span
+            ><strong id="paint-latency">Awaiting a change</strong
+            ><small id="clock-note">Measuring clock offset…</small>
+          </div>
+          <a href="/api/metrics" target="_blank" rel="noopener"
+            >View measurement data ↗</a
+          >
+        </div>
+      </section>
+      <footer>
+        <span>FIELDLINE / BETSTAMP TAKE-HOME</span
+        ><span>Built by Alireza Moradian · NFL comparison prototype</span>
+      </footer>
+    </main>
+  </body>
+</html>

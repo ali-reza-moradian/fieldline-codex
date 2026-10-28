@@ -1,0 +1,20 @@
+{
+  "name": "betstamp-nfl-odds",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Live NFL odds comparison from DraftKings and FanDuel",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node --use-system-ca src/server.js",
+    "dev": "node --use-system-ca --watch src/server.js",
+    "test": "node --test",
+    "probe": "node --use-system-ca scripts/probe.js",
+    "benchmark": "node --use-system-ca scripts/benchmark.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
