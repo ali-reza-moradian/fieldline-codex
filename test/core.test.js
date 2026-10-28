@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { createServer } from "node:http";
+import { once } from "node:events";
 import {
   team,
   makeGame,
@@ -9,7 +11,7 @@ import {
   americanOdds,
   decimalOdds,
 } from "../src/model.js";
-import { DraftKingsState } from "../src/adapters/draftkings.js";
+import { DraftKings, DraftKingsState } from "../src/adapters/draftkings.js";
 import {
   normalizeFanDuel,
   selectFanDuelMarkets,
@@ -18,6 +20,25 @@ import { OddsStore } from "../src/store.js";
 import { retryDelay, UpstreamError } from "../src/http.js";
 import { Metrics, distribution } from "../src/metrics.js";
 import { createApp } from "../src/server.js";
+
+test("DraftKings preserves an HTTP handshake failure after the socket closes", async () => {
+  const upstream = createServer((req, res) => res.writeHead(403).end());
+  upstream.listen(0, "127.0.0.1");
+  await once(upstream, "listening");
+  const store = new OddsStore();
+  const collector = new DraftKings(store, {
+    socketUrl: `ws://127.0.0.1:${upstream.address().port}`,
+  });
+  try {
+    collector.start();
+    await new Promise((resolve) => collector.ws.once("close", resolve));
+    assert.equal(store.sources.draftkings.status, "stale");
+    assert.match(store.sources.draftkings.error, /Unexpected server response: 403/);
+  } finally {
+    collector.stop();
+    await new Promise((resolve) => upstream.close(resolve));
+  }
+});
 
 const fixture = (name) =>
   JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url)));

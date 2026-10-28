@@ -169,9 +169,10 @@ export class DraftKingsState {
 }
 
 export class DraftKings {
-  constructor(sink, { snapshotMs = 60000 } = {}) {
+  constructor(sink, { snapshotMs = 60000, socketUrl = DK_SOCKET } = {}) {
     this.sink = sink;
     this.snapshotMs = snapshotMs;
+    this.socketUrl = socketUrl;
     this.stopped = true;
   }
   start() {
@@ -187,7 +188,7 @@ export class DraftKings {
   }
   connect() {
     if (this.stopped) return;
-    const ws = (this.ws = new WebSocket(DK_SOCKET, {
+    const ws = (this.ws = new WebSocket(this.socketUrl, {
       handshakeTimeout: 10000,
       maxPayload: 8 * 1024 * 1024,
     }));
@@ -201,8 +202,8 @@ export class DraftKings {
       ws.send(JSON.stringify(subscription(id)));
       this.heartbeat = setInterval(() => {
         if (this.awaitingPong || !this.subscribed) {
-          this.sink.failure(
-            "draftkings",
+          this.fail(
+            ws,
             new Error("Stream heartbeat or subscription timeout"),
           );
           ws.terminate();
@@ -254,12 +255,12 @@ export class DraftKings {
         } else if (message.event === "unsubscribed")
           throw new Error("DraftKings subscription ended");
       } catch (error) {
-        this.sink.failure("draftkings", error);
+        this.fail(ws, error);
         ws.terminate();
       }
     });
     ws.on("error", (error) => {
-      if (!this.stopped) this.sink.failure("draftkings", error);
+      if (!this.stopped) this.fail(ws, error);
     });
     ws.on("close", () => {
       clearInterval(this.heartbeat);
@@ -267,13 +268,19 @@ export class DraftKings {
       if (this.stopped || ws !== this.ws) return;
       this.sink.failure(
         "draftkings",
-        new Error("Stream disconnected; reconnecting and rebuilding state"),
+        ws.failureReason ??
+          new Error("Stream disconnected; reconnecting and rebuilding state"),
       );
       this.retry = setTimeout(
         () => this.connect(),
         retryDelay((this.failures = (this.failures || 0) + 1)),
       );
     });
+  }
+  fail(ws, error) {
+    // A subsequent close event must not replace the actionable handshake/snapshot error.
+    ws.failureReason = error;
+    this.sink.failure("draftkings", error);
   }
   consume(update) {
     this.state.apply(update.delta);
@@ -300,7 +307,7 @@ export class DraftKings {
       });
     } catch (error) {
       if (this.stopped || ws !== this.ws) return;
-      this.sink.failure("draftkings", error);
+      this.fail(ws, error);
       ws.terminate();
     } finally {
       if (ws === this.ws) this.syncing = false;
