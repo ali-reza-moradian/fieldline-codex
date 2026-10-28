@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: fieldline-nfl-odds
+    name: fieldline-codex
     runtime: node
     plan: free
     region: ohio
