@@ -6,10 +6,10 @@ A small, continuously updating NFL board comparing DraftKings and FanDuel moneyl
 
 Deployed October 28, 2026. Both public source integrations work from the development machine in the Toronto area. The app has displayed current odds for 29 DraftKings games and 28 FanDuel games; counts and availability change over time. The default run always fetches actual source data. Test fixtures are never used as a live-data fallback.
 
-Public app: [fieldline-codex.onrender.com](https://fieldline-codex.onrender.com).
+Public app (partial, FanDuel only): [fieldline-codex.onrender.com](https://fieldline-codex.onrender.com).
 GitHub repository: [ali-reza-moradian/fieldline-codex](https://github.com/ali-reza-moradian/fieldline-codex).
 
-**Not yet submission-ready:** FanDuel is healthy on Render, but the DraftKings initial HTTP snapshot returns **403** from that host. Its WebSocket subscription opens, but a delta stream cannot reconstruct the full board without a valid initial state. The public UI marks DraftKings unavailable and continues serving FanDuel. Both sources were rechecked successfully locally after this hosted failure. Resolving hosted access, actual in-game NFL validation and complete source-to-screen measurement remain outstanding. A connected WebSocket, passing fixture tests, or a fast HTTP request is not proof of measured live-game latency.
+**Not yet submission-ready:** FanDuel is healthy on both Render (Ohio) and a Fly.io trial (Toronto), but neither host successfully acquires DraftKings odds. Render receives **403** for the initial snapshot despite an open WebSocket subscription. Fly receives **403** for the snapshot, public NFL page and WebSocket handshake. The public UI marks DraftKings unavailable and continues serving FanDuel. Both sources were rechecked successfully locally after the Render failure. Resolving hosted access, actual in-game NFL validation and complete source-to-screen measurement remain outstanding. A connected WebSocket, passing fixture tests, or a fast HTTP request is not proof of measured live-game latency.
 
 See the [plain-English walkthrough](docs/walkthrough.md) for the design, a demo sequence and questions to practice.
 
@@ -111,6 +111,8 @@ A [subsequent local observation](docs/measurements/local-pregame-changes.json), 
 
 A [Render observation](docs/measurements/render-access-check.json) saved at 4:59:29 p.m. Toronto time records FanDuel request p50 / p95 of **16.38 / 30.56 ms** and processing p50 / p95 of **1.28 / 2.46 ms**, with 207 samples accumulated since the process started at 4:52:36 p.m. The separate CLI observation ran from 4:58:29 to 4:59:29 p.m. and received no changed-price events. DraftKings had zero hosted acquisition samples because its snapshot was denied. These figures measure FanDuel request/processing time, not source-change-to-screen latency.
 
+A [Fly Toronto observation](docs/measurements/fly-access-check.json) at 6:15:47 p.m. records 21 FanDuel pregame price requests after a cold start: request p50 / p95 **39.59 / 77.72 ms**, processing **1.81 / 4.02 ms**. Two HTTP stream clients each received a snapshot containing 28 games. DraftKings again had zero valid acquisition samples. No changed-price rendering or in-game samples were captured. The trial Machine stopped five minutes after its first start and woke for a subsequent request; the saved report separates the initial empty cold-start state from the populated board.
+
 Measurement instrumentation:
 
 1. Record source request duration, response receipt time, decoded bytes and store-processing time.
@@ -128,24 +130,25 @@ Latency choices: reuse fetch connections; maintain DraftKings' push connection; 
 - On Render's Ohio service, FanDuel discovery and prices work, but DraftKings' initial snapshot returns HTTP 403. Its WebSocket connects and acknowledges the subscription. A [bounded runtime diagnostic](docs/measurements/render-access-diagnostic.json) at 5:33 p.m. Toronto time found that the public NFL HTML page returned 200 and selected Illinois for that connection. The page-advertised Illinois snapshot also returned 403, with `AkamaiGHost` as the response server. This rules out fixing the observed failure simply by following the page-selected regional configuration; it does not establish the provider's exact blocking rule. Enabling or omitting the stream's `initialData` option in local probes did not yield a complete snapshot; it is not an established replacement for HTTP bootstrap. The snapshot denial remains unresolved. Reconnect errors preserve the original cause instead of replacing it with a generic disconnect message.
 - No CAPTCHA solver, proxy rotation, personal account credentials, TLS-verification bypass or copied anti-bot cookies are used. There is no hidden relay through the development laptop or fixture fallback on the hosted site.
 - An [isolated cloud browser check](docs/measurements/render-browser-check.json), 5:49–5:51 p.m. Toronto time, launched a fresh headless Chromium session in the Render runtime. The public NFL page displayed `Access Denied`; no successful snapshot was observed. The optional diagnostic is retained under `diagnostics/`, separately from the app dependencies. Its temporary startup hook and result endpoint were removed after the observation. It is not a working acquisition path.
+- A separate [Fly.io Toronto trial](docs/measurements/fly-access-check.json) also failed to acquire DraftKings. A bounded command inside that Machine received HTTP 403 for both the configured Ontario snapshot and the public NFL HTML page, with `AkamaiGHost` response headers. The collector's WebSocket handshake separately received HTTP 403. Moving the same integration to Toronto did not resolve the observed access failure. A paid hosting upgrade has not been established as a remedy.
 - No HTTP 429 was observed during the initial checks; retry behavior is implemented and its delay policy is tested, not claimed as a measured rate-limit recovery incident.
 
 ## Deployment
 
-`Dockerfile`, `railway.json` and `render.yaml` are included. For Docker:
+`Dockerfile`, `fly.toml`, `railway.json` and `render.yaml` are included. For Docker:
 
 ```sh
 docker build -t fieldline .
 docker run --rm -p 3210:3210 fieldline
 ```
 
-The Docker build has not been executed in the initial local verification. The public app runs on Render in a dedicated service for this repository, with one instance. The health check confirms the server is running; inspect both source states and the actual board separately before declaring the integration healthy. An HTTP 200 from `/healthz` alone does not imply that both collectors work.
+The Docker image built successfully using Fly's remote builder and ran on a single 512 MB Machine in Toronto on October 28. The Render service uses its native Node runtime, also with one instance. The health check confirms the server is running; inspect both source states and the actual board separately before declaring the integration healthy. An HTTP 200 from `/healthz` alone does not imply that both collectors work.
 
-Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, Node 24+, health path `/healthz`. The service uses the free plan in Ohio. It was created from the public Git repository; deployments are currently triggered manually. The Docker image and `railway.json` remain portable alternatives, but neither alternative host has been verified.
+Render settings: build `npm ci --omit=dev`, start `npm start`, `HOST=0.0.0.0`, Node 24+, health path `/healthz`. The service uses the free plan in Ohio. It was created from the public Git repository; deployments are currently triggered manually. Railway deployment has not been verified.
 
 Render's free services can sleep after 15 minutes without inbound traffic and can take about a minute to wake. They can also be suspended for unusually high outbound traffic. These limits affect a continuously ingesting demonstration. Do not present a sleeping free service as an always-on production design. See [Render's free-service limitations](https://render.com/docs/free) and [Node deployment instructions](https://render.com/docs/deploy-node-express-app).
 
-`fly.toml` prepares a single 512 MB instance in Toronto for an alternative access test using the same Docker image. It has not yet been deployed or proven to reach DraftKings. Fly's [trial](https://fly.io/docs/about/free-trial/) is limited to two total VM hours or seven days, whichever comes first, and trial machines can stop after five minutes. It is suitable for a bounded access check, not a promise of continuous hosting through review. No paid hosting plan has been activated.
+`fly.toml` configures the tested single 512 MB instance in Toronto. The trial address is [fieldline-codex.fly.dev](https://fieldline-codex.fly.dev); it is a partial deployment with the same unresolved DraftKings access requirement. Fly's [trial](https://fly.io/docs/about/free-trial/) is limited to two total VM hours or seven days, whichever comes first, and trial machines can stop after five minutes. That stop was observed during this check. It is suitable for a bounded access check, not continuous hosting through review. No payment method or paid upgrade was added as part of this work. Both trial hosts remain unsuitable as the final two-source submission.
 
 Before submission: resolve DraftKings access from the hosting environment, verify both feeds and SSE in a separate browser, collect hosted pregame and actual in-game observations, and update this status section with the resulting evidence.
 

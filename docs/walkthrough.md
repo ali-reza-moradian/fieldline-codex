@@ -32,7 +32,7 @@ Each source has its own state and retry cycle. A failing DraftKings collector ca
 
 Retries grow farther apart after repeated failures, with a small random variation to avoid synchronized bursts. HTTP errors that include Retry-After also feed that instruction into the retry delay. The DraftKings handshake/snapshot error is preserved when the socket subsequently closes, so the useful cause remains visible.
 
-The hosted access issue is a real example: Render can subscribe to DraftKings' stream but receives HTTP 403 for the initial snapshot. A working stream alone is insufficient, because partial updates need an initial state. FanDuel continues operating. Locally both source integrations work. Do not demonstrate the hosted page as a complete two-source result until that blocker is resolved.
+The hosted access issue is a real example: Render can subscribe to DraftKings' stream but receives HTTP 403 for the initial snapshot. A working stream alone is insufficient, because partial updates need an initial state. A second deployment in Toronto on Fly also receives HTTP 403, including for the stream handshake and public NFL page. FanDuel continues operating on both hosts. Locally both source integrations work. Do not demonstrate either hosted page as a complete two-source result until that blocker is resolved. Upgrading hosting has not been shown to fix the source-access failure.
 
 ## How to talk about speed accurately
 

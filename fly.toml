@@ -1,4 +1,4 @@
-# Prepared for a bounded Toronto-hosted access trial. Not yet a verified deployment.
+# Toronto trial deployed successfully; FanDuel works, DraftKings returns HTTP 403.
 # Trial machines can stop after five minutes and have a two-hour total runtime limit.
 app = "fieldline-codex"
 primary_region = "yyz"
