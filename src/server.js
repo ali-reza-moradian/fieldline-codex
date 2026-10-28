@@ -70,12 +70,6 @@ export function createApp({
         return json(200, store.snapshot());
       if (req.method === "GET" && url.pathname === "/api/time")
         return json(200, { now: Date.now() });
-      if (req.method === "GET" && url.pathname === "/api/access-check" && process.env.RENDER) {
-        try {
-          const result = await readFile(new URL("../data/cloud-access-check.json", import.meta.url), "utf8");
-          return json(200, JSON.parse(result));
-        } catch { return json(404, { error: "No access diagnostic recorded" }); }
-      }
       if (req.method === "GET" && url.pathname === "/api/metrics")
         return json(200, {
           ...metrics.report(store.history, store.sources),

@@ -1,0 +1,19 @@
+[
+  {
+    "diagnostic": "browser-access",
+    "at": "2026-10-28T21:49:17.318Z",
+    "phase": "launching"
+  },
+  {
+    "diagnostic": "browser-access",
+    "at": "2026-10-28T21:49:37.117Z",
+    "phase": "page-loaded",
+    "title": "Access Denied"
+  },
+  {
+    "diagnostic": "browser-access",
+    "at": "2026-10-28T21:51:06.619Z",
+    "result": "no-successful-snapshot",
+    "statuses": []
+  }
+]
