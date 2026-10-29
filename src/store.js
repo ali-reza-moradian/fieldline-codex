@@ -36,7 +36,7 @@ export class OddsStore extends EventEmitter {
             book === "draftkings"
               ? "WebSocket · JSON deltas"
               : "Connecting live feed · polling backup",
-          region: book === "draftkings" ? "Ontario" : "New Jersey",
+          region: "Ontario",
         },
       ]),
     );

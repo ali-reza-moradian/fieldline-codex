@@ -82,7 +82,8 @@ export function createApp({
           const ageMs = source.lastConfirmedAt ? now - source.lastConfirmedAt : null;
           const complete = book !== "fanduel" || (source.coverage?.requested > 0 &&
             source.coverage.returned === source.coverage.requested && source.coverage.missingIds?.length === 0);
-          return [book, { fresh: source.status === "healthy" && Number.isFinite(ageMs) && ageMs >= 0 && ageMs < source.staleAfterMs,
+          return [book, { region: source.region,
+            fresh: source.status === "healthy" && Number.isFinite(ageMs) && ageMs >= 0 && ageMs < source.staleAfterMs,
             complete, games: source.games, quotes: source.quotes, ageMs,
             pushVerified: source.channels?.push?.verified ?? null }];
         }));

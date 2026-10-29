@@ -6,6 +6,8 @@ This guide explains the implemented code. It is not a claim that every requireme
 
 Fieldline collects NFL odds from two sportsbooks, turns their different formats into the same structure, and shows comparable prices in one board. Each sportsbook has one collector running on the server. Every viewer shares those results, so opening ten tabs does not create ten sets of sportsbook requests.
 
+Both feeds now use Ontario prices. The server can remain in Ohio: where the server runs and which regional price feed it reads are separate choices. FanDuel's Canadian discovery, prices and push connection are configured together, so a label change cannot silently leave the app reading New Jersey prices. The older measurements in the README record the previous New Jersey configuration explicitly.
+
 Both books supply an initial list of games and prices, then push changes over persistent connections. FanDuel also checks HTTP prices every second, even while push works: a connected push feed may still be late. Both paths can deliver changes, and polling continues during a push outage. The server pushes board changes to browsers immediately.
 
 The shared data lives in memory. We only need the current board for this prototype, so adding a database would add work without solving a current requirement. A restart fetches the current state again.

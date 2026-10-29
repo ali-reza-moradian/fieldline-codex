@@ -1,0 +1,55 @@
+{
+  "region": "Ontario",
+  "discovery": {
+    "capturedAt": "2026-10-29T00:26:49.276Z",
+    "url": "https://sbapi.on.sportsbook.fanduel.ca/api/content-managed-page?page=CUSTOM&customPageId=nfl&pbHorizontal=false&_ak=FhMFpcPWXMeyZxOx&timezone=America%2FToronto",
+    "headers": {
+      "X-Sportsbook-Region": "ON"
+    },
+    "retained": "Only NFL moneyline/spread/total markets and referenced events; entity fields unchanged.",
+    "events": 29,
+    "markets": 87
+  },
+  "prices": {
+    "capturedAt": "2026-10-29T00:27:38.974Z",
+    "url": "https://smp.on.sportsbook.fanduel.ca/api/sports/fixedodds/readonly/v1/getMarketPrices?priceHistory=0",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "batches": [
+      {
+        "status": 200,
+        "requested": 70,
+        "returned": 70,
+        "elapsedMs": 271.12962500000003,
+        "bytes": 81631
+      },
+      {
+        "status": 200,
+        "requested": 17,
+        "returned": 17,
+        "elapsedMs": 261.026708,
+        "bytes": 19684
+      }
+    ],
+    "retained": "Complete original market response rows from the two requested batches.",
+    "markets": 87,
+    "quotes": 174,
+    "observedIdPrefix": [
+      "801"
+    ]
+  },
+  "officialApplicationSources": [
+    "https://sportsbook.fanduel.ca/navigation/nfl",
+    "https://sportsbook.fanduel.ca/static/js/main.d3966b20110928e3.js",
+    "https://sportsbook.fanduel.ca/static/js/dependencies.d754b1e4c28a4a0e.js"
+  ],
+  "notes": [
+    "The official production bundle declares Ontario .ca SB_API/SMP hosts and a 70-market batch size.",
+    "The observed 801 ID prefix is fixture provenance, not assumed to be a permanent provider contract.",
+    "Captured through logged-out public endpoints without account cookies or personal credentials.",
+    "All 87 captured market rows were OPEN; suspension tests mutate copies of these recorded rows.",
+    "Local request durations are not cloud deployment or bookmaker-to-screen latency measurements."
+  ]
+}

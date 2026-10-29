@@ -4,6 +4,7 @@ import {
 } from "../src/adapters/draftkings.js";
 import {
   FD_DISCOVERY,
+  FD_HEADERS,
   fetchFanDuelPrices,
   selectFanDuelMarkets,
   normalizeFanDuel,
@@ -19,7 +20,7 @@ const results = await Promise.allSettled([
   })(),
   (async () => {
     const r = await fetchJson(FD_DISCOVERY, {
-      headers: { "X-Sportsbook-Region": "NJ" },
+      headers: FD_HEADERS,
     });
     const c = selectFanDuelMarkets(r.data);
     const p = await fetchFanDuelPrices(Object.keys(c.markets));

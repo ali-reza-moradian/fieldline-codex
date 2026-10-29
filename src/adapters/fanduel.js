@@ -10,10 +10,15 @@ export const FD_TYPES = {
   "TOTAL_POINTS_(OVER/UNDER)": "total",
 };
 // Public page configuration, observed in the logged-out NFL page's network requests.
+export const FD_REGION = "on";
+export const FD_ORIGIN = "https://sportsbook.fanduel.ca";
+export const FD_HEADERS = Object.freeze({
+  "X-Sportsbook-Region": "ON", Origin: FD_ORIGIN, Referer: `${FD_ORIGIN}/`,
+});
 export const FD_DISCOVERY =
-  "https://api.sportsbook.fanduel.com/sbapi/content-managed-page?page=CUSTOM&customPageId=nfl&pbHorizontal=false&_ak=FhMFpcPWXMeyZxOx&timezone=America%2FNew_York";
+  "https://sbapi.on.sportsbook.fanduel.ca/api/content-managed-page?page=CUSTOM&customPageId=nfl&pbHorizontal=false&_ak=FhMFpcPWXMeyZxOx&timezone=America%2FToronto";
 export const FD_PRICES =
-  "https://smp.nj.sportsbook.fanduel.com/api/sports/fixedodds/readonly/v1/getMarketPrices?priceHistory=0";
+  "https://smp.on.sportsbook.fanduel.ca/api/sports/fixedodds/readonly/v1/getMarketPrices?priceHistory=0";
 
 export function selectFanDuelMarkets(data) {
   if (!data?.attachments?.events || !data?.attachments?.markets)
@@ -113,7 +118,7 @@ export async function fetchFanDuelPrices(ids, { fetcher = fetchJson, signal, bat
       requestSignal.throwIfAborted();
       const slot = index++, batch = batches[slot];
       const result = await fetcher(FD_PRICES, {
-        method: "POST", headers: { "Content-Type": "application/json" },
+        method: "POST", headers: { ...FD_HEADERS, "Content-Type": "application/json" },
         body: JSON.stringify({ marketIds: batch }), signal: requestSignal,
       });
       if (!Array.isArray(result.data) || result.data.some(m => !m || !batch.includes(m.marketId) || !Array.isArray(m.runnerDetails)))
@@ -146,7 +151,7 @@ export class FanDuel {
     this.clock = clock;
     this.state = new FanDuelState({ now: clock });
     this.pushState = { status: "disconnected", generation: 0, subscribedMarkets: 0 };
-    this.push = pushFactory({ ...pushOptions,
+    this.push = pushFactory({ ...pushOptions, region: FD_REGION,
       onMarkets: (markets, timing) => this.onPushMarkets(markets, timing),
       onState: state => this.onPushState(state) });
     this.nextAllowedPollAt = 0;
@@ -190,6 +195,9 @@ export class FanDuel {
   interval() { return this.pushReady() ? this.verificationMs : this.pollMs; }
   details() {
     this.sink.details?.("fanduel", {
+      region: "Ontario",
+      endpoints: { discovery: new URL(FD_DISCOVERY).origin,
+        prices: new URL(FD_PRICES).origin },
       transport: this.pushReady() ? "Live push · polling backup" : "Polling fallback · reconnecting live feed",
       pollMs: this.interval(), coverage: this.coverage ?? null,
       channels: { push: { ...this.pushState, verified: this.pushReady(), ordering: { ...this.state.counters } },
@@ -277,7 +285,7 @@ export class FanDuel {
     try {
       if (!this.catalog || this.clock() >= this.nextDiscoveryAt) {
         try {
-          const result = await this.fetcher(FD_DISCOVERY, { headers: { "X-Sportsbook-Region": "NJ" }, signal });
+          const result = await this.fetcher(FD_DISCOVERY, { headers: FD_HEADERS, signal });
           if (this.stopped || runId !== this.runId) return;
           this.catalog = selectFanDuelMarkets(result.data);
           this.discoveredAt = this.clock();

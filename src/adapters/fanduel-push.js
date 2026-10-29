@@ -1,6 +1,17 @@
 import WebSocket from "ws";
 
-const SITE = "https://sportsbook.fanduel.com";
+// FanDuel's production bundle selects a distinct Canadian configuration.
+// Never infer an arbitrary region hostname or fall back across jurisdictions.
+const PROFILES = Object.freeze({
+  on: Object.freeze({ site: "https://sportsbook.fanduel.ca", suffix: "ca", awsRegion: "ca-west-1" }),
+  nj: Object.freeze({ site: "https://sportsbook.fanduel.com", suffix: "com", awsRegion: "us-east-2" }),
+});
+function profileFor(region) {
+  if (!Object.hasOwn(PROFILES, region)) throw new Error("Unsupported FanDuel region; use on or nj");
+  const profile = PROFILES[region];
+  return { ...profile, endpoint: `https://pir.${region}.sportsbook.fanduel.${profile.suffix}/graphql`,
+    websocketUrl: `wss://pir.${region}.sportsbook.fanduel.${profile.suffix}/graphql/realtime` };
+}
 const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/141.0.0.0 Safari/537.36";
 // Field selection verified in FanDuel's public production bundle. This is the
 // sportsbook market-price subscription, independent of account or betting APIs.
@@ -14,9 +25,9 @@ export const FD_PRICE_SUBSCRIPTION = `subscription OnUpdateMarketPrice($ids: [St
   }
 }`;
 
-export function parseFanDuelPushConfig(bundle, region = "nj") {
-  if (!/^[a-z]{2}$/.test(region)) throw new Error("Invalid FanDuel region");
-  const anchor = 'aws_appsync_graphqlEndpoint:"https://pir.{REGION}.sportsbook.fanduel.com/graphql"';
+export function parseFanDuelPushConfig(bundle, region = "on") {
+  const profile = profileFor(region);
+  const anchor = `aws_appsync_graphqlEndpoint:"https://pir.{REGION}.sportsbook.fanduel.${profile.suffix}/graphql"`;
   const offset = bundle.indexOf(anchor);
   if (offset < 0) throw new Error("FanDuel public push configuration was not found");
   const end = bundle.indexOf("},", offset);
@@ -26,7 +37,8 @@ export function parseFanDuelPushConfig(bundle, region = "nj") {
   const websocketUrl = read("aws_appsync_wssEndpoint");
   const clientId = read("aws_appsync_clientId");
   if (read("aws_appsync_authenticationType") !== "PIR_AUTH_KEY" ||
-      websocketUrl !== "wss://pir.{REGION}.sportsbook.fanduel.com/graphql/realtime" ||
+      read("aws_appsync_region") !== profile.awsRegion ||
+      websocketUrl?.replace("{REGION}", region) !== profile.websocketUrl ||
       !clientId || clientId.length > 200)
     throw new Error("FanDuel public push configuration has changed");
   return { endpoint: endpoint.replace("{REGION}", region),
@@ -47,12 +59,13 @@ async function boundedText(url, signal, fetchImpl, limit) {
   return result + decoder.decode();
 }
 
-export async function discoverFanDuelPushConfig({ region = "nj", signal = new AbortController().signal, fetchImpl = fetch } = {}) {
-  const shell = await boundedText(`${SITE}/sw.js`, signal, fetchImpl, 2 * 1024 * 1024);
+export async function discoverFanDuelPushConfig({ region = "on", signal = new AbortController().signal, fetchImpl = fetch } = {}) {
+  const { site } = profileFor(region);
+  const shell = await boundedText(`${site}/sw.js`, signal, fetchImpl, 2 * 1024 * 1024);
   const path = shell.match(/\/static\/js\/main\.[\w-]+\.js/)?.[0];
   if (!path) throw new Error("FanDuel public app bundle was not found");
-  const bundle = await boundedText(SITE + path, signal, fetchImpl, 12 * 1024 * 1024);
-  return { ...parseFanDuelPushConfig(bundle, region), sourceUrl: SITE + path };
+  const bundle = await boundedText(site + path, signal, fetchImpl, 12 * 1024 * 1024);
+  return { ...parseFanDuelPushConfig(bundle, region), sourceUrl: site + path };
 }
 
 function validMarket(m) {
@@ -80,13 +93,14 @@ function validMarket(m) {
 /** AppSync transport only. The collector owns the authoritative baseline and
  * ordering between push and polling; an acknowledgement supplies no prices. */
 export class FanDuelPush {
-  constructor({ onMarkets = () => {}, onState = () => {}, region = "nj",
+  constructor({ onMarkets = () => {}, onState = () => {}, region = "on",
     fetchConfig = discoverFanDuelPushConfig, url, WebSocketImpl = WebSocket,
     ackTimeoutMs = 10000, heartbeatMs = 12000, pingMs = 5000,
     reconnectBaseMs = 1000, reconnectMaxMs = 30000, keyRefreshMs = 300000,
     configRetryMs = 30000, batchSize = 350, stableConnectionMs = 30000,
     protocolHeartbeatMs = 75000, maxProtocolHeartbeatMs = 120000, random = Math.random } = {}) {
     if (!Number.isInteger(batchSize) || batchSize < 1 || batchSize > 350) throw new Error("Invalid FanDuel subscription batch size");
+    this.profile = profileFor(region);
     Object.assign(this, { onMarkets, onState, region, fetchConfig, url, WebSocketImpl,
       ackTimeoutMs, heartbeatMs, pingMs, reconnectBaseMs, reconnectMaxMs,
       keyRefreshMs, configRetryMs, batchSize, stableConnectionMs,
@@ -96,6 +110,7 @@ export class FanDuelPush {
     this.socketTimers = new Set(); this.sequence = 0;
     this.state = { status: "disconnected", lastConfirmedAt: null, lastDataAt: null,
       error: null, generation: 0, subscribedMarkets: 0,
+      region, origin: this.profile.site, endpoint: this.profile.endpoint,
       lastProtocolAt: null, protocolTimeoutMs: Math.min(protocolHeartbeatMs, maxProtocolHeartbeatMs) };
     this.counters = { connections: 0, reconnects: 0, messages: 0, markets: 0,
       invalidFrames: 0, configReads: 0, authErrors: 0 };
@@ -157,7 +172,8 @@ export class FanDuelPush {
         this.counters.configReads++;
         const config = await this.fetchConfig({ region: this.region, signal: this.controller.signal });
         if (this.stopped || run !== this.run) return;
-        if (!config?.clientId || !config?.endpoint || !config?.websocketUrl) throw new Error("Invalid public push configuration");
+        if (!config?.clientId || config.endpoint !== this.profile.endpoint || config.websocketUrl !== this.profile.websocketUrl)
+          throw new Error("FanDuel public push configuration does not match the requested region");
         this.config = config; this.refreshRequired = false;
       }
       if (this.stopped || run !== this.run) return;
@@ -166,7 +182,7 @@ export class FanDuelPush {
       endpoint.searchParams.set("header", Buffer.from(JSON.stringify(auth)).toString("base64"));
       endpoint.searchParams.set("payload", Buffer.from("{}").toString("base64"));
       const socket = new this.WebSocketImpl(endpoint, ["graphql-ws"], {
-        headers: { Origin: SITE, "User-Agent": UA }, handshakeTimeout: this.ackTimeoutMs,
+        headers: { Origin: this.profile.site, "User-Agent": UA }, handshakeTimeout: this.ackTimeoutMs,
         maxPayload: 2 * 1024 * 1024, perMessageDeflate: false,
       });
       this.ws = socket; this.auth = auth; this.generation++; this.counters.connections++;

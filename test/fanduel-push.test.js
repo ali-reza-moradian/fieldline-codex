@@ -9,8 +9,11 @@ async function until(predicate, timeout = 1500) {
   const deadline = Date.now() + timeout;
   while (!predicate()) { if (Date.now() > deadline) throw new Error("Condition timed out"); await pause(2); }
 }
-const config = clientId => ({ endpoint: "https://pir.nj.sportsbook.fanduel.com/graphql",
-  websocketUrl: "wss://pir.nj.sportsbook.fanduel.com/graphql/realtime", clientId });
+const config = (clientId, region = "on") => {
+  const suffix = region === "on" ? "ca" : "com";
+  return { endpoint: `https://pir.${region}.sportsbook.fanduel.${suffix}/graphql`,
+    websocketUrl: `wss://pir.${region}.sportsbook.fanduel.${suffix}/graphql/realtime`, clientId };
+};
 const market = (marketId = "734.1") => ({ marketId, marketStatus: "OPEN", inplay: false,
   updatedAt: "2026-10-28T23:00:00Z", runnerDetails: [{ selectionId: 7, handicap: 3.5,
     runnerStatus: "ACTIVE", winRunnerOdds: { americanDisplayOdds: { americanOdds: "-110", americanOddsInt: -110 },
@@ -42,19 +45,43 @@ async function harness(t, { handler, serverOptions = {}, options = {} } = {}) {
   return { transport, messages, sockets, states, updates };
 }
 
-test("FanDuel discovers only the production public config without executing the bundle", async () => {
-  const bundle = 'const config={aws_appsync_graphqlEndpoint:"https://pir.{REGION}.sportsbook.fanduel.com/graphql",aws_appsync_wssEndpoint:"wss://pir.{REGION}.sportsbook.fanduel.com/graphql/realtime",aws_appsync_region:"us-east-2",aws_appsync_authenticationType:"PIR_AUTH_KEY",aws_appsync_clientId:"test-public-client"};';
-  assert.deepEqual(parseFanDuelPushConfig(bundle), config("test-public-client"));
-  assert.throws(() => parseFanDuelPushConfig(bundle.replace("PIR_AUTH_KEY", "OTHER")), /configuration has changed/);
+test("FanDuel selects Ontario's distinct public config and fetches the Canadian production bundle", async () => {
+  const us = 'aws_appsync_graphqlEndpoint:"https://pir.{REGION}.sportsbook.fanduel.com/graphql",aws_appsync_wssEndpoint:"wss://pir.{REGION}.sportsbook.fanduel.com/graphql/realtime",aws_appsync_region:"us-east-2",aws_appsync_authenticationType:"PIR_AUTH_KEY",aws_appsync_clientId:"test-us-client"';
+  const ca = 'aws_appsync_graphqlEndpoint:"https://pir.{REGION}.sportsbook.fanduel.ca/graphql",aws_appsync_wssEndpoint:"wss://pir.{REGION}.sportsbook.fanduel.ca/graphql/realtime",aws_appsync_region:"ca-west-1",aws_appsync_authenticationType:"PIR_AUTH_KEY",aws_appsync_clientId:"test-ca-client"';
+  const bundle = `const us={${us}},ca={${ca}};`;
+  assert.deepEqual(parseFanDuelPushConfig(bundle), config("test-ca-client"));
+  assert.deepEqual(parseFanDuelPushConfig(bundle, "nj"), config("test-us-client", "nj"));
+  assert.throws(() => parseFanDuelPushConfig(`const us={${us}};`), /was not found/, "Ontario must not silently use the US config");
+  assert.throws(() => parseFanDuelPushConfig(`const ca={${ca}};`, "nj"), /was not found/);
+  assert.throws(() => parseFanDuelPushConfig(bundle.replaceAll("PIR_AUTH_KEY", "OTHER")), /configuration has changed/);
   assert.throws(() => parseFanDuelPushConfig(bundle, "../../bad"), /region/);
+  assert.throws(() => parseFanDuelPushConfig(bundle, "ab"), /Unsupported/);
   const urls = [];
   const discovered = await discoverFanDuelPushConfig({ fetchImpl: async url => {
     urls.push(url);
     return new Response(url.endsWith("sw.js") ? '<script src="/static/js/main.example.js"></script>' : bundle);
   } });
-  assert.equal(discovered.clientId, "test-public-client");
-  assert.deepEqual(urls, ["https://sportsbook.fanduel.com/sw.js", "https://sportsbook.fanduel.com/static/js/main.example.js"]);
+  assert.equal(discovered.clientId, "test-ca-client");
+  assert.deepEqual(urls, ["https://sportsbook.fanduel.ca/sw.js", "https://sportsbook.fanduel.ca/static/js/main.example.js"]);
   await assert.rejects(discoverFanDuelPushConfig({ fetchImpl: async () => new Response("denied", { status: 403 }) }), /HTTP 403/);
+});
+
+test("FanDuel sends the selected regional Origin and refuses cross-region injected configuration", async t => {
+  for (const region of ["on", "nj"]) {
+    const h = await harness(t, { options: { region, fetchConfig: async () => config("test-client", region) } });
+    h.transport.setMarketIds(["734.1"]); h.transport.start();
+    await until(() => h.transport.state.status === "subscribed");
+    const request = h.messages[0].request;
+    const auth = JSON.parse(Buffer.from(new URL(request.url, "http://local").searchParams.get("header"), "base64").toString());
+    assert.equal(request.headers.origin, region === "on" ? "https://sportsbook.fanduel.ca" : "https://sportsbook.fanduel.com");
+    assert.equal(auth.host, new URL(config("test-client", region).endpoint).host);
+    assert.equal(h.transport.state.region, region);
+    h.transport.stop();
+  }
+  const wrong = await harness(t, { options: { fetchConfig: async () => config("wrong-us-key", "nj") } });
+  wrong.transport.setMarketIds(["734.1"]); wrong.transport.start();
+  await until(() => wrong.states.some(s => /does not match the requested region/.test(s.error ?? "")));
+  assert.equal(wrong.sockets.length, 0);
 });
 
 test("FanDuel push delivers acknowledged requested market data, not heartbeats or malformed frames", async t => {
