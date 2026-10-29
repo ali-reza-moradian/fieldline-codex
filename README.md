@@ -6,7 +6,11 @@ Both collectors now target **Ontario**. FanDuel discovery, price requests, push 
 
 ## Current status
 
-Runtime **`2bffe9c`** was verified on October 29, 2026, at 11:44 a.m. Toronto time. It adds silent-stream recovery, compact source confirmations and bounded clock checks. The [deployment report](docs/measurements/render-stream-recovery-deployment-verification.json) verifies both Ontario sources, 29 matched games, all 348 prices, 87/87 FanDuel markets, two identical viewer snapshots and all six frontend assets. Fresh independent checks matched **174/174 [DraftKings quotes](docs/measurements/render-stream-recovery-draftkings-source-verification.json)** and **174/174 [FanDuel quotes](docs/measurements/render-stream-recovery-fanduel-source-verification.json)** on their first attempts. The suite passes **106 tests, none skipped**, including silent connections, delayed messages, browser API compatibility, source failures, slow viewers and compact-message ordering. [Browser fault checks](docs/measurements/ui-stream-recovery-verification.json) verified Chrome recovery to a fresh baseline and stale-source exclusion; the public FanDuel and Best Price views were checked after deployment.
+The new optional-feature and retained-history release is implemented; **deployment, browser checks, source accuracy and performance verification for this release are pending**. Its features and limits are described below. The saved reports in the following section verify earlier releases and must not be treated as evidence for this new release. Add the new deployment and observation reports here after verification; no speed advantage is claimed from implementation alone.
+
+### Last verified deployment
+
+Runtime **`2bffe9c`** was verified on October 29, 2026, at 11:44 a.m. Toronto time. It adds silent-stream recovery, compact source confirmations and bounded clock checks. The [deployment report](docs/measurements/render-stream-recovery-deployment-verification.json) verifies both Ontario sources, 29 matched games, all 348 prices, 87/87 FanDuel markets, two identical viewer snapshots and all six frontend assets. Fresh independent checks matched **174/174 [DraftKings quotes](docs/measurements/render-stream-recovery-draftkings-source-verification.json)** and **174/174 [FanDuel quotes](docs/measurements/render-stream-recovery-fanduel-source-verification.json)** on their first attempts. That release passed **106 tests, none skipped**, including silent connections, delayed messages, browser API compatibility, source failures, slow viewers and compact-message ordering. [Browser fault checks](docs/measurements/ui-stream-recovery-verification.json) verified Chrome recovery to a fresh baseline and stale-source exclusion; the public FanDuel and Best Price views were checked after deployment.
 
 A [60-second public observation](docs/measurements/render-stream-recovery-observation.json) received 218 compact confirmations and 30 heartbeats, averaging about **1,002 SSE application bytes/second** after the initial snapshot. The longest observed receive gap was 704 ms. Across the surrounding metadata interval, 239 complete FanDuel checks succeeded with no failures, partial responses or rate limits. No prices changed during this window, so it establishes neither changed-price latency nor superiority over another implementation. The earlier delivery gap below remains historical evidence; the recovery mechanism does not identify or prove elimination of its underlying cause.
 
@@ -56,7 +60,7 @@ npm run diagnose  # Bounded DraftKings access and public regional-configuration 
 npm run benchmark -- http://localhost:3210 60
 ```
 
-`HOST` defaults to `127.0.0.1`; `PORT` defaults to `3210`. Set `HOST=0.0.0.0` in a hosting environment. There are no account credentials or copied browser cookies. `npm start` uses the operating system's certificate authorities; TLS verification remains enabled.
+`HOST` defaults to `127.0.0.1`; `PORT` defaults to `3210`. Set `HOST=0.0.0.0` in a hosting environment. Sportsbook collection needs no account credentials or copied browser cookies. Optional history persistence uses a server-only database connection string; see `.env.example` and the deployment section. `npm start` uses the operating system's certificate authorities; TLS verification remains enabled.
 
 The frontend is plain JavaScript and CSS. The backend uses Node's HTTP server and the `ws` package. On Render, a small Python subprocess using pinned `curl_cffi` fetches DraftKings' initial and periodic HTTP snapshots. Streaming updates stay in Node. There is no frontend build step.
 
@@ -68,7 +72,7 @@ DK_HTTP_TRANSPORT=curl npm start
 npm test
 ```
 
-`DK_HTTP_TRANSPORT=native` selects Node's HTTP client; `curl` selects the compatible client. Render defaults to `curl`; other native Node installations default to `native`. The current local suite passed **106 tests, with none skipped**; the earlier Ontario migration's 65-test result above is historical. The optional HTTP integration test runs when `.venv` is installed; otherwise it is explicitly skipped. Tests cover real local HTTP/WebSocket servers, every captured Ontario price and side/line mapping, regional configuration isolation, complete multi-batch acquisition, rate limits, cancellation, subscription expiry, reconnect baselines, push/poll ordering, quarter-second scheduling, stale-data handling, multiple viewers, presentation/history rules and the independent comparison harness. They do not contact bookmakers. The [manual UI replay check](docs/measurements/ui-movement-verification.json) additionally records desktop and 375px responsive checks of arrows, line changes, pauses, stale sources, reconnects and history.
+`DK_HTTP_TRANSPORT=native` selects Node's HTTP client; `curl` selects the compatible client. Render defaults to `curl`; other native Node installations default to `native`. The verified stream-recovery release passed **106 tests, with none skipped**; that count and the earlier Ontario migration's 65-test result are historical. Run `npm test` for the current release; its final verification is pending. The optional HTTP integration test runs when `.venv` is installed; otherwise it is explicitly skipped. Tests cover real local HTTP/WebSocket servers, every captured Ontario price and side/line mapping, regional configuration isolation, complete multi-batch acquisition, rate limits, cancellation, subscription expiry, reconnect baselines, push/poll ordering, quarter-second scheduling, stale-data handling, multiple viewers, presentation/history rules and the independent comparison harness. They do not contact bookmakers. The [manual UI replay check](docs/measurements/ui-movement-verification.json) additionally records desktop and 375px responsive checks of arrows, line changes, pauses, stale sources, reconnects and history.
 
 ## Architecture
 
@@ -80,6 +84,9 @@ flowchart LR
   FDA --> N
   N --> S[Shared in-memory board]
   S --> SSE[Server-sent events]
+  S --> H[Bounded observation history]
+  H --> PG[Optional PostgreSQL checkpoints]
+  E[On-demand extra-market child process] --> ES[Separate extra-market stream]
   SSE --> B1[Browser 1]
   SSE --> B2[Browser 2 ...]
   B1 --> M[Clock-adjusted paint telemetry]
@@ -91,7 +98,7 @@ Price changes and changes to source eligibility are sent immediately. Repeated t
 
 The browser owns reconnection with 1–15 second backoff. An observable heartbeat every two seconds confirms transport only; it never makes a sportsbook healthy. After 12 seconds without a valid message, or without an initial snapshot, the browser closes the old connection and requires a fresh full snapshot. It also checks when a hidden tab returns. Browser timer suspension can delay background detection; these intervals are not wall-clock guarantees while the browser is suspended. Generation guards reject callbacks from old connections, calibrated checks reject substantially delayed frames, and history leaves gaps across outages. Clock requests have four-second timeouts and one synchronization in flight; calibration uses monotonic time and expires after two minutes.
 
-SSE suits a mostly one-way board. The backend uses each book's own public WebSocket price feed. The current board fits in memory; persistence and a database are unnecessary for serving the latest state. Metrics reset on process restart.
+SSE suits a mostly one-way board. The backend uses each book's own public WebSocket price feed. The current board stays in memory and is rebuilt from the books after a restart. Optional PostgreSQL storage preserves historical observations only; it never restores live-price eligibility. History and extra-market failures do not change the main-source readiness calculation. Metrics reset on process restart.
 
 ## DraftKings acquisition
 
@@ -136,17 +143,36 @@ Game matching uses Toronto calendar date plus away/home team identities. The obs
 
 Best price means the highest decimal payout **for the same game, full-game period, side and point line**. American odds are converted to decimal for comparison. Ties show both books. `-3 at -110` and `-3.5 at +100` remain separate contracts; the app does not invent a point-value model to rank them. Stale and suspended offers cannot win. Book-specific views retain stale prices with a clear label.
 
-## Board controls and observed history
+## Board controls and optional features
 
-The compact responsive board keeps source health, Ontario labels and comparison policy visible. Choose Best Price, DraftKings or FanDuel; filter by team or game status; and switch between American and decimal odds. Decimal prices display to three places, while ranking uses the original precision. The odds-format preference stays in this browser. View and format are shareable through the URL, for example `/?view=fanduel&odds=decimal`.
+The responsive board keeps source health, Ontario labels and comparison policy visible. Choose Best Price, DraftKings or FanDuel; filter by team or game status; and switch between American and decimal odds. Decimal prices display to three places, while ranking uses the original precision. View and format are shareable through the URL, for example `/?view=fanduel&odds=decimal`.
 
-Movement cues use transitions actually observed by this tab. A higher/lower payout gets an up/down arrow and its previous price for eight seconds. Negative American prices and transitions across zero are compared by decimal payout; −100 and +100 are equivalent. A changed point line is marked separately because it changes the bet. Suspension and reopening are availability changes, not price improvements. Accessible button names include this movement context.
+Eight optional feature groups are implemented:
 
-Select a price or **Price history** to open a lightweight chart for that game/market/side. Only an open chart is drawn. It plots observed decimal prices, with separate book lines, and never joins different point lines, source-stale periods or browser disconnections into one continuous segment. The first state after opening or reconnecting is a baseline, not an invented movement. Losing one source breaks that source's history without interrupting the other book.
+- Alternate spreads and totals, opened through **More markets**.
+- Player props: touchdowns, passing yards, rushing yards, receiving yards and receptions where offered. Supported player ladders preserve inclusive **N+** thresholds; this is not a claim to support every ordinary over/under market.
+- Starred games, saved in this browser and sorted first.
+- Comfortable and compact density.
+- Light and dark themes.
+- Board and comparison-grid layouts.
+- Keyboard shortcuts, with help in the UI and typing-safe handling.
+- Main-market implied margin, arbitrage candidates, market-derived fair probability and estimated EV, with margin/EV sorting.
 
-History exists **only in the current tab** and resets on reload. It retains at most 60 minutes, 120 observations per game/book/market/side and 512 selection series; it does not load historical sportsbook prices. Recent moves retain 30 transitions and show the latest eight for the selected source view. The UI labels these records “since this page opened.” A chart point records what the tab received, not a verified trading-engine change time. The chart, format controls and recent moves make no additional source requests.
+Scope remains NFL. Extra-market comparisons require the same game, player or team, side, line and settlement contract. Different house protection or early-exit rules remain separate and are not ranked against each other. Analytics require fresh, active, complete two-sided prices from both books on the same contract. Fair probabilities normalize each book's implied probabilities and average the books; estimated EV is conditional on a settled win/loss and is **not an independently predictive model**. Push, tie-void and cancellation probabilities are not modeled. An arbitrage flag identifies observed-price candidates, not guaranteed executable profit.
 
-Price updates replace only affected game markup and preserve the focused control. Status-only updates refresh source cards unless eligibility changes. Changed-price telemetry still runs after two animation frames for visible games, with clock uncertainty reported separately. Local replay tests and browser checks exercise these behaviors; they do not establish production or live-game latency.
+Extra markets run only while requested, in a separate cloud child process and stream. Viewers share work for the same game; at most **two games** are collected concurrently across viewers. The nominal refresh interval is **15 seconds**, with exclusion after **45 seconds** without confirmation. Failures and capacity limits are shown in the panel and do not make the main feed unhealthy. Main DraftKings/FanDuel push behavior and FanDuel's **250 ms** parallel HTTP checks remain unchanged. Process isolation does not eliminate shared-host resource costs; the new release still requires measured performance verification.
+
+Movement cues use transitions actually observed by this tab. A higher/lower payout gets an up/down arrow and its previous price for eight seconds. Negative American prices and transitions across zero are compared by decimal payout; −100 and +100 are equivalent. Changed point lines, suspension and reopening are separate events. Recent moves remain tab-local: they retain 30 transitions, show the latest eight for the selected source view, and reset on reload.
+
+## Retained price history
+
+Select a price or **Price history** to request server observations for that game/market/side. One open chart is drawn at a time. It shows up to **48 hours**, bounded to **3,000 points per book/game/market/side series**, **1,024 series** and **150,000 points globally**. Startup, retention and capacity eviction can shorten the available window. There is no backfill of unobserved sportsbook history. A labeled current-tab history may appear while the server request loads.
+
+Charts use actual server observation times and decimal prices, not verified trading-engine change times. Source failures, stale periods, suspensions, removals and changed point lines break continuity; the next eligible observation starts a new baseline. The chart never extends an old price to the present or fills an outage with invented points. A browser reconnect reloads available server history; movements missed by that browser are not invented in its Recent moves list. History requests add no sportsbook polling.
+
+History processing is deferred from main-message fanout and bounded; overload leaves a visible gap. Optional PostgreSQL checkpoints run asynchronously every **60 seconds**, serializing and restoring one bounded series at a time. Restoration merges older points without replacing newer in-memory observations or making a source healthy. A crash can lose observations since the last successful checkpoint, normally up to about a minute and longer during storage outages. Failed or unconfigured storage leaves in-memory history working, with its limitation shown in the chart. Check `/api/history` storage status and `/api/metrics` for actual availability.
+
+Price updates replace only affected game markup and preserve the focused control. Status-only updates refresh source cards unless eligibility changes. Changed-price telemetry still runs after two animation frames for visible games, with clock uncertainty reported separately. Tests and browser replay checks do not establish production or live-game latency.
 
 ## Latency: measurements and limits
 
@@ -220,6 +246,8 @@ The current Docker image, including the Python snapshot transport, built success
 
 Render settings: build `npm ci --omit=dev` (its install hook prepares the pinned Python transport), start `npm start`, `HOST=0.0.0.0`, Node 24+, Python 3.10+, health path `/healthz`. The service uses the free plan in Ohio. It was created from the public Git repository; deployments are currently triggered manually. Railway deployment has not been verified.
 
+Optional history storage uses `HISTORY_DATABASE_URL`, configured only in the server environment. `.env.example` contains an empty template; the app does not automatically load that file. PostgreSQL connections verify TLS certificates, use one connection with five-second connection/query limits, and fail open to in-memory history. The dedicated free Render PostgreSQL instance created for this release **expires November 28, 2026**; migrate or export retained history before that date if it must survive. The expiry and free-service limits mean this is a demonstration deployment, not a durable production-storage commitment. Storage verification for this release is pending.
+
 Render's free services can sleep after 15 minutes without inbound traffic and can take about a minute to wake. They can also be suspended for unusually high outbound traffic. These limits affect a continuously ingesting demonstration. Do not present a sleeping free service as an always-on production design. See [Render's free-service limitations](https://render.com/docs/free) and [Node deployment instructions](https://render.com/docs/deploy-node-express-app).
 
 `fly.toml` preserves the tested single 512 MB Toronto configuration. The Fly trial did not resolve DraftKings access and is not the submission deployment; use the Render URL above. Fly's [trial](https://fly.io/docs/about/free-trial/) is limited to two total VM hours or seven days, whichever comes first, and trial machines can stop after five minutes. That stop was observed during the check. No payment method or paid upgrade was added as part of this work.
@@ -231,7 +259,7 @@ Before submission: collect actual in-game observations and per-source rendering 
 - Verify in-game status, suspension, line changes and discovery behavior during a real NFL game; capture measured latency for both sources.
 - Compare MessagePack and JSON empirically, implement the binary mapping if it materially reduces latency/bandwidth, and investigate atomic snapshot/stream versioning.
 - Measure cross-channel ordering and reconciliation corrections during live play; inspect whether the provider exposes a stronger shared sequence/version.
-- Instrument clock skew, response cache age, true wire bytes and frontend visible-change timings more precisely; export observations to durable storage.
+- Instrument clock skew, response cache age, true wire bytes and frontend visible-change timings more precisely; retain detailed latency telemetry separately from the bounded price-history checkpoints.
 - Add third-book adapters returning the same game/quote model. For multiple serving instances, move collectors into a single owned service (or use leader election) and distribute updates through a broker. Do not simply start duplicate collectors per web replica.
 - Add schema-drift alerts and a measured multi-viewer load test. AI can help propose mapping changes, but fixture checks and comparison with source pages must approve them.
 

@@ -1,0 +1,1213 @@
+{
+  "capturedAt": "2026-10-29",
+  "region": "Ontario",
+  "note": "Minimal public logged-out source responses; no cookies or credentials.",
+  "draftkings": {
+    "12438": {
+      "markets": [
+        {
+          "id": "382678835",
+          "eventId": "34118182",
+          "sportId": "3",
+          "leagueId": "88808",
+          "name": "Anytime TD Scorer",
+          "subcategoryId": "12438",
+          "marketType": {
+            "id": "11019",
+            "betOfferTypeId": 0,
+            "name": "Anytime Touchdown Scorer"
+          },
+          "tags": [
+            "SGP",
+            "PlayerStack",
+            "YourBetEligible",
+            "Cashout",
+            "EarlyExit",
+            "EarlyExitPlus",
+            "FeaturedSubcategory",
+            "IgnoreSortOrderOnPush",
+            "OSB",
+            "PlayerProps"
+          ]
+        }
+      ],
+      "selections": [
+        {
+          "id": "0QA382678835#2336139995_13L88808Q1724494599Q20",
+          "marketId": "382678835",
+          "label": "Josh Jacobs",
+          "displayOdds": {
+            "american": "−140",
+            "decimal": "1.71",
+            "fractional": "5/7",
+            "percentage": "58%",
+            "multiplier": "1.71x"
+          },
+          "trueOdds": 1.71428572,
+          "outcomeType": "ToScoreAnyTime",
+          "tags": [
+            "SGP",
+            "1stFavorite",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "12715",
+              "name": "Josh Jacobs",
+              "type": "Player",
+              "venueRole": "HomePlayer"
+            }
+          ]
+        },
+        {
+          "id": "0QA382678835#2336140023_13L88808Q1850190615Q20",
+          "marketId": "382678835",
+          "label": "Chuba Hubbard",
+          "displayOdds": {
+            "american": "−115",
+            "decimal": "1.86",
+            "fractional": "20/23",
+            "percentage": "53%",
+            "multiplier": "1.86x"
+          },
+          "trueOdds": 1.86956522,
+          "outcomeType": "ToScoreAnyTime",
+          "tags": [
+            "SGP",
+            "1stFavorite",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "560815",
+              "name": "Chuba Hubbard",
+              "type": "Player",
+              "venueRole": "AwayPlayer"
+            }
+          ]
+        }
+      ]
+    },
+    "13195": {
+      "markets": [
+        {
+          "id": "2_86942663",
+          "eventId": "34118182",
+          "sportId": "3",
+          "leagueId": "88808",
+          "name": "Spread Alternate",
+          "subcategoryId": "13195",
+          "marketType": {
+            "id": "2_576",
+            "betOfferTypeId": 1,
+            "name": "Spread Alternate"
+          },
+          "tags": [
+            "SGP",
+            "YourBetEligible",
+            "Cashout",
+            "OSB"
+          ]
+        }
+      ],
+      "selections": [
+        {
+          "id": "0HC86942663N2050_3",
+          "marketId": "2_86942663",
+          "label": "CAR Panthers",
+          "displayOdds": {
+            "american": "+1280",
+            "decimal": "13.80",
+            "fractional": "64/5",
+            "percentage": "7.2%",
+            "multiplier": "13.80x"
+          },
+          "trueOdds": 13.8,
+          "points": -20.5,
+          "outcomeType": "Away",
+          "tags": [
+            "SGP",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "18484",
+              "name": "CAR Panthers",
+              "type": "Team",
+              "venueRole": "Away"
+            }
+          ]
+        },
+        {
+          "id": "0HC86942663P2050_1",
+          "marketId": "2_86942663",
+          "label": "GB Packers",
+          "displayOdds": {
+            "american": "−10000",
+            "decimal": "1.01",
+            "fractional": "1/100",
+            "percentage": "99.0%",
+            "multiplier": "1.01x"
+          },
+          "trueOdds": 1.01,
+          "points": 20.5,
+          "outcomeType": "Home",
+          "tags": [
+            "SGP",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "18357",
+              "name": "GB Packers",
+              "type": "Team",
+              "venueRole": "Home"
+            }
+          ]
+        }
+      ]
+    },
+    "13196": {
+      "markets": [
+        {
+          "id": "3_86942663",
+          "eventId": "34118182",
+          "sportId": "3",
+          "leagueId": "88808",
+          "name": "Total Alternate",
+          "subcategoryId": "13196",
+          "marketType": {
+            "id": "3_576",
+            "betOfferTypeId": 6,
+            "name": "Total Alternate"
+          },
+          "tags": [
+            "SGP",
+            "YourBetEligible",
+            "Cashout",
+            "OSB"
+          ]
+        }
+      ],
+      "selections": [
+        {
+          "id": "0OU86942663O2550_1",
+          "marketId": "3_86942663",
+          "label": "Over",
+          "displayOdds": {
+            "american": "−10000",
+            "decimal": "1.01",
+            "fractional": "1/100",
+            "percentage": "99.0%",
+            "multiplier": "1.01x"
+          },
+          "trueOdds": 1.01,
+          "points": 25.5,
+          "outcomeType": "Over",
+          "tags": [
+            "SGP",
+            "OSB"
+          ]
+        },
+        {
+          "id": "0OU86942663U2550_3",
+          "marketId": "3_86942663",
+          "label": "Under",
+          "displayOdds": {
+            "american": "+1260",
+            "decimal": "13.60",
+            "fractional": "63/5",
+            "percentage": "7.3%",
+            "multiplier": "13.60x"
+          },
+          "trueOdds": 13.6,
+          "points": 25.5,
+          "outcomeType": "Under",
+          "tags": [
+            "SGP",
+            "OSB"
+          ]
+        }
+      ]
+    },
+    "16569": {
+      "markets": [
+        {
+          "id": "382675656",
+          "eventId": "34118182",
+          "sportId": "3",
+          "leagueId": "88808",
+          "name": "Jordan Love Passing Yards",
+          "subcategoryId": "16569",
+          "marketType": {
+            "id": "12330",
+            "betOfferTypeId": 0,
+            "name": "Passing Yards Milestones"
+          },
+          "tags": [
+            "SGP",
+            "YourBetEligible",
+            "Cashout",
+            "EarlyExit",
+            "EarlyExitPlus",
+            "FeaturedSubcategory",
+            "IgnoreSortOrderOnPush",
+            "OSB",
+            "PlayerProps"
+          ]
+        }
+      ],
+      "selections": [
+        {
+          "id": "0QA382675656#2336123206_13L88808Q1-2069844962Q20",
+          "marketId": "382675656",
+          "label": "180+",
+          "displayOdds": {
+            "american": "−1360",
+            "decimal": "1.07",
+            "fractional": "5/68",
+            "percentage": "93.1%",
+            "multiplier": "1.07x"
+          },
+          "trueOdds": 1.07352942,
+          "milestoneValue": 180,
+          "tags": [
+            "SGP",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "470097",
+              "name": "Jordan Love",
+              "type": "Player",
+              "venueRole": "HomePlayer"
+            }
+          ]
+        },
+        {
+          "id": "0QA382675656#2336123211_13L88808Q1-921453900Q20",
+          "marketId": "382675656",
+          "label": "190+",
+          "displayOdds": {
+            "american": "−890",
+            "decimal": "1.11",
+            "fractional": "10/89",
+            "percentage": "89%",
+            "multiplier": "1.11x"
+          },
+          "trueOdds": 1.11235956,
+          "milestoneValue": 190,
+          "tags": [
+            "SGP",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "470097",
+              "name": "Jordan Love",
+              "type": "Player",
+              "venueRole": "HomePlayer"
+            }
+          ]
+        }
+      ]
+    },
+    "16570": {
+      "markets": [
+        {
+          "id": "382675455",
+          "eventId": "34118182",
+          "sportId": "3",
+          "leagueId": "88808",
+          "name": "Christian Watson Receiving Yards",
+          "subcategoryId": "16570",
+          "marketType": {
+            "id": "12331",
+            "betOfferTypeId": 0,
+            "name": "Receiving Yards Milestones"
+          },
+          "tags": [
+            "SGP",
+            "YourBetEligible",
+            "Cashout",
+            "EarlyExit",
+            "EarlyExitPlus",
+            "FeaturedSubcategory",
+            "IgnoreSortOrderOnPush",
+            "OSB",
+            "PlayerProps"
+          ]
+        }
+      ],
+      "selections": [
+        {
+          "id": "0QA382675455#2336121142_13L88808Q1-347953252Q20",
+          "marketId": "382675455",
+          "label": "15+",
+          "displayOdds": {
+            "american": "−1820",
+            "decimal": "1.05",
+            "fractional": "5/91",
+            "percentage": "94.7%",
+            "multiplier": "1.05x"
+          },
+          "trueOdds": 1.05494506,
+          "milestoneValue": 15,
+          "tags": [
+            "SGP",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "640851",
+              "name": "Christian Watson",
+              "type": "Player",
+              "venueRole": "HomePlayer"
+            }
+          ]
+        },
+        {
+          "id": "0QA382675455#2336121213_13L88808Q11649361331Q20",
+          "marketId": "382675455",
+          "label": "20+",
+          "displayOdds": {
+            "american": "−1200",
+            "decimal": "1.08",
+            "fractional": "1/12",
+            "percentage": "92.3%",
+            "multiplier": "1.08x"
+          },
+          "trueOdds": 1.08333334,
+          "milestoneValue": 20,
+          "tags": [
+            "SGP",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "640851",
+              "name": "Christian Watson",
+              "type": "Player",
+              "venueRole": "HomePlayer"
+            }
+          ]
+        }
+      ]
+    },
+    "16571": {
+      "markets": [
+        {
+          "id": "382675667",
+          "eventId": "34118182",
+          "sportId": "3",
+          "leagueId": "88808",
+          "name": "Chuba Hubbard Rushing Yards",
+          "subcategoryId": "16571",
+          "marketType": {
+            "id": "12332",
+            "betOfferTypeId": 0,
+            "name": "Rushing Yards Milestones"
+          },
+          "tags": [
+            "SGP",
+            "YourBetEligible",
+            "Cashout",
+            "EarlyExit",
+            "EarlyExitPlus",
+            "FeaturedSubcategory",
+            "IgnoreSortOrderOnPush",
+            "OSB",
+            "PlayerProps"
+          ]
+        }
+      ],
+      "selections": [
+        {
+          "id": "0QA382675667#2336143447_13L88808Q11842635267Q20",
+          "marketId": "382675667",
+          "label": "25+",
+          "displayOdds": {
+            "american": "−2900",
+            "decimal": "1.03",
+            "fractional": "1/29",
+            "percentage": "96.6%",
+            "multiplier": "1.03x"
+          },
+          "trueOdds": 1.03448276,
+          "milestoneValue": 25,
+          "tags": [
+            "SGP",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "560815",
+              "name": "Chuba Hubbard",
+              "type": "Player",
+              "venueRole": "AwayPlayer"
+            }
+          ]
+        },
+        {
+          "id": "0QA382675667#2336138937_13L88808Q1451706787Q20",
+          "marketId": "382675667",
+          "label": "30+",
+          "displayOdds": {
+            "american": "−1480",
+            "decimal": "1.06",
+            "fractional": "5/74",
+            "percentage": "93.6%",
+            "multiplier": "1.06x"
+          },
+          "trueOdds": 1.06756757,
+          "milestoneValue": 30,
+          "tags": [
+            "SGP",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "560815",
+              "name": "Chuba Hubbard",
+              "type": "Player",
+              "venueRole": "AwayPlayer"
+            }
+          ]
+        }
+      ]
+    },
+    "16821": {
+      "markets": [
+        {
+          "id": "382674966",
+          "eventId": "34118182",
+          "sportId": "3",
+          "leagueId": "88808",
+          "name": "Tetairoa McMillan Receptions",
+          "subcategoryId": "16821",
+          "marketType": {
+            "id": "14382",
+            "betOfferTypeId": 0,
+            "name": "Receptions Milestones"
+          },
+          "tags": [
+            "SGP",
+            "YourBetEligible",
+            "Cashout",
+            "EarlyExit",
+            "EarlyExitPlus",
+            "FeaturedSubcategory",
+            "IgnoreSortOrderOnPush",
+            "OSB",
+            "PlayerProps"
+          ]
+        }
+      ],
+      "selections": [
+        {
+          "id": "0QA382674966#2336120005_13L88808Q1-1007188401Q20",
+          "marketId": "382674966",
+          "label": "3+",
+          "displayOdds": {
+            "american": "−1340",
+            "decimal": "1.07",
+            "fractional": "5/67",
+            "percentage": "93.0%",
+            "multiplier": "1.07x"
+          },
+          "trueOdds": 1.07462687,
+          "milestoneValue": 3,
+          "tags": [
+            "SGP",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "886102",
+              "name": "Tetairoa McMillan",
+              "type": "Player",
+              "venueRole": "AwayPlayer"
+            }
+          ]
+        },
+        {
+          "id": "0QA382674966#2336120020_13L88808Q11124471851Q20",
+          "marketId": "382674966",
+          "label": "4+",
+          "displayOdds": {
+            "american": "−446",
+            "decimal": "1.22",
+            "fractional": "50/223",
+            "percentage": "81%",
+            "multiplier": "1.22x"
+          },
+          "trueOdds": 1.22421525,
+          "milestoneValue": 4,
+          "tags": [
+            "SGP",
+            "EarlyExitPlus",
+            "EarlyExit",
+            "OSB"
+          ],
+          "participants": [
+            {
+              "id": "886102",
+              "name": "Tetairoa McMillan",
+              "type": "Player",
+              "venueRole": "AwayPlayer"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "fanduel": {
+    "page": {
+      "attachments": {
+        "events": {
+          "36215311": {
+            "competitionId": 12282733,
+            "eventId": 36215311,
+            "name": "Carolina Panthers @ Green Bay Packers",
+            "openDate": "2026-10-30T00:16:00.000Z"
+          }
+        },
+        "markets": {
+          "801.194058746": {
+            "marketId": "801.194058746",
+            "competitionId": 12282733,
+            "eventId": 36215311,
+            "marketName": "Christian Watson - Alt Receptions",
+            "marketType": "PLAYER_X_ALT_RECEPTIONS_HIGH",
+            "marketStatus": "OPEN",
+            "isBetProtectEligible": true,
+            "runners": [
+              {
+                "selectionId": 61447958,
+                "handicap": 0,
+                "runnerName": "Christian Watson 3+ Receptions",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              },
+              {
+                "selectionId": 61447939,
+                "handicap": 0,
+                "runnerName": "Christian Watson 4+ Receptions",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              }
+            ]
+          },
+          "801.194058743": {
+            "marketId": "801.194058743",
+            "competitionId": 12282733,
+            "eventId": 36215311,
+            "marketName": "Christian Watson - Alt Receiving Yds",
+            "marketType": "PLAYER_X_ALT_RECEIVING_YARDS_HIGH",
+            "marketStatus": "OPEN",
+            "isBetProtectEligible": true,
+            "runners": [
+              {
+                "selectionId": 48614480,
+                "handicap": 0,
+                "runnerName": "Christian Watson 25+ Yards",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              },
+              {
+                "selectionId": 73484469,
+                "handicap": 0,
+                "runnerName": "Christian Watson 30+ Yards",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              }
+            ]
+          },
+          "801.194057494": {
+            "marketId": "801.194057494",
+            "competitionId": 12282733,
+            "eventId": 36215311,
+            "marketName": "Jordan Love - Alt Passing Yds",
+            "marketType": "PLAYER_X_ALT_PASSING_YARDS_HIGH",
+            "marketStatus": "OPEN",
+            "isBetProtectEligible": true,
+            "runners": [
+              {
+                "selectionId": 64185975,
+                "handicap": 0,
+                "runnerName": "Jordan Love 175+ Yards",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              },
+              {
+                "selectionId": 41618204,
+                "handicap": 0,
+                "runnerName": "Jordan Love 200+ Yards",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              }
+            ]
+          },
+          "801.194057495": {
+            "marketId": "801.194057495",
+            "competitionId": 12282733,
+            "eventId": 36215311,
+            "marketName": "Any Time Touchdown Scorer",
+            "marketType": "ANY_TIME_TOUCHDOWN_SCORER",
+            "marketStatus": "OPEN",
+            "isBetProtectEligible": true,
+            "runners": [
+              {
+                "selectionId": 16602542,
+                "handicap": 0,
+                "runnerName": "Josh Jacobs",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              },
+              {
+                "selectionId": 22502305,
+                "handicap": 0,
+                "runnerName": "Chuba Hubbard",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              }
+            ]
+          },
+          "801.194057472": {
+            "marketId": "801.194057472",
+            "competitionId": 12282733,
+            "eventId": 36215311,
+            "marketName": "Alternate Spread",
+            "marketType": "ALTERNATE_HANDICAP",
+            "marketStatus": "OPEN",
+            "isBetProtectEligible": false,
+            "runners": [
+              {
+                "selectionId": 16250620,
+                "handicap": 0,
+                "runnerName": "Carolina Panthers (+29.5)",
+                "result": {
+                  "type": "AWAY"
+                },
+                "runnerStatus": "ACTIVE"
+              },
+              {
+                "selectionId": 16250621,
+                "handicap": 0,
+                "runnerName": "Carolina Panthers (+28.5)",
+                "result": {
+                  "type": "AWAY"
+                },
+                "runnerStatus": "ACTIVE"
+              }
+            ]
+          },
+          "801.194057485": {
+            "marketId": "801.194057485",
+            "competitionId": 12282733,
+            "eventId": 36215311,
+            "marketName": "Alternate Total Points",
+            "marketType": "ALTERNATE_TOTAL",
+            "marketStatus": "OPEN",
+            "isBetProtectEligible": false,
+            "runners": [
+              {
+                "selectionId": 12213256,
+                "handicap": 0,
+                "runnerName": "Over (20.5)",
+                "result": {
+                  "type": "OVER"
+                },
+                "runnerStatus": "ACTIVE"
+              },
+              {
+                "selectionId": 12235570,
+                "handicap": 0,
+                "runnerName": "Over (21.5)",
+                "result": {
+                  "type": "OVER"
+                },
+                "runnerStatus": "ACTIVE"
+              }
+            ]
+          },
+          "801.194058292": {
+            "marketId": "801.194058292",
+            "competitionId": 12282733,
+            "eventId": 36215311,
+            "marketName": "MarShawn Lloyd - Alt Rushing Yds",
+            "marketType": "PLAYER_X_ALT_RUSHING_YARDS_MEDIUM",
+            "marketStatus": "OPEN",
+            "isBetProtectEligible": true,
+            "runners": [
+              {
+                "selectionId": 102305115,
+                "handicap": 0,
+                "runnerName": "MarShawn Lloyd 5+ Yards",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              },
+              {
+                "selectionId": 102305108,
+                "handicap": 0,
+                "runnerName": "MarShawn Lloyd 10+ Yards",
+                "result": {},
+                "runnerStatus": "ACTIVE",
+                "isPlayerSelection": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "prices": [
+      {
+        "marketId": "801.194058746",
+        "marketStatus": "OPEN",
+        "runnerDetails": [
+          {
+            "selectionId": 61447958,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.111111111111111
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 90
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.11
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 90
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -900,
+                "americanOddsInt": -900
+              }
+            }
+          },
+          {
+            "selectionId": 61447939,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.32258064516129
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 31
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.32
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 31
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -310,
+                "americanOddsInt": -310
+              }
+            }
+          }
+        ]
+      },
+      {
+        "marketId": "801.194058743",
+        "marketStatus": "OPEN",
+        "runnerDetails": [
+          {
+            "selectionId": 48614480,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.055555555555556
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 180
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.06
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 180
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -1800,
+                "americanOddsInt": -1800
+              }
+            }
+          },
+          {
+            "selectionId": 73484469,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.1
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 100
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.1
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 100
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -1000,
+                "americanOddsInt": -1000
+              }
+            }
+          }
+        ]
+      },
+      {
+        "marketId": "801.194057494",
+        "marketStatus": "OPEN",
+        "runnerDetails": [
+          {
+            "selectionId": 64185975,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.068965517241379
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 145
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.07
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 145
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -1450,
+                "americanOddsInt": -1450
+              }
+            }
+          },
+          {
+            "selectionId": 41618204,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.153846153846154
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 65
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.15
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 65
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -650,
+                "americanOddsInt": -650
+              }
+            }
+          }
+        ]
+      },
+      {
+        "marketId": "801.194057495",
+        "marketStatus": "OPEN",
+        "runnerDetails": [
+          {
+            "selectionId": 16602542,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.689655172413793
+                },
+                "fractionalOdds": {
+                  "numerator": 100,
+                  "denominator": 145
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.69
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 100,
+                "denominator": 145
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -145,
+                "americanOddsInt": -145
+              }
+            }
+          },
+          {
+            "selectionId": 22502305,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.869565217391304
+                },
+                "fractionalOdds": {
+                  "numerator": 100,
+                  "denominator": 115
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.87
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 100,
+                "denominator": 115
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -115,
+                "americanOddsInt": -115
+              }
+            }
+          }
+        ]
+      },
+      {
+        "marketId": "801.194057472",
+        "marketStatus": "OPEN",
+        "runnerDetails": [
+          {
+            "selectionId": 16250620,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.01
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 1000
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.01
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 1000
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -10000,
+                "americanOddsInt": -10000
+              }
+            }
+          },
+          {
+            "selectionId": 16250621,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.01
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 1000
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.01
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 1000
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -10000,
+                "americanOddsInt": -10000
+              }
+            }
+          }
+        ]
+      },
+      {
+        "marketId": "801.194057485",
+        "marketStatus": "OPEN",
+        "runnerDetails": [
+          {
+            "selectionId": 12213256,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.002
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 5000
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.002
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 5000
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -50000,
+                "americanOddsInt": -50000
+              }
+            }
+          },
+          {
+            "selectionId": 12235570,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.002
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 5000
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.002
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 5000
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -50000,
+                "americanOddsInt": -50000
+              }
+            }
+          }
+        ]
+      },
+      {
+        "marketId": "801.194058292",
+        "marketStatus": "OPEN",
+        "runnerDetails": [
+          {
+            "selectionId": 102305115,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.133333333333333
+                },
+                "fractionalOdds": {
+                  "numerator": 10,
+                  "denominator": 75
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.13
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 10,
+                "denominator": 75
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -750,
+                "americanOddsInt": -750
+              }
+            }
+          },
+          {
+            "selectionId": 102305108,
+            "handicap": 0,
+            "runnerStatus": "ACTIVE",
+            "winRunnerOdds": {
+              "trueOdds": {
+                "decimalOdds": {
+                  "decimalOdds": 1.363636363636364
+                },
+                "fractionalOdds": {
+                  "numerator": 100,
+                  "denominator": 275
+                }
+              },
+              "decimalDisplayOdds": {
+                "decimalOdds": 1.36
+              },
+              "fractionalDisplayOdds": {
+                "numerator": 100,
+                "denominator": 275
+              },
+              "americanDisplayOdds": {
+                "americanOdds": -275,
+                "americanOddsInt": -275
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

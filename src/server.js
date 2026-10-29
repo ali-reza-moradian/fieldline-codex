@@ -5,6 +5,9 @@ import { OddsStore } from "./store.js";
 import { Metrics } from "./metrics.js";
 import { DraftKings } from "./adapters/draftkings.js";
 import { FanDuel } from "./adapters/fanduel.js";
+import { ExtrasService } from "./extras-service.js";
+import { PriceHistory } from "./price-history.js";
+import { HistoryPersistence } from "./history-persistence.js";
 
 // Counters and timestamps stay available in snapshots and /api/metrics. Only
 // fields that change how a source can be displayed or trusted need a full frame.
@@ -32,8 +35,12 @@ export function createApp({
   ingest = true,
   collectorFactory = (sink) => [new DraftKings(sink), new FanDuel(sink)],
   streamScheduler = { setInterval, clearInterval },
+  extrasFactory = options => new ExtrasService(options),
+  priceHistory = new PriceHistory(),
+  persistenceFactory = options => new HistoryPersistence(options),
 } = {}) {
   const clients = new Set();
+  const extras = extrasFactory({ store });
   const files = new Map([
     ["/", ["../public/index.html", "text/html; charset=utf-8"]],
     ["/app.js", ["../public/app.js", "text/javascript; charset=utf-8"]],
@@ -41,6 +48,9 @@ export function createApp({
     ["/stream.js", ["../public/stream.js", "text/javascript; charset=utf-8"]],
     ["/style.css", ["../public/style.css", "text/css; charset=utf-8"]],
     ["/model.js", ["./model.js", "text/javascript; charset=utf-8"]],
+    ["/analytics.js", ["./analytics.js", "text/javascript; charset=utf-8"]],
+    ["/ui-controls.js", ["../public/ui-controls.js", "text/javascript; charset=utf-8"]],
+    ["/extras-panel.js", ["../public/extras-panel.js", "text/javascript; charset=utf-8"]],
   ]);
   const security = {
     "X-Content-Type-Options": "nosniff",
@@ -81,6 +91,9 @@ export function createApp({
     broadcast(type, data);
   };
   store.on("message", onMessage);
+  const detachHistory = priceHistory.attach(store);
+  const persistence = persistenceFactory({ history: priceHistory, connectionString: process.env.HISTORY_DATABASE_URL });
+  persistence.start();
   const freshness = streamScheduler.setInterval(() => {
     if (!freshnessPending) return;
     freshnessPending = false;
@@ -107,6 +120,31 @@ export function createApp({
       res.end(JSON.stringify(data));
     };
     try {
+      if (req.method === "GET" && url.pathname === "/api/history") {
+        const gameId = url.searchParams.get("gameId"), market = url.searchParams.get("market"), side = url.searchParams.get("side");
+        if (!gameId || gameId.length > 150 || !['moneyline','spread','total'].includes(market) ||
+          !(market === 'total' ? ['over','under'] : ['home','away']).includes(side))
+          return json(400, { error: "A gameId, market and matching side are required" });
+        try { return json(200, { ...priceHistory.query({ gameId, market, side,
+          hours: url.searchParams.has('hours') ? Number(url.searchParams.get('hours')) : 48,
+          maxPoints: url.searchParams.has('maxPoints') ? Number(url.searchParams.get('maxPoints')) : 3000 }),
+          storage: persistence.status() }); }
+        catch (error) { if (error instanceof RangeError || error instanceof TypeError) return json(400, { error: error.message }); throw error; }
+      }
+      if (req.method === "GET" && url.pathname === "/api/extras/events") {
+        const gameId = url.searchParams.get("gameId");
+        if (!gameId || gameId.length > 150) return json(400, { error: "A valid gameId is required" });
+        if (extras.report().viewers >= 100) return json(503, { error: "Extra-market viewer capacity reached" });
+        const watch = extras.watch(gameId, res);
+        if (watch.status !== 200) return json(watch.status, { error: watch.error });
+        res.writeHead(200, { ...security, "Cache-Control": "no-store, no-transform",
+          "Content-Type": "text/event-stream", Connection: "keep-alive", "X-Accel-Buffering": "no" });
+        res.flushHeaders(); req.socket.setNoDelay(true);
+        extras.write(res, serialize("snapshot", watch.snapshot));
+        req.on("close", watch.release); res.on("close", watch.release);
+        res.on("error", () => { watch.release(); res.destroy(); });
+        return;
+      }
       if (req.method === "GET" && url.pathname === "/api/events") {
         if (clients.size >= 500)
           return json(503, { error: "Viewer capacity reached; retry shortly" });
@@ -135,6 +173,8 @@ export function createApp({
           version: process.env.RENDER_GIT_COMMIT ?? process.env.GIT_COMMIT ?? null,
           ...metrics.report(store.history, store.sources),
           viewers: clients.size,
+          extras: extras.report(),
+          history: { ...priceHistory.limits(), retentionHours: 48, storage: persistence.status() },
         });
       if (req.method === "GET" && url.pathname === "/api/health") {
         const now = Date.now();
@@ -192,22 +232,25 @@ export function createApp({
     // Transport liveness only. This does not confirm either bookmaker or
     // advance the board revision, and it remains visible to EventSource users.
     if (clients.size) broadcast("heartbeat", { sentAt: Date.now() });
+    extras.heartbeat();
   }, 2000);
   heartbeat.unref?.();
   const collectors = ingest ? collectorFactory(store) : [];
   for (const collector of collectors) collector.start();
-  function shutdown() {
+  async function shutdown() {
     for (const collector of collectors) collector.stop();
+    extras.stop();
     streamScheduler.clearInterval(heartbeat);
     streamScheduler.clearInterval(freshness);
     store.off("message", onMessage);
+    detachHistory();
     for (const client of clients) client.end();
-    return new Promise((resolve) => {
+    await Promise.all([persistence.close(), new Promise((resolve) => {
       server.close(resolve);
       server.closeIdleConnections();
-    });
+    })]);
   }
-  return { server, store, metrics, shutdown };
+  return { server, store, metrics, extras, shutdown };
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

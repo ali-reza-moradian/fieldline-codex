@@ -1,0 +1,81 @@
+{
+  "observedAt": "2026-10-29T19:43:41.183Z",
+  "version": "2bffe9c2f89d531959092819afe10fa8e7e97ab4",
+  "environment": "Render Ohio service; one public SSE observer on the development Mac. No Mac collector.",
+  "windowSeconds": 60,
+  "counts": {
+    "snapshot": 1,
+    "heartbeat": 30,
+    "freshness": 220
+  },
+  "applicationBytesByType": {
+    "snapshot": 110772,
+    "heartbeat": 1470,
+    "freshness": 64020
+  },
+  "applicationBytesExcludingSnapshot": 65490,
+  "applicationBytesPerSecondExcludingSnapshot": 1091.5,
+  "maxObservedReceiveGapMs": 677.203125,
+  "pollingDelta": {
+    "cyclesStarted": 237,
+    "successfulCycles": 237,
+    "failedCycles": 0,
+    "partialCycles": 0,
+    "rateLimitedCycles": 0
+  },
+  "healthBefore": {
+    "ready": true,
+    "books": {
+      "draftkings": {
+        "region": "Ontario",
+        "fresh": true,
+        "complete": true,
+        "games": 29,
+        "quotes": 174,
+        "ageMs": 1455,
+        "pushVerified": null
+      },
+      "fanduel": {
+        "region": "Ontario",
+        "fresh": true,
+        "complete": true,
+        "games": 29,
+        "quotes": 174,
+        "ageMs": 546,
+        "pushVerified": true
+      }
+    },
+    "version": "2bffe9c2f89d531959092819afe10fa8e7e97ab4"
+  },
+  "healthAfter": {
+    "ready": true,
+    "books": {
+      "draftkings": {
+        "region": "Ontario",
+        "fresh": true,
+        "complete": true,
+        "games": 29,
+        "quotes": 174,
+        "ageMs": 2062,
+        "pushVerified": null
+      },
+      "fanduel": {
+        "region": "Ontario",
+        "fresh": true,
+        "complete": true,
+        "games": 29,
+        "quotes": 174,
+        "ageMs": 280,
+        "pushVerified": true
+      }
+    },
+    "version": "2bffe9c2f89d531959092819afe10fa8e7e97ab4"
+  },
+  "actualPriceChangeMessages": [],
+  "limits": [
+    "One bounded pregame observation; no causal or comparative price-speed claim.",
+    "Byte counts cover UTF-8 SSE application frames, not HTTP/TLS overhead.",
+    "Polling metadata spans begin before and end after the fixed SSE window.",
+    "Receive intervals are observer measurements, not bookmaker-change latency."
+  ]
+}

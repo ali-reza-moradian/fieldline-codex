@@ -63,6 +63,10 @@
             </select><label class="format-field"><span>Odds</span><select id="odds-format" aria-label="Odds format"><option value="american">American</option><option value="decimal">Decimal</option></select></label>
           </div>
         </div>
+        <div class="display-tools" aria-label="Board preferences">
+          <div class="display-group"><button type="button" id="starred-toggle" aria-pressed="false">★ Starred <span id="star-count">0</span></button><label>Layout <select id="layout-choice"><option value="board">Board</option><option value="grid">Comparison grid</option></select></label><label>Sort <select id="sort-choice"><option value="kickoff">Kickoff</option><option value="hold">Lowest margin</option><option value="ev">Highest estimated EV</option></select></label></div>
+          <div class="display-group"><button type="button" id="density-toggle" aria-pressed="false" title="Compact density (C)">Compact</button><button type="button" id="theme-toggle" aria-pressed="false" title="Dark appearance (D)">Dark</button><button type="button" id="help-toggle" aria-haspopup="dialog" aria-controls="keyboard-help">Keys <kbd>?</kbd></button></div>
+        </div>
         <div class="board-caption">
           <span
             ><span class="green-dot"></span> Best price compares the same
@@ -92,7 +96,8 @@
           <summary><strong>Recent moves <span id="move-count">0</span></strong><span>Since this page opened</span></summary>
           <div id="recent-moves"><p>No changes observed yet. This tab starts with current prices.</p></div>
         </details>
-        <div class="history-hint">Select any price to explore its history in this tab.</div>
+        <details id="analytics-guide" class="analytics-guide"><summary><strong>Market estimates</strong><span>Margin · fair chance · estimated EV</span></summary><div><p><strong>These are price-based estimates, not predictions.</strong> Fair chance removes each book’s implied margin, then averages the two books. Estimated EV combines that chance with the best available price. Estimates assume a settled win or loss; pushes and voids are excluded. Neither guarantees a profitable bet.</p><p>Implied margin adds the best prices’ implied chances and subtracts 100%. A negative value marks an arbitrage candidate only: both sides, point line, period and settlement must agree. Availability, limits, voids and final settlement can change. Missing, stale or paused prices are excluded. Extra player markets are not included in these estimates.</p><p>Open this panel to show the estimates below each game. Starred games stay at the top; the sort menu orders the remaining games.</p></div></details>
+        <div class="history-hint">Select a price for available history up to 48 hours. More markets loads extra lines and player props for one game at a time.</div>
         <div class="table-head" aria-hidden="true">
           <span>MATCHUP / TORONTO TIME</span><span>MONEYLINE</span
           ><span>SPREAD</span><span>TOTAL</span>
@@ -131,5 +136,11 @@
         ><span>Built by Alireza Moradian · NFL comparison prototype</span>
       </footer>
     </main>
+    <dialog id="keyboard-help" aria-labelledby="keyboard-title">
+      <div class="help-heading"><h2 id="keyboard-title">Keyboard shortcuts</h2><button type="button" id="help-close" aria-label="Close keyboard help">×</button></div>
+      <p>Shortcuts work when you are not typing in a field.</p>
+      <dl class="shortcut-list"><dt><kbd>/</kbd></dt><dd>Find a team</dd><dt><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></dt><dd>Best price / DraftKings / FanDuel</dd><dt><kbd>S</kbd></dt><dd>Star the game you are focused on</dd><dt><kbd>C</kbd></dt><dd>Toggle compact spacing</dd><dt><kbd>D</kbd></dt><dd>Toggle dark appearance</dd><dt><kbd>?</kbd></dt><dd>Show this help</dd><dt><kbd>Esc</kbd></dt><dd>Clear team search, or close the panel you are in</dd></dl>
+      <p>Use Tab to move through controls and Enter or Space to activate a button. Preferences and starred games are saved on this device.</p>
+    </dialog>
   </body>
 </html>

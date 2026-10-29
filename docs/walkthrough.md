@@ -1,6 +1,6 @@
 # Understand and demonstrate Fieldline
 
-This guide explains the implemented code. It is not a claim that every requirement has been verified. The README's current status and saved measurements are the record of what actually works.
+This guide explains the implemented code. It is not a claim that every requirement has been verified. The README's current status and saved measurements are the record of what actually works. The new optional-feature and retained-history release is implemented, but its deployment, browser, accuracy and performance verification is pending; earlier reports verify earlier releases.
 
 ## The whole system in one minute
 
@@ -10,7 +10,7 @@ Both feeds now use Ontario prices. The server can remain in Ohio: where the serv
 
 Both books supply an initial list of games and prices, then push changes over persistent connections. FanDuel also checks HTTP prices every quarter-second, even while push works: a connected push feed may still be late. Both paths can deliver changes, and polling continues during a push outage. The server pushes board changes to browsers immediately.
 
-The shared data lives in memory. We only need the current board for this prototype, so adding a database would add work without solving a current requirement. A restart fetches the current state again.
+The current board lives in memory and is fetched afresh after a restart. A separate, optional PostgreSQL database preserves observed price history. Restoring old history never makes an old price live or changes a source's health.
 
 ## What an odds update means
 
@@ -26,9 +26,21 @@ The odds-format control changes how a price is written; it does not change which
 
 An upward arrow means a higher payout for the same bet, with the previous price shown beside it. A downward arrow means a lower payout. A move from −120 to −110 is an improvement; −100 and +100 pay the same and get no directional arrow. A changed point line is a separate “line changed” event. Pauses and reopenings are availability events, not better or worse prices. These cues last eight seconds and are also included in accessible button names.
 
-Select a price or **Price history** to see observations collected by this tab. **Recent moves** shows observed transitions. Both are explicitly labeled “since this page opened”: there is no saved sportsbook history before that moment, and reloading clears them. The chart retains up to 60 minutes and 120 observations per selection/book, with a total cap of 512 selection series. Recent moves retain 30 transitions and display the latest eight for the selected source view.
+Select a price or **Price history** to see actual server observations from up to **48 hours**. Retention is bounded to 3,000 points per book/game/market/side, 1,024 series and 150,000 points in total, so a busy series or a new deployment may show less. There is no invented history before collection started. The chart may temporarily show a labeled current-tab view while saved observations load. **Recent moves** is still tab-local: it retains 30 observed transitions, displays the latest eight for the selected source view, and resets when the page reloads.
 
-A reconnect or stale source creates a gap. The next available state establishes a new baseline; the app does not claim it saw the changes missed during the gap. Different point lines also start separate chart segments. The other book can continue recording while one source is unavailable. Charts use decimal prices and record receipt by this tab, not the exact time the sportsbook changed its price. These controls add no source polling.
+Source outages, stale periods, suspension, removal and changed point lines create gaps. A fresh eligible observation starts a new segment. The chart never fills an outage or stretches an old price to the present. A browser reconnect reloads server history; it does not invent missed transitions in Recent moves. Chart timestamps mean when the server observed a price, not when the sportsbook's trading system changed it. Opening a chart does not add sportsbook requests.
+
+Cloud history checkpoints run every 60 seconds, separately from live delivery, with verified TLS and bounded database operations. A crash can lose the latest minute of observations, or more if storage has been unavailable. If storage fails, the board and in-memory history continue; the chart explains that limitation. The free Render PostgreSQL instance expires **November 28, 2026**, so retained history needs migration or export before then. A new deployment's storage status still needs verification.
+
+## Optional controls and more markets
+
+The eight added groups are alternate lines, player props, starred games, compact density, light/dark themes, board/grid layouts, keyboard shortcuts, and main-market analytics with margin/EV sorting. Stars and display preferences stay in this browser. Shortcuts avoid changing the board while you type; use the help control to see them.
+
+**More markets** loads alternate spreads/totals and supported player ladders for touchdowns, passing/rushing/receiving yards and receptions. A label such as **50+** means at least 50; the implementation does not claim to cover every ordinary over/under prop. Prices are compared only for the same player or team, side, line and contract. Different early-exit or house protection rules are shown separately and are not ranked. This remains an NFL board; no other-league support is claimed.
+
+These markets use a separate cloud child process and stream, refresh nominally every **15 seconds**, and become ineligible after **45 seconds** without confirmation. Work is shared across viewers, with at most **two active games** across the service. Closing the last viewer's panel stops collection for that game. An extra-market failure does not change main-feed health. The main push connections and FanDuel's parallel quarter-second checks are unchanged; measured performance still needs to confirm the new release's resource cost.
+
+The analytics need both books' complete, active, fresh prices on the same two-outcome contract. Implied margin describes quoted prices. Fair probabilities remove each book's quoted margin and average the results; EV is a market-derived estimate conditional on a settled win/loss, not an independent prediction. Pushes, tie-voids and cancellations are not modeled. An arbitrage candidate is not a guarantee that both prices can be executed or settle identically.
 
 ## Why the two collectors are different
 
@@ -70,13 +82,13 @@ At 8:06 p.m. Toronto time on October 28, the earlier New Jersey FanDuel configur
 
 After the Ontario migration, independent checks matched all 174 FanDuel quotes and all 174 DraftKings quotes against fresh official Ontario responses, and the complete test suite passed 65 tests. The public board showed 29 matched games and 348 prices. A 330-second Ontario observation received two DraftKings changed-price messages in about 28–31 ms after backend receipt, with at least ±29 ms clock uncertainty. No FanDuel changed-price message was observed during that window, so its Ontario change-delivery time remains unmeasured. An acknowledged Ontario push connection proves subscription setup, not delivery speed. Use these current results and keep the older New Jersey measurements clearly identified.
 
-A later [Ontario observation](measurements/render-ontario-first-push.json), at 10:21–10:26 p.m. Toronto time on October 28, did receive actual FanDuel price pushes through the public stream: Green Bay's moneyline moved from −190 to −200 and Carolina's from +160 to +168. Store processing took about 2.12 and 4.82 ms. This proves the Ontario push path delivered changed prices; it does not measure bookmaker-to-screen latency. The two updates were on one pregame game, before the quarter-second polling change. The current local test suite now passes 86 tests, including scheduling, presentation, source gaps and reconnect-history cases; the 65-test migration result is historical.
+A later [Ontario observation](measurements/render-ontario-first-push.json), at 10:21–10:26 p.m. Toronto time on October 28, did receive actual FanDuel price pushes through the public stream: Green Bay's moneyline moved from −190 to −200 and Carolina's from +160 to +168. Store processing took about 2.12 and 4.82 ms. This proves the Ontario push path delivered changed prices; it does not measure bookmaker-to-screen latency. The two updates were on one pregame game, before the quarter-second polling change. The later 86-test release covered scheduling, presentation, source gaps and reconnect-history cases; both that count and the 65-test migration result are historical.
 
-The UI and quarter-second checks are now deployed as `1365228`. The [new deployment report](measurements/render-ui-speed-deployment-verification.json) confirms both Ontario feeds and identical boards for two viewers; fresh independent source checks again matched all 348 quotes. All 86 automated tests passed. Browser replay checks exercised payout arrows, separate line and availability changes, stale-source exclusion, reconnects and history at desktop and 375px widths. The new reports describe this release; the older measurements above retain their original settings and limitations.
+The UI and quarter-second checks were deployed as `1365228`. The [new deployment report](measurements/render-ui-speed-deployment-verification.json) confirms both Ontario feeds and identical boards for two viewers; fresh independent source checks again matched all 348 quotes. All 86 automated tests passed. Browser replay checks exercised payout arrows, separate line and availability changes, stale-source exclusion, reconnects and history at desktop and 375px widths. Those reports describe that release; the older measurements above retain their original settings and limitations.
 
 The [post-deployment observation](measurements/render-ui-speed-pregame-observation.json) ran two fixed five-minute windows. Across their baseline and grace metadata spans, 2,532 complete FanDuel checks succeeded without failures, partial responses or rate limits. Neither window contained a price change, so they cannot establish actual change-delivery speed. One receive gap crossed the end of the first window; the server continued collecting and sending timestamped status messages, which reached the observer later in a burst. The delivery layer causing that delay is still unresolved. This is why a configured quarter-second interval is not a promise that every viewer sees every update within a quarter-second.
 
-The subsequent stream-recovery release is **`2bffe9c`**, verified October 29 at 11:44 a.m. Toronto time. All 106 automated tests pass, and fresh independent checks again matched all 348 Ontario quotes. It sends smaller routine confirmations, detects silently open browser streams and uses bounded clock checks. A controlled 50-cycle test used 82.4% fewer SSE application bytes; changed prices and source failures still bypass that batching. The [one-minute public check](measurements/render-stream-recovery-observation.json) observed 218 compact confirmations, 30 transport heartbeats and 239 successful complete FanDuel cycles across the surrounding metadata span, with no failed, partial or rate-limited cycles. There were no actual price changes, so this is traffic and health evidence, not proof of faster price delivery. Chrome fault injection verified reconnection to a current snapshot without inventing movements missed during the outage. Safari's background timers could be suspended; returning to the tab detected the gap, so the 12-second deadline is not an absolute background-time guarantee.
+The subsequent stream-recovery release is **`2bffe9c`**, verified October 29 at 11:44 a.m. Toronto time. That release passed all 106 automated tests, and fresh independent checks again matched all 348 Ontario quotes. It sends smaller routine confirmations, detects silently open browser streams and uses bounded clock checks. A controlled 50-cycle test used 82.4% fewer SSE application bytes; changed prices and source failures still bypass that batching. The [one-minute public check](measurements/render-stream-recovery-observation.json) observed 218 compact confirmations, 30 transport heartbeats and 239 successful complete FanDuel cycles across the surrounding metadata span, with no failed, partial or rate-limited cycles. There were no actual price changes, so this is traffic and health evidence, not proof of faster price delivery. Chrome fault injection verified reconnection to a current snapshot without inventing movements missed during the outage. Safari's background timers could be suspended; returning to the tab detected the gap, so the 12-second deadline is not an absolute background-time guarantee.
 
 ## Demo sequence
 
@@ -84,9 +96,9 @@ The subsequent stream-recovery release is **`2bffe9c`**, verified October 29 at 
 2. Check both source indicators before comparing prices. Open Best Price, DraftKings and FanDuel in turn.
 3. Find a game present at both books. Compare moneyline, spread and total rows. Explain why different point lines are separate.
 4. Switch between American and decimal odds. Copy the resulting URL to show that source and format are shareable.
-5. Select a price to open its history, and open Recent moves. Explain the tab-local baseline and why there may be only one observation or no moves yet. Do not present a fixture replay as a real sportsbook change.
-6. Open a second tab. Both tabs share the server's collectors and receive pushed updates; each tab starts its own observation history.
-7. Open `/api/metrics` to show source health and sample counts. A zero live sample count means “not measured.”
+5. Select a price to open its server history, then open Recent moves. Explain the difference between retained server observations and this tab's recent transitions, along with visible gaps and storage status. Do not present a fixture replay as a real sportsbook change.
+6. Open a second tab. Both tabs share the main collectors and retained server history; Recent moves starts separately in each tab. Try the themes, density, layouts, stars and shortcut help.
+7. Open More markets for one game. Explain its slower refresh and separate health, inclusive N+ labels and contract restrictions. Open `/api/metrics` to show main health and sample counts; a zero live sample count means “not measured.”
 8. Show the public Render page with both sources connected. Explain the snapshot transport fix, the free host's sleep limitation, and the distinction between verified pregame data and still-outstanding in-game measurements.
 
 For the remaining live-game check, observe both source pages and the board during an actual NFL game. Verify live status, suspensions and reopenings, changed prices, and changed lines. Save the measurement report with its environment, observation window and sample counts. A fixture replay can test logic but cannot replace this observation.
@@ -99,7 +111,9 @@ For the remaining live-game check, observe both source pages and the board durin
 - What does a healthy connection tell us, and what does it not tell us about an unchanged quote?
 - Why does a fast FanDuel request not prove how quickly a changed price reaches us?
 - What evidence would establish live-game performance?
-- Why does this prototype use memory instead of a database?
+- Why is the current board rebuilt from live feeds while historical observations can be restored from a database?
+- Why can two props with the same player and number still have different settlement rules?
+- Why is a market-derived EV estimate not an independent forecast?
 - If we ran three web servers, how would we avoid starting three collectors per book?
 
 For the final question: separate ingestion from serving, keep one owner per source, and distribute updates to the web servers through a shared message service. That is a next step, not functionality claimed by this version.
