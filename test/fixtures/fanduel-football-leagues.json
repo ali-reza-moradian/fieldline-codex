@@ -1,0 +1,2652 @@
+{
+  "observedAt": "2026-10-29T21:46:57.752Z",
+  "region": "Ontario",
+  "leagues": {
+    "ncaaf": {
+      "discovery": {
+        "attachments": {
+          "events": {
+            "35632913": {
+              "eventId": 35632913,
+              "name": "Miami Florida @ Notre Dame",
+              "eventTypeId": 6423,
+              "competitionId": 12529073,
+              "countryCode": "GB",
+              "openDate": "2026-11-08T00:30:00.000Z",
+              "videoAvailable": false,
+              "statsAvailable": false
+            },
+            "36236491": {
+              "eventId": 36236491,
+              "name": "Florida Atlantic @ North Texas",
+              "eventTypeId": 6423,
+              "competitionId": 12529073,
+              "countryCode": "GB",
+              "openDate": "2026-10-29T23:30:00.000Z",
+              "videoAvailable": false,
+              "statsAvailable": false
+            },
+            "36237568": {
+              "eventId": 36237568,
+              "name": "Houston Christian @ Stephen F. Austin",
+              "eventTypeId": 6423,
+              "competitionId": 12623176,
+              "countryCode": "GB",
+              "openDate": "2026-10-31T19:01:00.000Z",
+              "videoAvailable": false,
+              "statsAvailable": false
+            }
+          },
+          "markets": {
+            "801.193891067": {
+              "marketId": "801.193891067",
+              "eventTypeId": 6423,
+              "competitionId": 12529073,
+              "eventId": 36236491,
+              "marketName": "Moneyline",
+              "marketTime": "2026-10-29T23:30:00.000Z",
+              "marketType": "MONEY_LINE",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": 10,
+              "bettingType": "ODDS",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 2560730,
+                  "handicap": 0,
+                  "runnerName": "Florida Atlantic",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/florida_atlantic.png",
+                  "nameAbbr": "Florida Atlantic",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": 420,
+                      "americanOddsInt": 420
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 5.2
+                      },
+                      "fractionalOdds": {
+                        "numerator": 42,
+                        "denominator": 10
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 593458,
+                  "handicap": 0,
+                  "runnerName": "North Texas",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/north_texas.png",
+                  "nameAbbr": "North Texas",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -550,
+                      "americanOddsInt": -550
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.181818181818182
+                      },
+                      "fractionalOdds": {
+                        "numerator": 10,
+                        "denominator": 55
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 36236491,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619462268"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193891068": {
+              "marketId": "801.193891068",
+              "eventTypeId": 6423,
+              "competitionId": 12529073,
+              "eventId": 36236491,
+              "marketName": "Spread",
+              "marketTime": "2026-10-29T23:30:00.000Z",
+              "marketType": "MATCH_HANDICAP_(2-WAY)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": 20,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 2560730,
+                  "handicap": 14.5,
+                  "runnerName": "Florida Atlantic",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/florida_atlantic.png",
+                  "nameAbbr": "Florida Atlantic",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -118,
+                      "americanOddsInt": -118
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.847457627118644
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 118
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 593458,
+                  "handicap": -14.5,
+                  "runnerName": "North Texas",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/north_texas.png",
+                  "nameAbbr": "North Texas",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -104,
+                      "americanOddsInt": -104
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.961538461538462
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 104
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 36236491,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619462269"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193891069": {
+              "marketId": "801.193891069",
+              "eventTypeId": 6423,
+              "competitionId": 12529073,
+              "eventId": 36236491,
+              "marketName": "Total Points",
+              "marketTime": "2026-10-29T23:30:00.000Z",
+              "marketType": "TOTAL_POINTS_(OVER/UNDER)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": 30,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 7017916,
+                  "handicap": 78.5,
+                  "runnerName": "Over",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "OVER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -105,
+                      "americanOddsInt": -105
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.952380952380952
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 105
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 7017917,
+                  "handicap": 78.5,
+                  "runnerName": "Under",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "UNDER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -115,
+                      "americanOddsInt": -115
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.869565217391304
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 115
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 36236491,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619462270"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.169873640": {
+              "marketId": "801.169873640",
+              "eventTypeId": 6423,
+              "competitionId": 12529073,
+              "eventId": 35632913,
+              "marketName": "Moneyline",
+              "marketTime": "2026-11-08T00:30:00.000Z",
+              "marketType": "MONEY_LINE",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": 10,
+              "bettingType": "ODDS",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 558823,
+                  "handicap": 0,
+                  "runnerName": "Miami Florida",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/miami_fl.png",
+                  "nameAbbr": "Miami (FL)",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": 132,
+                      "americanOddsInt": 132
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 2.32
+                      },
+                      "fractionalOdds": {
+                        "numerator": 132,
+                        "denominator": 100
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 484735,
+                  "handicap": 0,
+                  "runnerName": "Notre Dame",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/notre_dame.png",
+                  "nameAbbr": "Notre Dame",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -160,
+                      "americanOddsInt": -160
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.625
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 160
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 35632913,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.579972737"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.169873638": {
+              "marketId": "801.169873638",
+              "eventTypeId": 6423,
+              "competitionId": 12529073,
+              "eventId": 35632913,
+              "marketName": "Spread",
+              "marketTime": "2026-11-08T00:30:00.000Z",
+              "marketType": "MATCH_HANDICAP_(2-WAY)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": 20,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 558823,
+                  "handicap": 3.5,
+                  "runnerName": "Miami Florida",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/miami_fl.png",
+                  "nameAbbr": "Miami (FL)",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -122,
+                      "americanOddsInt": -122
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.819672131147541
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 122
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 484735,
+                  "handicap": -3.5,
+                  "runnerName": "Notre Dame",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/notre_dame.png",
+                  "nameAbbr": "Notre Dame",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": 100,
+                      "americanOddsInt": 100
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 2
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 100
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 35632913,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.579972738"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.169873637": {
+              "marketId": "801.169873637",
+              "eventTypeId": 6423,
+              "competitionId": 12529073,
+              "eventId": 35632913,
+              "marketName": "Total Points",
+              "marketTime": "2026-11-08T00:30:00.000Z",
+              "marketType": "TOTAL_POINTS_(OVER/UNDER)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": 30,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 7017916,
+                  "handicap": 55.5,
+                  "runnerName": "Over",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "OVER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -106,
+                      "americanOddsInt": -106
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.943396226415094
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 106
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 7017917,
+                  "handicap": 55.5,
+                  "runnerName": "Under",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "UNDER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -114,
+                      "americanOddsInt": -114
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.87719298245614
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 114
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 35632913,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.579972739"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193928421": {
+              "marketId": "801.193928421",
+              "eventTypeId": 6423,
+              "competitionId": 12623176,
+              "eventId": 36237568,
+              "marketName": "Moneyline",
+              "marketTime": "2026-10-31T19:01:00.000Z",
+              "marketType": "MONEY_LINE",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": 10,
+              "bettingType": "ODDS",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 72444768,
+                  "handicap": 0,
+                  "runnerName": "Houston Christian",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/houston_christian.png",
+                  "nameAbbr": "Houston Christian",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": 1400,
+                      "americanOddsInt": 1400
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 15
+                      },
+                      "fractionalOdds": {
+                        "numerator": 140,
+                        "denominator": 10
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 5814940,
+                  "handicap": 0,
+                  "runnerName": "Stephen F. Austin",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/stephen_f_austin_lumberjacks.png",
+                  "nameAbbr": "Stephen F. Austin",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -6000,
+                      "americanOddsInt": -6000
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.016666666666667
+                      },
+                      "fractionalOdds": {
+                        "numerator": 10,
+                        "denominator": 600
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": false,
+              "associatedMarkets": [
+                {
+                  "eventId": 36237568,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619516591"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193928420": {
+              "marketId": "801.193928420",
+              "eventTypeId": 6423,
+              "competitionId": 12623176,
+              "eventId": 36237568,
+              "marketName": "Total Points",
+              "marketTime": "2026-10-31T19:01:00.000Z",
+              "marketType": "TOTAL_POINTS_(OVER/UNDER)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": 30,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 7017916,
+                  "handicap": 54.5,
+                  "runnerName": "Over",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "OVER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -113,
+                      "americanOddsInt": -113
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.884955752212389
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 113
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 7017917,
+                  "handicap": 54.5,
+                  "runnerName": "Under",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "UNDER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -113,
+                      "americanOddsInt": -113
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.884955752212389
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 113
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": false,
+              "associatedMarkets": [
+                {
+                  "eventId": 36237568,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619516594"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193928419": {
+              "marketId": "801.193928419",
+              "eventTypeId": 6423,
+              "competitionId": 12623176,
+              "eventId": 36237568,
+              "marketName": "Spread",
+              "marketTime": "2026-10-31T19:01:00.000Z",
+              "marketType": "MATCH_HANDICAP_(2-WAY)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": 20,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 72444768,
+                  "handicap": 27.5,
+                  "runnerName": "Houston Christian",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/houston_christian.png",
+                  "nameAbbr": "Houston Christian",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -106,
+                      "americanOddsInt": -106
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.943396226415094
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 106
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 5814940,
+                  "handicap": -27.5,
+                  "runnerName": "Stephen F. Austin",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/ncaaf/stephen_f_austin_lumberjacks.png",
+                  "nameAbbr": "Stephen F. Austin",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -120,
+                      "americanOddsInt": -120
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.833333333333333
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 120
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": false,
+              "associatedMarkets": [
+                {
+                  "eventId": 36237568,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619516592"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            }
+          }
+        }
+      },
+      "prices": [
+        {
+          "marketId": "801.193891067",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 2560730,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 5.2
+                  },
+                  "fractionalOdds": {
+                    "numerator": 42,
+                    "denominator": 10
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 5.2
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 42,
+                  "denominator": 10
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": 420,
+                  "americanOddsInt": 420
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 593458,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.181818181818182
+                  },
+                  "fractionalOdds": {
+                    "numerator": 10,
+                    "denominator": 55
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.18
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 10,
+                  "denominator": 55
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -550,
+                  "americanOddsInt": -550
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "betDelay": 1,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "FIXED_ODDS"
+        },
+        {
+          "marketId": "801.193891068",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 2560730,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.847457627118644
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 118
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.85
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 118
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -118,
+                  "americanOddsInt": -118
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 14.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 593458,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.961538461538462
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 104
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.96
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 104
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -104,
+                  "americanOddsInt": -104
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": -14.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "betDelay": 1,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        },
+        {
+          "marketId": "801.193891069",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 7017916,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.952380952380952
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 105
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.95
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 105
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -105,
+                  "americanOddsInt": -105
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 78.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 7017917,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.869565217391304
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 115
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.87
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 115
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -115,
+                  "americanOddsInt": -115
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 78.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "betDelay": 1,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        },
+        {
+          "marketId": "801.169873640",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 558823,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 2.32
+                  },
+                  "fractionalOdds": {
+                    "numerator": 132,
+                    "denominator": 100
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 2.32
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 132,
+                  "denominator": 100
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": 132,
+                  "americanOddsInt": 132
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 484735,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.625
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 160
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.63
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 160
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -160,
+                  "americanOddsInt": -160
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "betDelay": 5,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "FIXED_ODDS"
+        },
+        {
+          "marketId": "801.169873638",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 558823,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.819672131147541
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 122
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.82
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 122
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -122,
+                  "americanOddsInt": -122
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 3.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 484735,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 2
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 100
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 2
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 100
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": 100,
+                  "americanOddsInt": 100
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": -3.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "betDelay": 5,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        },
+        {
+          "marketId": "801.169873637",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 7017916,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.943396226415094
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 106
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.94
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 106
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -106,
+                  "americanOddsInt": -106
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 55.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 7017917,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.87719298245614
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 114
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.88
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 114
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -114,
+                  "americanOddsInt": -114
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 55.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "betDelay": 5,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        },
+        {
+          "marketId": "801.193928421",
+          "turnInPlayEnabled": false,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 72444768,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 15
+                  },
+                  "fractionalOdds": {
+                    "numerator": 140,
+                    "denominator": 10
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 15
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 140,
+                  "denominator": 10
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": 1400,
+                  "americanOddsInt": 1400
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 5814940,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.016666666666667
+                  },
+                  "fractionalOdds": {
+                    "numerator": 10,
+                    "denominator": 600
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.02
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 10,
+                  "denominator": 600
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -6000,
+                  "americanOddsInt": -6000
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "betDelay": 3,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "FIXED_ODDS"
+        },
+        {
+          "marketId": "801.193928420",
+          "turnInPlayEnabled": false,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 7017916,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.884955752212389
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 113
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.88
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 113
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -113,
+                  "americanOddsInt": -113
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 54.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 7017917,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.884955752212389
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 113
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.88
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 113
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -113,
+                  "americanOddsInt": -113
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 54.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "betDelay": 3,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        },
+        {
+          "marketId": "801.193928419",
+          "turnInPlayEnabled": false,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 72444768,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.943396226415094
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 106
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.94
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 106
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -106,
+                  "americanOddsInt": -106
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 27.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 5814940,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.833333333333333
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 120
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.83
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 120
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -120,
+                  "americanOddsInt": -120
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": -27.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "betDelay": 3,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        }
+      ]
+    },
+    "cfl": {
+      "discovery": {
+        "attachments": {
+          "events": {
+            "36236119": {
+              "eventId": 36236119,
+              "name": "Winnipeg Blue Bombers @ Toronto Argonauts",
+              "eventTypeId": 6423,
+              "competitionId": 12488538,
+              "countryCode": "GB",
+              "openDate": "2026-10-31T17:00:00.000Z",
+              "videoAvailable": false,
+              "statsAvailable": false
+            },
+            "36236120": {
+              "eventId": 36236120,
+              "name": "Saskatchewan Roughriders @ British Columbia Lions",
+              "eventTypeId": 6423,
+              "competitionId": 12488538,
+              "countryCode": "GB",
+              "openDate": "2026-10-31T20:30:00.000Z",
+              "videoAvailable": false,
+              "statsAvailable": false
+            }
+          },
+          "markets": {
+            "801.193877638": {
+              "marketId": "801.193877638",
+              "eventTypeId": 6423,
+              "competitionId": 12488538,
+              "eventId": 36236120,
+              "exchangeMarketId": "1.264710078",
+              "marketName": "Total Points",
+              "marketTime": "2026-10-31T20:30:00.000Z",
+              "marketType": "TOTAL_POINTS_(OVER/UNDER)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": -880,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 7017916,
+                  "handicap": 58.5,
+                  "runnerName": "Over",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "OVER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -110,
+                      "americanOddsInt": -110
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.909090909090909
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 110
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 7017917,
+                  "handicap": 58.5,
+                  "runnerName": "Under",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "UNDER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -110,
+                      "americanOddsInt": -110
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.909090909090909
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 110
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 36236120,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619440090"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193877637": {
+              "marketId": "801.193877637",
+              "eventTypeId": 6423,
+              "competitionId": 12488538,
+              "eventId": 36236120,
+              "exchangeMarketId": "1.264710280",
+              "marketName": "Moneyline",
+              "marketTime": "2026-10-31T20:30:00.000Z",
+              "marketType": "MONEY_LINE",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": -900,
+              "bettingType": "ODDS",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 1174299,
+                  "handicap": 0,
+                  "runnerName": "Saskatchewan Roughriders",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/cfl/saskatchewan_roughriders.png",
+                  "nameAbbr": "SAS Roughriders",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": 250,
+                      "americanOddsInt": 250
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 3.5
+                      },
+                      "fractionalOdds": {
+                        "numerator": 25,
+                        "denominator": 10
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 414028,
+                  "handicap": 0,
+                  "runnerName": "British Columbia Lions",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/cfl/bc_lions.png",
+                  "nameAbbr": "BC Lions",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -315,
+                      "americanOddsInt": -315
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.317460317460317
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 315
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 36236120,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619440087"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193877632": {
+              "marketId": "801.193877632",
+              "eventTypeId": 6423,
+              "competitionId": 12488538,
+              "eventId": 36236119,
+              "exchangeMarketId": "1.264709452",
+              "marketName": "Spread",
+              "marketTime": "2026-10-31T17:00:00.000Z",
+              "marketType": "MATCH_HANDICAP_(2-WAY)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": -890,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 414026,
+                  "handicap": 3.5,
+                  "runnerName": "Winnipeg Blue Bombers",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/cfl/winnipeg_bluebombers.png",
+                  "nameAbbr": "WPG Blue Bombers",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -106,
+                      "americanOddsInt": -106
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.943396226415094
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 106
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 414029,
+                  "handicap": -3.5,
+                  "runnerName": "Toronto Argonauts",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/cfl/toronto_argonauts.png",
+                  "nameAbbr": "TOR Argonauts",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -114,
+                      "americanOddsInt": -114
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.87719298245614
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 114
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 36236119,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619440077"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193877636": {
+              "marketId": "801.193877636",
+              "eventTypeId": 6423,
+              "competitionId": 12488538,
+              "eventId": 36236120,
+              "exchangeMarketId": "1.264709876",
+              "marketName": "Spread",
+              "marketTime": "2026-10-31T20:30:00.000Z",
+              "marketType": "MATCH_HANDICAP_(2-WAY)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": -890,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 1174299,
+                  "handicap": 6.5,
+                  "runnerName": "Saskatchewan Roughriders",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/cfl/saskatchewan_roughriders.png",
+                  "nameAbbr": "SAS Roughriders",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -104,
+                      "americanOddsInt": -104
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.961538461538462
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 104
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 414028,
+                  "handicap": -6.5,
+                  "runnerName": "British Columbia Lions",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/cfl/bc_lions.png",
+                  "nameAbbr": "BC Lions",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -118,
+                      "americanOddsInt": -118
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.847457627118644
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 118
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 36236120,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619440088"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193877635": {
+              "marketId": "801.193877635",
+              "eventTypeId": 6423,
+              "competitionId": 12488538,
+              "eventId": 36236119,
+              "exchangeMarketId": "1.264709861",
+              "marketName": "Moneyline",
+              "marketTime": "2026-10-31T17:00:00.000Z",
+              "marketType": "MONEY_LINE",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": -900,
+              "bettingType": "ODDS",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 414026,
+                  "handicap": 0,
+                  "runnerName": "Winnipeg Blue Bombers",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "AWAY"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/cfl/winnipeg_bluebombers.png",
+                  "nameAbbr": "WPG Blue Bombers",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": 172,
+                      "americanOddsInt": 172
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 2.72
+                      },
+                      "fractionalOdds": {
+                        "numerator": 172,
+                        "denominator": 100
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 414029,
+                  "handicap": 0,
+                  "runnerName": "Toronto Argonauts",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "HOME"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "logo": "https://assets.sportsbook.fanduel.com/images/team/cfl/toronto_argonauts.png",
+                  "nameAbbr": "TOR Argonauts",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -210,
+                      "americanOddsInt": -210
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.476190476190476
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 210
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 36236119,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619440076"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            },
+            "801.193877633": {
+              "marketId": "801.193877633",
+              "eventTypeId": 6423,
+              "competitionId": 12488538,
+              "eventId": 36236119,
+              "exchangeMarketId": "1.264709657",
+              "marketName": "Total Points",
+              "marketTime": "2026-10-31T17:00:00.000Z",
+              "marketType": "TOTAL_POINTS_(OVER/UNDER)",
+              "bspMarket": false,
+              "sgmMarket": true,
+              "inPlay": false,
+              "numberOfRunners": 2,
+              "numberOfActiveRunners": 2,
+              "numberOfWinners": 1,
+              "sortPriority": -880,
+              "bettingType": "MOVING_HANDICAP",
+              "marketStatus": "OPEN",
+              "marketLevels": [
+                "AVB_EVENT"
+              ],
+              "runners": [
+                {
+                  "selectionId": 7017916,
+                  "handicap": 57.5,
+                  "runnerName": "Over",
+                  "sortPriority": 1,
+                  "result": {
+                    "type": "OVER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -110,
+                      "americanOddsInt": -110
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.909090909090909
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 110
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                },
+                {
+                  "selectionId": 7017917,
+                  "handicap": 57.5,
+                  "runnerName": "Under",
+                  "sortPriority": 2,
+                  "result": {
+                    "type": "UNDER"
+                  },
+                  "runnerStatus": "ACTIVE",
+                  "winRunnerOdds": {
+                    "americanDisplayOdds": {
+                      "americanOdds": -110,
+                      "americanOddsInt": -110
+                    },
+                    "trueOdds": {
+                      "decimalOdds": {
+                        "decimalOdds": 1.909090909090909
+                      },
+                      "fractionalOdds": {
+                        "numerator": 100,
+                        "denominator": 110
+                      }
+                    }
+                  },
+                  "previousWinRunnerOdds": []
+                }
+              ],
+              "canTurnInPlay": true,
+              "associatedMarkets": [
+                {
+                  "eventId": 36236119,
+                  "eventTypeId": 6423,
+                  "externalMarketId": "42.619440079"
+                }
+              ],
+              "isSuperSubEnabled": false,
+              "isBetProtectEligible": false,
+              "shouldDisplayStatsInRunner": true,
+              "eachwayAvailable": false,
+              "legTypes": [
+                "SIMPLE_SELECTION"
+              ]
+            }
+          }
+        }
+      },
+      "prices": [
+        {
+          "marketId": "801.193877638",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 7017916,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.909090909090909
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 110
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.91
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 110
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -110,
+                  "americanOddsInt": -110
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 58.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 7017917,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.909090909090909
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 110
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.91
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 110
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -110,
+                  "americanOddsInt": -110
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 58.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "linkedMarketId": "1.264710078",
+          "betDelay": 6,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        },
+        {
+          "marketId": "801.193877637",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 1174299,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 3.5
+                  },
+                  "fractionalOdds": {
+                    "numerator": 25,
+                    "denominator": 10
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 3.5
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 25,
+                  "denominator": 10
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": 250,
+                  "americanOddsInt": 250
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 414028,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.317460317460317
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 315
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.32
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 315
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -315,
+                  "americanOddsInt": -315
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "linkedMarketId": "1.264710280",
+          "betDelay": 6,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "FIXED_ODDS"
+        },
+        {
+          "marketId": "801.193877632",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 414026,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.943396226415094
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 106
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.94
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 106
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -106,
+                  "americanOddsInt": -106
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 3.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 414029,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.87719298245614
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 114
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.88
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 114
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -114,
+                  "americanOddsInt": -114
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": -3.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "linkedMarketId": "1.264709452",
+          "betDelay": 6,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        },
+        {
+          "marketId": "801.193877636",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 1174299,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.961538461538462
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 104
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.96
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 104
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -104,
+                  "americanOddsInt": -104
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 6.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 414028,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.847457627118644
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 118
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.85
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 118
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -118,
+                  "americanOddsInt": -118
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": -6.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "linkedMarketId": "1.264709876",
+          "betDelay": 6,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        },
+        {
+          "marketId": "801.193877635",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 414026,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 2.72
+                  },
+                  "fractionalOdds": {
+                    "numerator": 172,
+                    "denominator": 100
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 2.72
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 172,
+                  "denominator": 100
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": 172,
+                  "americanOddsInt": 172
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 414029,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.476190476190476
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 210
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.48
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 210
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -210,
+                  "americanOddsInt": -210
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 0,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "linkedMarketId": "1.264709861",
+          "betDelay": 6,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "FIXED_ODDS"
+        },
+        {
+          "marketId": "801.193877633",
+          "turnInPlayEnabled": true,
+          "inplay": false,
+          "bspMarket": false,
+          "livePriceAvailable": true,
+          "guaranteedPriceAvailable": false,
+          "runnerDetails": [
+            {
+              "selectionId": 7017916,
+              "runnerOrder": 10,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.909090909090909
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 110
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.91
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 110
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -110,
+                  "americanOddsInt": -110
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 57.5,
+              "runnerStatus": "ACTIVE"
+            },
+            {
+              "selectionId": 7017917,
+              "runnerOrder": 20,
+              "winRunnerOdds": {
+                "trueOdds": {
+                  "decimalOdds": {
+                    "decimalOdds": 1.909090909090909
+                  },
+                  "fractionalOdds": {
+                    "numerator": 100,
+                    "denominator": 110
+                  }
+                },
+                "decimalDisplayOdds": {
+                  "decimalOdds": 1.91
+                },
+                "fractionalDisplayOdds": {
+                  "numerator": 100,
+                  "denominator": 110
+                },
+                "americanDisplayOdds": {
+                  "americanOdds": -110,
+                  "americanOddsInt": -110
+                }
+              },
+              "previousWinRunnerOdds": [],
+              "handicap": 57.5,
+              "runnerStatus": "ACTIVE"
+            }
+          ],
+          "eachwayAvailable": false,
+          "legTypes": [
+            "SIMPLE_SELECTION"
+          ],
+          "hasBPE": false,
+          "hasSGM": false,
+          "linkedMarketId": "1.264709657",
+          "betDelay": 6,
+          "rule4Deductions": [],
+          "marketStatus": "OPEN",
+          "bettingType": "MOVING_HANDICAP"
+        }
+      ]
+    }
+  }
+}

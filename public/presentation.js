@@ -4,6 +4,8 @@ export const safeFormat = value => value === "decimal" ? "decimal" : "american";
 export function sourceFresh(source, { connected, now, clockUncertaintyMs = 0 }) {
   if (!connected || source?.status !== "healthy" || !Number.isFinite(source.lastConfirmedAt) ||
       !Number.isFinite(source.staleAfterMs) || source.staleAfterMs <= 0) return false;
+  if (source.coverage != null && (!Number.isInteger(source.coverage.requested) || source.coverage.requested <= 0 ||
+      source.coverage.returned !== source.coverage.requested || !Array.isArray(source.coverage.missingIds) || source.coverage.missingIds.length > 0)) return false;
   const age = now - source.lastConfirmedAt;
   return age >= -Math.max(1000, clockUncertaintyMs) && Math.max(0, age) < source.staleAfterMs;
 }

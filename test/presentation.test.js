@@ -37,6 +37,16 @@ test("movement follows payout for negative and cross-sign odds, with no false -1
   assert.equal(quoteChange(null, quote(110)), null);
 });
 
+test('a fresh connection cannot certify an incomplete league price check', () => {
+  const source = { status: 'healthy', lastConfirmedAt: 1000, staleAfterMs: 10000 };
+  const options = { connected: true, now: 1050 };
+  for (const coverage of [{ requested: 2, returned: 1, missingIds: ['m'] },
+    { requested: 2, returned: 2, missingIds: ['m'] }, { requested: 0, returned: 0, missingIds: [] },
+    { requested: 2, returned: 2 }, {}]) assert.equal(sourceFresh({ ...source, coverage }, options), false);
+  assert.equal(sourceFresh({ ...source, coverage: { requested: 2, returned: 2, missingIds: [] } }, options), true);
+  assert.equal(sourceFresh(source, options), true);
+});
+
 test("line and suspension changes cannot be presented as an up/down price recommendation", () => {
   const line = quoteChange(quote(-110, -3.5), quote(120, -4));
   assert.equal(line.kind, "line"); assert.equal(line.direction, 0); assert.equal(line.before.line, -3.5);

@@ -1,6 +1,6 @@
-# Fieldline: NFL odds comparison
+# Fieldline: Ontario football odds comparison
 
-A small, continuously updating NFL board comparing DraftKings and FanDuel moneyline, spread and total markets. Best Price shows the winner for each **identical point line**, with both books' prices available for comparison. Different lines remain separate. Each source has its own collector and failure state.
+A continuously updating NFL, college football (including FCS), and CFL board comparing DraftKings and FanDuel moneyline, spread and total markets. Best Price shows the winner for each **identical point line**, with both books' prices available for comparison. Different lines remain separate. Both sources use Ontario endpoints. FanDuel keeps an independent verification state for each league; DraftKings rebuilds one complete baseline covering all four source leagues.
 
 Both collectors now target **Ontario**. FanDuel discovery, price requests, push configuration and connection Origin all use the Canadian public site; the UI and health endpoints identify Ontario for both books. There is no fallback to another jurisdiction. Earlier New Jersey observations below are historical and must not be treated as Ontario measurements.
 
@@ -55,6 +55,14 @@ The [pre-migration deployment check](docs/measurements/render-fanduel-push-hedge
 
 See the [plain-English walkthrough](docs/walkthrough.md) for the design, a demo sequence and questions to practice.
 
+## League selection and delivery
+
+Use the League menu, or `?league=nfl`, `?league=ncaaf`, and `?league=cfl`. `/api/board`, `/api/events`, and `/api/health` accept the same parameter and default to NFL. Each stream starts from a complete selected-league snapshot. A league switch closes the previous stream and starts a fresh baseline; unrelated prices and chart state cannot leak into the next league.
+
+FanDuel keeps NFL checks at 250 ms. College and CFL share a bounded auxiliary request queue, normally every 2 seconds and every 1 second when a game is live. Each league has its own complete-price lease and push subscriptions. A shared price-endpoint rate limit pauses all queues; it is never bypassed by switching leagues. Quiet checks avoid rebuilding unchanged boards.
+
+HTML, scripts, styles and JSON responses support gzip. Static files are cached in memory and revalidated with representation-specific ETags; live JSON remains `no-store`. Streaming changes are sent immediately without compression buffering. The browser retries an isolated stream disconnect after 250 ms, with exponential backoff on repeated failures. DraftKings also retries its first isolated connection loss promptly, and remains stale until a complete baseline has been rebuilt.
+
 ## Run locally
 
 Node.js 24 or later:
@@ -104,7 +112,7 @@ flowchart LR
   B1 --> M[Clock-adjusted paint telemetry]
 ```
 
-Run **one application instance** for this version. Collectors start once when the process starts, independently of viewer count. A reconnecting browser receives a complete current snapshot, followed by changed games and source status messages. Updates are serialized once before fanout. Slow viewers with more than 256 KiB queued are disconnected and can reconnect to a fresh snapshot. The prototype caps concurrent streams at 500; this is a protective bound, not a claim of load-tested capacity.
+Run **one application instance** for this version. Collectors start once when the process starts, independently of viewer count. A reconnecting browser receives a complete current snapshot, followed by changed games and source status messages. Updates are serialized once per selected league before fanout. Each league receives only its own games and source verification state. Slow viewers have a bounded queue: at least 256 KiB, or their initial snapshot plus 64 KiB, capped at 1 MiB. Exceeding that bound disconnects the stream so it can recover with a fresh snapshot. The prototype caps concurrent streams at 500; this is a protective bound, not a claim of load-tested capacity.
 
 Price changes and changes to source eligibility are sent immediately. Repeated timestamp confirmations use compact `freshness` messages, at most four per second; full diagnostics remain in snapshots and `/api/metrics`. A controlled 50-cycle test reduced routine SSE application bytes from 70,659 to 12,448 (82.4%), excluding identical initial snapshots. This measures traffic saved, not changed-price latency.
 
@@ -127,7 +135,7 @@ Chrome DevTools showed an initial `sportscontent/controldata/league/leagueSubcat
 
 The stream's literal `default-token` is part of the logged-out public subscription, not a user's JWT. No personal token is stored. Public endpoint paths and client-version fields may change and need maintenance.
 
-On Render, the main-market snapshot subprocess uses the Chrome TLS/HTTP profile supplied by pinned [`curl_cffi`](https://curl-cffi.readthedocs.io/en/latest/impersonate/_index.html). Each invocation has a fresh anonymous session, verifies certificates, caps the decoded body at 8 MiB, and exits after the single request. Node imposes a 12-second process timeout and cancels it when the collector stops or disconnects. HTTP status and `Retry-After` feed the existing source retry policy. A process per minute is a simplicity tradeoff: acquisition timing includes Python startup and decoding, so those figures are not pure network time. The continuous WebSocket path avoids this subprocess cost on each price change. No logged-in session or expiring copied browser cookie is required.
+On Render, the main-market snapshot subprocess uses the Chrome TLS/HTTP profile supplied by pinned [`curl_cffi`](https://curl-cffi.readthedocs.io/en/latest/impersonate/_index.html). The collector owns one persistent anonymous session, verifies certificates, and caps each complete batch at 8 MiB. Four verified league endpoints are merged atomically; a missing or failed response cannot become an empty healthy league. Node imposes a 15-second outer deadline. Aborting a request, timing out, or stopping the collector retires the worker. HTTP status and `Retry-After` feed the source retry policy. Warm refreshes reuse the process and connections; startup measurements are reported separately. The continuous WebSocket path avoids this subprocess cost on each price change. No logged-in session or expiring copied browser cookie is required.
 
 ## FanDuel acquisition
 
@@ -135,7 +143,7 @@ Region: **Ontario**, matching DraftKings. The original implementation used the N
 
 The Canadian public app provides discovery through `sbapi.on.sportsbook.fanduel.ca/api/content-managed-page`, HTTP price snapshots through `smp.on.sportsbook.fanduel.ca/api/sports/fixedodds/readonly/v1/getMarketPrices?priceHistory=0`, and sportsbook market-price push through `pir.on.sportsbook.fanduel.ca/graphql/realtime`. The current production web bundle independently confirms the separate Canadian `PIR_AUTH_KEY` configuration and `OnUpdateMarketPrice` subscription, including main-market runner prices, suspension, in-play status and `updatedAt`. A missing or mismatched Canadian configuration degrades push and leaves Ontario polling active; it does not substitute a US feed.
 
-- Refresh discovery every 60 seconds; retain only NFL full-game `MONEY_LINE`, `MATCH_HANDICAP_(2-WAY)` and `TOTAL_POINTS_(OVER/UNDER)` markets. Discovery failure retains the last valid catalogue while price updates continue, with a separate bounded retry. Unknown-market push messages can request rediscovery without postponing regular price checks or overriding the discovery endpoint's Retry-After deadline.
+- Refresh discovery every 60 seconds; retain only supported full-game `MONEY_LINE`, `MATCH_HANDICAP_(2-WAY)` and `TOTAL_POINTS_(OVER/UNDER)` markets. Discovery failure retains the last valid catalogue while price updates continue, with a separate bounded retry. Unknown-market push messages can request rediscovery without postponing regular price checks or overriding the discovery endpoint's Retry-After deadline.
 - Fetch HTTP prices in batches of at most **70 market IDs**, with at most two requests in flight. A direct check requested 87 together and received only 80; 70+17 returned all 87, including seven open markets previously omitted. A failed batch aborts its sibling and cannot replace the board with a partial result. Successful omissions are exposed as incomplete coverage, and omitted prices are removed rather than filled from old discovery data.
 - Discover the public AppSync client configuration from the current Canadian FanDuel app shell and bundle, validate its Canadian endpoint, and send the Canadian Origin. It is page configuration, not a sportsbook-account credential. The collector refreshes it after rejection with bounded retries; no personal login, cookie or fixed copied key is required.
 - Subscribe to all discovered markets and wait for every acknowledgement. Establish a complete fresh HTTP baseline after connecting/reconnecting. Push prices are then normalized and sent immediately, with no batching timer. An acknowledged socket is not treated as an initial price snapshot.
@@ -149,7 +157,7 @@ The Canadian public app provides discovery through `sbapi.on.sportsbook.fanduel.
 
 Normalized quote fields: `gameId`, `book`, `period`, `market`, `side`, `line`, American/decimal odds, source selection ID and suspension state. A separate source-health record tracks confirmation and error state. A price's `changedAt` is when this backend observed it change, not an invented provider timestamp.
 
-Team aliases map to explicit NFL identities. This handles `CAR Panthers` versus `Carolina Panthers`, `NY Jets` versus `New York Jets`, and distinct Rams/Chargers or Giants/Jets identities. Unknown names are reported and excluded rather than guessed.
+Team aliases map to explicit league-specific identities. NFL game IDs remain stable; college and CFL IDs include their league. A checked catalog covers observed college programs and rejects ambiguous names such as Miami without its state. Unknown future programs remain excluded with a warning until their identities are verified. NFL aliases use explicit identities. This handles `CAR Panthers` versus `Carolina Panthers`, `NY Jets` versus `New York Jets`, and distinct Rams/Chargers or Giants/Jets identities. Unknown names are reported and excluded rather than guessed.
 
 Game matching uses Toronto calendar date plus away/home team identities. The observed feeds differ by one minute on many kickoffs. Kickoff differences greater than 30 minutes are kept as separate games with a warning. The displayed kickoff favors DraftKings when present. Rescheduled fixtures crossing dates or team orientation changes require more sophisticated matching.
 
@@ -170,7 +178,7 @@ Eight optional feature groups are implemented:
 - Keyboard shortcuts, with help in the UI and typing-safe handling.
 - Main-market implied margin, arbitrage candidates, market-derived fair probability and estimated EV, with margin/EV sorting.
 
-Scope remains NFL. Extra-market comparisons require the same game, player or team, side, line and settlement contract. Different house protection or early-exit rules remain separate and are not ranked against each other. Analytics require fresh, active, complete two-sided prices from both books on the same contract. Fair probabilities normalize each book's implied probabilities and average the books; estimated EV is conditional on a settled win/loss and is **not an independently predictive model**. Push, tie-void and cancellation probabilities are not modeled. An arbitrage flag identifies observed-price candidates, not guaranteed executable profit.
+Extra-market scope remains NFL. College and CFL currently provide moneyline, spread and total game lines. Extra-market comparisons require the same game, player or team, side, line and settlement contract. Different house protection or early-exit rules remain separate and are not ranked against each other. Analytics require fresh, active, complete two-sided prices from both books on the same contract. Fair probabilities normalize each book's implied probabilities and average the books; estimated EV is conditional on a settled win/loss and is **not an independently predictive model**. Push, tie-void and cancellation probabilities are not modeled. An arbitrage flag identifies observed-price candidates, not guaranteed executable profit.
 
 Extra markets run only while requested, in a separate cloud child process and stream. Viewers share work for the same game; at most **two games** are collected concurrently across viewers. The nominal refresh interval is **15 seconds**, with exclusion after **45 seconds** without confirmation. Failures and capacity limits are shown in the panel and do not make the main feed unhealthy. Main DraftKings/FanDuel push behavior and FanDuel's **250 ms** parallel HTTP checks remain unchanged. DraftKings retrieves its seven supported categories sequentially through a bounded anonymous `curl_cffi` session owned by the extra-market worker. The Python process and TLS-verified session are reused across the 15-second refresh cycles. Cancellation retires the process and session, worker shutdown closes them, and 60 seconds of transport inactivity releases them; a later request creates a new session. The batch remains limited to seven categories, 8 MiB total decoded data and a 30-second outer deadline. It publishes only after every requested category succeeds and passes identity, coverage and timestamp validation; a failed or incomplete batch cannot refresh old prices. This optional transport does not change the main snapshot or push collector. Process isolation still shares the host's CPU and network resources.
 
@@ -193,7 +201,7 @@ Movement cues use transitions actually observed by this tab. A higher/lower payo
 
 ## Retained price history
 
-Select a price or **Price history** to request server observations for that game/market/side. One open chart is drawn at a time. It shows up to **48 hours**, bounded to **3,000 points per book/game/market/side series**, **1,024 series** and **150,000 points globally**. Startup, retention and capacity eviction can shorten the available window. There is no backfill of unobserved sportsbook history. A labeled current-tab history may appear while the server request loads.
+Select a price or **Price history** to request server observations for that game/market/side. One open chart is drawn at a time. It shows up to **48 hours**, bounded to **3,000 points per book/game/market/side series**, **4,096 series** and **150,000 points globally**. Startup, retention and capacity eviction can shorten the available window. There is no backfill of unobserved sportsbook history. A labeled current-tab history may appear while the server request loads.
 
 Charts use actual server observation times and decimal prices, not verified trading-engine change times. Source failures, stale periods, suspensions, removals and changed point lines break continuity; the next eligible observation starts a new baseline. The chart never extends an old price to the present or fills an outage with invented points. A browser reconnect reloads available server history; movements missed by that browser are not invented in its Recent moves list. History requests add no sportsbook polling.
 
@@ -245,7 +253,6 @@ Measurement instrumentation:
 3. Send receive/send times with each changed-game event. A foreground browser reports an estimate after two animation frames for changed games in view. Five `/api/time` probes select the lowest-RTT clock-offset estimate, refreshed every minute. Half the RTT is reported as a lower bound on timing uncertainty. Two animation frames are a rendering proxy, not hardware display instrumentation.
 4. `/api/metrics` returns counts, p50/p95/max and separate pregame/live rows. Client telemetry is diagnostic and client-reported, not trusted billing or security data. The store history is capped at 10,000 updates and browser samples at 5,000.
 5. `npm run benchmark -- URL 60` writes a report under ignored `data/`. It calibrates the CLI clock with five `/api/time` probes, selecting the lowest round trip and reporting at least half that round trip as uncertainty. CLI receive latency is explicitly separate from browser paint latency; provider-clock uncertainty remains. HTTP acquisition timing is not bookmaker-change latency.
-6. `npm run compare -- 300` observes both public implementations simultaneously using one monotonic clock. It compares identical old-to-new quote transitions, excludes initial loads and ambiguous matches, and reports unmatched changes and correlated batch counts. See the [comparison method and limitations](docs/comparison.md).
 
 To reproduce the controlled optional-market load comparison, run the following with a deployed runtime commit and a new output filename:
 

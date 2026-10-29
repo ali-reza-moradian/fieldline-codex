@@ -3,9 +3,12 @@ import { randomUUID } from "node:crypto";
 import { makeGame, makeQuote } from "../model.js";
 import { fetchJson, retryDelay } from "../http.js";
 import { fetchCurlJson } from "../curl-http.js";
+import { CurlJsonBatchClient } from "../curl-batch-http.js";
+import { DRAFTKINGS_LEAGUES, leagueForDraftKings } from "../leagues.js";
 
-const eventFilter =
-  "$filter=leagueId eq '88808' AND clientMetadata/Subcategories/any(s: s/Id eq '4518')";
+const eventsForLeague = leagueId =>
+  `$filter=leagueId eq '${leagueId}' AND clientMetadata/Subcategories/any(s: s/Id eq '4518')`;
+const eventFilter = eventsForLeague("88808");
 const marketFilter =
   "$filter=clientMetadata/subCategoryId eq '4518' AND tags/all(t: t ne 'SportcastBetBuilder')";
 export const DK_SNAPSHOT =
@@ -20,7 +23,15 @@ export const DK_SNAPSHOT =
   });
 export const DK_SOCKET =
   "wss://sportsbook-ws-ca-on.draftkings.com/websocket?format=json&locale=en";
-export function subscription(id) {
+export function snapshotUrl(leagueId) {
+  if (!leagueForDraftKings(leagueId)) throw new Error("Unsupported DraftKings league");
+  const url = new URL(DK_SNAPSHOT);
+  url.searchParams.set("templateVars", String(leagueId));
+  url.searchParams.set("eventsQuery", eventsForLeague(leagueId));
+  return url.href;
+}
+export function subscription(id, leagueId = "88808") {
+  if (!leagueForDraftKings(leagueId)) throw new Error("Unsupported DraftKings league");
   return {
     jsonrpc: "2.0",
     method: "subscribe",
@@ -28,7 +39,7 @@ export function subscription(id) {
     params: {
       entity: "events",
       queryParams: {
-        query: eventFilter + " and tags/any(t: t eq 'OSB')",
+        query: eventsForLeague(leagueId) + " and tags/any(t: t eq 'OSB')",
         initialData: false,
         projection: "sportsbook",
         locale: "en",
@@ -60,11 +71,68 @@ export const DK_HEADERS = {
   "x-pe-ep": "SB",
   "x-pe-loc": "CA-ON",
 };
-export async function fetchDraftKingsSnapshot({ signal } = {}) {
+export async function fetchDraftKingsSnapshot({ signal, leagueId = "88808" } = {}) {
   const transport = process.env.DK_HTTP_TRANSPORT || (process.env.RENDER === "true" ? "curl" : "native");
   if (!["native", "curl"].includes(transport)) throw new Error("Unknown DK_HTTP_TRANSPORT");
   const fetcher = transport === "curl" ? fetchCurlJson : fetchJson;
-  return fetcher(DK_SNAPSHOT, { headers: DK_HEADERS, signal });
+  return fetcher(snapshotUrl(leagueId), { headers: DK_HEADERS, signal });
+}
+
+// A single atomic baseline for every subscribed league. The anonymous HTTP
+// session is owned by this collector, reused while active, and retired on abort.
+// No failed or missing league is represented as a successful empty response.
+export class DraftKingsSnapshotClient {
+  constructor({ transport = process.env.DK_HTTP_TRANSPORT || (process.env.RENDER === "true" ? "curl" : "native"),
+    client = null, nativeFetch = fetchJson, leagueIds = DRAFTKINGS_LEAGUES.map(x => x.sourceId) } = {}) {
+    if (!["native", "curl"].includes(transport)) throw new Error("Unknown DK_HTTP_TRANSPORT");
+    this.transport = transport; this.client = client; this.nativeFetch = nativeFetch;
+    this.requests = leagueIds.map(id => ({ id, url: snapshotUrl(id) }));
+    if (!this.requests.length || new Set(leagueIds).size !== leagueIds.length) throw new Error("Invalid DraftKings league scope");
+  }
+  async fetch({ signal } = {}) {
+    const began = performance.now();
+    const deadline = AbortSignal.timeout(15000);
+    const batchController = new AbortController();
+    const requestSignal = AbortSignal.any([deadline, batchController.signal, ...(signal ? [signal] : [])]);
+    let responses;
+    if (this.transport === "curl") {
+      this.client ??= new CurlJsonBatchClient();
+      responses = await this.client.fetch(this.requests, { headers: DK_HEADERS, signal: requestSignal });
+    } else {
+      // Small requests in parallel keep a slow auxiliary league from serially
+      // adding to native acquisition time. Publish only the complete result.
+      const pending = this.requests.map(async request => ({ id: request.id,
+        ...await this.nativeFetch(request.url, { headers: DK_HEADERS, signal: requestSignal }) }));
+      try {
+        responses = await Promise.all(pending);
+      } catch (error) {
+        // A denied league invalidates the whole baseline. Retire its siblings
+        // before reconnecting so unsuccessful native batches cannot overlap.
+        batchController.abort(error);
+        await Promise.allSettled(pending);
+        throw error;
+      }
+    }
+    if (responses.length !== this.requests.length) throw new Error("DraftKings snapshot omitted a league");
+    const merged = { events: new Map(), markets: new Map(), selections: new Map() };
+    for (let i = 0; i < responses.length; i++) {
+      const response = responses[i];
+      if (response.id !== this.requests[i].id) throw new Error("DraftKings snapshot league identity mismatch");
+      for (const kind of Object.keys(merged)) {
+        if (!Array.isArray(response.data?.[kind])) throw new Error(`DraftKings ${kind} schema changed`);
+        for (const item of response.data[kind]) {
+          if (!item?.id || merged[kind].has(item.id)) throw new Error(`Duplicate or missing DraftKings ${kind} identity`);
+          if (kind === "events" && String(item.leagueId) !== response.id) throw new Error("DraftKings returned the wrong league");
+          merged[kind].set(item.id, item);
+        }
+      }
+    }
+    return { data: Object.fromEntries(Object.entries(merged).map(([kind, map]) => [kind, [...map.values()]])),
+      receivedAt: Math.min(...responses.map(r => r.receivedAt)), durationMs: performance.now() - began,
+      decodedBytes: responses.reduce((n, r) => n + r.decodedBytes, 0),
+      wireBytes: responses.every(r => Number.isFinite(r.wireBytes)) ? responses.reduce((n, r) => n + r.wireBytes, 0) : null };
+  }
+  close() { this.client?.close(); this.client = null; }
 }
 export class DraftKingsState {
   replace(data) {
@@ -112,8 +180,9 @@ export class DraftKingsState {
       quotes = [],
       warnings = [];
     for (const event of this.events.values()) {
+      const league = leagueForDraftKings(event.leagueId);
       if (
-        event.leagueId !== "88808" ||
+        !league ||
         ["FINISHED", "CANCELLED", "ENDED"].includes(event.status)
       )
         continue;
@@ -129,6 +198,7 @@ export class DraftKingsState {
             home?.name,
             event.startEventDate,
             ["STARTED", "IN_PROGRESS", "LIVE"].includes(event.status),
+            league,
           ),
         );
       } catch (e) {
@@ -172,14 +242,21 @@ export class DraftKingsState {
 }
 
 export class DraftKings {
-  constructor(sink, { snapshotMs = 60000, socketUrl = DK_SOCKET, snapshotFetch = fetchDraftKingsSnapshot } = {}) {
+  constructor(sink, { snapshotMs = 60000, socketUrl = DK_SOCKET, snapshotFetch = null,
+    leagueIds = DRAFTKINGS_LEAGUES.map(x => x.sourceId), maxBufferedBytes = 16 * 1024 * 1024 } = {}) {
+    if (!Number.isSafeInteger(maxBufferedBytes) || maxBufferedBytes < 1 || maxBufferedBytes > 16 * 1024 * 1024)
+      throw new Error("Invalid DraftKings stream buffer byte limit");
     this.sink = sink;
     this.snapshotMs = snapshotMs;
     this.socketUrl = socketUrl;
-    this.snapshotFetch = snapshotFetch;
+    this.leagueIds = leagueIds;
+    this.maxBufferedBytes = maxBufferedBytes;
+    this.snapshotClient = snapshotFetch ? null : new DraftKingsSnapshotClient({ leagueIds });
+    this.snapshotFetch = snapshotFetch ?? (options => this.snapshotClient.fetch(options));
     this.stopped = true;
   }
   start() {
+    if (!this.stopped) return;
     this.stopped = false;
     this.connect();
   }
@@ -189,6 +266,9 @@ export class DraftKings {
     clearInterval(this.heartbeat);
     clearInterval(this.refresh);
     this.snapshotController?.abort();
+    this.snapshotClient?.close();
+    this.buffer = [];
+    this.bufferBytes = 0;
     this.ws?.terminate();
   }
   connect() {
@@ -199,12 +279,14 @@ export class DraftKings {
     }));
     this.state = null;
     this.buffer = [];
+    this.bufferBytes = 0;
     this.syncing = false;
     this.subscribed = false;
+    this.subscriptions = new Map(this.leagueIds.map(leagueId => [randomUUID(), { leagueId, acknowledged: false }]));
     this.awaitingPong = false;
-    const id = randomUUID();
     ws.on("open", () => {
-      ws.send(JSON.stringify(subscription(id)));
+      if (this.stopped || ws !== this.ws) { ws.terminate(); return; }
+      for (const [id, { leagueId }] of this.subscriptions) ws.send(JSON.stringify(subscription(id, leagueId)));
       this.heartbeat = setInterval(() => {
         if (this.awaitingPong || !this.subscribed) {
           this.fail(
@@ -219,6 +301,7 @@ export class DraftKings {
       }, 10000);
     });
     ws.on("pong", () => {
+      if (ws !== this.ws || this.stopped) return;
       this.awaitingPong = false;
       if (this.state) this.sink.confirm("draftkings");
     });
@@ -231,8 +314,12 @@ export class DraftKings {
           throw new Error(
             `DraftKings subscription error: ${message.error.message ?? message.error.code}`,
           );
-        if (message.id !== id) return;
+        const subscribedLeague = this.subscriptions.get(message.id);
+        if (!subscribedLeague) return;
         if (message.event === "subscribed") {
+          if (subscribedLeague.acknowledged) throw new Error("DraftKings duplicated subscription acknowledgement");
+          subscribedLeague.acknowledged = true;
+          if (![...this.subscriptions.values()].every(x => x.acknowledged)) return;
           this.subscribed = true;
           void this.resnapshot(ws);
           this.refresh = setInterval(
@@ -253,9 +340,10 @@ export class DraftKings {
             },
           };
           if (!this.state || this.syncing) {
-            if (this.buffer.length > 10000)
+            if (this.buffer.length >= 10000 || this.bufferBytes + raw.length > this.maxBufferedBytes)
               throw new Error("Stream buffer limit exceeded");
             this.buffer.push(update);
+            this.bufferBytes += raw.length;
           }
           // A periodic snapshot must not delay prices already arriving on the
           // stream. Keep serving the current state while buffering for its replacement.
@@ -268,11 +356,14 @@ export class DraftKings {
       }
     });
     ws.on("error", (error) => {
-      if (!this.stopped) this.fail(ws, error);
+      if (!this.stopped && ws === this.ws) this.fail(ws, error);
     });
     ws.on("close", () => {
+      if (ws !== this.ws) return;
       clearInterval(this.heartbeat);
       clearInterval(this.refresh);
+      this.buffer = [];
+      this.bufferBytes = 0;
       if (this.stopped || ws !== this.ws) return;
       this.snapshotController?.abort();
       this.sink.failure(
@@ -282,9 +373,18 @@ export class DraftKings {
       );
       this.retry = setTimeout(
         () => this.connect(),
-        retryDelay((this.failures = (this.failures || 0) + 1), ws.failureReason),
+        this.reconnectDelay(ws.failureReason),
       );
     });
+  }
+  reconnectDelay(error) {
+    this.failures = (this.failures || 0) + 1;
+    this.lastFailureAt = Date.now();
+    // One isolated transport close can recover promptly. Repeated failures and
+    // HTTP denials keep exponential backoff and Retry-After intact.
+    const handshakeStatus = /^Unexpected server response: (\d{3})$/.exec(error?.message ?? "")?.[1];
+    return this.failures === 1 && !error?.status && !handshakeStatus && !error?.retryAfterMs
+      ? 250 + Math.random() * 50 : retryDelay(this.failures, error);
   }
   fail(ws, error) {
     // A subsequent close event must not replace the actionable handshake/snapshot error.
@@ -309,7 +409,8 @@ export class DraftKings {
       for (const item of this.buffer) next.apply(item.delta);
       this.state = next;
       this.buffer = [];
-      this.failures = 0;
+      this.bufferBytes = 0;
+      if (!this.lastFailureAt || Date.now() - this.lastFailureAt >= 30000) this.failures = 0;
       this.sink.update("draftkings", next.normalize(), {
         ...result,
         data: undefined,

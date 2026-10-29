@@ -1,7 +1,8 @@
 import { makeGame, makeQuote } from "../model.js";
-import { fetchJson, retryDelay } from "../http.js";
-import { FanDuelPush } from "./fanduel-push.js";
+import { fetchJson, retryDelay, UpstreamError } from "../http.js";
+import { FanDuelPush, discoverFanDuelPushConfig } from "./fanduel-push.js";
 import { FanDuelState } from "./fanduel-state.js";
+import { LEAGUES } from "../leagues.js";
 export { FanDuelState } from "./fanduel-state.js";
 
 export const FD_TYPES = {
@@ -17,17 +18,35 @@ export const FD_HEADERS = Object.freeze({
 });
 export const FD_DISCOVERY =
   "https://sbapi.on.sportsbook.fanduel.ca/api/content-managed-page?page=CUSTOM&customPageId=nfl&pbHorizontal=false&_ak=FhMFpcPWXMeyZxOx&timezone=America%2FToronto";
+// Verified from the Ontario football navigation and each league's public page.
+// Futures and exhibition/e-football competitions are deliberately excluded.
+export const FD_LEAGUES = Object.freeze({
+  nfl: Object.freeze({ page: "nfl", competitions: LEAGUES.nfl.fanduel }),
+  ncaaf: Object.freeze({ page: "ncaaf", competitions: LEAGUES.ncaaf.fanduel }),
+  cfl: Object.freeze({ page: "cfl", competitions: LEAGUES.cfl.fanduel }),
+});
+export function fanDuelDiscovery(league = "nfl") {
+  const config = FD_LEAGUES[league];
+  if (!config) throw new Error("Unsupported FanDuel league");
+  const url = new URL(FD_DISCOVERY);
+  url.searchParams.set("customPageId", config.page);
+  return url.href;
+}
 export const FD_PRICES =
   "https://smp.on.sportsbook.fanduel.ca/api/sports/fixedodds/readonly/v1/getMarketPrices?priceHistory=0";
 
-export function selectFanDuelMarkets(data) {
+export function selectFanDuelMarkets(data, { league = "nfl" } = {}) {
+  const config = FD_LEAGUES[league];
+  if (!config) throw new Error("Unsupported FanDuel league");
   if (!data?.attachments?.events || !data?.attachments?.markets)
     throw new Error("FanDuel discovery schema changed");
   return {
+    league,
     events: data.attachments.events,
     markets: Object.fromEntries(
       Object.entries(data.attachments.markets).filter(
-        ([, m]) => m.competitionId === 12282733 && FD_TYPES[m.marketType],
+        ([, m]) => config.competitions.includes(m.competitionId) && FD_TYPES[m.marketType] &&
+          data.attachments.events[m.eventId]?.competitionId === m.competitionId,
       ),
     ),
   };
@@ -61,6 +80,7 @@ export function normalizeFanDuel(catalog, prices) {
         home,
         event.openDate,
         price.inplay === true,
+        catalog.league ?? "nfl",
       );
     } catch (e) {
       warnings.push(e.message);
@@ -142,8 +162,15 @@ export class FanDuel {
   constructor(sink, { pollMs = process.env.FD_POLL_MS ?? 250, verificationMs = pollMs, discoveryMs = 60000,
     fetcher = fetchJson, pushFactory = options => new FanDuelPush(options),
     clock = Date.now, pushOptions = {}, reconcileMaxAgeMs = 30000,
+    league = "nfl", priceConcurrency = 2, livePollMs = null,
     scheduler = { now: () => performance.now(), setTimeout, clearTimeout } } = {}) {
     this.sink = sink;
+    this.league = league;
+    this.discoveryUrl = fanDuelDiscovery(league);
+    this.priceConcurrency = priceConcurrency;
+    if (livePollMs != null && (!Number.isFinite(Number(livePollMs)) || Number(livePollMs) < 250))
+      throw new Error("FanDuel live poll interval must be at least 250ms");
+    this.livePollMs = livePollMs == null ? null : Number(livePollMs);
     if (!Number.isFinite(Number(pollMs)) || !Number.isFinite(Number(verificationMs)))
       throw new Error("FanDuel poll intervals must be finite milliseconds");
     // Four complete cycles/second at most during regular successful polling.
@@ -173,6 +200,7 @@ export class FanDuel {
     this.verifiedEpoch = null;
     this.pushEpoch = null;
     this.hasBaseline = false;
+    this.hasLiveGames = false;
     this.lastFullPollAt = null;
     this.lastPollAt = null;
     this.catalog = null;
@@ -206,10 +234,14 @@ export class FanDuel {
       this.lastFullPollAt != null && this.clock() - this.lastFullPollAt < this.reconcileMaxAgeMs &&
       this.clock() - (this.pushState.lastConfirmedAt ?? 0) < 12000;
   }
-  interval() { return this.pushReady() ? this.verificationMs : this.pollMs; }
-  details() {
-    this.sink.details?.("fanduel", {
+  interval() {
+    const normal = this.pushReady() ? this.verificationMs : this.pollMs;
+    return this.hasLiveGames && this.livePollMs != null ? Math.min(normal, this.livePollMs) : normal;
+  }
+  sourceDetails() {
+    return {
       region: "Ontario",
+      league: this.league,
       endpoints: { discovery: new URL(FD_DISCOVERY).origin,
         prices: new URL(FD_PRICES).origin },
       transport: this.pushReady() ? "Live push · polling backup" : "Polling fallback · reconnecting live feed",
@@ -218,8 +250,9 @@ export class FanDuel {
         polling: { ...this.pollingCounters, intervalMs: this.interval(), lastSuccessAt: this.lastPollAt ?? null,
           lastCompleteAt: this.lastFullPollAt ?? null, error: this.pollError ?? null },
         discovery: { lastSuccessAt: this.discoveredAt ?? null, error: this.discoveryError ?? null } },
-    });
+    };
   }
+  details() { this.sink.details?.("fanduel", this.sourceDetails()); }
   queueTick(delay = 0) {
     if (this.stopped) return;
     const now = this.clock();
@@ -279,8 +312,12 @@ export class FanDuel {
   }
   publish(timing) {
     const dataset = normalizeFanDuel(this.catalog, this.state.values());
+    this.hasLiveGames = dataset.games.some(game => game.live);
     if (this.coverage?.missingIds.length)
       dataset.warnings.push(`FanDuel omitted ${this.coverage.missingIds.length} requested markets; coverage is incomplete`);
+    // Coverage and price changes must travel in the same publication. A later
+    // details frame must not briefly certify a partial reply using an old lease.
+    dataset.source = this.sourceDetails();
     this.sink.update("fanduel", dataset, timing);
   }
   tick() {
@@ -324,9 +361,9 @@ export class FanDuel {
     try {
       if (!this.catalog || this.clock() >= this.nextDiscoveryAt) {
         try {
-          const result = await this.fetcher(FD_DISCOVERY, { headers: FD_HEADERS, signal });
+          const result = await this.fetcher(this.discoveryUrl, { headers: FD_HEADERS, signal });
           if (this.stopped || runId !== this.runId) return;
-          this.catalog = selectFanDuelMarkets(result.data);
+          this.catalog = selectFanDuelMarkets(result.data, { league: this.league });
           this.discoveredAt = this.clock();
           this.nextDiscoveryAt = this.clock() + this.discoveryMs;
           this.discoveryRetryAt = 0;
@@ -343,7 +380,9 @@ export class FanDuel {
         }
       }
       const token = this.state.beginPoll();
-      const result = await fetchFanDuelPrices(Object.keys(this.catalog.markets), { fetcher: this.fetcher, signal });
+      const result = await fetchFanDuelPrices(Object.keys(this.catalog.markets), {
+        fetcher: this.fetcher, signal, concurrency: this.priceConcurrency,
+      });
       if (this.stopped || runId !== this.runId) return;
       // Validate the complete HTTP response before replacing any working state.
       normalizeFanDuel(this.catalog, result.data);
@@ -379,5 +418,197 @@ export class FanDuel {
       this.nextAllowedPollAt = this.clock() + this.nextDelay;
       this.details();
     }
+  }
+}
+
+// Keep lower-priority league requests off the NFL's verification path. At most
+// one extra-league HTTP request runs at once; aborting a queued generation
+// removes it immediately. Each child still owns its own complete poll cycle.
+function serialFetcher(fetcher) {
+  const queue = [];
+  let active = false;
+  const drain = () => {
+    if (active) return;
+    const job = queue.shift();
+    if (!job) return;
+    job.signal?.removeEventListener("abort", job.abort);
+    if (job.signal?.aborted) { job.reject(job.signal.reason); drain(); return; }
+    active = true;
+    Promise.resolve().then(() => fetcher(job.url, job.options)).then(job.resolve, job.reject)
+      .finally(() => { active = false; drain(); });
+  };
+  return (url, options = {}) => new Promise((resolve, reject) => {
+    const signal = options.signal;
+    if (signal?.aborted) { reject(signal.reason); return; }
+    const job = { url, options, resolve, reject, signal };
+    job.abort = () => {
+      const index = queue.indexOf(job);
+      if (index >= 0) { queue.splice(index, 1); reject(signal.reason); }
+    };
+    signal?.addEventListener("abort", job.abort, { once: true });
+    queue.push(job); drain();
+  });
+}
+
+/** Separate complete baselines, freshness clocks and retry budgets per league.
+ * The store receives the union, but an NFL poll never refreshes college/CFL.
+ * dataset.source is an atomic source patch consumed by OddsStore.update.
+ */
+export class FanDuelLeagues {
+  constructor(sink, { leagues = ["nfl", "ncaaf", "cfl"], fetcher = fetchJson,
+    collectorFactory = (target, options) => new FanDuel(target, options),
+    clock = Date.now, extraPollMs = 2000, extraLivePollMs = 1000,
+    ...options } = {}) {
+    if (!leagues.length || new Set(leagues).size !== leagues.length || leagues.some(league => !FD_LEAGUES[league]))
+      throw new Error("FanDuel requires distinct supported leagues");
+    this.sink = sink; this.clock = clock; this.leagues = [...leagues];
+    this.stopped = true;
+    this.datasets = new Map();
+    this.sources = new Map(leagues.map(league => [league, {
+      book: "fanduel", league, region: "Ontario", status: "connecting", error: null,
+      lastConfirmedAt: null, lastDataAt: null, lastChangeAt: null, staleAfterMs: 10000,
+      warnings: [], games: 0, quotes: 0, updates: 0, priceChanges: 0,
+    }]));
+    this.rateLimits = new Map();
+    const limitedFetcher = async (url, request) => {
+      const parsed = new URL(url), key = parsed.origin + parsed.pathname;
+      const remaining = (this.rateLimits.get(key) ?? 0) - this.clock();
+      if (remaining > 0) throw new UpstreamError("FanDuel shared endpoint Retry-After is active", 429, remaining);
+      try { return await fetcher(url, request); }
+      catch (error) {
+        if (error?.status === 429) this.rateLimits.set(key, Math.max(this.rateLimits.get(key) ?? 0,
+          this.clock() + Math.max(1000, error.retryAfterMs || 0)));
+        throw error;
+      }
+    };
+    const extraFetcher = serialFetcher(limitedFetcher);
+    // All leagues use the same public Ontario subscription configuration.
+    // Coalesce simultaneous bundle reads without retaining expired auth data.
+    const configFetcher = options.pushOptions?.fetchConfig ?? discoverFanDuelPushConfig;
+    const sharedConfig = args => {
+      if (!this.configRead) {
+        const request = configFetcher({ ...args, signal: this.configController.signal });
+        this.configRead = request;
+        request.finally(() => { if (this.configRead === request) this.configRead = null; }).catch(() => {});
+      }
+      return this.configRead;
+    };
+    this.collectors = new Map(leagues.map(league => {
+      const target = {
+        update: (book, dataset, timing) => { if (!this.stopped) this.update(league, dataset, timing); },
+        details: (book, patch) => { if (!this.stopped) { Object.assign(this.sources.get(league), patch); this.details(); } },
+        confirm: () => {
+          if (this.stopped) return;
+          const source = this.sources.get(league);
+          if (source.status !== "healthy") return;
+          source.lastConfirmedAt = this.clock(); this.details();
+        },
+        failure: (book, error) => {
+          if (this.stopped) return;
+          Object.assign(this.sources.get(league), { status: "stale", error: error.message, lastErrorAt: this.clock() });
+          this.details();
+        },
+      };
+      return [league, collectorFactory(target, {
+        ...options, league, clock,
+        pushOptions: { ...options.pushOptions, fetchConfig: sharedConfig },
+        ...(league === "nfl" ? { fetcher: limitedFetcher } : {
+          fetcher: extraFetcher, pollMs: extraPollMs, verificationMs: extraPollMs,
+          livePollMs: extraLivePollMs, priceConcurrency: 1,
+        }),
+      })];
+    }));
+  }
+  start() {
+    if (!this.stopped) return;
+    this.stopped = false;
+    this.configController = new AbortController();
+    this.configRead = null;
+    this.datasets.clear();
+    for (const source of this.sources.values()) Object.assign(source, {
+      status: "connecting", error: null, lastConfirmedAt: null, lastDataAt: null,
+      lastChangeAt: null, games: 0, quotes: 0, warnings: [], updates: 0, priceChanges: 0,
+    });
+    this.details();
+    for (const collector of this.collectors.values()) collector.start();
+  }
+  stop() {
+    if (this.stopped) return;
+    this.stopped = true;
+    this.configController?.abort();
+    for (const collector of this.collectors.values()) collector.stop();
+  }
+  source() {
+    const now = this.clock();
+    const leagues = Object.fromEntries([...this.sources].map(([league, source]) => [league, {
+      ...source,
+      status: source.status === "healthy" && (source.lastConfirmedAt == null || now - source.lastConfirmedAt >= source.staleAfterMs)
+        ? "stale" : source.status,
+    }]));
+    const rows = Object.values(leagues), healthy = rows.every(row => row.status === "healthy");
+    const oldest = key => rows.every(row => row[key] != null) ? Math.min(...rows.map(row => row[key])) : null;
+    const total = key => rows.reduce((sum, row) => sum + (row[key] ?? 0), 0);
+    const nfl = leagues.nfl ?? rows[0];
+    const polling = rows.map(row => row.channels?.polling ?? {});
+    const pushes = rows.map(row => row.channels?.push ?? {});
+    const sum = (values, key) => values.reduce((n, row) => n + (Number.isFinite(row[key]) ? row[key] : 0), 0);
+    const oldestOf = (values, key) => values.every(row => Number.isFinite(row[key])) ? Math.min(...values.map(row => row[key])) : null;
+    const coverage = rows.every(row => row.coverage) ? {
+      requested: sum(rows.map(row => row.coverage), "requested"),
+      returned: sum(rows.map(row => row.coverage), "returned"),
+      batches: sum(rows.map(row => row.coverage), "batches"),
+      missingIds: rows.flatMap(row => row.coverage.missingIds ?? []),
+    } : null;
+    return {
+      ...nfl, book: "fanduel", league: undefined, leagues,
+      status: healthy ? "healthy" : rows.some(row => row.status === "stale") ? "stale" : "connecting",
+      lastConfirmedAt: oldest("lastConfirmedAt"), lastDataAt: oldest("lastDataAt"),
+      lastChangeAt: Math.max(0, ...rows.map(row => row.lastChangeAt ?? 0)) || null,
+      games: total("games"), quotes: total("quotes"), updates: total("updates"), priceChanges: total("priceChanges"),
+      error: healthy ? null : rows.filter(row => row.status !== "healthy").map(row => `${row.league}: ${row.error ?? row.status}`).join("; "),
+      warnings: rows.flatMap(row => (row.warnings ?? []).map(warning => `${row.league}: ${warning}`)),
+      region: "Ontario",
+      pollMs: null, coverage,
+      transport: "Live push with independent league verification",
+      channels: {
+        push: { status: pushes.every(row => row.status === "subscribed") ? "subscribed" : "partial",
+          verified: pushes.every(row => row.verified === true), subscribedMarkets: sum(pushes, "subscribedMarkets"),
+          lastConfirmedAt: oldestOf(pushes, "lastConfirmedAt"), region: FD_REGION, origin: FD_ORIGIN,
+          endpoint: "https://pir.on.sportsbook.fanduel.ca/graphql", leagueCount: rows.length },
+        polling: { ...Object.fromEntries(["cyclesStarted", "successfulCycles", "failedCycles", "partialCycles", "rateLimitedCycles"]
+          .map(key => [key, sum(polling, key)])), intervalMs: null,
+          lastSuccessAt: oldestOf(polling, "lastSuccessAt"), lastCompleteAt: oldestOf(polling, "lastCompleteAt"),
+          error: polling.map(row => row.error).filter(Boolean).join("; ") || null },
+        discovery: { lastSuccessAt: oldestOf(rows.map(row => row.channels?.discovery ?? {}), "lastSuccessAt"),
+          error: rows.map(row => row.channels?.discovery?.error).filter(Boolean).join("; ") || null },
+      },
+    };
+  }
+  details() { this.sink.details?.("fanduel", this.source()); }
+  update(league, dataset, timing) {
+    const source = this.sources.get(league), now = this.clock();
+    if (dataset.games.some(game => (game.league ?? "nfl") !== league))
+      throw new Error("FanDuel league collector returned a different competition");
+    const previous = new Map((this.datasets.get(league)?.quotes ?? []).map(quote =>
+      [`${quote.gameId}:${quote.market}:${quote.side}`, quote]));
+    const changed = dataset.quotes.filter(quote => {
+      const old = previous.get(`${quote.gameId}:${quote.market}:${quote.side}`);
+      return old && (old.american !== quote.american || old.line !== quote.line || old.suspended !== quote.suspended);
+    }).length;
+    this.datasets.set(league, dataset);
+    Object.assign(source, {
+      ...dataset.source,
+      status: "healthy", lastConfirmedAt: now, lastDataAt: timing.receivedAt,
+      lastChangeAt: changed ? now : source.lastChangeAt, error: null,
+      warnings: dataset.warnings ?? [], games: dataset.games.length, quotes: dataset.quotes.length,
+      updates: source.updates + 1, priceChanges: source.priceChanges + changed,
+      requestMs: timing.durationMs ?? source.requestMs ?? null, decodedBytes: timing.decodedBytes,
+      pollMs: timing.pollMs ?? source.pollMs ?? null,
+    });
+    const datasets = [...this.datasets.values()];
+    this.sink.update("fanduel", {
+      games: datasets.flatMap(row => row.games), quotes: datasets.flatMap(row => row.quotes),
+      warnings: datasets.flatMap(row => row.warnings ?? []), source: this.source(),
+    }, { ...timing, league });
   }
 }

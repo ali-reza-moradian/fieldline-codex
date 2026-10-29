@@ -1,0 +1,12 @@
+{
+  "scope": "Full local regression suite for Ontario NFL, college/FCS and CFL release",
+  "tests": 248,
+  "passed": 248,
+  "failed": 0,
+  "skipped": 0,
+  "command": "npm test",
+  "notes": [
+    "Includes independent league failure/history isolation, incomplete coverage eligibility, large initial college stream, gzip/live-data cache policy, multi-subscription replay and bounded reconnect recovery tests.",
+    "Live source verification is recorded separately; local regression tests do not establish cloud or in-play latency."
+  ]
+}

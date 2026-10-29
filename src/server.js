@@ -4,10 +4,13 @@ import { fileURLToPath } from "node:url";
 import { OddsStore } from "./store.js";
 import { Metrics } from "./metrics.js";
 import { DraftKings } from "./adapters/draftkings.js";
-import { FanDuel } from "./adapters/fanduel.js";
+import { FanDuelLeagues } from "./adapters/fanduel.js";
 import { ExtrasService } from "./extras-service.js";
 import { PriceHistory } from "./price-history.js";
 import { HistoryPersistence } from "./history-persistence.js";
+import { LEAGUE_IDS } from "./leagues.js";
+import { selectedLeague, leagueSources, leagueSnapshot, leagueFrame } from "./league-view.js";
+import { acceptsGzip, responseBody } from "./response-body.js";
 
 // Counters and timestamps stay available in snapshots and /api/metrics. Only
 // fields that change how a source can be displayed or trusted need a full frame.
@@ -33,10 +36,10 @@ export function createApp({
   store = new OddsStore(),
   metrics = new Metrics(),
   ingest = true,
-  collectorFactory = (sink) => [new DraftKings(sink), new FanDuel(sink)],
+  collectorFactory = (sink) => [new DraftKings(sink), new FanDuelLeagues(sink)],
   streamScheduler = { setInterval, clearInterval },
   extrasFactory = options => new ExtrasService(options),
-  priceHistory = new PriceHistory(),
+  priceHistory = new PriceHistory({ maxSeries: 4096 }),
   persistenceFactory = options => new HistoryPersistence(options),
 } = {}) {
   const clients = new Set();
@@ -48,10 +51,13 @@ export function createApp({
     ["/stream.js", ["../public/stream.js", "text/javascript; charset=utf-8"]],
     ["/style.css", ["../public/style.css", "text/css; charset=utf-8"]],
     ["/model.js", ["./model.js", "text/javascript; charset=utf-8"]],
+    ["/leagues.js", ["./leagues.js", "text/javascript; charset=utf-8"]],
+    ["/college-teams.js", ["./college-teams.js", "text/javascript; charset=utf-8"]],
     ["/analytics.js", ["./analytics.js", "text/javascript; charset=utf-8"]],
     ["/ui-controls.js", ["../public/ui-controls.js", "text/javascript; charset=utf-8"]],
     ["/extras-panel.js", ["../public/extras-panel.js", "text/javascript; charset=utf-8"]],
   ]);
+  const assets = new Map();
   const security = {
     "X-Content-Type-Options": "nosniff",
     "Referrer-Policy": "no-referrer",
@@ -62,7 +68,7 @@ export function createApp({
   const serialize = (type, data) =>
     `${Number.isInteger(data.revision) ? `id: ${data.revision}\n` : ""}event: ${type}\ndata: ${JSON.stringify(data)}\n\n`;
   const write = (client, frame, bytes = Buffer.byteLength(frame)) => {
-    if (client.destroyed || client.writableEnded || client.writableLength + bytes > 256 * 1024) {
+    if (client.destroyed || client.writableEnded || client.writableLength + bytes > (client.fieldlineBufferLimit ?? 256 * 1024)) {
       client.destroy();
       clients.delete(client);
       return;
@@ -71,55 +77,66 @@ export function createApp({
     catch { client.destroy(); clients.delete(client); }
   };
   const send = (res, type, data) => write(res, serialize(type, data));
-  const broadcast = (type, data) => {
+  const broadcast = (type, data, league = null) => {
     const frame = serialize(type, data);
     const bytes = Buffer.byteLength(frame);
-    for (const client of clients) write(client, frame, bytes);
+    for (const client of clients) if (league === null || client.fieldlineLeague === league) write(client, frame, bytes);
   };
-  const presentations = new Map(Object.entries(store.sources).map(([book, source]) => [book, sourcePresentation(source)]));
-  let freshnessPending = false;
+  const presentations = new Map();
+  for (const league of LEAGUE_IDS) for (const [book, source] of Object.entries(leagueSources(store.sources, league)))
+    presentations.set(`${league}:${book}`, sourcePresentation(source));
+  const freshnessPending = new Set();
   const onMessage = ({ type, data }) => {
-    if (data.source) {
-      const signature = sourcePresentation(data.source);
-      const changed = presentations.get(data.source.book) !== signature;
-      presentations.set(data.source.book, signature);
-      if (type === "status" && !changed) {
-        freshnessPending = true;
-        return;
+    for (const league of LEAGUE_IDS) {
+      const frame = leagueFrame(type, data, league, store);
+      if (frame.data.source) {
+        const key = `${league}:${frame.data.source.book}`;
+        const signature = sourcePresentation(frame.data.source);
+        const changed = presentations.get(key) !== signature;
+        presentations.set(key, signature);
+        if (frame.type === "status" && !changed) {
+          freshnessPending.add(league);
+          continue;
+        }
       }
+      broadcast(frame.type, frame.data, league);
     }
-    broadcast(type, data);
   };
   store.on("message", onMessage);
   const detachHistory = priceHistory.attach(store);
   const persistence = persistenceFactory({ history: priceHistory, connectionString: process.env.HISTORY_DATABASE_URL });
   persistence.start();
   const freshness = streamScheduler.setInterval(() => {
-    if (!freshnessPending) return;
-    freshnessPending = false;
+    if (!freshnessPending.size) return;
+    const pending = [...freshnessPending]; freshnessPending.clear();
     if (!clients.size) return;
     // Read current state at flush time: a status queued before a newer delta
     // must never send the delta's older source timestamps afterwards.
-    broadcast("freshness", {
+    for (const league of pending) broadcast("freshness", {
       revision: store.revision, sentAt: Date.now(),
-      sources: Object.fromEntries(Object.entries(store.sources).map(([book, source]) => [book, {
+      sources: Object.fromEntries(Object.entries(leagueSources(store.sources, league)).map(([book, source]) => [book, {
         lastConfirmedAt: source.lastConfirmedAt,
         lastDataAt: source.lastDataAt,
         lastChangeAt: source.lastChangeAt,
       }])),
-    });
+    }, league);
   }, 250);
   freshness.unref?.();
   const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, "http://localhost");
-    const json = (status, data) => {
+    const json = async (status, data) => {
+      const body = await responseBody(JSON.stringify(data), req.headers['accept-encoding']);
       res.writeHead(status, {
         ...security,
         "Content-Type": "application/json",
+        ...body.headers,
       });
-      res.end(JSON.stringify(data));
+      res.end(body.content);
     };
     try {
+      let league;
+      try { league = selectedLeague(url.searchParams.get('league')); }
+      catch { return json(400, { error: 'Choose nfl, ncaaf or cfl' }); }
       if (req.method === "GET" && url.pathname === "/api/history") {
         const gameId = url.searchParams.get("gameId"), market = url.searchParams.get("market"), side = url.searchParams.get("side");
         if (!gameId || gameId.length > 150 || !['moneyline','spread','total'].includes(market) ||
@@ -134,6 +151,8 @@ export function createApp({
       if (req.method === "GET" && url.pathname === "/api/extras/events") {
         const gameId = url.searchParams.get("gameId");
         if (!gameId || gameId.length > 150) return json(400, { error: "A valid gameId is required" });
+        if ((store.boards.get(gameId)?.league ?? 'nfl') !== 'nfl')
+          return json(400, { error: 'Extra markets are currently available for NFL only' });
         if (extras.report().viewers >= 100) return json(503, { error: "Extra-market viewer capacity reached" });
         const watch = extras.watch(gameId, res);
         if (watch.status !== 200) return json(watch.status, { error: watch.error });
@@ -157,15 +176,21 @@ export function createApp({
         });
         res.flushHeaders();
         req.socket.setNoDelay(true);
+        res.fieldlineLeague = league;
+        const snapshotFrame = serialize('snapshot', leagueSnapshot(store.snapshot(), league));
+        const snapshotBytes = Buffer.byteLength(snapshotFrame);
+        // College has a larger complete initial board. Give it one bounded
+        // snapshot plus a small update allowance; never an unbounded queue.
+        res.fieldlineBufferLimit = Math.min(1024 * 1024, Math.max(256 * 1024, snapshotBytes + 64 * 1024));
         clients.add(res);
-        send(res, "snapshot", store.snapshot());
+        write(res, snapshotFrame, snapshotBytes);
         req.on("close", () => clients.delete(res));
         res.on("close", () => clients.delete(res));
         res.on("error", () => { clients.delete(res); res.destroy(); });
         return;
       }
       if (req.method === "GET" && url.pathname === "/api/board")
-        return json(200, store.snapshot());
+        return json(200, leagueSnapshot(store.snapshot(), league));
       if (req.method === "GET" && url.pathname === "/api/time")
         return json(200, { now: Date.now() });
       if (req.method === "GET" && url.pathname === "/api/metrics")
@@ -178,7 +203,8 @@ export function createApp({
         });
       if (req.method === "GET" && url.pathname === "/api/health") {
         const now = Date.now();
-        const books = Object.fromEntries(Object.entries(store.sources).map(([book, source]) => {
+        const selected = leagueSnapshot(store.snapshot(), league);
+        const books = Object.fromEntries(Object.entries(selected.sources).map(([book, source]) => {
           const ageMs = source.lastConfirmedAt ? now - source.lastConfirmedAt : null;
           const complete = book !== "fanduel" || (source.coverage?.requested > 0 &&
             source.coverage.returned === source.coverage.requested && source.coverage.missingIds?.length === 0);
@@ -188,7 +214,7 @@ export function createApp({
             pushVerified: source.channels?.push?.verified ?? null }];
         }));
         const ready = Object.values(books).every(b => b.fresh && b.complete && b.games > 0 && b.quotes > 0);
-        return json(ready ? 200 : 503, { ready, books,
+        return json(ready ? 200 : 503, { ready, league, books,
           version: process.env.RENDER_GIT_COMMIT ?? process.env.GIT_COMMIT ?? null });
       }
       if (req.method === "GET" && url.pathname === "/healthz")
@@ -219,9 +245,19 @@ export function createApp({
       if (req.method !== "GET" || !files.has(url.pathname))
         return json(404, { error: "Not found" });
       const [path, type] = files.get(url.pathname);
-      const content = await readFile(new URL(path, import.meta.url));
-      res.writeHead(200, { ...security, "Content-Type": type });
-      res.end(content);
+      const encoding = acceptsGzip(req.headers['accept-encoding']) ? 'gzip' : '';
+      const key = `${path}:${encoding}`;
+      if (!assets.has(key)) assets.set(key, readFile(new URL(path, import.meta.url))
+        .then(content => responseBody(content, encoding, { etag: true }))
+        .catch(error => { assets.delete(key); throw error; }));
+      const asset = await assets.get(key);
+      const headers = { ...security, 'Cache-Control': 'public, max-age=0, must-revalidate',
+        'Content-Type': type, ...asset.headers };
+      if (req.headers['if-none-match'] === asset.headers.ETag) {
+        delete headers['Content-Length']; res.writeHead(304, headers); res.end(); return;
+      }
+      res.writeHead(200, headers);
+      res.end(asset.content);
     } catch (error) {
       console.error("Request failed:", error.message);
       if (!res.headersSent) json(500, { error: "Request failed" });

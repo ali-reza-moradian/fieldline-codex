@@ -1,7 +1,7 @@
 import { EventEmitter } from "node:events";
 import { BOOKS } from "./model.js";
 
-const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const same = (a, b) => a === b || JSON.stringify(a) === JSON.stringify(b);
 const quoteValue = (q) => [
   q.gameId,
   q.market,
@@ -9,6 +9,8 @@ const quoteValue = (q) => [
   q.line,
   q.american,
   q.suspended,
+  q.period,
+  q.settlement,
 ];
 export class OddsStore extends EventEmitter {
   constructor() {
@@ -66,6 +68,14 @@ export class OddsStore extends EventEmitter {
           : (old?.previousAmerican ?? null),
       };
     });
+    // A quiet verification does not need to rebuild and stringify every game.
+    // Identity, line, price, availability and game metadata still invalidate it.
+    const boardChanged = !same(dataset.games, this.datasets[book].games) ||
+      quotes.length !== previous.size || quotes.some(q => {
+        const old = previous.get(q.id);
+        return !old || !same(quoteValue(q), quoteValue(old)) || q.period !== old.period ||
+          q.decimal !== old.decimal || q.sourceId !== old.sourceId;
+      });
     this.datasets[book] = { games: dataset.games, quotes };
     Object.assign(source, {
       status: "healthy",
@@ -82,7 +92,10 @@ export class OddsStore extends EventEmitter {
       decodedBytes: timing.decodedBytes,
       pollMs: timing.pollMs ?? null,
     });
-    const next = this.buildBoard(),
+    // A multi-league collector supplies independent verification leases. Apply
+    // these atomically so no intermediate frame certifies an unverified league.
+    if (dataset.source) Object.assign(source, dataset.source);
+    const next = boardChanged ? this.buildBoard() : this.boards,
       upsertGames = [],
       removeGameIds = [];
     for (const [id, game] of next)
@@ -93,6 +106,7 @@ export class OddsStore extends EventEmitter {
     const normalizedAt = Date.now();
     const metadata = {
       book,
+      league: timing.league ?? null,
       kind: timing.kind,
       receivedAt: timing.receivedAt,
       normalizedAt,
@@ -105,7 +119,8 @@ export class OddsStore extends EventEmitter {
       priceChanges,
       phases: [
         ...new Set(
-          (upsertGames.length ? upsertGames : dataset.games).map((g) =>
+          (upsertGames.length ? upsertGames : dataset.games)
+            .filter(g => !timing.league || (g.league ?? 'nfl') === timing.league).map((g) =>
             g.live ? "live" : "pregame",
           ),
         ),
@@ -138,6 +153,7 @@ export class OddsStore extends EventEmitter {
         gameMap.set(`${book}:${g.id}`, id);
         const merged = games.get(id) ?? {
           id,
+          league: g.league ?? "nfl",
           away: g.away,
           home: g.home,
           startsAt: g.startsAt,

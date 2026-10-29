@@ -1,4 +1,5 @@
 import { BOOK_NAMES, compareQuotes } from "/model.js";
+import { LEAGUES, LEAGUE_IDS } from "/leagues.js";
 import { formatOdds, safeView, safeFormat, sourceFresh, SessionHistory, historySegments, selectionKey } from "/presentation.js";
 import { BoardStream, ClockSync, mergeFreshness } from "/stream.js";
 import { analyzeGame } from "/analytics.js";
@@ -7,6 +8,7 @@ import { ExtrasPanel } from "/extras-panel.js";
 
 const $ = id => document.getElementById(id);
 const escape = value => String(value ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const teamBadge = t => t.id.length <= 4 ? t.id : t.name.split(/\s+/).map(w => w[0]).join("").slice(0, 4).toUpperCase();
 const signed = n => n > 0 ? `+${n}` : n < 0 ? `−${Math.abs(n)}` : "PK";
 const lineText = q => q.market === "moneyline" ? "" : q.market === "total" ? `${q.side === "over" ? "O" : "U"} ${q.line}` : signed(q.line);
 const marketName = { moneyline: "Moneyline", spread: "Spread", total: "Total" };
@@ -14,11 +16,14 @@ const when = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Toronto", wee
 const shortTime = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Toronto", hour: "2-digit", minute: "2-digit", second: "2-digit" });
 const storage = { get(key = "odds") { try { return localStorage.getItem("fieldline." + key); } catch { return null; } }, set(value, key = "odds") { try { localStorage.setItem("fieldline." + key, value); } catch { /* optional preference */ } } };
 const params = new URLSearchParams(location.search);
+const safeLeague = value => LEAGUE_IDS.includes(value) ? value : "nfl";
+let league = safeLeague(params.get("league"));
 let games = new Map(), sources = {}, view = safeView(params.get("view")), format = safeFormat(params.get("odds") ?? storage.get());
 let connected = false, loaded = false, revision = 0, clockOffset = 0, clockUncertainty = null, lastClockSync = 0;
 let lastHealthKey = "", movementDeadline = Infinity;
-const rendered = new Map(), charts = new Map(), history = new SessionHistory();
-const observedHealth = new Map();
+const rendered = new Map(), charts = new Map();
+let history = new SessionHistory({ maxSeries: 2048 });
+const observedHealth = new Map(), sourceMarkup = new Map();
 const openedAt = Date.now();
 const preferences = Object.fromEntries(["layout", "density", "scheme", "sort"].map(key => [key, safePreference(key, storage.get(key))]));
 const favorites = parseFavorites(storage.get("favorites"));
@@ -52,7 +57,8 @@ function renderSource(book) {
   const label = healthy ? "Connected" : !s || s.status === "connecting" ? "Connecting" : "Stale";
   const age = s?.lastConfirmedAt ? Math.max(0, Math.floor((serverNow() - s.lastConfirmedAt) / 1000)) : null;
   const error = !connected && loaded ? "Connection lost. Prices are excluded until reconnected." : s?.error;
-  $(book + "-status").innerHTML = `<div class="source-title"><span class="book-logo ${book === "fanduel" ? "fd" : ""}">${book === "fanduel" ? "FD" : "DK"}</span>${BOOK_NAMES[book]}<span class="region">Ontario</span></div><span class="status-pill ${healthy ? "" : "stale"}">${label}</span><div class="source-details">${escape(s?.transport ?? "Waiting for source")}</div><div class="source-details right">${age === null ? "Awaiting data" : `Confirmed ${age}s ago`}</div>${error ? `<div class="source-error">${escape(error)}</div>` : ""}${s?.warnings?.length ? `<div class="source-error">${s.warnings.length} validation warning(s). <a href="/api/metrics" target="_blank" rel="noopener">Details</a></div>` : ""}`;
+  const html = `<div class="source-title"><span class="book-logo ${book === "fanduel" ? "fd" : ""}">${book === "fanduel" ? "FD" : "DK"}</span>${BOOK_NAMES[book]}<span class="region">Ontario</span></div><span class="status-pill ${healthy ? "" : "stale"}">${label}</span><div class="source-details">${escape(s?.transport ?? "Waiting for source")}</div><div class="source-details right">${age === null ? "Awaiting data" : `Confirmed ${age}s ago`}</div>${error ? `<div class="source-error">${escape(error)}</div>` : ""}${s?.warnings?.length ? `<div class="source-error">${s.warnings.length} validation warning(s). <a href="/api/metrics" target="_blank" rel="noopener">Details</a></div>` : ""}`;
+  if (sourceMarkup.get(book) !== html) { $(book + "-status").innerHTML = html; sourceMarkup.set(book, html); }
 }
 function movementHtml(q, stale) {
   if (stale) return "";
@@ -174,7 +180,7 @@ function extrasHtml(game) {
 }
 function gameHtml(game) {
   const starred = favorites.has(game.id), analysis = gameAnalysis(game);
-  return `<div class="game-meta"><div class="game-meta-left"><button type="button" class="star-game" data-star-game="${escape(game.id)}" data-focus="star" aria-pressed="${starred}" aria-label="${starred ? "Unstar" : "Star"} ${escape(`${game.away.name} at ${game.home.name}`)}">${starred ? "★" : "☆"}</button><time datetime="${escape(game.startsAt)}">${when.format(new Date(game.startsAt))}</time><span class="state-tag ${game.live ? "live" : ""}">${game.live ? "LIVE" : "PREGAME"}</span></div><div class="game-meta-right"><span class="${game.books.length < 2 ? "one-book" : ""}">${game.matchWarning ? escape(game.matchWarning) : game.books.length === 2 ? "2 books" : `${BOOK_NAMES[game.books[0]]} only`}</span><button type="button" class="history-toggle" data-toggle-history="${escape(game.id)}" data-focus="history-toggle" aria-expanded="${charts.has(game.id)}" aria-controls="${historyId(game.id)}">${charts.has(game.id) ? "Close history" : "Price history"} <span aria-hidden="true">⌁</span></button><button type="button" class="history-toggle" data-toggle-extras="${escape(game.id)}" data-focus="extras-toggle" aria-expanded="${extras.gameId === game.id}" aria-controls="${extrasId(game.id)}">More markets <span aria-hidden="true">${extras.gameId === game.id ? "−" : "+"}</span></button></div></div>${preferences.layout === "grid" ? gridHtml(game) : ["away", "home"].map((side, i) => `<div class="game-row"><div class="team"><span class="team-badge">${escape(game[side].id)}</span><span class="team-name">${escape(game[side].name)}<small>${side}</small></span></div>${cell(game, "moneyline", side)}${cell(game, "spread", side)}${cell(game, "total", i === 0 ? "over" : "under")}</div>`).join("")}<div class="analysis-summary"><span>${Number.isFinite(analysis.bestHoldPercent) ? `Lowest implied margin ${percent(analysis.bestHoldPercent)}` : "No complete same-line margin"}</span>${analysis.groups.some(g => g.arbitrageCandidate) ? '<span class="candidate">Arbitrage candidate · see estimates</span>' : ""}</div>${analyticsHtml(game)}${chartHtml(game)}${extrasHtml(game)}`;
+  return `<div class="game-meta"><div class="game-meta-left"><button type="button" class="star-game" data-star-game="${escape(game.id)}" data-focus="star" aria-pressed="${starred}" aria-label="${starred ? "Unstar" : "Star"} ${escape(`${game.away.name} at ${game.home.name}`)}">${starred ? "★" : "☆"}</button><time datetime="${escape(game.startsAt)}">${when.format(new Date(game.startsAt))}</time><span class="state-tag ${game.live ? "live" : ""}">${game.live ? "LIVE" : "PREGAME"}</span></div><div class="game-meta-right"><span class="${game.books.length < 2 ? "one-book" : ""}">${game.matchWarning ? escape(game.matchWarning) : game.books.length === 2 ? "2 books" : `${BOOK_NAMES[game.books[0]]} only`}</span><button type="button" class="history-toggle" data-toggle-history="${escape(game.id)}" data-focus="history-toggle" aria-expanded="${charts.has(game.id)}" aria-controls="${historyId(game.id)}">${charts.has(game.id) ? "Close history" : "Price history"} <span aria-hidden="true">⌁</span></button>${(game.league ?? "nfl") === "nfl" ? `<button type="button" class="history-toggle" data-toggle-extras="${escape(game.id)}" data-focus="extras-toggle" aria-expanded="${extras.gameId === game.id}" aria-controls="${extrasId(game.id)}">More markets <span aria-hidden="true">${extras.gameId === game.id ? "−" : "+"}</span></button>` : ""}</div></div>${preferences.layout === "grid" ? gridHtml(game) : ["away", "home"].map((side, i) => `<div class="game-row"><div class="team"><span class="team-badge">${escape(teamBadge(game[side]))}</span><span class="team-name">${escape(game[side].name)}<small>${side}</small></span></div>${cell(game, "moneyline", side)}${cell(game, "spread", side)}${cell(game, "total", i === 0 ? "over" : "under")}</div>`).join("")}<div class="analysis-summary"><span>${Number.isFinite(analysis.bestHoldPercent) ? `Lowest implied margin ${percent(analysis.bestHoldPercent)}` : "No complete same-line margin"}</span>${analysis.groups.some(g => g.arbitrageCandidate) ? '<span class="candidate">Arbitrage candidate · see estimates</span>' : ""}</div>${analyticsHtml(game)}${chartHtml(game)}${extrasHtml(game)}`;
 }
 function replaceGameContents(element, html) {
   const active = element.contains(document.activeElement) ? document.activeElement : null;
@@ -198,6 +204,11 @@ function renderActivity() {
   }).join("")}</ol>` : '<p>No changes observed in this view since this page opened. Initial and reconnect snapshots establish a baseline.</p>';
 }
 function render() {
+  $("league-choice").value = league;
+  $("league-title").textContent = LEAGUES[league].name;
+  $("league-badge").textContent = league === "ncaaf" ? "COLLEGE" : LEAGUES[league].name;
+  $("board").setAttribute("aria-label", LEAGUES[league].name + " odds comparison");
+  document.title = `Fieldline · ${LEAGUES[league].name} Odds`;
   markSourceGaps();
   movementDeadline = Infinity;
   renderSource("draftkings"); renderSource("fanduel");
@@ -225,7 +236,7 @@ function render() {
   const container = $("board");
   if (!visible.length) {
     rendered.clear();
-    const title = games.size ? filter === "live" ? "No live NFL games right now" : "No matching games" : loaded ? "Waiting for available odds" : "Connecting to the books";
+    const title = games.size ? filter === "live" ? `No live ${LEAGUES[league].name} games right now` : "No matching games" : loaded ? "Waiting for available odds" : "Connecting to the books";
     container.innerHTML = `<div class="empty-state"><h2>${title}</h2><p>${games.size ? "Clear the search, turn off Starred or choose All games to see more." : "Each book connects independently. Check the source status above."}</p></div>`;
   } else {
     container.querySelector(".empty-state")?.remove();
@@ -252,6 +263,7 @@ function render() {
 }
 function updateUrl() {
   const url = new URL(location.href);
+  if (league === "nfl") url.searchParams.delete("league"); else url.searchParams.set("league", league);
   if (view === "best") url.searchParams.delete("view"); else url.searchParams.set("view", view);
   if (format === "american") url.searchParams.delete("odds"); else url.searchParams.set("odds", format);
   window.history.replaceState(null, "", url);
@@ -262,10 +274,22 @@ function closeChart() { charts.clear(); savedHistory.close(); chartGraphicCache 
 function selectChart(gameId, market = "moneyline", side = "away") {
   charts.clear(); charts.set(gameId, { market, side }); savedHistory.select({ gameId, market, side }); render();
 }
+function selectLeague(value, updateAddress = true) {
+  const next = safeLeague(value); if (next === league) return;
+  stream.stop(); extras.close(); closeChart();
+  league = next; games.clear(); sources = {}; rendered.clear(); analyticsCache.clear(); observedHealth.clear();
+  history = new SessionHistory({ maxSeries: 2048 });
+  connected = false; loaded = false; revision = 0; lastHealthKey = "";
+  $("board").replaceChildren(); $("search").value = ""; $("game-filter").value = "all";
+  $("paint-latency").textContent = "Awaiting a measured change";
+  if (updateAddress) updateUrl();
+  stream.url = "/api/events?league=" + league; render(); stream.start();
+}
 function selectView(value) { view = safeView(value); updateUrl(); render(); }
+$("league-choice").addEventListener("change", event => selectLeague(event.target.value));
 for (const button of document.querySelectorAll("[data-view]")) button.addEventListener("click", () => selectView(button.dataset.view));
 $("odds-format").addEventListener("change", event => { format = safeFormat(event.target.value); storage.set(format); updateUrl(); render(); });
-window.addEventListener("popstate", () => { const p = new URLSearchParams(location.search); view = safeView(p.get("view")); format = safeFormat(p.get("odds") ?? storage.get()); render(); });
+window.addEventListener("popstate", () => { const p = new URLSearchParams(location.search); view = safeView(p.get("view")); format = safeFormat(p.get("odds") ?? storage.get()); selectLeague(p.get("league"), false); render(); });
 $("search").addEventListener("input", render); $("game-filter").addEventListener("change", render);
 $("layout-choice").addEventListener("change", e => setPreference("layout", e.target.value));
 $("sort-choice").addEventListener("change", e => setPreference("sort", e.target.value));
@@ -337,6 +361,7 @@ function disconnected() {
   connected = false; render();
 }
 function applyStreamEvent(type, data) {
+  if (data.league && data.league !== league) return;
   if (type === "snapshot") {
     games = new Map(data.games.map(g => [g.id, g])); sources = data.sources; revision = data.revision;
     connected = true; loaded = true;
@@ -367,7 +392,7 @@ function applyStreamEvent(type, data) {
     if (JSON.stringify([freshness("draftkings"), freshness("fanduel")]) !== lastHealthKey) render();
   }
 }
-const stream = new BoardStream({ getClock: () => clockSync.estimate(),
+const stream = new BoardStream({ url: "/api/events?league=" + league, retryMinMs: 250, getClock: () => clockSync.estimate(),
   onEvent: applyStreamEvent, onDisconnect: disconnected });
 setInterval(() => {
   renderSource("draftkings"); renderSource("fanduel"); extras.tick(); renderExtraSources();

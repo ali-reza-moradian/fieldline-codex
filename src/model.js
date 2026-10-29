@@ -1,3 +1,6 @@
+import { COLLEGE_TEAMS } from "./college-teams.js";
+import { LEAGUES } from "./leagues.js";
+
 export const BOOKS = ["draftkings", "fanduel"];
 export const BOOK_NAMES = { draftkings: "DraftKings", fanduel: "FanDuel" };
 
@@ -47,9 +50,30 @@ for (const [id, name, ...extra] of teams) {
     aliases.set(clean(alias), { id, name });
   }
 }
-export function team(name) {
-  const result = aliases.get(clean(name));
-  if (!result) throw new Error(`Unrecognized NFL team: ${name}`);
+const leagueAliases = { nfl: aliases, ncaaf: new Map(), cfl: new Map() };
+const cflTeams = [
+  ["BC", "British Columbia Lions", "BC Lions"],
+  ["CGY", "Calgary Stampeders", "CGY Stampeders", "CAL Stampeders"],
+  ["EDM", "Edmonton Elks", "EDM Elks"],
+  ["HAM", "Hamilton Tiger-Cats", "HAM Tiger-Cats"],
+  ["MTL", "Montreal Alouettes", "MTL Alouettes"],
+  ["OTT", "Ottawa Redblacks", "OTT Redblacks"],
+  ["SSK", "Saskatchewan Roughriders", "SSK Roughriders", "SAS Roughriders"],
+  ["TOR", "Toronto Argonauts", "TOR Argonauts"],
+  ["WPG", "Winnipeg Blue Bombers", "WPG Blue Bombers", "WIN Blue Bombers"],
+];
+for (const [league, rows] of [["ncaaf", COLLEGE_TEAMS], ["cfl", cflTeams]]) {
+  for (const [id, name, ...extra] of rows) {
+    for (const alias of [id, name, ...extra]) {
+      const key = clean(alias), existing = leagueAliases[league].get(key);
+      if (existing && existing.id !== id) throw new Error(`Ambiguous ${league} team alias: ${alias}`);
+      leagueAliases[league].set(key, { id, name });
+    }
+  }
+}
+export function team(name, league = "nfl") {
+  const result = leagueAliases[league]?.get(clean(name));
+  if (!result) throw new Error(`Unrecognized ${LEAGUES[league]?.name ?? league} team: ${name}`);
   return result;
 }
 export function americanOdds(value) {
@@ -73,14 +97,17 @@ export function makeGame(
   homeName,
   startsAt,
   live = false,
+  league = "nfl",
 ) {
-  const away = team(awayName),
-    home = team(homeName),
+  if (!Object.hasOwn(LEAGUES, league)) throw new Error(`Unsupported league: ${league}`);
+  const away = team(awayName, league),
+    home = team(homeName, league),
     time = new Date(startsAt);
   if (away.id === home.id || !Number.isFinite(time.getTime()))
     throw new Error("Invalid game identity");
   return {
-    id: `${day.format(time)}:${away.id}:${home.id}`,
+    id: `${league === "nfl" ? "" : `${league}:`}${day.format(time)}:${away.id}:${home.id}`,
+    league,
     book,
     sourceId: String(sourceId),
     away,
@@ -135,7 +162,10 @@ export function compareQuotes(quotes, sources, now = Date.now()) {
     const stale =
       !source ||
       source.status !== "healthy" ||
-      now - source.lastConfirmedAt > source.staleAfterMs;
+      now - source.lastConfirmedAt > source.staleAfterMs ||
+      (source.coverage != null && (!Number.isInteger(source.coverage.requested) || source.coverage.requested <= 0 ||
+        source.coverage.returned !== source.coverage.requested || !Array.isArray(source.coverage.missingIds) ||
+        source.coverage.missingIds.length !== 0));
     groups.get(key).push({ ...q, stale });
   }
   return [...groups.entries()].map(([key, offers]) => {

@@ -3,12 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fieldline · NFL Odds</title>
+    <title>Fieldline · Football Odds</title>
     <meta
       name="description"
-      content="Live NFL odds comparison from DraftKings and FanDuel, with transparent source status and comparable lines."
+      content="Live NFL, college football and CFL odds comparison from DraftKings and FanDuel, with transparent source status and comparable lines."
     />
     <link rel="stylesheet" href="/style.css" />
+    <link rel="modulepreload" href="/model.js" />
+    <link rel="modulepreload" href="/leagues.js" />
+    <link rel="modulepreload" href="/college-teams.js" />
+    <link rel="modulepreload" href="/presentation.js" />
+    <link rel="modulepreload" href="/stream.js" />
+    <link rel="modulepreload" href="/analytics.js" />
+    <link rel="modulepreload" href="/ui-controls.js" />
+    <link rel="modulepreload" href="/extras-panel.js" />
     <script type="module" src="/app.js"></script>
   </head>
   <body>
@@ -20,7 +28,7 @@
         ></a
       >
       <div class="top-meta">
-        <span class="league-tag">NFL</span
+        <span class="league-tag" id="league-badge">NFL</span
         ><span id="connection" role="status">Connecting…</span>
       </div>
     </header>
@@ -28,7 +36,7 @@
       <section class="intro">
         <div>
           <div class="eyebrow">ONTARIO · FULL GAME · INCLUDES OVERTIME</div>
-          <h1>NFL <span>odds board.</span></h1>
+          <h1><span id="league-title">NFL</span> <span>odds board.</span></h1>
           <p>Two books, the same bet. Find the better price.</p>
         </div>
         <div class="intro-stat">
@@ -41,6 +49,7 @@
         <article class="source-card" id="fanduel-status"></article>
       </section>
       <section class="board-section">
+        <div class="league-tools"><label for="league-choice">League</label><select id="league-choice"><option value="nfl">NFL</option><option value="ncaaf">College football</option><option value="cfl">CFL</option></select><span>Ontario prices · both books</span></div>
         <div class="board-tools">
           <div class="view-switch" role="group" aria-label="Odds source">
             <button data-view="best" aria-pressed="true">Best Price</button
@@ -93,11 +102,11 @@
           </p>
         </aside>
         <details class="activity" id="activity">
-          <summary><strong>Recent moves <span id="move-count">0</span></strong><span>Since this page opened</span></summary>
+          <summary><strong>Recent moves <span id="move-count">0</span></strong><span>This league, this visit</span></summary>
           <div id="recent-moves"><p>No changes observed yet. This tab starts with current prices.</p></div>
         </details>
         <details id="analytics-guide" class="analytics-guide"><summary><strong>Market estimates</strong><span>Margin · fair chance · estimated EV</span></summary><div><p><strong>These are price-based estimates, not predictions.</strong> Fair chance removes each book’s implied margin, then averages the two books. Estimated EV combines that chance with the best available price. Estimates assume a settled win or loss; pushes and voids are excluded. Neither guarantees a profitable bet.</p><p>Implied margin adds the best prices’ implied chances and subtracts 100%. A negative value marks an arbitrage candidate only: both sides, point line, period and settlement must agree. Availability, limits, voids and final settlement can change. Missing, stale or paused prices are excluded. Extra player markets are not included in these estimates.</p><p>Open this panel to show the estimates below each game. Starred games stay at the top; the sort menu orders the remaining games.</p></div></details>
-        <div class="history-hint">Select a price for available history up to 48 hours. More markets loads extra lines and player props for one game at a time.</div>
+        <div class="history-hint">Select a price for available history up to 48 hours. NFL More markets loads extra lines and player props for one game at a time. College and CFL show main game lines.</div>
         <div class="table-head" aria-hidden="true">
           <span>MATCHUP / TORONTO TIME</span><span>MONEYLINE</span
           ><span>SPREAD</span><span>TOTAL</span>
@@ -133,7 +142,7 @@
       </section>
       <footer>
         <span>FIELDLINE / BETSTAMP TAKE-HOME</span
-        ><span>Built by Alireza Moradian · NFL comparison prototype</span>
+        ><span>Built by Alireza Moradian · Ontario football comparison</span>
       </footer>
     </main>
     <dialog id="keyboard-help" aria-labelledby="keyboard-title">

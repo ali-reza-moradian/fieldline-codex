@@ -1,5 +1,6 @@
 import { BOOKS, decimalOdds } from "./model.js";
 import { isSourceFresh } from "./analytics.js";
+import { sourceForLeague } from "./league-view.js";
 
 const HOUR = 3600000;
 const SIDES = { moneyline: ["away", "home"], spread: ["away", "home"], total: ["over", "under"] };
@@ -12,7 +13,10 @@ const integer = (value, min, max, name) => {
 };
 const sourceCopy = source => source && ({ status: source.status, lastConfirmedAt: source.lastConfirmedAt,
   staleAfterMs: source.staleAfterMs, coverage: source.coverage && { requested: source.coverage.requested,
-    returned: source.coverage.returned, missingIds: [...(source.coverage.missingIds ?? [])] } });
+    returned: source.coverage.returned, missingIds: [...(source.coverage.missingIds ?? [])] },
+  ...(source.leagues ? { leagues: Object.fromEntries(Object.entries(source.leagues).map(([league, s]) => [league, sourceCopy(s)])) } : {}) });
+const gameLeague = game => game?.league ?? (/^(ncaaf|cfl):/.exec(game?.id ?? '')?.[1]) ?? 'nfl';
+const freshForGame = (source, game, at) => isSourceFresh(sourceForLeague(source, gameLeague(game)), at);
 const metadata = (q, gameId = q?.gameId, defaultSettlement = "including_overtime") => {
   const settlement = q?.settlement ?? defaultSettlement;
   if (!q || !BOOKS.includes(q.book) || !string(gameId) || q.period !== "full_game" ||
@@ -101,7 +105,7 @@ export class PriceHistory {
       this.games.clear(); this.sources = Object.fromEntries(Object.entries(data.sources ?? {}).map(([b, s]) => [b, sourceCopy(s)]));
       for (const game of data.games ?? []) { this.games.set(game.id, game); this.recordGame(game, at); }
     } else {
-      const book = data.source?.book, wasFresh = book && isSourceFresh(this.sources[book], at);
+      const book = data.source?.book, previousSource = this.sources[book];
       if (BOOKS.includes(book)) this.sources[book] = sourceCopy(data.source);
       this.expire(at);
       if (type === "delta") {
@@ -111,15 +115,15 @@ export class PriceHistory {
         }
         for (const game of data.upsertGames ?? []) { this.games.set(game.id, game); this.recordGame(game, at); }
       }
-      if (book && !wasFresh && isSourceFresh(this.sources[book], at))
-        for (const game of this.games.values()) this.recordGame(game, at, book);
+      if (book) for (const game of this.games.values())
+        if (!freshForGame(previousSource, game, at) && freshForGame(this.sources[book], game, at)) this.recordGame(game, at, book);
     }
     this.prune(at);
   }
 
   expire(at, currentSources = this.sources) {
-    const failed = new Set(BOOKS.filter(book => !isSourceFresh(currentSources[book], at)));
-    if (failed.size) for (const entry of [...this.series.values()]) if (failed.has(entry.book)) this.gap(entry, at, "source unavailable");
+    for (const entry of this.series.values())
+      if (!freshForGame(currentSources[entry.book], this.games.get(entry.gameId) ?? { id: entry.gameId }, at)) this.gap(entry, at, "source unavailable");
   }
 
   recordGame(game, at, onlyBook = null) {
@@ -131,7 +135,7 @@ export class PriceHistory {
       if (!m) continue;
       const key = keyOf(m); retained.add(key);
       let entry = this.series.get(key);
-      if (!isSourceFresh(this.sources[q.book], at) || q.suspended || q.missing || !price(q)) {
+      if (!freshForGame(this.sources[q.book], game, at) || q.suspended || q.missing || !price(q)) {
         if (entry) this.gap(entry, at, q.suspended ? "suspended" : "quote unavailable");
         continue;
       }

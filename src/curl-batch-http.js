@@ -50,7 +50,7 @@ function decodeResponses(envelope, requests, began) {
   return responses;
 }
 
-/** One bounded, single-flight JSONL connection to an extras-only Python process.
+/** One bounded, single-flight JSONL connection to a collector-owned Python process.
  * An abort retires the entire process generation. Late bytes/exit callbacks can
  * never resolve a request sent to its replacement. Idle processes are reclaimed.
  */
@@ -140,8 +140,8 @@ export class CurlJsonBatchClient {
   }
 }
 
-// Compatibility helper for diagnostics and isolated calls. Production extras
-// workers own one client and close it with their lifecycle instead.
+// Compatibility helper for diagnostics and isolated calls. Production
+// collectors own one client and close it with their lifecycle instead.
 export async function fetchCurlJsonBatch(requests, options = {}) {
   const client = new CurlJsonBatchClient();
   try { return await client.fetch(requests, options); }

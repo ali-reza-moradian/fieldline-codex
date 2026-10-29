@@ -1,0 +1,68 @@
+{
+  "observedAt": "2026-10-29T21:58:37.689Z",
+  "scope": "Ontario NFL, College football/FCS and CFL main two-way moneyline, spread and total",
+  "rawMarkets": {
+    "draftkings": {
+      "leagueIds": [
+        "88808",
+        "87637",
+        "154752",
+        "33567"
+      ],
+      "subcategory": "4518",
+      "marketNames": [
+        "Moneyline",
+        "Spread",
+        "Total"
+      ],
+      "marketTypeIds": [
+        "1_0",
+        "2_0",
+        "3_0"
+      ],
+      "note": "Full-game main market identities; no regulation-only or three-way market was selected."
+    },
+    "fanduel": {
+      "competitionIds": [
+        12282733,
+        12529073,
+        12623176,
+        12488538
+      ],
+      "marketTypes": [
+        "MONEY_LINE",
+        "MATCH_HANDICAP_(2-WAY)",
+        "TOTAL_POINTS_(OVER/UNDER)"
+      ],
+      "note": "Futures excluded. Raw runner role and event name independently agree on home/away. One college market currently has only one available source runner; the app preserves that omission rather than inventing the opposite price."
+    }
+  },
+  "reviewedRules": [
+    {
+      "url": "https://policies.fanduel.com/SB/ON/2026-09-30T12-06-15.html",
+      "lastUpdated": "2026-09-30",
+      "section": "Part B, Specific Sports Rules, American Football 1.1–1.3",
+      "observed": "Football main markets include overtime unless explicitly stated otherwise. Moneyline ties are void. The second listed event team is home."
+    },
+    {
+      "url": "https://support.draftkings.com/dk/en-ca/what-is-a-moneyline-bet?id=kb_article_view&sysparm_article=KB0010553",
+      "section": "2-way Moneyline",
+      "observed": "The Canadian support page defines two-way moneyline ties as a push with the stake returned."
+    },
+    {
+      "url": "https://sportsbook.draftkings.com/legal/on-terms-of-use",
+      "observed": "Ontario terms link to the same DraftKings General Betting Rules and Sport Rules routes."
+    }
+  ],
+  "unresolved": [
+    {
+      "url": "https://sportsbook.draftkings.com/help/sport-rules/football",
+      "observed": "HTTP200 but empty helpPage.content in the Ontario response; explicit CA-ON-SB request and trailing-slash retry were also empty. Current Ontario DraftKings football overtime wording could not be independently re-read from this endpoint. This does not establish different settlement; it limits this fresh legal-rule verification."
+    }
+  ],
+  "limits": [
+    "This is a market-identity and source-rule review, not a wager settlement experiment.",
+    "No assertion that both bookmakers have identical cancellation, rescheduling, or player-protection rules.",
+    "The separate source accuracy report verifies observed prices, lines, sides, event identities and availability only."
+  ]
+}
