@@ -54,6 +54,8 @@ The saved local test captured two DraftKings changed-price rendering samples, ap
 
 The corrected cloud observation captured two more DraftKings changes at approximately 70–73 ms from backend receipt to the remote command-line observer, with at least ±25 ms clock uncertainty. This verifies the live delivery path, but it is still only two pregame samples and does not time browser rendering. FanDuel stayed healthy without a price change during that short window, so its change-delivery row remains unmeasured.
 
+At 8:06 p.m. Toronto time on October 28, the final cloud version also delivered actual FanDuel changes for Atlanta at Tampa Bay. HTTP caught a total-line change first; push caught the subsequent moneyline change first. Processing in our store took about 1.17 and 1.75 ms respectively. This is why we keep both paths active. These two correlated messages prove actual price delivery through the public stream; they do not establish a broad latency distribution, browser-paint timing, or live-game performance.
+
 ## Demo sequence
 
 1. Run `npm ci` and `npm start`, then open `http://localhost:3210`.

@@ -1,0 +1,831 @@
+{
+  "observedAt": "2026-10-29T00:10:32.449Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "version": "0b357804af3afc579b487195a0367b7656fa2094",
+  "environment": "Fully hosted Render Ohio collector; external public SSE observer in Toronto",
+  "observationWindow": {
+    "startedAt": "2026-10-29T00:02:38.298Z",
+    "endedAt": "2026-10-29T00:07:38.298Z"
+  },
+  "method": "Read public SSE and timestamp complete frames before parsing. This report retains only this application's records.",
+  "changedPriceMessages": [
+    {
+      "observerReceivedAt": "2026-10-29T00:06:33.718Z",
+      "timing": {
+        "book": "fanduel",
+        "kind": "poll",
+        "receivedAt": 1793232393678,
+        "normalizedAt": 1793232393681,
+        "processingMs": 1.1650160000426695,
+        "requestMs": 14.703625000023749,
+        "sourceCreatedAt": null,
+        "sourcePublishedAt": null,
+        "sourceUpdatedAt": null,
+        "decodedBytes": 101314,
+        "priceChanges": 2,
+        "phases": [
+          "pregame"
+        ]
+      },
+      "sentAt": 1793232393681,
+      "revision": 955,
+      "games": [
+        {
+          "id": "2026-11-01:ATL:TB",
+          "away": {
+            "id": "ATL",
+            "name": "Atlanta Falcons"
+          },
+          "home": {
+            "id": "TB",
+            "name": "Tampa Bay Buccaneers"
+          },
+          "startsAt": "2026-11-01T18:00:00.000Z",
+          "live": false,
+          "books": [
+            "draftkings",
+            "fanduel"
+          ],
+          "quotes": [
+            {
+              "id": "draftkings:0HC84695566N250_1",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "spread",
+              "side": "home",
+              "line": -2.5,
+              "american": -108,
+              "decimal": 1.925925925925926,
+              "suspended": false,
+              "sourceId": "0HC84695566N250_1",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0HC84695566P250_3",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "spread",
+              "side": "away",
+              "line": 2.5,
+              "american": -112,
+              "decimal": 1.8928571428571428,
+              "suspended": false,
+              "sourceId": "0HC84695566P250_3",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0ML84695566_1",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "moneyline",
+              "side": "home",
+              "line": null,
+              "american": -135,
+              "decimal": 1.7407407407407407,
+              "suspended": false,
+              "sourceId": "0ML84695566_1",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0ML84695566_3",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "moneyline",
+              "side": "away",
+              "line": null,
+              "american": 114,
+              "decimal": 2.1399999999999997,
+              "suspended": false,
+              "sourceId": "0ML84695566_3",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0OU84695566O4450_1",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "total",
+              "side": "over",
+              "line": 44.5,
+              "american": -115,
+              "decimal": 1.8695652173913042,
+              "suspended": false,
+              "sourceId": "0OU84695566O4450_1",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0OU84695566U4450_3",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "total",
+              "side": "under",
+              "line": 44.5,
+              "american": -105,
+              "decimal": 1.9523809523809523,
+              "suspended": false,
+              "sourceId": "0OU84695566U4450_3",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "fanduel:734.192676646:7017916",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "total",
+              "side": "over",
+              "line": 44.5,
+              "american": -110,
+              "decimal": 1.9090909090909092,
+              "suspended": false,
+              "sourceId": "734.192676646:7017916",
+              "changedAt": 1793232393680,
+              "previousAmerican": -105
+            },
+            {
+              "id": "fanduel:734.192676646:7017917",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "total",
+              "side": "under",
+              "line": 44.5,
+              "american": -110,
+              "decimal": 1.9090909090909092,
+              "suspended": false,
+              "sourceId": "734.192676646:7017917",
+              "changedAt": 1793232393680,
+              "previousAmerican": -115
+            },
+            {
+              "id": "fanduel:734.192676648:50190",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "spread",
+              "side": "home",
+              "line": -2.5,
+              "american": -110,
+              "decimal": 1.9090909090909092,
+              "suspended": false,
+              "sourceId": "734.192676648:50190",
+              "changedAt": 1793232045756,
+              "previousAmerican": null
+            },
+            {
+              "id": "fanduel:734.192676648:50199",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "spread",
+              "side": "away",
+              "line": 2.5,
+              "american": -110,
+              "decimal": 1.9090909090909092,
+              "suspended": false,
+              "sourceId": "734.192676648:50199",
+              "changedAt": 1793232045756,
+              "previousAmerican": null
+            },
+            {
+              "id": "fanduel:734.192676650:50190",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "moneyline",
+              "side": "home",
+              "line": null,
+              "american": -138,
+              "decimal": 1.7246376811594204,
+              "suspended": false,
+              "sourceId": "734.192676650:50190",
+              "changedAt": 1793232045756,
+              "previousAmerican": null
+            },
+            {
+              "id": "fanduel:734.192676650:50199",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "moneyline",
+              "side": "away",
+              "line": null,
+              "american": 118,
+              "decimal": 2.1799999999999997,
+              "suspended": false,
+              "sourceId": "734.192676650:50199",
+              "changedAt": 1793232045756,
+              "previousAmerican": null
+            }
+          ],
+          "matchWarning": null
+        }
+      ]
+    },
+    {
+      "observerReceivedAt": "2026-10-29T00:06:34.343Z",
+      "timing": {
+        "book": "fanduel",
+        "kind": "push",
+        "receivedAt": 1793232394308,
+        "normalizedAt": 1793232394312,
+        "processingMs": 1.7465650000376627,
+        "requestMs": null,
+        "sourceCreatedAt": null,
+        "sourcePublishedAt": null,
+        "sourceUpdatedAt": 1793232394000,
+        "decodedBytes": 579,
+        "priceChanges": 2,
+        "phases": [
+          "pregame"
+        ]
+      },
+      "sentAt": 1793232394312,
+      "revision": 967,
+      "games": [
+        {
+          "id": "2026-11-01:ATL:TB",
+          "away": {
+            "id": "ATL",
+            "name": "Atlanta Falcons"
+          },
+          "home": {
+            "id": "TB",
+            "name": "Tampa Bay Buccaneers"
+          },
+          "startsAt": "2026-11-01T18:00:00.000Z",
+          "live": false,
+          "books": [
+            "draftkings",
+            "fanduel"
+          ],
+          "quotes": [
+            {
+              "id": "draftkings:0HC84695566N250_1",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "spread",
+              "side": "home",
+              "line": -2.5,
+              "american": -108,
+              "decimal": 1.925925925925926,
+              "suspended": false,
+              "sourceId": "0HC84695566N250_1",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0HC84695566P250_3",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "spread",
+              "side": "away",
+              "line": 2.5,
+              "american": -112,
+              "decimal": 1.8928571428571428,
+              "suspended": false,
+              "sourceId": "0HC84695566P250_3",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0ML84695566_1",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "moneyline",
+              "side": "home",
+              "line": null,
+              "american": -135,
+              "decimal": 1.7407407407407407,
+              "suspended": false,
+              "sourceId": "0ML84695566_1",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0ML84695566_3",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "moneyline",
+              "side": "away",
+              "line": null,
+              "american": 114,
+              "decimal": 2.1399999999999997,
+              "suspended": false,
+              "sourceId": "0ML84695566_3",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0OU84695566O4450_1",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "total",
+              "side": "over",
+              "line": 44.5,
+              "american": -115,
+              "decimal": 1.8695652173913042,
+              "suspended": false,
+              "sourceId": "0OU84695566O4450_1",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "draftkings:0OU84695566U4450_3",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "draftkings",
+              "period": "full_game",
+              "market": "total",
+              "side": "under",
+              "line": 44.5,
+              "american": -105,
+              "decimal": 1.9523809523809523,
+              "suspended": false,
+              "sourceId": "0OU84695566U4450_3",
+              "changedAt": 1793232052557,
+              "previousAmerican": null
+            },
+            {
+              "id": "fanduel:734.192676646:7017916",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "total",
+              "side": "over",
+              "line": 44.5,
+              "american": -110,
+              "decimal": 1.9090909090909092,
+              "suspended": false,
+              "sourceId": "734.192676646:7017916",
+              "changedAt": 1793232393680,
+              "previousAmerican": -105
+            },
+            {
+              "id": "fanduel:734.192676646:7017917",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "total",
+              "side": "under",
+              "line": 44.5,
+              "american": -110,
+              "decimal": 1.9090909090909092,
+              "suspended": false,
+              "sourceId": "734.192676646:7017917",
+              "changedAt": 1793232393680,
+              "previousAmerican": -115
+            },
+            {
+              "id": "fanduel:734.192676648:50190",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "spread",
+              "side": "home",
+              "line": -2.5,
+              "american": -110,
+              "decimal": 1.9090909090909092,
+              "suspended": false,
+              "sourceId": "734.192676648:50190",
+              "changedAt": 1793232045756,
+              "previousAmerican": null
+            },
+            {
+              "id": "fanduel:734.192676648:50199",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "spread",
+              "side": "away",
+              "line": 2.5,
+              "american": -110,
+              "decimal": 1.9090909090909092,
+              "suspended": false,
+              "sourceId": "734.192676648:50199",
+              "changedAt": 1793232045756,
+              "previousAmerican": null
+            },
+            {
+              "id": "fanduel:734.192676650:50190",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "moneyline",
+              "side": "home",
+              "line": null,
+              "american": -136,
+              "decimal": 1.7352941176470589,
+              "suspended": false,
+              "sourceId": "734.192676650:50190",
+              "changedAt": 1793232394310,
+              "previousAmerican": -138
+            },
+            {
+              "id": "fanduel:734.192676650:50199",
+              "gameId": "2026-11-01:ATL:TB",
+              "book": "fanduel",
+              "period": "full_game",
+              "market": "moneyline",
+              "side": "away",
+              "line": null,
+              "american": 116,
+              "decimal": 2.16,
+              "suspended": false,
+              "sourceId": "734.192676650:50199",
+              "changedAt": 1793232394310,
+              "previousAmerican": 118
+            }
+          ],
+          "matchWarning": null
+        }
+      ]
+    }
+  ],
+  "health": {
+    "ready": true,
+    "books": {
+      "draftkings": {
+        "fresh": true,
+        "complete": true,
+        "games": 29,
+        "quotes": 174,
+        "ageMs": 8780,
+        "pushVerified": null
+      },
+      "fanduel": {
+        "fresh": true,
+        "complete": true,
+        "games": 29,
+        "quotes": 174,
+        "ageMs": 115,
+        "pushVerified": true
+      }
+    },
+    "version": "0b357804af3afc579b487195a0367b7656fa2094"
+  },
+  "sources": {
+    "draftkings": {
+      "book": "draftkings",
+      "status": "healthy",
+      "lastConfirmedAt": 1793232623609,
+      "lastDataAt": 1793232623041,
+      "lastChangeAt": 1793232548755,
+      "staleAfterMs": 25000,
+      "error": null,
+      "warnings": [],
+      "updates": 73,
+      "priceChanges": 4,
+      "games": 29,
+      "quotes": 174,
+      "transport": "WebSocket · JSON deltas",
+      "region": "Ontario",
+      "requestMs": 1579.5060449999291,
+      "decodedBytes": 1777,
+      "pollMs": null
+    },
+    "fanduel": {
+      "book": "fanduel",
+      "status": "healthy",
+      "lastConfirmedAt": 1793232632274,
+      "lastDataAt": 1793232631654,
+      "lastChangeAt": 1793232394310,
+      "staleAfterMs": 10000,
+      "error": null,
+      "warnings": [],
+      "updates": 590,
+      "priceChanges": 4,
+      "games": 29,
+      "quotes": 174,
+      "transport": "Live push · polling backup",
+      "region": "New Jersey",
+      "pollMs": 1000,
+      "coverage": {
+        "requested": 87,
+        "returned": 87,
+        "batches": 2,
+        "missingIds": []
+      },
+      "channels": {
+        "push": {
+          "status": "subscribed",
+          "lastConfirmedAt": 1793232632274,
+          "lastDataAt": 1793232394308,
+          "error": null,
+          "generation": 1,
+          "subscribedMarkets": 87,
+          "lastProtocolAt": 1793232587264,
+          "protocolTimeoutMs": 120000,
+          "counters": {
+            "connections": 1,
+            "reconnects": 0,
+            "messages": 14,
+            "markets": 2,
+            "invalidFrames": 0,
+            "configReads": 1,
+            "authErrors": 0
+          },
+          "verified": true,
+          "ordering": {
+            "accepted": 2,
+            "duplicates": 0,
+            "outOfOrder": 0,
+            "unknown": 0,
+            "pollOverwritesPrevented": 0
+          }
+        },
+        "polling": {
+          "intervalMs": 1000,
+          "lastSuccessAt": 1793232631655,
+          "lastCompleteAt": 1793232631655,
+          "error": null
+        },
+        "discovery": {
+          "lastSuccessAt": 1793232594049,
+          "error": null
+        }
+      },
+      "requestMs": 19.039914999972098,
+      "decodedBytes": 101315
+    }
+  },
+  "measurements": {
+    "draftkings": {
+      "pregame": {
+        "acquisitionRequestMs": {
+          "n": 10,
+          "p50": 1684.31,
+          "p95": 8903.27,
+          "max": 8903.27
+        },
+        "processingMs": {
+          "n": 73,
+          "p50": 1.81,
+          "p95": 87.18,
+          "max": 96.5
+        },
+        "feedCreatedToBackendMs": {
+          "n": 63,
+          "p50": 1875,
+          "p95": 5292,
+          "max": 5303
+        },
+        "changedPriceFeedToBackendMs": {
+          "n": 4,
+          "p50": 276,
+          "p95": 922,
+          "max": 922
+        },
+        "changedPricePushUpdatedToBackendUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceMessages": 4,
+        "backendToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "feedCreatedToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pushUpdatedToPaintUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "clockUncertaintyMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "decodedPayloadBytes": {
+          "n": 73,
+          "p50": 953,
+          "p95": 155288,
+          "max": 155288
+        }
+      },
+      "live": {
+        "acquisitionRequestMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "processingMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "feedCreatedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceFeedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPricePushUpdatedToBackendUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceMessages": 0,
+        "backendToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "feedCreatedToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pushUpdatedToPaintUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "clockUncertaintyMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "decodedPayloadBytes": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        }
+      }
+    },
+    "fanduel": {
+      "pregame": {
+        "acquisitionRequestMs": {
+          "n": 588,
+          "p50": 16.65,
+          "p95": 101.73,
+          "max": 704.46
+        },
+        "processingMs": {
+          "n": 590,
+          "p50": 1.67,
+          "p95": 3.04,
+          "max": 97.52
+        },
+        "feedCreatedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceFeedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPricePushUpdatedToBackendUpperBoundMs": {
+          "n": 1,
+          "p50": 308,
+          "p95": 308,
+          "max": 308
+        },
+        "changedPriceMessages": 2,
+        "backendToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "feedCreatedToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pushUpdatedToPaintUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "clockUncertaintyMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "decodedPayloadBytes": {
+          "n": 590,
+          "p50": 101314,
+          "p95": 101315,
+          "max": 101315
+        }
+      },
+      "live": {
+        "acquisitionRequestMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "processingMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "feedCreatedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceFeedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPricePushUpdatedToBackendUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceMessages": 0,
+        "backendToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "feedCreatedToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pushUpdatedToPaintUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "clockUncertaintyMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "decodedPayloadBytes": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        }
+      }
+    }
+  },
+  "limits": [
+    "Two correlated updates in one pregame game: four changed quotes, not four independent latency trials.",
+    "One total update arrived via HTTP first, then a moneyline update arrived via push. A later pushed copy of the total introduced no additional price change.",
+    "Observer wall-clock receipt values are not calibrated here; do not subtract backend timestamps to claim delivery latency.",
+    "FanDuel updatedAt has whole-second precision and unknown provider clock skew. The push-to-backend age estimate is not true bookmaker-change-to-screen time.",
+    "No actual in-game or changed-price browser-paint measurement established."
+  ]
+}

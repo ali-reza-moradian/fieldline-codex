@@ -1,0 +1,423 @@
+{
+  "startedAt": "2026-10-29T00:03:10.925Z",
+  "finishedAt": "2026-10-29T00:06:11.026Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "seconds": 180,
+  "clockCalibration": {
+    "offsetMs": 14.67333984375,
+    "rttMs": 60.653125000000045,
+    "uncertaintyMs": 30.326562500000023,
+    "measuredAt": "2026-10-29T00:03:10.861Z"
+  },
+  "caution": "CLI times use the lowest-RTT of five server clock probes; half the RTT is a lower uncertainty bound. Provider-clock skew remains unknown. These are not browser render or full bookmaker-change latency measurements.",
+  "client": {
+    "draftkings": {
+      "backendToClientMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "feedCreatedToClientMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "pushUpdatedToClientUpperBoundMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "ssePayloadBytes": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      }
+    },
+    "fanduel": {
+      "backendToClientMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "feedCreatedToClientMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "pushUpdatedToClientUpperBoundMs": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "ssePayloadBytes": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      }
+    }
+  },
+  "metrics": {
+    "version": "0b357804af3afc579b487195a0367b7656fa2094",
+    "startedAt": 1793232041559,
+    "generatedAt": 1793232370997,
+    "sources": {
+      "draftkings": {
+        "book": "draftkings",
+        "status": "healthy",
+        "lastConfirmedAt": 1793232363595,
+        "lastDataAt": 1793232345160,
+        "lastChangeAt": null,
+        "staleAfterMs": 25000,
+        "error": null,
+        "warnings": [],
+        "updates": 55,
+        "priceChanges": 0,
+        "games": 29,
+        "quotes": 174,
+        "transport": "WebSocket · JSON deltas",
+        "region": "Ontario",
+        "requestMs": 1408.0866900000256,
+        "decodedBytes": 155288,
+        "pollMs": null
+      },
+      "fanduel": {
+        "book": "fanduel",
+        "status": "healthy",
+        "lastConfirmedAt": 1793232370641,
+        "lastDataAt": 1793232370640,
+        "lastChangeAt": null,
+        "staleAfterMs": 10000,
+        "error": null,
+        "warnings": [],
+        "updates": 327,
+        "priceChanges": 0,
+        "games": 29,
+        "quotes": 174,
+        "transport": "Live push · polling backup",
+        "region": "New Jersey",
+        "pollMs": 1000,
+        "coverage": {
+          "requested": 87,
+          "returned": 87,
+          "batches": 2,
+          "missingIds": []
+        },
+        "channels": {
+          "push": {
+            "status": "subscribed",
+            "lastConfirmedAt": 1793232366062,
+            "lastDataAt": null,
+            "error": null,
+            "generation": 1,
+            "subscribedMarkets": 87,
+            "lastProtocolAt": 1793232347264,
+            "protocolTimeoutMs": 120000,
+            "counters": {
+              "connections": 1,
+              "reconnects": 0,
+              "messages": 8,
+              "markets": 0,
+              "invalidFrames": 0,
+              "configReads": 1,
+              "authErrors": 0
+            },
+            "verified": true,
+            "ordering": {
+              "accepted": 0,
+              "duplicates": 0,
+              "outOfOrder": 0,
+              "unknown": 0,
+              "pollOverwritesPrevented": 0
+            }
+          },
+          "polling": {
+            "intervalMs": 1000,
+            "lastSuccessAt": 1793232370641,
+            "lastCompleteAt": 1793232370641,
+            "error": null
+          },
+          "discovery": {
+            "lastSuccessAt": 1793232350049,
+            "error": null
+          }
+        },
+        "requestMs": 14.813500999996904,
+        "decodedBytes": 101314
+      }
+    },
+    "notes": [
+      "Browser samples are client-reported estimates after two animation frames, corrected using /api/time. Inspect clock uncertainty.",
+      "DraftKings createdTime is the provider feed timestamp, not a verified trading-engine change timestamp. Cross-host clock skew can affect it.",
+      "FanDuel push updatedAt has whole-second precision. Its age is an upper-bound estimate with up to about 999ms quantization plus unmeasured provider clock skew; HTTP prices have no change timestamp.",
+      "FanDuel uses immediate push alongside 1-second HTTP checks, continuing HTTP if push is unavailable. Polling's nominal mean waiting time is about 500ms before the request, absent failures; this is not a measured end-to-end guarantee.",
+      "Live rows with n=0 mean not measured; pregame results must not be presented as live results."
+    ],
+    "measurements": {
+      "draftkings": {
+        "pregame": {
+          "acquisitionRequestMs": {
+            "n": 6,
+            "p50": 1700.45,
+            "p95": 8903.27,
+            "max": 8903.27
+          },
+          "processingMs": {
+            "n": 55,
+            "p50": 1.91,
+            "p95": 87.18,
+            "max": 96.5
+          },
+          "feedCreatedToBackendMs": {
+            "n": 49,
+            "p50": 2962,
+            "p95": 5296,
+            "max": 5303
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 55,
+            "p50": 952,
+            "p95": 155288,
+            "max": 155288
+          }
+        },
+        "live": {
+          "acquisitionRequestMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "processingMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          }
+        }
+      },
+      "fanduel": {
+        "pregame": {
+          "acquisitionRequestMs": {
+            "n": 327,
+            "p50": 17.1,
+            "p95": 108.96,
+            "max": 704.46
+          },
+          "processingMs": {
+            "n": 327,
+            "p50": 1.68,
+            "p95": 3.12,
+            "max": 97.52
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 327,
+            "p50": 101314,
+            "p95": 101314,
+            "max": 101314
+          }
+        },
+        "live": {
+          "acquisitionRequestMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "processingMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          }
+        }
+      }
+    },
+    "viewers": 3
+  }
+}
