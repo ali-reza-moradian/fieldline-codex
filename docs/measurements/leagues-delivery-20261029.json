@@ -1,0 +1,3436 @@
+{
+  "generatedAt": "2026-10-29T22:18:17.667Z",
+  "site": "https://fieldline-codex.onrender.com",
+  "expectedVersion": "4c1395370df1530de6c728b67d5a6b16e974997b",
+  "method": "Actual BoardStream controller with a Node fetch SSE adapter, one connection at a time. Five rounds per league; each receives an initial complete snapshot, deliberately closes only its own viewer connection, then uses the configured250ms client retry and receives a new full snapshot. Finally hold one college stream for30s. Monotonic timestamps are public HTTP/SSE receipt times, not browser paint or bookmaker latency.",
+  "rounds": [
+    {
+      "league": "nfl",
+      "round": 1,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 45.31037500000002,
+          "snapshotMs": 113.00675000000001,
+          "receivedAtMonoMs": 644.920958,
+          "bytes": 111128,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 7213,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 112,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1450,
+          "sentAt": 1793312298212,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        },
+        {
+          "connection": 2,
+          "headersMs": 83.20400000000006,
+          "snapshotMs": 152.24741700000004,
+          "receivedAtMonoMs": 1055.518,
+          "bytes": 111129,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 7627,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 23,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1454,
+          "sentAt": 1793312298626,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 652.192125
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 408.80037500000003,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "ncaaf",
+      "round": 1,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 75.96379200000001,
+          "snapshotMs": 170.08400000000006,
+          "receivedAtMonoMs": 1327.700333,
+          "bytes": 385111,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 7871,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1106,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1458,
+          "sentAt": 1793312298870,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        },
+        {
+          "connection": 2,
+          "headersMs": 149.628833,
+          "snapshotMs": 187.504958,
+          "receivedAtMonoMs": 1770.038833,
+          "bytes": 385111,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 8369,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1604,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1460,
+          "sentAt": 1793312299368,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 1331.78875
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 438.8369580000001,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "cfl",
+      "round": 1,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 81.44258300000001,
+          "snapshotMs": 81.81449999999995,
+          "receivedAtMonoMs": 1956.969917,
+          "bytes": 9557,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 8595,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 779,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1462,
+          "sentAt": 1793312299594,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        },
+        {
+          "connection": 2,
+          "headersMs": 132.37491599999976,
+          "snapshotMs": 133.1849159999997,
+          "receivedAtMonoMs": 2341.928208,
+          "bytes": 9557,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 8970,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1154,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1466,
+          "sentAt": 1793312299969,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 1958.082792
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 384.6486249999998,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "nfl",
+      "round": 2,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 378.56891700000006,
+          "snapshotMs": 401.7742079999998,
+          "receivedAtMonoMs": 2846.732583,
+          "bytes": 111128,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 87,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 389,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1487,
+          "sentAt": 1793312300464,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        },
+        {
+          "connection": 2,
+          "headersMs": 140.29500000000007,
+          "snapshotMs": 353.3631250000003,
+          "receivedAtMonoMs": 3451.887,
+          "bytes": 111129,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 586,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 347,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1491,
+          "sentAt": 1793312300963,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 2848.710042
+        }
+      ],
+      "events": {
+        "snapshot": 2,
+        "freshness": 1
+      },
+      "reconnectMs": 603.672208,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "ncaaf",
+      "round": 2,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 100.46591699999999,
+          "snapshotMs": 186.2566670000001,
+          "receivedAtMonoMs": 3741.509167,
+          "bytes": 385107,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 218,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1014,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1496,
+          "sentAt": 1793312301285,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        },
+        {
+          "connection": 2,
+          "headersMs": 75.03612500000008,
+          "snapshotMs": 146.54362500000025,
+          "receivedAtMonoMs": 4143.498542,
+          "bytes": 385107,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 642,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 339,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1506,
+          "sentAt": 1793312301709,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 3747.246333
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 397.2985840000001,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "cfl",
+      "round": 2,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 75.97662500000024,
+          "snapshotMs": 76.71654200000012,
+          "receivedAtMonoMs": 4323.200667,
+          "bytes": 9558,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 891,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 991,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1510,
+          "sentAt": 1793312301958,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        },
+        {
+          "connection": 2,
+          "headersMs": 253.0576659999997,
+          "snapshotMs": 253.71337499999936,
+          "receivedAtMonoMs": 4829.011917,
+          "bytes": 9558,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1396,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1496,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1512,
+          "sentAt": 1793312302463,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 4324.136875
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 505.4464170000001,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "nfl",
+      "round": 3,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 111.23758300000009,
+          "snapshotMs": 225.83379100000002,
+          "receivedAtMonoMs": 5156.827458,
+          "bytes": 111129,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1604,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 51,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1516,
+          "sentAt": 1793312302671,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        },
+        {
+          "connection": 2,
+          "headersMs": 66.62083299999995,
+          "snapshotMs": 131.79566700000032,
+          "receivedAtMonoMs": 5540.627792,
+          "bytes": 111129,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 2046,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 239,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1520,
+          "sentAt": 1793312303113,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 5158.6025
+        }
+      ],
+      "events": {
+        "snapshot": 2,
+        "freshness": 1,
+        "heartbeat": 1
+      },
+      "reconnectMs": 382.6668749999999,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "ncaaf",
+      "round": 3,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 78.67125000000033,
+          "snapshotMs": 116.38937499999975,
+          "receivedAtMonoMs": 5757.773125,
+          "bytes": 385111,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 2281,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1580,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1522,
+          "sentAt": 1793312303348,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        },
+        {
+          "connection": 2,
+          "headersMs": 114.46587499999987,
+          "snapshotMs": 175.40712499999972,
+          "receivedAtMonoMs": 6185.414083,
+          "bytes": 385112,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 2698,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 187,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1526,
+          "sentAt": 1793312303765,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 5759.296583
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 426.2948749999996,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "cfl",
+      "round": 3,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 88.09095800000068,
+          "snapshotMs": 88.53337499999998,
+          "receivedAtMonoMs": 6377.072375,
+          "bytes": 9557,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 2945,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1197,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1528,
+          "sentAt": 1793312304012,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        },
+        {
+          "connection": 2,
+          "headersMs": 155.597084,
+          "snapshotMs": 156.3249169999999,
+          "receivedAtMonoMs": 6785.08125,
+          "bytes": 9557,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 3300,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1552,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1530,
+          "sentAt": 1793312304367,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 6378.450042
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 407.67824999999993,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "nfl",
+      "round": 4,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 76.15479099999993,
+          "snapshotMs": 141.9502080000002,
+          "receivedAtMonoMs": 7029.301875,
+          "bytes": 111130,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 3532,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 105,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1532,
+          "sentAt": 1793312304599,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        },
+        {
+          "connection": 2,
+          "headersMs": 70.42241699999977,
+          "snapshotMs": 97.60095799999999,
+          "receivedAtMonoMs": 7381.471333,
+          "bytes": 111129,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 3924,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 73,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1538,
+          "sentAt": 1793312304991,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 7031.897083
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 350.19675000000007,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "ncaaf",
+      "round": 4,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 94.39570800000001,
+          "snapshotMs": 294.4640419999996,
+          "receivedAtMonoMs": 7778.912917,
+          "bytes": 385112,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 4142,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1631,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1538,
+          "sentAt": 1793312305209,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        },
+        {
+          "connection": 2,
+          "headersMs": 298.9996659999997,
+          "snapshotMs": 342.9683750000004,
+          "receivedAtMonoMs": 8375.595042,
+          "bytes": 385110,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 4905,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 103,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1550,
+          "sentAt": 1793312305972,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 7782.342583
+        }
+      ],
+      "events": {
+        "snapshot": 2,
+        "freshness": 1
+      },
+      "reconnectMs": 593.6573340000004,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "cfl",
+      "round": 4,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 86.66304200000013,
+          "snapshotMs": 86.94891699999971,
+          "receivedAtMonoMs": 8567.294917,
+          "bytes": 9557,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 5128,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 973,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1552,
+          "sentAt": 1793312306195,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        },
+        {
+          "connection": 2,
+          "headersMs": 76.01974999999948,
+          "snapshotMs": 76.36520799999926,
+          "receivedAtMonoMs": 8895.093958,
+          "bytes": 9557,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 5465,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1310,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1554,
+          "sentAt": 1793312306532,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 8567.899417
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 327.59920799999963,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "nfl",
+      "round": 5,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 73.20195799999965,
+          "snapshotMs": 84.31162499999846,
+          "receivedAtMonoMs": 9079.6575,
+          "bytes": 111130,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 5642,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 163,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1556,
+          "sentAt": 1793312306709,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        },
+        {
+          "connection": 2,
+          "headersMs": 73.85383299999921,
+          "snapshotMs": 132.08424999999988,
+          "receivedAtMonoMs": 9462.918417,
+          "bytes": 111130,
+          "league": "nfl",
+          "games": 29,
+          "quotes": 348,
+          "bookQuotes": {
+            "draftkings": 174,
+            "fanduel": 174
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 5965,
+              "staleAfterMs": 25000,
+              "quotes": 174,
+              "games": 29,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 313,
+              "staleAfterMs": 10000,
+              "quotes": 174,
+              "games": 29,
+              "coverage": {
+                "requested": 87,
+                "returned": 87,
+                "batches": 2,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1560,
+          "sentAt": 1793312307032,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 9080.219042
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 382.8684170000015,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "ncaaf",
+      "round": 5,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 216.94641600000068,
+          "snapshotMs": 380.50175000000127,
+          "receivedAtMonoMs": 9951.697667,
+          "bytes": 385110,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 6349,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1547,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1564,
+          "sentAt": 1793312307416,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        },
+        {
+          "connection": 2,
+          "headersMs": 129.2040420000012,
+          "snapshotMs": 230.47320800000125,
+          "receivedAtMonoMs": 10433.791708,
+          "bytes": 385112,
+          "league": "ncaaf",
+          "games": 126,
+          "quotes": 1115,
+          "bookQuotes": {
+            "draftkings": 402,
+            "fanduel": 713
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 6898,
+              "staleAfterMs": 25000,
+              "quotes": 402,
+              "games": 67,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 400,
+              "staleAfterMs": 10000,
+              "quotes": 713,
+              "games": 119,
+              "coverage": {
+                "requested": 357,
+                "returned": 357,
+                "batches": 6,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1566,
+          "sentAt": 1793312307965,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 9953.120708
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 480.8942500000012,
+      "configuredRetryMs": 250,
+      "ready": true
+    },
+    {
+      "league": "cfl",
+      "round": 5,
+      "connections": 2,
+      "snapshots": [
+        {
+          "connection": 1,
+          "headersMs": 65.79120800000055,
+          "snapshotMs": 65.9291659999999,
+          "receivedAtMonoMs": 10603.090708,
+          "bytes": 9557,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 7175,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1425,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1570,
+          "sentAt": 1793312308242,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        },
+        {
+          "connection": 2,
+          "headersMs": 81.81670800000029,
+          "snapshotMs": 82.03304199999911,
+          "receivedAtMonoMs": 10936.526042,
+          "bytes": 9557,
+          "league": "cfl",
+          "games": 2,
+          "quotes": 24,
+          "bookQuotes": {
+            "draftkings": 12,
+            "fanduel": 12
+          },
+          "source": {
+            "draftkings": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 7509,
+              "staleAfterMs": 25000,
+              "quotes": 12,
+              "games": 2,
+              "valid": true
+            },
+            "fanduel": {
+              "status": "healthy",
+              "region": "Ontario",
+              "ageAtSendMs": 1759,
+              "staleAfterMs": 10000,
+              "quotes": 12,
+              "games": 2,
+              "coverage": {
+                "requested": 6,
+                "returned": 6,
+                "batches": 1,
+                "missingIds": []
+              },
+              "valid": true
+            }
+          },
+          "revision": 1572,
+          "sentAt": 1793312308576,
+          "uniqueQuotes": true,
+          "correctLeague": true,
+          "metadataCountsAgree": true,
+          "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+        }
+      ],
+      "disconnects": [
+        {
+          "reason": "Controlled client reconnect probe",
+          "atMonoMs": 10603.335792
+        }
+      ],
+      "events": {
+        "snapshot": 2
+      },
+      "reconnectMs": 333.3416249999991,
+      "configuredRetryMs": 250,
+      "ready": true
+    }
+  ],
+  "errors": [],
+  "limits": [
+    "No provider connection, deployment, service or extra-market panel was restarted. Only own viewer connections were closed.",
+    "Source accuracy beyond snapshot integrity is checked separately.",
+    "Observed only this bounded window and one network location.",
+    "Controlled reconnect includes250ms scheduled client delay; does not measure recovery from a real upstream bookmaker failure."
+  ],
+  "before": {
+    "version": "4c1395370df1530de6c728b67d5a6b16e974997b",
+    "startedAt": 1793312148366,
+    "generatedAt": 1793312297868,
+    "sources": {
+      "draftkings": {
+        "book": "draftkings",
+        "status": "healthy",
+        "lastConfirmedAt": 1793312290999,
+        "lastDataAt": 1793312271094,
+        "lastChangeAt": null,
+        "staleAfterMs": 25000,
+        "error": null,
+        "warnings": [],
+        "updates": 3,
+        "priceChanges": 0,
+        "games": 98,
+        "quotes": 588,
+        "transport": "WebSocket · JSON deltas",
+        "region": "Ontario",
+        "requestMs": 1009.0933249999944,
+        "decodedBytes": 537555,
+        "pollMs": null
+      },
+      "fanduel": {
+        "book": "fanduel",
+        "status": "healthy",
+        "lastConfirmedAt": 1793312296813,
+        "lastDataAt": 1793312296813,
+        "lastChangeAt": null,
+        "staleAfterMs": 10000,
+        "error": null,
+        "warnings": [],
+        "updates": 599,
+        "priceChanges": 0,
+        "games": 150,
+        "quotes": 899,
+        "transport": "Live push with independent league verification",
+        "region": "Ontario",
+        "leagues": {
+          "nfl": {
+            "book": "fanduel",
+            "league": "nfl",
+            "region": "Ontario",
+            "status": "healthy",
+            "error": null,
+            "lastConfirmedAt": 1793312297596,
+            "lastDataAt": 1793312297592,
+            "lastChangeAt": null,
+            "staleAfterMs": 10000,
+            "warnings": [],
+            "games": 29,
+            "quotes": 174,
+            "updates": 452,
+            "priceChanges": 0,
+            "endpoints": {
+              "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+              "prices": "https://smp.on.sportsbook.fanduel.ca"
+            },
+            "transport": "Live push · polling backup",
+            "pollMs": 250,
+            "coverage": {
+              "requested": 87,
+              "returned": 87,
+              "batches": 2,
+              "missingIds": []
+            },
+            "channels": {
+              "push": {
+                "status": "subscribed",
+                "lastConfirmedAt": 1793312295023,
+                "lastDataAt": null,
+                "error": null,
+                "generation": 1,
+                "subscribedMarkets": 87,
+                "region": "on",
+                "origin": "https://sportsbook.fanduel.ca",
+                "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+                "lastProtocolAt": 1793312272805,
+                "protocolTimeoutMs": 120000,
+                "counters": {
+                  "connections": 1,
+                  "reconnects": 0,
+                  "messages": 5,
+                  "markets": 0,
+                  "invalidFrames": 0,
+                  "configReads": 1,
+                  "authErrors": 0
+                },
+                "verified": true,
+                "ordering": {
+                  "accepted": 0,
+                  "duplicates": 0,
+                  "outOfOrder": 0,
+                  "unknown": 0,
+                  "pollOverwritesPrevented": 0
+                }
+              },
+              "polling": {
+                "cyclesStarted": 452,
+                "successfulCycles": 452,
+                "failedCycles": 0,
+                "partialCycles": 0,
+                "rateLimitedCycles": 0,
+                "lastFailureAt": null,
+                "lastFailureStatus": null,
+                "intervalMs": 250,
+                "lastSuccessAt": 1793312297595,
+                "lastCompleteAt": 1793312297595,
+                "error": null
+              },
+              "discovery": {
+                "lastSuccessAt": 1793312274573,
+                "error": null
+              }
+            },
+            "requestMs": 228.79891499999212,
+            "decodedBytes": 101311
+          },
+          "ncaaf": {
+            "book": "fanduel",
+            "league": "ncaaf",
+            "region": "Ontario",
+            "status": "healthy",
+            "error": null,
+            "lastConfirmedAt": 1793312297764,
+            "lastDataAt": 1793312297669,
+            "lastChangeAt": null,
+            "staleAfterMs": 10000,
+            "warnings": [],
+            "games": 119,
+            "quotes": 713,
+            "updates": 75,
+            "priceChanges": 0,
+            "endpoints": {
+              "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+              "prices": "https://smp.on.sportsbook.fanduel.ca"
+            },
+            "transport": "Live push · polling backup",
+            "pollMs": 2000,
+            "coverage": {
+              "requested": 357,
+              "returned": 357,
+              "batches": 6,
+              "missingIds": []
+            },
+            "channels": {
+              "push": {
+                "status": "subscribed",
+                "lastConfirmedAt": 1793312295017,
+                "lastDataAt": 1793312269564,
+                "error": null,
+                "generation": 1,
+                "subscribedMarkets": 357,
+                "region": "on",
+                "origin": "https://sportsbook.fanduel.ca",
+                "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+                "lastProtocolAt": 1793312272799,
+                "protocolTimeoutMs": 120000,
+                "counters": {
+                  "connections": 1,
+                  "reconnects": 0,
+                  "messages": 12,
+                  "markets": 6,
+                  "invalidFrames": 0,
+                  "configReads": 1,
+                  "authErrors": 0
+                },
+                "verified": true,
+                "ordering": {
+                  "accepted": 6,
+                  "duplicates": 0,
+                  "outOfOrder": 0,
+                  "unknown": 0,
+                  "pollOverwritesPrevented": 6
+                }
+              },
+              "polling": {
+                "cyclesStarted": 69,
+                "successfulCycles": 69,
+                "failedCycles": 0,
+                "partialCycles": 0,
+                "rateLimitedCycles": 0,
+                "lastFailureAt": null,
+                "lastFailureStatus": null,
+                "intervalMs": 2000,
+                "lastSuccessAt": 1793312297673,
+                "lastCompleteAt": 1793312297673,
+                "error": null
+              },
+              "discovery": {
+                "lastSuccessAt": 1793312275565,
+                "error": null
+              }
+            },
+            "requestMs": 596.2950450000062,
+            "decodedBytes": 410649
+          },
+          "cfl": {
+            "book": "fanduel",
+            "league": "cfl",
+            "region": "Ontario",
+            "status": "healthy",
+            "error": null,
+            "lastConfirmedAt": 1793312296813,
+            "lastDataAt": 1793312296813,
+            "lastChangeAt": null,
+            "staleAfterMs": 10000,
+            "warnings": [],
+            "games": 2,
+            "quotes": 12,
+            "updates": 72,
+            "priceChanges": 0,
+            "endpoints": {
+              "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+              "prices": "https://smp.on.sportsbook.fanduel.ca"
+            },
+            "transport": "Live push · polling backup",
+            "pollMs": 2000,
+            "coverage": {
+              "requested": 6,
+              "returned": 6,
+              "batches": 1,
+              "missingIds": []
+            },
+            "channels": {
+              "push": {
+                "status": "subscribed",
+                "lastConfirmedAt": 1793312295023,
+                "lastDataAt": null,
+                "error": null,
+                "generation": 1,
+                "subscribedMarkets": 6,
+                "region": "on",
+                "origin": "https://sportsbook.fanduel.ca",
+                "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+                "lastProtocolAt": 1793312272864,
+                "protocolTimeoutMs": 120000,
+                "counters": {
+                  "connections": 1,
+                  "reconnects": 0,
+                  "messages": 5,
+                  "markets": 0,
+                  "invalidFrames": 0,
+                  "configReads": 1,
+                  "authErrors": 0
+                },
+                "verified": true,
+                "ordering": {
+                  "accepted": 0,
+                  "duplicates": 0,
+                  "outOfOrder": 0,
+                  "unknown": 0,
+                  "pollOverwritesPrevented": 0
+                }
+              },
+              "polling": {
+                "cyclesStarted": 72,
+                "successfulCycles": 72,
+                "failedCycles": 0,
+                "partialCycles": 0,
+                "rateLimitedCycles": 0,
+                "lastFailureAt": null,
+                "lastFailureStatus": null,
+                "intervalMs": 2000,
+                "lastSuccessAt": 1793312296813,
+                "lastCompleteAt": 1793312296813,
+                "error": null
+              },
+              "discovery": {
+                "lastSuccessAt": 1793312274673,
+                "error": null
+              }
+            },
+            "requestMs": 48.053378000011435,
+            "decodedBytes": 7094
+          }
+        },
+        "pollMs": null,
+        "coverage": {
+          "requested": 450,
+          "returned": 450,
+          "batches": 9,
+          "missingIds": []
+        },
+        "channels": {
+          "push": {
+            "status": "subscribed",
+            "verified": true,
+            "subscribedMarkets": 450,
+            "lastConfirmedAt": 1793312295017,
+            "region": "on",
+            "origin": "https://sportsbook.fanduel.ca",
+            "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+            "leagueCount": 3
+          },
+          "polling": {
+            "cyclesStarted": 593,
+            "successfulCycles": 593,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "intervalMs": null,
+            "lastSuccessAt": 1793312296813,
+            "lastCompleteAt": 1793312296813,
+            "error": null
+          },
+          "discovery": {
+            "lastSuccessAt": 1793312274573,
+            "error": null
+          }
+        },
+        "endpoints": {
+          "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+          "prices": "https://smp.on.sportsbook.fanduel.ca"
+        },
+        "requestMs": 228.79891499999212,
+        "decodedBytes": 101311
+      }
+    },
+    "notes": [
+      "Browser samples are client-reported estimates after two animation frames, corrected using /api/time. Inspect clock uncertainty.",
+      "DraftKings createdTime is the provider feed timestamp, not a verified trading-engine change timestamp. Cross-host clock skew can affect it.",
+      "FanDuel push updatedAt has whole-second precision. Its age is an upper-bound estimate with up to about 999ms quantization plus unmeasured provider clock skew; HTTP prices have no change timestamp.",
+      "FanDuel uses immediate push alongside configured HTTP checks, continuing HTTP if push is unavailable. Nominal polling wait averages half the interval only for uniformly timed changes without delays; this is not a measured end-to-end guarantee or a maximum price age.",
+      "Live rows with n=0 mean not measured; pregame results must not be presented as live results."
+    ],
+    "measurements": {
+      "draftkings": {
+        "pregame": {
+          "acquisitionRequestMs": {
+            "n": 3,
+            "p50": 1009.09,
+            "p95": 14413.85,
+            "max": 14413.85
+          },
+          "processingMs": {
+            "n": 3,
+            "p50": 90.26,
+            "p95": 300.69,
+            "max": 300.69
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 3,
+            "p50": 537555,
+            "p95": 537555,
+            "max": 537555
+          }
+        },
+        "live": {
+          "acquisitionRequestMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "processingMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          }
+        }
+      },
+      "fanduel": {
+        "pregame": {
+          "acquisitionRequestMs": {
+            "n": 593,
+            "p50": 128.45,
+            "p95": 850.29,
+            "max": 4902.2
+          },
+          "processingMs": {
+            "n": 599,
+            "p50": 5.09,
+            "p95": 94.94,
+            "max": 266.56
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 599,
+            "p50": 101311,
+            "p95": 410649,
+            "max": 410649
+          }
+        },
+        "live": {
+          "acquisitionRequestMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "processingMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          }
+        }
+      }
+    },
+    "viewers": 8,
+    "extras": {
+      "snapshots": 0,
+      "failures": 0,
+      "workerRestarts": 0,
+      "upstreamBytes": 0,
+      "activeGames": 0,
+      "viewers": 0,
+      "pollMs": 15000,
+      "staleAfterMs": 45000,
+      "region": "Ontario",
+      "isolatedProcess": true
+    },
+    "history": {
+      "maxSeries": 4096,
+      "maxPointsPerSeries": 3000,
+      "maxTotalPoints": 150000,
+      "pendingEvents": 0,
+      "queueOverflows": 0,
+      "clockRollbacks": 0,
+      "evictedSeries": 0,
+      "evictedPoints": 0,
+      "invalidImports": 0,
+      "note": "Actual server observations only. History can be shorter than the selected window after startup, gaps, or capacity eviction. Restored history never restores live eligibility.",
+      "retentionHours": 48,
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793312268368,
+        "lastSavedAt": 1793312284097,
+        "lastRestoredAt": 1793312168675,
+        "lastFailureAt": null,
+        "savedSeries": 1487,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      }
+    }
+  },
+  "controller": {
+    "servedSha256": "9735c1a0731aadf7ad5a58d25f3617fb34af8e0adcb3a22f3eae7f8d20ed8e4e",
+    "testedSha256": "9735c1a0731aadf7ad5a58d25f3617fb34af8e0adcb3a22f3eae7f8d20ed8e4e",
+    "equal": true
+  },
+  "reference": {
+    "nfl": {
+      "league": "nfl",
+      "games": 29,
+      "quotes": 348,
+      "bookQuotes": {
+        "draftkings": 174,
+        "fanduel": 174
+      },
+      "source": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 7034,
+          "staleAfterMs": 25000,
+          "quotes": 174,
+          "games": 29,
+          "valid": true
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 160,
+          "staleAfterMs": 10000,
+          "quotes": 174,
+          "games": 29,
+          "coverage": {
+            "requested": 87,
+            "returned": 87,
+            "batches": 2,
+            "missingIds": []
+          },
+          "valid": true
+        }
+      },
+      "revision": 1448,
+      "sentAt": 1793312298033,
+      "uniqueQuotes": true,
+      "correctLeague": true,
+      "metadataCountsAgree": true,
+      "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+    },
+    "ncaaf": {
+      "league": "ncaaf",
+      "games": 126,
+      "quotes": 1115,
+      "bookQuotes": {
+        "draftkings": 402,
+        "fanduel": 713
+      },
+      "source": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 7094,
+          "staleAfterMs": 25000,
+          "quotes": 402,
+          "games": 67,
+          "valid": true
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 329,
+          "staleAfterMs": 10000,
+          "quotes": 713,
+          "games": 119,
+          "coverage": {
+            "requested": 357,
+            "returned": 357,
+            "batches": 6,
+            "missingIds": []
+          },
+          "valid": true
+        }
+      },
+      "revision": 1448,
+      "sentAt": 1793312298093,
+      "uniqueQuotes": true,
+      "correctLeague": true,
+      "metadataCountsAgree": true,
+      "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+    },
+    "cfl": {
+      "league": "cfl",
+      "games": 2,
+      "quotes": 24,
+      "bookQuotes": {
+        "draftkings": 12,
+        "fanduel": 12
+      },
+      "source": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 7168,
+          "staleAfterMs": 25000,
+          "quotes": 12,
+          "games": 2,
+          "valid": true
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 1354,
+          "staleAfterMs": 10000,
+          "quotes": 12,
+          "games": 2,
+          "coverage": {
+            "requested": 6,
+            "returned": 6,
+            "batches": 1,
+            "missingIds": []
+          },
+          "valid": true
+        }
+      },
+      "revision": 1450,
+      "sentAt": 1793312298167,
+      "uniqueQuotes": true,
+      "correctLeague": true,
+      "metadataCountsAgree": true,
+      "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+    }
+  },
+  "collegeHold": {
+    "league": "ncaaf",
+    "round": 0,
+    "holdMs": 30000,
+    "connections": 1,
+    "snapshots": [
+      {
+        "connection": 1,
+        "headersMs": 77.1543330000004,
+        "snapshotMs": 100.09408299999996,
+        "receivedAtMonoMs": 11138.538708,
+        "bytes": 385112,
+        "league": "ncaaf",
+        "games": 126,
+        "quotes": 1115,
+        "bookQuotes": {
+          "draftkings": 402,
+          "fanduel": 713
+        },
+        "source": {
+          "draftkings": {
+            "status": "healthy",
+            "region": "Ontario",
+            "ageAtSendMs": 7689,
+            "staleAfterMs": 25000,
+            "quotes": 402,
+            "games": 67,
+            "valid": true
+          },
+          "fanduel": {
+            "status": "healthy",
+            "region": "Ontario",
+            "ageAtSendMs": 1191,
+            "staleAfterMs": 10000,
+            "quotes": 713,
+            "games": 119,
+            "coverage": {
+              "requested": 357,
+              "returned": 357,
+              "batches": 6,
+              "missingIds": []
+            },
+            "valid": true
+          }
+        },
+        "revision": 1574,
+        "sentAt": 1793312308756,
+        "uniqueQuotes": true,
+        "correctLeague": true,
+        "metadataCountsAgree": true,
+        "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+      }
+    ],
+    "disconnects": [],
+    "events": {
+      "snapshot": 1,
+      "heartbeat": 15,
+      "freshness": 102
+    },
+    "ready": true
+  },
+  "assets": [
+    {
+      "path": "/app.js",
+      "status": 200,
+      "encoding": "gzip",
+      "etag": "\"XGkcW8grjI7SkbzEk559qgiWswKQHpaV08ZTthwcrLQ\"",
+      "decodedBytes": 44262,
+      "wireContentLength": 15215,
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "conditionalStatus": 304,
+      "conditionalBytes": 0,
+      "sha256": "12fad47a9a226a74e4daad4b7354731109ff0000c09c27b516bdcecd3d04ae15"
+    },
+    {
+      "path": "/stream.js",
+      "status": 200,
+      "encoding": "gzip",
+      "etag": "\"9sxfsXxAxV77IbiKh4jvNJPBFXYYpx8kwPsXn9kWFEc\"",
+      "decodedBytes": 9501,
+      "wireContentLength": 3365,
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "conditionalStatus": 304,
+      "conditionalBytes": 0,
+      "sha256": "9735c1a0731aadf7ad5a58d25f3617fb34af8e0adcb3a22f3eae7f8d20ed8e4e"
+    },
+    {
+      "path": "/leagues.js",
+      "status": 200,
+      "encoding": "gzip",
+      "etag": "\"tj-ZHzQ2qkxp--sA4-aE-dYUIWhf3t0m2EddlI49kNc\"",
+      "decodedBytes": 1087,
+      "wireContentLength": 541,
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "conditionalStatus": 304,
+      "conditionalBytes": 0,
+      "sha256": "fca66ec92dfebc2094b6e801cf5929234ddeec2936d97219387a6de277277c64"
+    },
+    {
+      "path": "/college-teams.js",
+      "status": 200,
+      "encoding": "gzip",
+      "etag": "\"acpkMCO031mvImk7qkfQHztxZSj-imoi8pdnIog13JI\"",
+      "decodedBytes": 7494,
+      "wireContentLength": 3057,
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "conditionalStatus": 304,
+      "conditionalBytes": 0,
+      "sha256": "360f85acf1d2a69364df41bfab307bd15c7f6c980b3c1d09e64a1e4cd11f2f7b"
+    },
+    {
+      "path": "/style.css",
+      "status": 200,
+      "encoding": "gzip",
+      "etag": "\"pdNYOvefOtfUFF2LCF6srHekjRyWbk03_7TxHsXsbXo\"",
+      "decodedBytes": 30728,
+      "wireContentLength": 8320,
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "conditionalStatus": 304,
+      "conditionalBytes": 0,
+      "sha256": "3febde1d4b4d0fe5fd907b1d3b44df9ec5e6135ddd283433080a33a4746dda97"
+    }
+  ],
+  "boards": [
+    {
+      "league": "nfl",
+      "status": 200,
+      "encoding": "gzip",
+      "etag": null,
+      "cacheControl": "no-store",
+      "decodedBytes": 111099,
+      "wireContentLength": 11539,
+      "games": 29,
+      "quotes": 348,
+      "bookQuotes": {
+        "draftkings": 174,
+        "fanduel": 174
+      },
+      "source": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 7897,
+          "staleAfterMs": 25000,
+          "quotes": 174,
+          "games": 29,
+          "valid": true
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 194,
+          "staleAfterMs": 10000,
+          "quotes": 174,
+          "games": 29,
+          "coverage": {
+            "requested": 87,
+            "returned": 87,
+            "batches": 2,
+            "missingIds": []
+          },
+          "valid": true
+        }
+      },
+      "revision": 1889,
+      "sentAt": 1793312339864,
+      "uniqueQuotes": true,
+      "correctLeague": true,
+      "metadataCountsAgree": true,
+      "quoteIdentityHash": "1650bf3c2019a15d12046246da2de02f96e05ce821febc6a80b593d7e3fd2677"
+    },
+    {
+      "league": "ncaaf",
+      "status": 200,
+      "encoding": "gzip",
+      "etag": null,
+      "cacheControl": "no-store",
+      "decodedBytes": 385080,
+      "wireContentLength": 36939,
+      "games": 126,
+      "quotes": 1115,
+      "bookQuotes": {
+        "draftkings": 402,
+        "fanduel": 713
+      },
+      "source": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 8003,
+          "staleAfterMs": 25000,
+          "quotes": 402,
+          "games": 67,
+          "valid": true
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 1496,
+          "staleAfterMs": 10000,
+          "quotes": 713,
+          "games": 119,
+          "coverage": {
+            "requested": 357,
+            "returned": 357,
+            "batches": 6,
+            "missingIds": []
+          },
+          "valid": true
+        }
+      },
+      "revision": 1891,
+      "sentAt": 1793312339970,
+      "uniqueQuotes": true,
+      "correctLeague": true,
+      "metadataCountsAgree": true,
+      "quoteIdentityHash": "c761c6de24548b5b7466c9ba6e50a79a1f3147e82d52530fff9c15dc1b7667b4"
+    },
+    {
+      "league": "cfl",
+      "status": 200,
+      "encoding": "gzip",
+      "etag": null,
+      "cacheControl": "no-store",
+      "decodedBytes": 9527,
+      "wireContentLength": 1898,
+      "games": 2,
+      "quotes": 24,
+      "bookQuotes": {
+        "draftkings": 12,
+        "fanduel": 12
+      },
+      "source": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 8098,
+          "staleAfterMs": 25000,
+          "quotes": 12,
+          "games": 2,
+          "valid": true
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageAtSendMs": 499,
+          "staleAfterMs": 10000,
+          "quotes": 12,
+          "games": 2,
+          "coverage": {
+            "requested": 6,
+            "returned": 6,
+            "batches": 1,
+            "missingIds": []
+          },
+          "valid": true
+        }
+      },
+      "revision": 1891,
+      "sentAt": 1793312340065,
+      "uniqueQuotes": true,
+      "correctLeague": true,
+      "metadataCountsAgree": true,
+      "quoteIdentityHash": "ec09fd657198e311e11799147a11769a676a872f1b63a671f22a48f62d48dbfd"
+    }
+  ],
+  "after": {
+    "version": "4c1395370df1530de6c728b67d5a6b16e974997b",
+    "startedAt": 1793312148366,
+    "generatedAt": 1793312340264,
+    "sources": {
+      "draftkings": {
+        "book": "draftkings",
+        "status": "healthy",
+        "lastConfirmedAt": 1793312331967,
+        "lastDataAt": 1793312331074,
+        "lastChangeAt": null,
+        "staleAfterMs": 25000,
+        "error": null,
+        "warnings": [],
+        "updates": 4,
+        "priceChanges": 0,
+        "games": 98,
+        "quotes": 588,
+        "transport": "WebSocket · JSON deltas",
+        "region": "Ontario",
+        "requestMs": 1001.2293669999926,
+        "decodedBytes": 537555,
+        "pollMs": null
+      },
+      "fanduel": {
+        "book": "fanduel",
+        "status": "healthy",
+        "lastConfirmedAt": 1793312339566,
+        "lastDataAt": 1793312339566,
+        "lastChangeAt": null,
+        "staleAfterMs": 10000,
+        "error": null,
+        "warnings": [],
+        "updates": 786,
+        "priceChanges": 0,
+        "games": 150,
+        "quotes": 899,
+        "transport": "Live push with independent league verification",
+        "region": "Ontario",
+        "leagues": {
+          "nfl": {
+            "book": "fanduel",
+            "league": "nfl",
+            "region": "Ontario",
+            "status": "healthy",
+            "error": null,
+            "lastConfirmedAt": 1793312339897,
+            "lastDataAt": 1793312339895,
+            "lastChangeAt": null,
+            "staleAfterMs": 10000,
+            "warnings": [],
+            "games": 29,
+            "quotes": 174,
+            "updates": 594,
+            "priceChanges": 0,
+            "endpoints": {
+              "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+              "prices": "https://smp.on.sportsbook.fanduel.ca"
+            },
+            "transport": "Live push · polling backup",
+            "pollMs": 250,
+            "coverage": {
+              "requested": 87,
+              "returned": 87,
+              "batches": 2,
+              "missingIds": []
+            },
+            "channels": {
+              "push": {
+                "status": "subscribed",
+                "lastConfirmedAt": 1793312335572,
+                "lastDataAt": null,
+                "error": null,
+                "generation": 1,
+                "subscribedMarkets": 87,
+                "region": "on",
+                "origin": "https://sportsbook.fanduel.ca",
+                "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+                "lastProtocolAt": 1793312332866,
+                "protocolTimeoutMs": 120000,
+                "counters": {
+                  "connections": 1,
+                  "reconnects": 0,
+                  "messages": 6,
+                  "markets": 0,
+                  "invalidFrames": 0,
+                  "configReads": 1,
+                  "authErrors": 0
+                },
+                "verified": true,
+                "ordering": {
+                  "accepted": 0,
+                  "duplicates": 0,
+                  "outOfOrder": 0,
+                  "unknown": 0,
+                  "pollOverwritesPrevented": 0
+                }
+              },
+              "polling": {
+                "cyclesStarted": 594,
+                "successfulCycles": 594,
+                "failedCycles": 0,
+                "partialCycles": 0,
+                "rateLimitedCycles": 0,
+                "lastFailureAt": null,
+                "lastFailureStatus": null,
+                "intervalMs": 250,
+                "lastSuccessAt": 1793312339896,
+                "lastCompleteAt": 1793312339896,
+                "error": null
+              },
+              "discovery": {
+                "lastSuccessAt": 1793312335173,
+                "error": null
+              }
+            },
+            "requestMs": 128.80139099998632,
+            "decodedBytes": 101311
+          },
+          "ncaaf": {
+            "book": "fanduel",
+            "league": "ncaaf",
+            "region": "Ontario",
+            "status": "healthy",
+            "error": null,
+            "lastConfirmedAt": 1793312340168,
+            "lastDataAt": 1793312340113,
+            "lastChangeAt": null,
+            "staleAfterMs": 10000,
+            "warnings": [],
+            "games": 119,
+            "quotes": 713,
+            "updates": 99,
+            "priceChanges": 0,
+            "endpoints": {
+              "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+              "prices": "https://smp.on.sportsbook.fanduel.ca"
+            },
+            "transport": "Live push · polling backup",
+            "pollMs": 2000,
+            "coverage": {
+              "requested": 357,
+              "returned": 357,
+              "batches": 6,
+              "missingIds": []
+            },
+            "channels": {
+              "push": {
+                "status": "subscribed",
+                "lastConfirmedAt": 1793312335572,
+                "lastDataAt": 1793312301366,
+                "error": null,
+                "generation": 1,
+                "subscribedMarkets": 357,
+                "region": "on",
+                "origin": "https://sportsbook.fanduel.ca",
+                "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+                "lastProtocolAt": 1793312332865,
+                "protocolTimeoutMs": 120000,
+                "counters": {
+                  "connections": 1,
+                  "reconnects": 0,
+                  "messages": 16,
+                  "markets": 9,
+                  "invalidFrames": 0,
+                  "configReads": 1,
+                  "authErrors": 0
+                },
+                "verified": true,
+                "ordering": {
+                  "accepted": 9,
+                  "duplicates": 0,
+                  "outOfOrder": 0,
+                  "unknown": 0,
+                  "pollOverwritesPrevented": 7
+                }
+              },
+              "polling": {
+                "cyclesStarted": 90,
+                "successfulCycles": 90,
+                "failedCycles": 0,
+                "partialCycles": 0,
+                "rateLimitedCycles": 0,
+                "lastFailureAt": null,
+                "lastFailureStatus": null,
+                "intervalMs": 2000,
+                "lastSuccessAt": 1793312340164,
+                "lastCompleteAt": 1793312340164,
+                "error": null
+              },
+              "discovery": {
+                "lastSuccessAt": 1793312337864,
+                "error": null
+              }
+            },
+            "requestMs": 845.801581000007,
+            "decodedBytes": 410646
+          },
+          "cfl": {
+            "book": "fanduel",
+            "league": "cfl",
+            "region": "Ontario",
+            "status": "healthy",
+            "error": null,
+            "lastConfirmedAt": 1793312339566,
+            "lastDataAt": 1793312339566,
+            "lastChangeAt": null,
+            "staleAfterMs": 10000,
+            "warnings": [],
+            "games": 2,
+            "quotes": 12,
+            "updates": 93,
+            "priceChanges": 0,
+            "endpoints": {
+              "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+              "prices": "https://smp.on.sportsbook.fanduel.ca"
+            },
+            "transport": "Live push · polling backup",
+            "pollMs": 2000,
+            "coverage": {
+              "requested": 6,
+              "returned": 6,
+              "batches": 1,
+              "missingIds": []
+            },
+            "channels": {
+              "push": {
+                "status": "subscribed",
+                "lastConfirmedAt": 1793312335572,
+                "lastDataAt": null,
+                "error": null,
+                "generation": 1,
+                "subscribedMarkets": 6,
+                "region": "on",
+                "origin": "https://sportsbook.fanduel.ca",
+                "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+                "lastProtocolAt": 1793312332866,
+                "protocolTimeoutMs": 120000,
+                "counters": {
+                  "connections": 1,
+                  "reconnects": 0,
+                  "messages": 6,
+                  "markets": 0,
+                  "invalidFrames": 0,
+                  "configReads": 1,
+                  "authErrors": 0
+                },
+                "verified": true,
+                "ordering": {
+                  "accepted": 0,
+                  "duplicates": 0,
+                  "outOfOrder": 0,
+                  "unknown": 0,
+                  "pollOverwritesPrevented": 0
+                }
+              },
+              "polling": {
+                "cyclesStarted": 93,
+                "successfulCycles": 93,
+                "failedCycles": 0,
+                "partialCycles": 0,
+                "rateLimitedCycles": 0,
+                "lastFailureAt": null,
+                "lastFailureStatus": null,
+                "intervalMs": 2000,
+                "lastSuccessAt": 1793312339566,
+                "lastCompleteAt": 1793312339566,
+                "error": null
+              },
+              "discovery": {
+                "lastSuccessAt": 1793312335271,
+                "error": null
+              }
+            },
+            "requestMs": 257.08293199999025,
+            "decodedBytes": 7094
+          }
+        },
+        "pollMs": null,
+        "coverage": {
+          "requested": 450,
+          "returned": 450,
+          "batches": 9,
+          "missingIds": []
+        },
+        "channels": {
+          "push": {
+            "status": "subscribed",
+            "verified": true,
+            "subscribedMarkets": 450,
+            "lastConfirmedAt": 1793312335572,
+            "region": "on",
+            "origin": "https://sportsbook.fanduel.ca",
+            "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+            "leagueCount": 3
+          },
+          "polling": {
+            "cyclesStarted": 777,
+            "successfulCycles": 777,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "intervalMs": null,
+            "lastSuccessAt": 1793312339566,
+            "lastCompleteAt": 1793312339566,
+            "error": null
+          },
+          "discovery": {
+            "lastSuccessAt": 1793312335173,
+            "error": null
+          }
+        },
+        "endpoints": {
+          "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+          "prices": "https://smp.on.sportsbook.fanduel.ca"
+        },
+        "requestMs": 128.80139099998632,
+        "decodedBytes": 101311
+      }
+    },
+    "notes": [
+      "Browser samples are client-reported estimates after two animation frames, corrected using /api/time. Inspect clock uncertainty.",
+      "DraftKings createdTime is the provider feed timestamp, not a verified trading-engine change timestamp. Cross-host clock skew can affect it.",
+      "FanDuel push updatedAt has whole-second precision. Its age is an upper-bound estimate with up to about 999ms quantization plus unmeasured provider clock skew; HTTP prices have no change timestamp.",
+      "FanDuel uses immediate push alongside configured HTTP checks, continuing HTTP if push is unavailable. Nominal polling wait averages half the interval only for uniformly timed changes without delays; this is not a measured end-to-end guarantee or a maximum price age.",
+      "Live rows with n=0 mean not measured; pregame results must not be presented as live results."
+    ],
+    "measurements": {
+      "draftkings": {
+        "pregame": {
+          "acquisitionRequestMs": {
+            "n": 4,
+            "p50": 1001.23,
+            "p95": 14413.85,
+            "max": 14413.85
+          },
+          "processingMs": {
+            "n": 4,
+            "p50": 90.26,
+            "p95": 300.69,
+            "max": 300.69
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 4,
+            "p50": 537555,
+            "p95": 537555,
+            "max": 537555
+          }
+        },
+        "live": {
+          "acquisitionRequestMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "processingMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          }
+        }
+      },
+      "fanduel": {
+        "pregame": {
+          "acquisitionRequestMs": {
+            "n": 777,
+            "p50": 128.24,
+            "p95": 796.56,
+            "max": 4902.2
+          },
+          "processingMs": {
+            "n": 786,
+            "p50": 4.87,
+            "p95": 94.85,
+            "max": 266.56
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 786,
+            "p50": 101311,
+            "p95": 410649,
+            "max": 410649
+          }
+        },
+        "live": {
+          "acquisitionRequestMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "processingMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceFeedToBackendMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPricePushUpdatedToBackendUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "changedPriceMessages": 0,
+          "backendToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "feedCreatedToPaintMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "pushUpdatedToPaintUpperBoundMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "clockUncertaintyMs": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          },
+          "decodedPayloadBytes": {
+            "n": 0,
+            "p50": null,
+            "p95": null,
+            "max": null
+          }
+        }
+      }
+    },
+    "viewers": 8,
+    "extras": {
+      "snapshots": 0,
+      "failures": 0,
+      "workerRestarts": 0,
+      "upstreamBytes": 0,
+      "activeGames": 0,
+      "viewers": 0,
+      "pollMs": 15000,
+      "staleAfterMs": 45000,
+      "region": "Ontario",
+      "isolatedProcess": true
+    },
+    "history": {
+      "maxSeries": 4096,
+      "maxPointsPerSeries": 3000,
+      "maxTotalPoints": 150000,
+      "pendingEvents": 2,
+      "queueOverflows": 0,
+      "clockRollbacks": 0,
+      "evictedSeries": 0,
+      "evictedPoints": 0,
+      "invalidImports": 0,
+      "note": "Actual server observations only. History can be shorter than the selected window after startup, gaps, or capacity eviction. Restored history never restores live eligibility.",
+      "retentionHours": 48,
+      "storage": {
+        "enabled": true,
+        "state": "saving",
+        "available": true,
+        "pending": true,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793312328368,
+        "lastSavedAt": 1793312284097,
+        "lastRestoredAt": 1793312168675,
+        "lastFailureAt": null,
+        "savedSeries": 1487,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      }
+    }
+  },
+  "versionStable": true,
+  "summary": {
+    "nfl": {
+      "rounds": 5,
+      "initialSnapshotMs": {
+        "n": 5,
+        "min": 84.31162499999846,
+        "p50": 141.9502080000002,
+        "p95": 401.7742079999998,
+        "max": 401.7742079999998
+      },
+      "reconnectedSnapshotMs": {
+        "n": 5,
+        "min": 97.60095799999999,
+        "p50": 132.08424999999988,
+        "p95": 353.3631250000003,
+        "max": 353.3631250000003
+      },
+      "reconnectIncluding250msMs": {
+        "n": 5,
+        "min": 350.19675000000007,
+        "p50": 382.8684170000015,
+        "p95": 603.672208,
+        "max": 603.672208
+      },
+      "snapshotBytes": {
+        "n": 10,
+        "min": 111128,
+        "p50": 111129,
+        "p95": 111130,
+        "max": 111130
+      }
+    },
+    "ncaaf": {
+      "rounds": 5,
+      "initialSnapshotMs": {
+        "n": 5,
+        "min": 116.38937499999975,
+        "p50": 186.2566670000001,
+        "p95": 380.50175000000127,
+        "max": 380.50175000000127
+      },
+      "reconnectedSnapshotMs": {
+        "n": 5,
+        "min": 146.54362500000025,
+        "p50": 187.504958,
+        "p95": 342.9683750000004,
+        "max": 342.9683750000004
+      },
+      "reconnectIncluding250msMs": {
+        "n": 5,
+        "min": 397.2985840000001,
+        "p50": 438.8369580000001,
+        "p95": 593.6573340000004,
+        "max": 593.6573340000004
+      },
+      "snapshotBytes": {
+        "n": 10,
+        "min": 385107,
+        "p50": 385111,
+        "p95": 385112,
+        "max": 385112
+      }
+    },
+    "cfl": {
+      "rounds": 5,
+      "initialSnapshotMs": {
+        "n": 5,
+        "min": 65.9291659999999,
+        "p50": 81.81449999999995,
+        "p95": 88.53337499999998,
+        "max": 88.53337499999998
+      },
+      "reconnectedSnapshotMs": {
+        "n": 5,
+        "min": 76.36520799999926,
+        "p50": 133.1849159999997,
+        "p95": 253.71337499999936,
+        "max": 253.71337499999936
+      },
+      "reconnectIncluding250msMs": {
+        "n": 5,
+        "min": 327.59920799999963,
+        "p50": 384.6486249999998,
+        "p95": 505.4464170000001,
+        "max": 505.4464170000001
+      },
+      "snapshotBytes": {
+        "n": 10,
+        "min": 9557,
+        "p50": 9557,
+        "p95": 9558,
+        "max": 9558
+      }
+    }
+  },
+  "pass": true,
+  "finishedAt": "2026-10-29T22:19:00.280Z",
+  "observerEventLoopDelayMs": {
+    "p99": 12.681215,
+    "max": 80.740351
+  }
+}

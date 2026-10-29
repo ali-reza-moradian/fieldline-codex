@@ -1,0 +1,464 @@
+{
+  "generatedAt": "2026-10-29T22:18:45.138Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "version": "4c1395370df1530de6c728b67d5a6b16e974997b",
+  "method": "Read-only samples of public application metrics after deployment, including the first acquired baseline and two naturally scheduled warm snapshots. No process restart, forced resnapshot, extra upstream requests or added viewer stream was used for the warm observations.",
+  "serverStable": true,
+  "snapshotScope": {
+    "region": "Ontario",
+    "leagues": [
+      "NFL",
+      "college football",
+      "college FCS",
+      "CFL"
+    ],
+    "requestsPerBaseline": 4,
+    "transport": "persistent curl worker, sequential HTTP acquisition"
+  },
+  "observations": [
+    {
+      "observedAt": "2026-10-29T22:16:25.887Z",
+      "serverStartedAt": "2026-10-29T22:15:48.366Z",
+      "baselineNumber": 1,
+      "draftkings": {
+        "status": "healthy",
+        "acquisitionMs": 14413.853696000002,
+        "oldestResponseReceivedAt": "2026-10-29T22:16:03.868Z",
+        "lastConfirmedAt": "2026-10-29T22:16:20.508Z",
+        "games": 98,
+        "quotes": 588,
+        "decodedBytes": 537555,
+        "error": null,
+        "warnings": [],
+        "priceChanges": 0
+      },
+      "fanduel": {
+        "nfl": {
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "warnings": [],
+          "coverage": {
+            "requested": 87,
+            "returned": 87,
+            "batches": 2,
+            "missingIds": []
+          },
+          "polling": {
+            "cyclesStarted": 82,
+            "successfulCycles": 82,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 250,
+            "lastSuccessAt": 1793312185717,
+            "lastCompleteAt": 1793312185717,
+            "error": null
+          }
+        },
+        "ncaaf": {
+          "status": "healthy",
+          "games": 119,
+          "quotes": 713,
+          "warnings": [],
+          "coverage": {
+            "requested": 357,
+            "returned": 357,
+            "batches": 6,
+            "missingIds": []
+          },
+          "polling": {
+            "cyclesStarted": 13,
+            "successfulCycles": 13,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 2000,
+            "lastSuccessAt": 1793312184516,
+            "lastCompleteAt": 1793312184516,
+            "error": null
+          }
+        },
+        "cfl": {
+          "status": "healthy",
+          "games": 2,
+          "quotes": 12,
+          "warnings": [],
+          "coverage": {
+            "requested": 6,
+            "returned": 6,
+            "batches": 1,
+            "missingIds": []
+          },
+          "polling": {
+            "cyclesStarted": 16,
+            "successfulCycles": 16,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 2000,
+            "lastSuccessAt": 1793312184123,
+            "lastCompleteAt": 1793312184123,
+            "error": null
+          }
+        }
+      }
+    },
+    {
+      "observedAt": "2026-10-29T22:17:16.461Z",
+      "serverStartedAt": "2026-10-29T22:15:48.366Z",
+      "baselineNumber": 2,
+      "draftkings": {
+        "status": "healthy",
+        "acquisitionMs": 901.4284590000025,
+        "oldestResponseReceivedAt": "2026-10-29T22:16:50.969Z",
+        "lastConfirmedAt": "2026-10-29T22:17:10.699Z",
+        "games": 98,
+        "quotes": 588,
+        "decodedBytes": 537555,
+        "error": null,
+        "warnings": [],
+        "priceChanges": 0
+      },
+      "fanduel": {
+        "nfl": {
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "warnings": [],
+          "coverage": {
+            "requested": 87,
+            "returned": 87,
+            "batches": 2,
+            "missingIds": []
+          },
+          "polling": {
+            "cyclesStarted": 248,
+            "successfulCycles": 248,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 250,
+            "lastSuccessAt": 1793312236178,
+            "lastCompleteAt": 1793312236178,
+            "error": null
+          }
+        },
+        "ncaaf": {
+          "status": "healthy",
+          "games": 119,
+          "quotes": 713,
+          "warnings": [],
+          "coverage": {
+            "requested": 357,
+            "returned": 357,
+            "batches": 6,
+            "missingIds": []
+          },
+          "polling": {
+            "cyclesStarted": 38,
+            "successfulCycles": 38,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 2000,
+            "lastSuccessAt": 1793312235066,
+            "lastCompleteAt": 1793312235066,
+            "error": null
+          }
+        },
+        "cfl": {
+          "status": "healthy",
+          "games": 2,
+          "quotes": 12,
+          "warnings": [],
+          "coverage": {
+            "requested": 6,
+            "returned": 6,
+            "batches": 1,
+            "missingIds": []
+          },
+          "polling": {
+            "cyclesStarted": 41,
+            "successfulCycles": 41,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 2000,
+            "lastSuccessAt": 1793312234419,
+            "lastCompleteAt": 1793312234419,
+            "error": null
+          }
+        }
+      },
+      "draftkingsCumulativeMeasurements": {
+        "acquisitionRequestMs": {
+          "n": 2,
+          "p50": 901.43,
+          "p95": 14413.85,
+          "max": 14413.85
+        },
+        "processingMs": {
+          "n": 2,
+          "p50": 3.77,
+          "p95": 300.69,
+          "max": 300.69
+        },
+        "feedCreatedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceFeedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPricePushUpdatedToBackendUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceMessages": 0,
+        "backendToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "feedCreatedToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pushUpdatedToPaintUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "clockUncertaintyMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "decodedPayloadBytes": {
+          "n": 2,
+          "p50": 537555,
+          "p95": 537555,
+          "max": 537555
+        }
+      }
+    },
+    {
+      "observedAt": "2026-10-29T22:18:14.243Z",
+      "serverStartedAt": "2026-10-29T22:15:48.366Z",
+      "baselineNumber": 3,
+      "draftkings": {
+        "status": "healthy",
+        "acquisitionMs": 1009.0933249999944,
+        "oldestResponseReceivedAt": "2026-10-29T22:17:51.094Z",
+        "lastConfirmedAt": "2026-10-29T22:18:10.999Z",
+        "games": 98,
+        "quotes": 588,
+        "decodedBytes": 537555,
+        "error": null,
+        "warnings": [],
+        "priceChanges": 0
+      },
+      "fanduel": {
+        "nfl": {
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "warnings": [],
+          "coverage": {
+            "requested": 87,
+            "returned": 87,
+            "batches": 2,
+            "missingIds": []
+          },
+          "polling": {
+            "cyclesStarted": 439,
+            "successfulCycles": 439,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 250,
+            "lastSuccessAt": 1793312294104,
+            "lastCompleteAt": 1793312294104,
+            "error": null
+          }
+        },
+        "ncaaf": {
+          "status": "healthy",
+          "games": 119,
+          "quotes": 713,
+          "warnings": [],
+          "coverage": {
+            "requested": 357,
+            "returned": 357,
+            "batches": 6,
+            "missingIds": []
+          },
+          "polling": {
+            "cyclesStarted": 67,
+            "successfulCycles": 67,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 2000,
+            "lastSuccessAt": 1793312293865,
+            "lastCompleteAt": 1793312293865,
+            "error": null
+          }
+        },
+        "cfl": {
+          "status": "healthy",
+          "games": 2,
+          "quotes": 12,
+          "warnings": [],
+          "coverage": {
+            "requested": 6,
+            "returned": 6,
+            "batches": 1,
+            "missingIds": []
+          },
+          "polling": {
+            "cyclesStarted": 70,
+            "successfulCycles": 70,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 2000,
+            "lastSuccessAt": 1793312292812,
+            "lastCompleteAt": 1793312292812,
+            "error": null
+          }
+        }
+      },
+      "draftkingsCumulativeMeasurements": {
+        "acquisitionRequestMs": {
+          "n": 3,
+          "p50": 1009.09,
+          "p95": 14413.85,
+          "max": 14413.85
+        },
+        "processingMs": {
+          "n": 3,
+          "p50": 90.26,
+          "p95": 300.69,
+          "max": 300.69
+        },
+        "feedCreatedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceFeedToBackendMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPricePushUpdatedToBackendUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "changedPriceMessages": 0,
+        "backendToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "feedCreatedToPaintMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "pushUpdatedToPaintUpperBoundMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "clockUncertaintyMs": {
+          "n": 0,
+          "p50": null,
+          "p95": null,
+          "max": null
+        },
+        "decodedPayloadBytes": {
+          "n": 3,
+          "p50": 537555,
+          "p95": 537555,
+          "max": 537555
+        }
+      }
+    }
+  ],
+  "summary": {
+    "coldAcquisitionMs": 14413.853696000002,
+    "warmAcquisitionMs": [
+      901.4284590000025,
+      1009.0933249999944
+    ],
+    "allSampledSourcesHealthy": true,
+    "allSampledWarningsEmpty": true,
+    "latestFanDuelCumulativeFailures": {
+      "nfl": {
+        "failed": 0,
+        "partial": 0,
+        "rateLimited": 0
+      },
+      "ncaaf": {
+        "failed": 0,
+        "partial": 0,
+        "rateLimited": 0
+      },
+      "cfl": {
+        "failed": 0,
+        "partial": 0,
+        "rateLimited": 0
+      }
+    }
+  },
+  "accuracyReport": "leagues-cloud-source-20261029.json",
+  "limitations": [
+    "One cold acquisition and two warm acquisitions are a small deployment sample, not a latency distribution or an uptime guarantee.",
+    "Acquisition measures the entire four-request baseline, including worker startup and response handling; the public metrics do not separate Python import, CPU contention, DNS/TLS, network or server response time.",
+    "The first cold acquisition took 14.414 seconds, close to the configured 15-second deadline. This delay is retained; it must not be replaced by the faster warm measurements.",
+    "Samples confirm source health only at their observed timestamps. They do not rule out unsampled transient gaps. FanDuel failure counters are cumulative since this process started.",
+    "The response timestamp is the oldest individual response in the complete baseline, not the exact publication time or browser paint time.",
+    "These snapshot measurements do not measure live push latency. No changed-price messages were recorded during this short sample.",
+    "The public process version and start time remained stable throughout the accuracy and warm observations."
+  ]
+}
