@@ -222,6 +222,48 @@ test("empty DK categories are complete source observations, not fabricated rows"
   assert.equal(Object.keys(result.coverage.categories).length, 7);
 });
 
+test("DraftKings batch covers exactly seven categories with each category's own timestamp", async () => {
+  let calls = 0;
+  const result = await fetchDraftKingsExtras(dkGame, { batchFetcher: async (requests, options) => {
+    calls++;
+    assert.equal(options.headers["x-pe-loc"], "CA-ON");
+    assert.deepEqual(requests.map(r => r.id), DK_EXTRA_CATEGORIES.map(c => c.id));
+    assert.ok(requests.every(r => new URL(r.url).pathname.startsWith("/sites/CA-ON-SB/")));
+    return requests.map((r, i) => ({ id: r.id, ...response(fixture.draftkings[r.id], 1000+i*100) }));
+  } });
+  assert.equal(calls, 1);
+  assert.equal(result.rows.length, 14); assert.equal(result.observedAt, 1000);
+  for (let i = 0; i < DK_EXTRA_CATEGORIES.length; i++) {
+    const kind = DK_EXTRA_CATEGORIES[i].kind;
+    assert.equal(result.coverage.categories[kind].observedAt, 1000+i*100);
+    assert.ok(result.rows.filter(r => r.kind === kind).every(r => r.observedAt === 1000+i*100));
+  }
+});
+
+test("DraftKings partial, duplicate or misordered batches never publish a snapshot", async () => {
+  const good = DK_EXTRA_CATEGORIES.map(c => ({ id: c.id, ...response(fixture.draftkings[c.id]) }));
+  for (const responses of [good.slice(1), [...good].reverse(), good.map((r, i) => i === 1 ? good[0] : r)])
+    await assert.rejects(fetchDraftKingsExtras(dkGame, { batchFetcher: async () => responses }), /batch category coverage/);
+  const wrongEvent = clone(good);
+  wrongEvent[3].data.markets[0].eventId = "other-event";
+  await assert.rejects(fetchDraftKingsExtras(dkGame, { batchFetcher: async () => wrongEvent }), /another event/);
+  const missingTime = clone(good); delete missingTime[3].receivedAt;
+  await assert.rejects(fetchDraftKingsExtras(dkGame, { batchFetcher: async () => missingTime }), /observation time/);
+});
+
+test("DraftKings batch cancellation and Retry-After propagate with no per-category fallback", async () => {
+  let sequentialCalls = 0;
+  const error = new UpstreamError("Rate limited", 429, 60000);
+  await assert.rejects(fetchDraftKingsExtras(dkGame, { batchFetcher: async () => { throw error; },
+    fetcher: async () => { sequentialCalls++; } }), e => e === error);
+  assert.equal(sequentialCalls, 0);
+  const controller = new AbortController();
+  await assert.rejects(fetchDraftKingsExtras(dkGame, { signal: controller.signal, batchFetcher: async () => {
+    controller.abort();
+    return DK_EXTRA_CATEGORIES.map(c => ({ id: c.id, ...response(fixture.draftkings[c.id]) }));
+  } }), { name: "AbortError" });
+});
+
 test("HTTP retry-after and cancellation propagate without partial snapshots or retries", async () => {
   const error = new UpstreamError("Rate limited", 429, 60000);
   let count = 0;

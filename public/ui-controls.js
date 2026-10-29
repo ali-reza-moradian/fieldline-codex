@@ -27,6 +27,12 @@ export function sortGames(games, { favorites = new Set(), sort = 'kickoff', anal
   });
 }
 export const validExtraKinds = ['alt-spread', 'alt-total', 'td', 'pass-yds', 'rush-yds', 'rec-yds', 'receptions'];
+export function extraLineLabel(row) {
+  if (row.line == null) return '';
+  if (!Number.isFinite(row.line)) return 'Unverified line';
+  if (row.kind === 'alt-spread') return row.line > 0 ? `+${row.line}` : row.line < 0 ? `−${Math.abs(row.line)}` : 'PK';
+  return `${row.line}${row.thresholdOperator === 'gte' ? '+' : ''}`;
+}
 export function extraOffers(row, sources, { now, connected, clockUncertaintyMs = 0 }) {
   const eligible = {};
   for (const book of ['draftkings', 'fanduel']) {
@@ -40,7 +46,7 @@ export function extraOffers(row, sources, { now, connected, clockUncertaintyMs =
     eligible[book] = { ...q, book, decimal, stale: !fresh || !current, available: !!q && fresh && current && !q.suspended && !q.missing && validOdds && validDecimal };
   }
   const available = Object.values(eligible).filter(q => q.available);
-  const both = available.length === 2 && row.comparable !== false;
+  const both = available.length === 2 && row.comparable === true && ['alt-spread', 'alt-total'].includes(row.kind);
   const best = both ? Math.max(...available.map(q => q.decimal)) : null;
   return { offers: eligible, bestBooks: best === null ? [] : available.filter(q => Math.abs(q.decimal - best) < 1e-9).map(q => q.book) };
 }

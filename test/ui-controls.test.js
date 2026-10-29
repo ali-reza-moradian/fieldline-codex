@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { safePreference, parseFavorites, shortcutAction, sortGames, extraOffers, HistoryLoader, historyStorageLabel } from '../public/ui-controls.js';
+import { safePreference, parseFavorites, shortcutAction, sortGames, extraOffers, extraLineLabel, HistoryLoader, historyStorageLabel } from '../public/ui-controls.js';
 import { ExtrasPanel } from '../public/extras-panel.js';
 
 const epoch = 1700000000000;
@@ -23,7 +23,7 @@ function timers() {
 const source = () => ({ status: 'healthy', lastConfirmedAt: epoch, staleAfterMs: 10000 });
 const sources = () => ({ draftkings: source(), fanduel: source() });
 const quote = (american, extra = {}) => ({ american, observedAt: epoch, ...extra });
-const row = (extra = {}) => ({ id: 'x', kind: 'alt-total', subject: 'over', name: 'Over', line: 40.5,
+const row = (extra = {}) => ({ id: 'x', kind: 'alt-total', subject: 'over', name: 'Over', line: 40.5, comparable: true,
   offers: { draftkings: quote(-110), fanduel: quote(100) }, ...extra });
 
 test('saved preferences and favorites are bounded and malformed storage fails safely', () => {
@@ -61,6 +61,8 @@ test('extra market best-price labels require two fresh available matching contra
   assert.deepEqual(extraOffers(row(), sources(), options).bestBooks, ['fanduel']);
   assert.deepEqual(extraOffers(row({ offers: { draftkings: quote(100), fanduel: quote(-100) } }), sources(), options).bestBooks, ['draftkings', 'fanduel']);
   assert.deepEqual(extraOffers(row({ comparable: false }), sources(), options).bestBooks, [], 'different house protection rules cannot be ranked');
+  assert.deepEqual(extraOffers(row({ comparable: undefined }), sources(), options).bestBooks, [], 'a missing comparison confirmation cannot rank offers');
+  assert.deepEqual(extraOffers(row({ kind: 'pass-yds', thresholdOperator: 'gte', line: 175 }), sources(), options).bestBooks, [], 'props never inherit alternate-line ranking even if a flag is wrong');
   assert.deepEqual(extraOffers(row(), sources(), { ...options, connected: false }).bestBooks, []);
   const stale = sources(); stale.fanduel.status = 'stale';
   assert.deepEqual(extraOffers(row(), stale, options).bestBooks, []);
@@ -175,4 +177,32 @@ test('history storage messaging never promises restart persistence before a conf
   assert.match(historyStorageLabel({ enabled: true, available: false, state: 'restoring', lastSavedAt: null }), /first checkpoint/);
   assert.match(historyStorageLabel({ enabled: true, available: false, state: 'connecting', lastSavedAt: epoch }), /reconnecting/);
   assert.match(historyStorageLabel({ enabled: true, available: true, state: 'ready', lastSavedAt: epoch }), /since the last checkpoint may be lost/);
+});
+
+test('inclusive player thresholds display N+ while alternate spreads keep their signed line', () => {
+  for (const kind of ['pass-yds', 'rush-yds', 'rec-yds', 'receptions']) {
+    const text = extraLineLabel({ kind, line: 175, thresholdOperator: 'gte' });
+    assert.equal(text, '175+');
+    assert.doesNotMatch(text, /over|under/i, 'an inclusive threshold must not be relabelled as an exclusive over bet');
+  }
+  assert.equal(extraLineLabel({ kind: 'td', line: null }), '');
+  assert.equal(extraLineLabel({ kind: 'alt-total', line: 40.5 }), '40.5');
+  assert.equal(extraLineLabel({ kind: 'alt-spread', line: -3.5 }), '−3.5');
+  assert.equal(extraLineLabel({ kind: 'alt-spread', line: 3.5 }), '+3.5');
+  assert.equal(extraLineLabel({ kind: 'alt-spread', line: 0 }), 'PK');
+  assert.equal(extraLineLabel({ kind: 'pass-yds', line: '175', thresholdOperator: 'gte' }), 'Unverified line');
+});
+
+test('a suspended extra offer remains excluded across healthy freshness confirmations', () => {
+  const current = row({ offers: { draftkings: quote(-110), fanduel: quote(100, { suspended: true }) } });
+  const freshSources = sources();
+  for (const now of [epoch + 100, epoch + 5000]) {
+    freshSources.fanduel.lastConfirmedAt = now;
+    const comparison = extraOffers(current, freshSources, { now, connected: true });
+    assert.equal(comparison.offers.fanduel.available, false);
+    assert.deepEqual(comparison.bestBooks, []);
+  }
+  const reopened = row({ offers: { draftkings: quote(-110), fanduel: quote(100, { observedAt: epoch + 5000 }) } });
+  assert.deepEqual(extraOffers(reopened, freshSources, { now: epoch + 5000, connected: true }).bestBooks, ['fanduel']);
+  assert.deepEqual(extraOffers(reopened, freshSources, { now: epoch + 15000, connected: true }).bestBooks, [], 'expired quotes cannot win even with a previously healthy source');
 });

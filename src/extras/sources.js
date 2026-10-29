@@ -1,5 +1,5 @@
 import { fetchJson, UpstreamError } from "../http.js";
-import { fetchCurlJson } from "../curl-http.js";
+import { fetchCurlJsonBatch } from "../curl-batch-http.js";
 import { DK_HEADERS } from "../adapters/draftkings.js";
 import { FD_HEADERS, fetchFanDuelPrices } from "../adapters/fanduel.js";
 import { DK_EXTRA_CATEGORIES, EXTRA_KINDS, EXTRAS_RULES_NOTE, validateExtraGame,
@@ -26,25 +26,40 @@ function boundedSignal(signal) {
   const timeout = AbortSignal.timeout(30000);
   return signal ? AbortSignal.any([signal, timeout]) : timeout;
 }
-function dkDefaultFetcher() {
-  return (process.env.DK_HTTP_TRANSPORT ?? (process.env.RENDER === "true" ? "curl" : "native")) === "curl" ? fetchCurlJson : fetchJson;
+function dkUsesCurl() {
+  return (process.env.DK_HTTP_TRANSPORT ?? (process.env.RENDER === "true" ? "curl" : "native")) === "curl";
 }
 
 // No mutable price state is kept here. The caller publishes a complete snapshot
 // only if its request generation still owns the event. Failure leaves no partial
 // object that could accidentally refresh a previous price's observation time.
-export async function fetchDraftKingsExtras(game, { signal, fetcher = dkDefaultFetcher() } = {}) {
+export async function fetchDraftKingsExtras(game, { signal, fetcher, batchFetcher } = {}) {
   validateExtraGame(game);
   const began = performance.now(), requestStartedAt = Date.now(), snapshots = [], categories = {}, joinedSignal = boundedSignal(signal);
   let decodedBytes = 0, markets = 0;
-  for (const category of DK_EXTRA_CATEGORIES) {
-    joinedSignal.throwIfAborted();
-    const response = await fetcher(draftKingsExtrasUrl(game, category), { headers: DK_HEADERS, signal: joinedSignal });
+  const consume = (category, response) => {
     const parsed = normalizeDraftKingsExtras(response.data, game, category, response.receivedAt);
     snapshots.push({ rows: parsed.rows, observedAt: response.receivedAt });
     categories[category.kind] = { markets: parsed.markets, rows: parsed.rows.length, observedAt: response.receivedAt };
     markets += parsed.markets;
     decodedBytes += response.decodedBytes ?? 0;
+  };
+  const batch = batchFetcher ?? (!fetcher && dkUsesCurl() ? fetchCurlJsonBatch : null);
+  if (batch) {
+    joinedSignal.throwIfAborted();
+    const requests = DK_EXTRA_CATEGORIES.map(category => ({ id: category.id, url: draftKingsExtrasUrl(game, category) }));
+    const responses = await batch(requests, { headers: DK_HEADERS, signal: joinedSignal });
+    if (!Array.isArray(responses) || responses.length !== requests.length ||
+        responses.some((response, i) => response?.id !== requests[i].id))
+      throw new UpstreamError("DraftKings extras batch category coverage is incomplete or reordered");
+    joinedSignal.throwIfAborted();
+    for (let i = 0; i < responses.length; i++) consume(DK_EXTRA_CATEGORIES[i], responses[i]);
+  } else {
+    for (const category of DK_EXTRA_CATEGORIES) {
+      joinedSignal.throwIfAborted();
+      const response = await (fetcher ?? fetchJson)(draftKingsExtrasUrl(game, category), { headers: DK_HEADERS, signal: joinedSignal });
+      consume(category, response);
+    }
   }
   joinedSignal.throwIfAborted();
   const final = finalizeExtraRows(snapshots.flatMap(snapshot => snapshot.rows));
