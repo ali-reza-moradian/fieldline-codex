@@ -39,5 +39,12 @@
     "Local fault injection verifies logic, not provider-to-browser delivery time.",
     "No real-game price-change comparison is established by this check.",
     "Browser background suspension can delay timers."
-  ]
+  ],
+  "deployedVersion": "2bffe9c2f89d531959092819afe10fa8e7e97ab4",
+  "productionBrowserCheck": {
+    "observedAt": "2026-10-29T15:47:46.238602+00:00",
+    "browser": "Chrome",
+    "url": "https://fieldline-codex.onrender.com/",
+    "result": "Both Ontario sources Connected; 29 games; FanDuel view and Best Price values displayed. The current CAR moneyline was +166 at FanDuel and +160 at DraftKings; Best Price chose FanDuel. No price-change latency was measured."
+  }
 }
