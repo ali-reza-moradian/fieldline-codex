@@ -6,16 +6,39 @@ import { Metrics } from "./metrics.js";
 import { DraftKings } from "./adapters/draftkings.js";
 import { FanDuel } from "./adapters/fanduel.js";
 
+// Counters and timestamps stay available in snapshots and /api/metrics. Only
+// fields that change how a source can be displayed or trusted need a full frame.
+const sourcePresentation = (source) => JSON.stringify({
+  book: source.book, status: source.status, error: source.error,
+  warnings: source.warnings, games: source.games, quotes: source.quotes,
+  transport: source.transport, region: source.region, pollMs: source.pollMs,
+  staleAfterMs: source.staleAfterMs, coverage: source.coverage, endpoints: source.endpoints,
+  push: source.channels?.push && {
+    status: source.channels.push.status, error: source.channels.push.error,
+    generation: source.channels.push.generation, verified: source.channels.push.verified,
+    subscribedMarkets: source.channels.push.subscribedMarkets,
+    region: source.channels.push.region, origin: source.channels.push.origin,
+    endpoint: source.channels.push.endpoint,
+  },
+  polling: source.channels?.polling && {
+    error: source.channels.polling.error, intervalMs: source.channels.polling.intervalMs,
+  },
+  discovery: source.channels?.discovery && { error: source.channels.discovery.error },
+});
+
 export function createApp({
   store = new OddsStore(),
   metrics = new Metrics(),
   ingest = true,
+  collectorFactory = (sink) => [new DraftKings(sink), new FanDuel(sink)],
+  streamScheduler = { setInterval, clearInterval },
 } = {}) {
   const clients = new Set();
   const files = new Map([
     ["/", ["../public/index.html", "text/html; charset=utf-8"]],
     ["/app.js", ["../public/app.js", "text/javascript; charset=utf-8"]],
     ["/presentation.js", ["../public/presentation.js", "text/javascript; charset=utf-8"]],
+    ["/stream.js", ["../public/stream.js", "text/javascript; charset=utf-8"]],
     ["/style.css", ["../public/style.css", "text/css; charset=utf-8"]],
     ["/model.js", ["./model.js", "text/javascript; charset=utf-8"]],
   ]);
@@ -27,20 +50,53 @@ export function createApp({
     "Cache-Control": "no-store",
   };
   const serialize = (type, data) =>
-    `id: ${data.revision}\nevent: ${type}\ndata: ${JSON.stringify(data)}\n\n`;
-  const send = (res, type, data) => res.write(serialize(type, data));
-  const broadcast = ({ type, data }) => {
-    const frame = serialize(type, data);
-    for (const client of clients) {
-      if (client.writableLength > 256 * 1024) {
-        client.destroy();
-        clients.delete(client);
-        continue;
-      }
-      client.write(frame);
+    `${Number.isInteger(data.revision) ? `id: ${data.revision}\n` : ""}event: ${type}\ndata: ${JSON.stringify(data)}\n\n`;
+  const write = (client, frame, bytes = Buffer.byteLength(frame)) => {
+    if (client.destroyed || client.writableEnded || client.writableLength + bytes > 256 * 1024) {
+      client.destroy();
+      clients.delete(client);
+      return;
     }
+    try { client.write(frame); }
+    catch { client.destroy(); clients.delete(client); }
   };
-  store.on("message", broadcast);
+  const send = (res, type, data) => write(res, serialize(type, data));
+  const broadcast = (type, data) => {
+    const frame = serialize(type, data);
+    const bytes = Buffer.byteLength(frame);
+    for (const client of clients) write(client, frame, bytes);
+  };
+  const presentations = new Map(Object.entries(store.sources).map(([book, source]) => [book, sourcePresentation(source)]));
+  let freshnessPending = false;
+  const onMessage = ({ type, data }) => {
+    if (data.source) {
+      const signature = sourcePresentation(data.source);
+      const changed = presentations.get(data.source.book) !== signature;
+      presentations.set(data.source.book, signature);
+      if (type === "status" && !changed) {
+        freshnessPending = true;
+        return;
+      }
+    }
+    broadcast(type, data);
+  };
+  store.on("message", onMessage);
+  const freshness = streamScheduler.setInterval(() => {
+    if (!freshnessPending) return;
+    freshnessPending = false;
+    if (!clients.size) return;
+    // Read current state at flush time: a status queued before a newer delta
+    // must never send the delta's older source timestamps afterwards.
+    broadcast("freshness", {
+      revision: store.revision, sentAt: Date.now(),
+      sources: Object.fromEntries(Object.entries(store.sources).map(([book, source]) => [book, {
+        lastConfirmedAt: source.lastConfirmedAt,
+        lastDataAt: source.lastDataAt,
+        lastChangeAt: source.lastChangeAt,
+      }])),
+    });
+  }, 250);
+  freshness.unref?.();
   const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, "http://localhost");
     const json = (status, data) => {
@@ -56,6 +112,7 @@ export function createApp({
           return json(503, { error: "Viewer capacity reached; retry shortly" });
         res.writeHead(200, {
           ...security,
+          "Cache-Control": "no-store, no-transform",
           "Content-Type": "text/event-stream",
           Connection: "keep-alive",
           "X-Accel-Buffering": "no",
@@ -65,6 +122,8 @@ export function createApp({
         clients.add(res);
         send(res, "snapshot", store.snapshot());
         req.on("close", () => clients.delete(res));
+        res.on("close", () => clients.delete(res));
+        res.on("error", () => { clients.delete(res); res.destroy(); });
         return;
       }
       if (req.method === "GET" && url.pathname === "/api/board")
@@ -129,16 +188,19 @@ export function createApp({
       else res.end();
     }
   });
-  const heartbeat = setInterval(() => {
-    for (const client of clients) client.write(`: heartbeat ${Date.now()}\n\n`);
-  }, 15000);
-  heartbeat.unref();
-  const collectors = ingest ? [new DraftKings(store), new FanDuel(store)] : [];
+  const heartbeat = streamScheduler.setInterval(() => {
+    // Transport liveness only. This does not confirm either bookmaker or
+    // advance the board revision, and it remains visible to EventSource users.
+    if (clients.size) broadcast("heartbeat", { sentAt: Date.now() });
+  }, 2000);
+  heartbeat.unref?.();
+  const collectors = ingest ? collectorFactory(store) : [];
   for (const collector of collectors) collector.start();
   function shutdown() {
     for (const collector of collectors) collector.stop();
-    clearInterval(heartbeat);
-    store.off("message", broadcast);
+    streamScheduler.clearInterval(heartbeat);
+    streamScheduler.clearInterval(freshness);
+    store.off("message", onMessage);
     for (const client of clients) client.end();
     return new Promise((resolve) => {
       server.close(resolve);

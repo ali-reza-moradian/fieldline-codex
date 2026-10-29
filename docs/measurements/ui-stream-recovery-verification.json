@@ -1,0 +1,43 @@
+{
+  "observedAt": "2026-10-29T15:41:50.657486+00:00",
+  "environment": "Local captured Ontario fixture replay; no bookmaker requests; native Chrome and Safari browser controls",
+  "automatedTests": {
+    "passed": 106,
+    "failed": 0,
+    "skipped": 0
+  },
+  "checks": [
+    {
+      "name": "Chrome silent open stream recovery",
+      "result": "passed",
+      "detail": "Dropped writes only to existing SSE responses while the server continued updating. Browser reconnected, displayed FanDuel CAR moneyline +145 instead of +175, and retained Recent moves 0; missed changes became a fresh baseline."
+    },
+    {
+      "name": "Immediate local price update and arrow",
+      "result": "passed",
+      "detail": "Safari displayed +175 with Higher payout, previously +160 and incremented recent moves once before the silent-stream test."
+    },
+    {
+      "name": "Source failure remains excluded with a working browser stream",
+      "result": "passed",
+      "detail": "Chrome showed DraftKings Connected and FanDuel Stale with its failure message and Stale \u00b7 excluded prices despite continued transport heartbeats."
+    },
+    {
+      "name": "Safari hidden tab resume",
+      "result": "observed disconnect detection",
+      "detail": "Returning to the test tab showed Reconnecting and excluded old prices. Safari background timers were suspended; this is not a measured foreground 12-second recovery time."
+    }
+  ],
+  "quietTraffic": {
+    "cycles": 50,
+    "baselineApplicationBytes": 70659,
+    "compactApplicationBytes": 12448,
+    "reductionPercent": 82.3829943814659,
+    "scope": "Controlled server test with the same source confirmations, excluding identical initial snapshots. No price changes or WAN latency measured."
+  },
+  "limits": [
+    "Local fault injection verifies logic, not provider-to-browser delivery time.",
+    "No real-game price-change comparison is established by this check.",
+    "Browser background suspension can delay timers."
+  ]
+}

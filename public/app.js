@@ -1,5 +1,6 @@
 import { BOOK_NAMES, compareQuotes } from "/model.js";
 import { formatOdds, safeView, safeFormat, sourceFresh, SessionHistory, historySegments, selectionKey } from "/presentation.js";
+import { BoardStream, ClockSync, mergeFreshness } from "/stream.js";
 
 const $ = id => document.getElementById(id);
 const escape = value => String(value ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -16,7 +17,11 @@ let lastHealthKey = "", movementDeadline = Infinity;
 const rendered = new Map(), charts = new Map(), history = new SessionHistory();
 const observedHealth = new Map();
 const openedAt = Date.now();
-const serverNow = () => Date.now() + clockOffset;
+const clockSync = new ClockSync({ onSync(best) {
+  clockOffset = best.offset; clockUncertainty = best.rtt / 2; lastClockSync = Date.now();
+  $("clock-note").textContent = `Clock-sync uncertainty ≥ ±${clockUncertainty.toFixed(1)} ms`;
+} });
+const serverNow = () => clockSync.estimate()?.now ?? Date.now() + clockOffset;
 const odds = n => formatOdds(n, format);
 const historyId = id => `history-${encodeURIComponent(id)}`;
 function effectiveSources() { return Object.fromEntries(Object.entries(sources).map(([key, source]) => [key, { ...source, status: freshness(key) ? "healthy" : "stale" }])); }
@@ -189,22 +194,13 @@ $("recent-moves").addEventListener("click", event => {
   const element = rendered.get(target.dataset.moveGame)?.element; element?.scrollIntoView({ block: "center", behavior: "instant" });
   element?.querySelector("[data-history-select]")?.focus({ preventScroll: true });
 });
-async function syncClock() {
-  let best;
-  for (let i = 0; i < 5; i++) {
-    const wallStart = Date.now(), start = performance.now();
-    try { const response = await fetch("/api/time", { cache: "no-store" }); const { now } = await response.json(), rtt = performance.now() - start;
-      if (!best || rtt < best.rtt) best = { rtt, offset: now - (wallStart + rtt / 2) };
-    } catch { /* Source streaming does not wait for optional clock calibration. */ }
-  }
-  if (best) { clockOffset = best.offset; clockUncertainty = best.rtt / 2; lastClockSync = Date.now(); $("clock-note").textContent = `Clock-sync uncertainty ≥ ±${clockUncertainty.toFixed(1)} ms`; }
-}
+const syncClock = () => clockSync.sync();
 function recordPaint(timing, changedGames) {
-  if (!timing?.priceChanges || (view !== "best" && view !== timing.book) || document.visibilityState !== "visible" || clockUncertainty === null) return;
+  if (!timing?.priceChanges || (view !== "best" && view !== timing.book) || document.visibilityState !== "visible" || !clockSync.estimate()) return;
   const visible = changedGames.some(game => { const element = rendered.get(game.id)?.element; if (!element) return false; const rect = element.getBoundingClientRect(); return rect.top < innerHeight && rect.bottom > 0; });
   if (!visible) return;
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    if (document.visibilityState !== "visible") return;
+    if (!connected || document.visibilityState !== "visible" || !clockSync.estimate()) return;
     const paintedAt = serverNow(), value = paintedAt - timing.receivedAt;
     $("paint-latency").textContent = `${Math.round(value)} ms · ${BOOK_NAMES[timing.book]}`;
     for (const phase of timing.phases) void fetch("/api/telemetry", { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
@@ -216,17 +212,13 @@ function disconnected() {
   if (connected) history.disconnect();
   connected = false; render();
 }
-const stream = new EventSource("/api/events");
-stream.addEventListener("snapshot", event => {
-  try {
-    const data = JSON.parse(event.data); games = new Map(data.games.map(g => [g.id, g])); sources = data.sources; revision = data.revision;
+function applyStreamEvent(type, data) {
+  if (type === "snapshot") {
+    games = new Map(data.games.map(g => [g.id, g])); sources = data.sources; revision = data.revision;
     connected = true; loaded = true;
     history.recordGames(data.games.map(g => ({ ...g, quotes: g.quotes.filter(q => freshness(q.book)) })), { baseline: true, replaceAll: true }); render();
-  } catch { disconnected(); }
-});
-stream.addEventListener("delta", event => {
-  try {
-    const data = JSON.parse(event.data); if (data.revision <= revision) return; revision = data.revision;
+  } else if (type === "delta") {
+    if (data.revision <= revision) return; revision = data.revision;
     markSourceGaps();
     const removed = data.removeGameIds.map(id => ({ id, quotes: [] }));
     for (const id of data.removeGameIds) { games.delete(id); charts.delete(id); }
@@ -238,20 +230,26 @@ stream.addEventListener("delta", event => {
     } else history.disconnect(Date.now(), book);
     history.recordGames(removed);
     render(); recordPaint(data.timing, data.upsertGames);
-  } catch { disconnected(); }
-});
-stream.addEventListener("status", event => {
-  try {
-    const data = JSON.parse(event.data); if (data.revision <= revision) return; revision = data.revision; sources[data.source.book] = data.source;
+  } else if (type === "status") {
+    if (data.revision <= revision) return; revision = data.revision; sources[data.source.book] = data.source;
     renderSource(data.source.book);
     if (JSON.stringify([freshness("draftkings"), freshness("fanduel")]) !== lastHealthKey) render();
-  } catch { disconnected(); }
-});
-stream.onerror = disconnected;
+  } else if (type === "freshness") {
+    const patch = mergeFreshness(sources, data, revision);
+    if (!patch) return;
+    sources = patch.sources; revision = patch.revision;
+    for (const book of patch.updatedBooks) renderSource(book);
+    if (JSON.stringify([freshness("draftkings"), freshness("fanduel")]) !== lastHealthKey) render();
+  }
+}
+const stream = new BoardStream({ getClock: () => clockSync.estimate(),
+  onEvent: applyStreamEvent, onDisconnect: disconnected });
 setInterval(() => {
   renderSource("draftkings"); renderSource("fanduel");
   if (Date.now() >= movementDeadline || JSON.stringify([freshness("draftkings"), freshness("fanduel")]) !== lastHealthKey) render();
   if (Date.now() - lastClockSync > 60000) { lastClockSync = Date.now(); void syncClock(); }
 }, 1000);
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") { void syncClock(); render(); } });
-render(); void syncClock();
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") { stream.resume(); void syncClock(); render(); }
+});
+render(); stream.start(); void syncClock();

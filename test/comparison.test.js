@@ -52,3 +52,18 @@ test('app adapters agree on game identity and ignore initial loads, timestamps, 
   const a = claude.apply('batch', { quotes: [{ ...q, gameKey: 'a', odds: -115 }] });
   assert.equal(c.length, 1); assert.equal(a.length, 1); assert.deepEqual(c[0], a[0]);
 });
+
+test('compact freshness preserves comparison health and cannot revive failed sources', () => {
+  const observer = new BoardObserver('codex');
+  observer.apply('snapshot', { games: [], sources: { fanduel: { status: 'healthy', region: 'Ontario', lastConfirmedAt: 100 } } });
+  assert.deepEqual(observer.apply('freshness', { sources: { fanduel: { lastConfirmedAt: 200 }, unknown: { status: 'healthy' } } }), []);
+  assert.deepEqual(observer.sources.fanduel, { status: 'healthy', region: 'Ontario', lastConfirmedAt: 200 });
+  assert.equal(observer.sources.unknown, undefined);
+  observer.apply('status', { source: { book: 'fanduel', status: 'stale', error: 'disconnected', lastConfirmedAt: 200 } });
+  observer.apply('freshness', { sources: { fanduel: { status: 'healthy', error: null, lastConfirmedAt: 300 } } });
+  observer.apply('freshness', { sources: { fanduel: { lastConfirmedAt: 100 } } });
+  observer.apply('heartbeat', { sources: { fanduel: { status: 'healthy', lastConfirmedAt: 999 } } });
+  assert.equal(observer.sources.fanduel.status, 'stale');
+  assert.equal(observer.sources.fanduel.error, 'disconnected');
+  assert.equal(observer.sources.fanduel.lastConfirmedAt, 300);
+});

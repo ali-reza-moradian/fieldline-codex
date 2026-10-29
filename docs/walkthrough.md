@@ -38,7 +38,7 @@ FanDuel's HTTP price response is a snapshot for a batch of requested markets. It
 
 FanDuel's push feed sends updated market state. Its public connection configuration is read from the site's current JavaScript, and refreshed automatically if rejected. An acknowledgement alone contains no prices, so each reconnect also requires a fresh complete baseline. Updates arriving during a slow HTTP request keep flowing and take precedence over that request's response. A request started after the latest push can advance prices immediately, because HTTP may lead the push feed. The source timestamps are not precise enough to guarantee perfect ordering between every push and HTTP snapshot; that limitation is explicit.
 
-A **WebSocket** is a persistent two-way connection. Both bookmakers use it to push changes. **Server-sent events (SSE)** are a simpler persistent server-to-browser stream. Our board uses SSE because viewers mostly receive updates. Browsers reconnect automatically and receive a fresh full board before subsequent changes.
+A **WebSocket** is a persistent two-way connection. Both bookmakers use it to push changes. **Server-sent events (SSE)** are a simpler persistent server-to-browser stream. Our board uses SSE because viewers mostly receive updates. The browser detects a silent stream after 12 seconds, reconnects with increasing delays, and requires a fresh full board before applying subsequent changes. A two-second heartbeat proves that the browser connection answers, not that either bookmaker is fresh. Returning to a hidden tab checks the connection immediately; background timer suspension can delay detection until the browser runs again. Price changes and source failures go out immediately, while repeated confirmation timestamps are condensed into smaller messages.
 
 ## What happens when something breaks
 
@@ -58,7 +58,7 @@ There are different intervals:
 2. Our collector receives it and updates the shared board.
 3. The update travels to the browser and appears on screen.
 
-We can time our requests and processing. For changed games in view, the browser estimates rendering time after two animation frames and corrects for its clock difference from the server. That estimate is not a physical screen measurement.
+We can time our requests and processing. For changed games in view, the browser estimates rendering time after two animation frames and corrects for its clock difference from the server. Clock checks have timeouts, cannot overlap, and use a monotonic estimate so changing the laptop clock does not make current messages appear old. That estimate is not a physical screen measurement.
 
 DraftKings provides feed timestamps, but they do not prove the exact time its trading system changed the price. FanDuel's push timestamp has only whole-second precision, so a reported age can include almost a second of rounding. Its HTTP response has no change timestamp. Push avoids an intentional polling wait; the parallel quarter-second HTTP checks add roughly zero to a quarter-second of polling wait when they are the first path to expose a change, under normal operation. Those are design properties, not measured end-to-end guarantees.
 

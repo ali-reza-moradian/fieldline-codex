@@ -28,6 +28,17 @@ export class BoardObserver {
     return { key: `${day.format(new Date(start))}|${away}|${home}`, startsAt: start };
   }
   apply(type, data) {
+    if (type === 'heartbeat') return [];
+    if (this.app === 'codex' && type === 'freshness') {
+      for (const [book, patch] of Object.entries(data.sources ?? {})) {
+        const source = this.sources[book];
+        if (!source || !patch) continue;
+        for (const key of ['lastConfirmedAt', 'lastDataAt', 'lastChangeAt']) {
+          if (Number.isFinite(patch[key]) && patch[key] > 0 && (!Number.isFinite(source[key]) || patch[key] > source[key])) source[key] = patch[key];
+        }
+      }
+      return [];
+    }
     const before = new Map(this.quotes);
     if (type === 'snapshot') { this.games.clear(); this.quotes.clear(); }
     Object.assign(this.sources, data.sources ?? {});
