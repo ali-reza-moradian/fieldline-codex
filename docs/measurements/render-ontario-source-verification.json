@@ -1,0 +1,1592 @@
+{
+  "observedAt": "2026-10-29T00:37:14.323Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "version": "f8650e64b9dcf94cb721e9faee083b30fb3b666e",
+  "region": "Ontario",
+  "attempt": 1,
+  "sourceCapturedAt": "2026-10-29T00:37:14.252Z",
+  "boardRevision": 55,
+  "method": "Compare every deployed FanDuel quote by source selection ID against a contemporaneous direct Ontario HTTP response. Expected side comes from discovery; expected line, odds and suspension come directly from the price response. This verifier does not call normalizeFanDuel.",
+  "endpoints": {
+    "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+    "prices": "https://smp.on.sportsbook.fanduel.ca"
+  },
+  "requestedMarkets": 87,
+  "returnedMarkets": 87,
+  "distinctReturnedMarkets": 87,
+  "deployedQuotes": 174,
+  "matchedQuotes": 174,
+  "mismatches": [],
+  "matched": [
+    {
+      "id": "801.192827512:50205",
+      "game": "2026-11-01:BAL:BUF",
+      "market": "spread",
+      "side": "away",
+      "line": 3,
+      "american": 100,
+      "suspended": false
+    },
+    {
+      "id": "801.192827512:50203",
+      "game": "2026-11-01:BAL:BUF",
+      "market": "spread",
+      "side": "home",
+      "line": -3,
+      "american": -122,
+      "suspended": false
+    },
+    {
+      "id": "801.194235080:50185",
+      "game": "2026-11-08:NYG:PHI",
+      "market": "spread",
+      "side": "away",
+      "line": -1.5,
+      "american": -102,
+      "suspended": false
+    },
+    {
+      "id": "801.194235080:50186",
+      "game": "2026-11-08:NYG:PHI",
+      "market": "spread",
+      "side": "home",
+      "line": 1.5,
+      "american": -120,
+      "suspended": false
+    },
+    {
+      "id": "801.192827513:7017916",
+      "game": "2026-11-01:BAL:BUF",
+      "market": "total",
+      "side": "over",
+      "line": 54.5,
+      "american": -106,
+      "suspended": false
+    },
+    {
+      "id": "801.192827513:7017917",
+      "game": "2026-11-01:BAL:BUF",
+      "market": "total",
+      "side": "under",
+      "line": 54.5,
+      "american": -114,
+      "suspended": false
+    },
+    {
+      "id": "801.194235084:50185",
+      "game": "2026-11-08:NYG:PHI",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -116,
+      "suspended": false
+    },
+    {
+      "id": "801.194235084:50186",
+      "game": "2026-11-08:NYG:PHI",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -102,
+      "suspended": false
+    },
+    {
+      "id": "801.194235160:27443341",
+      "game": "2026-11-08:LV:SF",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 420,
+      "suspended": false
+    },
+    {
+      "id": "801.194235160:43010249",
+      "game": "2026-11-08:LV:SF",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -560,
+      "suspended": false
+    },
+    {
+      "id": "801.192827671:12481798",
+      "game": "2026-11-01:LAC:LAR",
+      "market": "spread",
+      "side": "away",
+      "line": 6.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.192827671:10782388",
+      "game": "2026-11-01:LAC:LAR",
+      "market": "spread",
+      "side": "home",
+      "line": -6.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.192827594:50209",
+      "game": "2026-11-01:CLE:PIT",
+      "market": "spread",
+      "side": "away",
+      "line": 3.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.192827594:50208",
+      "game": "2026-11-01:CLE:PIT",
+      "market": "spread",
+      "side": "home",
+      "line": -3.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.192827672:12481798",
+      "game": "2026-11-01:LAC:LAR",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 240,
+      "suspended": false
+    },
+    {
+      "id": "801.192827672:10782388",
+      "game": "2026-11-01:LAC:LAR",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -295,
+      "suspended": false
+    },
+    {
+      "id": "801.192827595:50209",
+      "game": "2026-11-01:CLE:PIT",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 158,
+      "suspended": false
+    },
+    {
+      "id": "801.192827595:50208",
+      "game": "2026-11-01:CLE:PIT",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -188,
+      "suspended": false
+    },
+    {
+      "id": "801.192827592:7017916",
+      "game": "2026-11-01:CLE:PIT",
+      "market": "total",
+      "side": "over",
+      "line": 39.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.192827592:7017917",
+      "game": "2026-11-01:CLE:PIT",
+      "market": "total",
+      "side": "under",
+      "line": 39.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.168890772:50210",
+      "game": "2026-11-08:CIN:ATL",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -174,
+      "suspended": false
+    },
+    {
+      "id": "801.168890772:50199",
+      "game": "2026-11-08:CIN:ATL",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": 146,
+      "suspended": false
+    },
+    {
+      "id": "801.168890771:7017916",
+      "game": "2026-11-08:CIN:ATL",
+      "market": "total",
+      "side": "over",
+      "line": 49.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.168890771:7017917",
+      "game": "2026-11-08:CIN:ATL",
+      "market": "total",
+      "side": "under",
+      "line": 49.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235440:50203",
+      "game": "2026-11-09:BUF:MIN",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -138,
+      "suspended": false
+    },
+    {
+      "id": "801.194235440:50191",
+      "game": "2026-11-09:BUF:MIN",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": 118,
+      "suspended": false
+    },
+    {
+      "id": "801.192827515:50205",
+      "game": "2026-11-01:BAL:BUF",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 150,
+      "suspended": false
+    },
+    {
+      "id": "801.192827515:50203",
+      "game": "2026-11-01:BAL:BUF",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -178,
+      "suspended": false
+    },
+    {
+      "id": "801.192827688:7017916",
+      "game": "2026-11-01:IND:JAX",
+      "market": "total",
+      "side": "over",
+      "line": 46.5,
+      "american": -106,
+      "suspended": false
+    },
+    {
+      "id": "801.192827688:7017917",
+      "game": "2026-11-01:IND:JAX",
+      "market": "total",
+      "side": "under",
+      "line": 46.5,
+      "american": -114,
+      "suspended": false
+    },
+    {
+      "id": "801.192827886:50214",
+      "game": "2026-11-01:KC:DEN",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -118,
+      "suspended": false
+    },
+    {
+      "id": "801.192827886:50211",
+      "game": "2026-11-01:KC:DEN",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": 100,
+      "suspended": false
+    },
+    {
+      "id": "801.192827963:7017916",
+      "game": "2026-11-01:NE:MIA",
+      "market": "total",
+      "side": "over",
+      "line": 44.5,
+      "american": -106,
+      "suspended": false
+    },
+    {
+      "id": "801.192827963:7017917",
+      "game": "2026-11-01:NE:MIA",
+      "market": "total",
+      "side": "under",
+      "line": 44.5,
+      "american": -114,
+      "suspended": false
+    },
+    {
+      "id": "801.192827689:50200",
+      "game": "2026-11-01:IND:JAX",
+      "market": "spread",
+      "side": "away",
+      "line": 9.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827689:50207",
+      "game": "2026-11-01:IND:JAX",
+      "market": "spread",
+      "side": "home",
+      "line": -9.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827887:50214",
+      "game": "2026-11-01:KC:DEN",
+      "market": "spread",
+      "side": "away",
+      "line": -1.5,
+      "american": -108,
+      "suspended": false
+    },
+    {
+      "id": "801.192827887:50211",
+      "game": "2026-11-01:KC:DEN",
+      "market": "spread",
+      "side": "home",
+      "line": 1.5,
+      "american": -112,
+      "suspended": false
+    },
+    {
+      "id": "801.192827961:50204",
+      "game": "2026-11-01:NE:MIA",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -330,
+      "suspended": false
+    },
+    {
+      "id": "801.192827961:50201",
+      "game": "2026-11-01:NE:MIA",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": 265,
+      "suspended": false
+    },
+    {
+      "id": "801.194235271:7017916",
+      "game": "2026-11-08:ARI:SEA",
+      "market": "total",
+      "side": "over",
+      "line": 44.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194235271:7017917",
+      "game": "2026-11-08:ARI:SEA",
+      "market": "total",
+      "side": "under",
+      "line": 44.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194234859:50207",
+      "game": "2026-11-05:JAX:BAL",
+      "market": "spread",
+      "side": "away",
+      "line": 3,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194234859:50205",
+      "game": "2026-11-05:JAX:BAL",
+      "market": "spread",
+      "side": "home",
+      "line": -3,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.168890770:50210",
+      "game": "2026-11-08:CIN:ATL",
+      "market": "spread",
+      "side": "away",
+      "line": -3,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.168890770:50199",
+      "game": "2026-11-08:CIN:ATL",
+      "market": "spread",
+      "side": "home",
+      "line": 3,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194235439:50203",
+      "game": "2026-11-09:BUF:MIN",
+      "market": "spread",
+      "side": "away",
+      "line": -2.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235439:50191",
+      "game": "2026-11-09:BUF:MIN",
+      "market": "spread",
+      "side": "home",
+      "line": 2.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235438:7017916",
+      "game": "2026-11-09:BUF:MIN",
+      "market": "total",
+      "side": "over",
+      "line": 48.5,
+      "american": -104,
+      "suspended": false
+    },
+    {
+      "id": "801.194235438:7017917",
+      "game": "2026-11-09:BUF:MIN",
+      "market": "total",
+      "side": "under",
+      "line": 48.5,
+      "american": -118,
+      "suspended": false
+    },
+    {
+      "id": "801.194235077:50193",
+      "game": "2026-11-08:DET:MIA",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -450,
+      "suspended": false
+    },
+    {
+      "id": "801.194235077:50201",
+      "game": "2026-11-08:DET:MIA",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": 350,
+      "suspended": false
+    },
+    {
+      "id": "801.194235075:7017916",
+      "game": "2026-11-08:DET:MIA",
+      "market": "total",
+      "side": "over",
+      "line": 48.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235075:7017917",
+      "game": "2026-11-08:DET:MIA",
+      "market": "total",
+      "side": "under",
+      "line": 48.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235273:50188",
+      "game": "2026-11-08:ARI:SEA",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 560,
+      "suspended": false
+    },
+    {
+      "id": "801.194235273:50213",
+      "game": "2026-11-08:ARI:SEA",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -800,
+      "suspended": false
+    },
+    {
+      "id": "801.194235074:50193",
+      "game": "2026-11-08:DET:MIA",
+      "market": "spread",
+      "side": "away",
+      "line": -8.5,
+      "american": -102,
+      "suspended": false
+    },
+    {
+      "id": "801.194235074:50201",
+      "game": "2026-11-08:DET:MIA",
+      "market": "spread",
+      "side": "home",
+      "line": 8.5,
+      "american": -120,
+      "suspended": false
+    },
+    {
+      "id": "801.194235158:27443341",
+      "game": "2026-11-08:LV:SF",
+      "market": "spread",
+      "side": "away",
+      "line": 9.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235158:43010249",
+      "game": "2026-11-08:LV:SF",
+      "market": "spread",
+      "side": "home",
+      "line": -9.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235157:7017916",
+      "game": "2026-11-08:LV:SF",
+      "market": "total",
+      "side": "over",
+      "line": 48.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194235157:7017917",
+      "game": "2026-11-08:LV:SF",
+      "market": "total",
+      "side": "under",
+      "line": 48.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.192827888:7017916",
+      "game": "2026-11-01:KC:DEN",
+      "market": "total",
+      "side": "over",
+      "line": 40.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.192827888:7017917",
+      "game": "2026-11-01:KC:DEN",
+      "market": "total",
+      "side": "under",
+      "line": 40.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194235078:7017916",
+      "game": "2026-11-08:NYG:PHI",
+      "market": "total",
+      "side": "over",
+      "line": 39.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235078:7017917",
+      "game": "2026-11-08:NYG:PHI",
+      "market": "total",
+      "side": "under",
+      "line": 39.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827966:50204",
+      "game": "2026-11-01:NE:MIA",
+      "market": "spread",
+      "side": "away",
+      "line": -7,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.192827966:50201",
+      "game": "2026-11-01:NE:MIA",
+      "market": "spread",
+      "side": "home",
+      "line": 7,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.192827699:7017916",
+      "game": "2026-11-01:MIN:DET",
+      "market": "total",
+      "side": "over",
+      "line": 46.5,
+      "american": -104,
+      "suspended": false
+    },
+    {
+      "id": "801.192827699:7017917",
+      "game": "2026-11-01:MIN:DET",
+      "market": "total",
+      "side": "under",
+      "line": 46.5,
+      "american": -118,
+      "suspended": false
+    },
+    {
+      "id": "801.192827576:7017916",
+      "game": "2026-11-01:ARI:DAL",
+      "market": "total",
+      "side": "over",
+      "line": 54.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827576:7017917",
+      "game": "2026-11-01:ARI:DAL",
+      "market": "total",
+      "side": "under",
+      "line": 54.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192828027:50186",
+      "game": "2026-11-01:PHI:WAS",
+      "market": "spread",
+      "side": "away",
+      "line": 5.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192828027:42568622",
+      "game": "2026-11-01:PHI:WAS",
+      "market": "spread",
+      "side": "home",
+      "line": -5.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192828028:7017916",
+      "game": "2026-11-01:PHI:WAS",
+      "market": "total",
+      "side": "over",
+      "line": 40.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.192828028:7017917",
+      "game": "2026-11-01:PHI:WAS",
+      "market": "total",
+      "side": "under",
+      "line": 40.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.192827497:50206",
+      "game": "2026-11-01:TEN:CIN",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 440,
+      "suspended": false
+    },
+    {
+      "id": "801.192827497:50210",
+      "game": "2026-11-01:TEN:CIN",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -590,
+      "suspended": false
+    },
+    {
+      "id": "801.192828026:50186",
+      "game": "2026-11-01:PHI:WAS",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 198,
+      "suspended": false
+    },
+    {
+      "id": "801.192828026:42568622",
+      "game": "2026-11-01:PHI:WAS",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -240,
+      "suspended": false
+    },
+    {
+      "id": "801.192827498:50206",
+      "game": "2026-11-01:TEN:CIN",
+      "market": "spread",
+      "side": "away",
+      "line": 10.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.192827498:50210",
+      "game": "2026-11-01:TEN:CIN",
+      "market": "spread",
+      "side": "home",
+      "line": -10.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.192827495:50198",
+      "game": "2026-10-29:CAR:GB",
+      "market": "spread",
+      "side": "away",
+      "line": 3.5,
+      "american": -106,
+      "suspended": false
+    },
+    {
+      "id": "801.192827495:50192",
+      "game": "2026-10-29:CAR:GB",
+      "market": "spread",
+      "side": "home",
+      "line": -3.5,
+      "american": -114,
+      "suspended": false
+    },
+    {
+      "id": "801.194235180:7017916",
+      "game": "2026-11-08:LAR:WAS",
+      "market": "total",
+      "side": "over",
+      "line": 48.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235180:7017917",
+      "game": "2026-11-08:LAR:WAS",
+      "market": "total",
+      "side": "under",
+      "line": 48.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827496:7017916",
+      "game": "2026-11-01:TEN:CIN",
+      "market": "total",
+      "side": "over",
+      "line": 46.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827496:7017917",
+      "game": "2026-11-01:TEN:CIN",
+      "market": "total",
+      "side": "under",
+      "line": 46.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827493:7017916",
+      "game": "2026-10-29:CAR:GB",
+      "market": "total",
+      "side": "over",
+      "line": 47.5,
+      "american": -102,
+      "suspended": false
+    },
+    {
+      "id": "801.192827493:7017917",
+      "game": "2026-10-29:CAR:GB",
+      "market": "total",
+      "side": "under",
+      "line": 47.5,
+      "american": -120,
+      "suspended": false
+    },
+    {
+      "id": "801.192827691:50200",
+      "game": "2026-11-01:IND:JAX",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 385,
+      "suspended": false
+    },
+    {
+      "id": "801.192827691:50207",
+      "game": "2026-11-01:IND:JAX",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -500,
+      "suspended": false
+    },
+    {
+      "id": "801.192827494:50198",
+      "game": "2026-10-29:CAR:GB",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 160,
+      "suspended": false
+    },
+    {
+      "id": "801.192827494:50192",
+      "game": "2026-10-29:CAR:GB",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -190,
+      "suspended": false
+    },
+    {
+      "id": "801.194235228:7017916",
+      "game": "2026-11-08:GB:NE",
+      "market": "total",
+      "side": "over",
+      "line": 46.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235228:7017917",
+      "game": "2026-11-08:GB:NE",
+      "market": "total",
+      "side": "under",
+      "line": 46.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194234853:50189",
+      "game": "2026-11-08:DAL:IND",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -220,
+      "suspended": false
+    },
+    {
+      "id": "801.194234853:50200",
+      "game": "2026-11-08:DAL:IND",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": 184,
+      "suspended": false
+    },
+    {
+      "id": "801.194235226:50192",
+      "game": "2026-11-08:GB:NE",
+      "market": "spread",
+      "side": "away",
+      "line": 3,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235226:50204",
+      "game": "2026-11-08:GB:NE",
+      "market": "spread",
+      "side": "home",
+      "line": -3,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194234895:7017916",
+      "game": "2026-11-08:CLE:NO",
+      "market": "total",
+      "side": "over",
+      "line": 42.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194234895:7017917",
+      "game": "2026-11-08:CLE:NO",
+      "market": "total",
+      "side": "under",
+      "line": 42.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194234896:50209",
+      "game": "2026-11-08:CLE:NO",
+      "market": "spread",
+      "side": "away",
+      "line": 2.5,
+      "american": -102,
+      "suspended": false
+    },
+    {
+      "id": "801.194234896:50196",
+      "game": "2026-11-08:CLE:NO",
+      "market": "spread",
+      "side": "home",
+      "line": -2.5,
+      "american": -120,
+      "suspended": false
+    },
+    {
+      "id": "801.194234852:7017916",
+      "game": "2026-11-08:DAL:IND",
+      "market": "total",
+      "side": "over",
+      "line": 50.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194234852:7017917",
+      "game": "2026-11-08:DAL:IND",
+      "market": "total",
+      "side": "under",
+      "line": 50.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194234857:50189",
+      "game": "2026-11-08:DAL:IND",
+      "market": "spread",
+      "side": "away",
+      "line": -4.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194234857:50200",
+      "game": "2026-11-08:DAL:IND",
+      "market": "spread",
+      "side": "home",
+      "line": 4.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194234858:50207",
+      "game": "2026-11-05:JAX:BAL",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 130,
+      "suspended": false
+    },
+    {
+      "id": "801.194234858:50205",
+      "game": "2026-11-05:JAX:BAL",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -154,
+      "suspended": false
+    },
+    {
+      "id": "801.194234856:7017916",
+      "game": "2026-11-05:JAX:BAL",
+      "market": "total",
+      "side": "over",
+      "line": 48.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194234856:7017917",
+      "game": "2026-11-05:JAX:BAL",
+      "market": "total",
+      "side": "under",
+      "line": 48.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194235224:50192",
+      "game": "2026-11-08:GB:NE",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 134,
+      "suspended": false
+    },
+    {
+      "id": "801.194235224:50204",
+      "game": "2026-11-08:GB:NE",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -158,
+      "suspended": false
+    },
+    {
+      "id": "801.192827858:27443341",
+      "game": "2026-11-01:LV:NYJ",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 104,
+      "suspended": false
+    },
+    {
+      "id": "801.192827858:50202",
+      "game": "2026-11-01:LV:NYJ",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -122,
+      "suspended": false
+    },
+    {
+      "id": "801.194235146:179823",
+      "game": "2026-11-08:HOU:LAC",
+      "market": "spread",
+      "side": "away",
+      "line": -3.5,
+      "american": -106,
+      "suspended": false
+    },
+    {
+      "id": "801.194235146:12481798",
+      "game": "2026-11-08:HOU:LAC",
+      "market": "spread",
+      "side": "home",
+      "line": 3.5,
+      "american": -114,
+      "suspended": false
+    },
+    {
+      "id": "801.194234894:50209",
+      "game": "2026-11-08:CLE:NO",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 124,
+      "suspended": false
+    },
+    {
+      "id": "801.194234894:50196",
+      "game": "2026-11-08:CLE:NO",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -146,
+      "suspended": false
+    },
+    {
+      "id": "801.194235145:179823",
+      "game": "2026-11-08:HOU:LAC",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -176,
+      "suspended": false
+    },
+    {
+      "id": "801.194235145:12481798",
+      "game": "2026-11-08:HOU:LAC",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": 148,
+      "suspended": false
+    },
+    {
+      "id": "801.194235144:7017916",
+      "game": "2026-11-08:HOU:LAC",
+      "market": "total",
+      "side": "over",
+      "line": 42.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194235144:7017917",
+      "game": "2026-11-08:HOU:LAC",
+      "market": "total",
+      "side": "under",
+      "line": 42.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.192827985:7017916",
+      "game": "2026-11-02:CHI:SEA",
+      "market": "total",
+      "side": "over",
+      "line": 46.5,
+      "american": -114,
+      "suspended": false
+    },
+    {
+      "id": "801.192827985:7017917",
+      "game": "2026-11-02:CHI:SEA",
+      "market": "total",
+      "side": "under",
+      "line": 46.5,
+      "american": -106,
+      "suspended": false
+    },
+    {
+      "id": "801.192827743:50199",
+      "game": "2026-11-01:ATL:TB",
+      "market": "spread",
+      "side": "away",
+      "line": 2.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827743:50190",
+      "game": "2026-11-01:ATL:TB",
+      "market": "spread",
+      "side": "home",
+      "line": -2.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827700:50191",
+      "game": "2026-11-01:MIN:DET",
+      "market": "spread",
+      "side": "away",
+      "line": 3.5,
+      "american": -120,
+      "suspended": false
+    },
+    {
+      "id": "801.192827700:50193",
+      "game": "2026-11-01:MIN:DET",
+      "market": "spread",
+      "side": "home",
+      "line": -3.5,
+      "american": -102,
+      "suspended": false
+    },
+    {
+      "id": "801.192827546:50188",
+      "game": "2026-11-01:ARI:DAL",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 275,
+      "suspended": false
+    },
+    {
+      "id": "801.192827546:50189",
+      "game": "2026-11-01:ARI:DAL",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -340,
+      "suspended": false
+    },
+    {
+      "id": "801.192827742:50199",
+      "game": "2026-11-01:ATL:TB",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 116,
+      "suspended": false
+    },
+    {
+      "id": "801.192827742:50190",
+      "game": "2026-11-01:ATL:TB",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -136,
+      "suspended": false
+    },
+    {
+      "id": "801.192827860:7017916",
+      "game": "2026-11-01:LV:NYJ",
+      "market": "total",
+      "side": "over",
+      "line": 45.5,
+      "american": -112,
+      "suspended": false
+    },
+    {
+      "id": "801.192827860:7017917",
+      "game": "2026-11-01:LV:NYJ",
+      "market": "total",
+      "side": "under",
+      "line": 45.5,
+      "american": -108,
+      "suspended": false
+    },
+    {
+      "id": "801.194235292:50188",
+      "game": "2026-11-08:ARI:SEA",
+      "market": "spread",
+      "side": "away",
+      "line": 11.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194235292:50213",
+      "game": "2026-11-08:ARI:SEA",
+      "market": "spread",
+      "side": "home",
+      "line": -11.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.192827861:27443341",
+      "game": "2026-11-01:LV:NYJ",
+      "market": "spread",
+      "side": "away",
+      "line": 1.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827861:50202",
+      "game": "2026-11-01:LV:NYJ",
+      "market": "spread",
+      "side": "home",
+      "line": -1.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194234839:7017916",
+      "game": "2026-11-08:DEN:CAR",
+      "market": "total",
+      "side": "over",
+      "line": 44.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194234839:7017917",
+      "game": "2026-11-08:DEN:CAR",
+      "market": "total",
+      "side": "under",
+      "line": 44.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194234837:50211",
+      "game": "2026-11-08:DEN:CAR",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -138,
+      "suspended": false
+    },
+    {
+      "id": "801.194234837:50198",
+      "game": "2026-11-08:DEN:CAR",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": 118,
+      "suspended": false
+    },
+    {
+      "id": "801.194234838:50211",
+      "game": "2026-11-08:DEN:CAR",
+      "market": "spread",
+      "side": "away",
+      "line": -2.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194234838:50198",
+      "game": "2026-11-08:DEN:CAR",
+      "market": "spread",
+      "side": "home",
+      "line": 2.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235337:7017916",
+      "game": "2026-11-08:TB:CHI",
+      "market": "total",
+      "side": "over",
+      "line": 48.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194235337:7017917",
+      "game": "2026-11-08:TB:CHI",
+      "market": "total",
+      "side": "under",
+      "line": 48.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.194234964:50202",
+      "game": "2026-11-08:NYJ:KC",
+      "market": "spread",
+      "side": "away",
+      "line": 8.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194234964:50214",
+      "game": "2026-11-08:NYJ:KC",
+      "market": "spread",
+      "side": "home",
+      "line": -8.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194235336:50190",
+      "game": "2026-11-08:TB:CHI",
+      "market": "spread",
+      "side": "away",
+      "line": 5.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194235336:50194",
+      "game": "2026-11-08:TB:CHI",
+      "market": "spread",
+      "side": "home",
+      "line": -5.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194235335:50190",
+      "game": "2026-11-08:TB:CHI",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 205,
+      "suspended": false
+    },
+    {
+      "id": "801.194235335:50194",
+      "game": "2026-11-08:TB:CHI",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -250,
+      "suspended": false
+    },
+    {
+      "id": "801.194234968:50202",
+      "game": "2026-11-08:NYJ:KC",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 410,
+      "suspended": false
+    },
+    {
+      "id": "801.194234968:50214",
+      "game": "2026-11-08:NYJ:KC",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -550,
+      "suspended": false
+    },
+    {
+      "id": "801.194234965:7017916",
+      "game": "2026-11-08:NYJ:KC",
+      "market": "total",
+      "side": "over",
+      "line": 44.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.194234965:7017917",
+      "game": "2026-11-08:NYJ:KC",
+      "market": "total",
+      "side": "under",
+      "line": 44.5,
+      "american": -115,
+      "suspended": false
+    },
+    {
+      "id": "801.194235176:10782388",
+      "game": "2026-11-08:LAR:WAS",
+      "market": "spread",
+      "side": "away",
+      "line": -5.5,
+      "american": 100,
+      "suspended": false
+    },
+    {
+      "id": "801.194235176:42568622",
+      "game": "2026-11-08:LAR:WAS",
+      "market": "spread",
+      "side": "home",
+      "line": 5.5,
+      "american": -122,
+      "suspended": false
+    },
+    {
+      "id": "801.192827989:50194",
+      "game": "2026-11-02:CHI:SEA",
+      "market": "spread",
+      "side": "away",
+      "line": 3,
+      "american": -104,
+      "suspended": false
+    },
+    {
+      "id": "801.192827989:50213",
+      "game": "2026-11-02:CHI:SEA",
+      "market": "spread",
+      "side": "home",
+      "line": -3,
+      "american": -118,
+      "suspended": false
+    },
+    {
+      "id": "801.192827745:7017916",
+      "game": "2026-11-01:ATL:TB",
+      "market": "total",
+      "side": "over",
+      "line": 44.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827745:7017917",
+      "game": "2026-11-01:ATL:TB",
+      "market": "total",
+      "side": "under",
+      "line": 44.5,
+      "american": -110,
+      "suspended": false
+    },
+    {
+      "id": "801.192827547:50188",
+      "game": "2026-11-01:ARI:DAL",
+      "market": "spread",
+      "side": "away",
+      "line": 6.5,
+      "american": 100,
+      "suspended": false
+    },
+    {
+      "id": "801.192827547:50189",
+      "game": "2026-11-01:ARI:DAL",
+      "market": "spread",
+      "side": "home",
+      "line": -6.5,
+      "american": -122,
+      "suspended": false
+    },
+    {
+      "id": "801.192827701:50191",
+      "game": "2026-11-01:MIN:DET",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 144,
+      "suspended": false
+    },
+    {
+      "id": "801.192827701:50193",
+      "game": "2026-11-01:MIN:DET",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -172,
+      "suspended": false
+    },
+    {
+      "id": "801.192827987:50194",
+      "game": "2026-11-02:CHI:SEA",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": 146,
+      "suspended": false
+    },
+    {
+      "id": "801.192827987:50213",
+      "game": "2026-11-02:CHI:SEA",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": -174,
+      "suspended": false
+    },
+    {
+      "id": "801.194235178:10782388",
+      "game": "2026-11-08:LAR:WAS",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "american": -215,
+      "suspended": false
+    },
+    {
+      "id": "801.194235178:42568622",
+      "game": "2026-11-08:LAR:WAS",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "american": 180,
+      "suspended": false
+    },
+    {
+      "id": "801.192827669:7017916",
+      "game": "2026-11-01:LAC:LAR",
+      "market": "total",
+      "side": "over",
+      "line": 45.5,
+      "american": -105,
+      "suspended": false
+    },
+    {
+      "id": "801.192827669:7017917",
+      "game": "2026-11-01:LAC:LAR",
+      "market": "total",
+      "side": "under",
+      "line": 45.5,
+      "american": -115,
+      "suspended": false
+    }
+  ],
+  "limits": [
+    "This is a timestamped consistency check, not a guarantee of perpetual correctness or perfectly simultaneous source responses.",
+    "DraftKings is independently checked against a fresh official Ontario response in render-ontario-draftkings-source-verification.json."
+  ]
+}
