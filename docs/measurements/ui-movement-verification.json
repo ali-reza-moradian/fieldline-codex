@@ -1,0 +1,26 @@
+{
+  "observedAt": "2026-10-29T03:03:00Z",
+  "environment": "Local deterministic fixture replay in Chrome; no sportsbook requests or production writes",
+  "scope": "Presentation behavior and responsive layout, not live sportsbook timing",
+  "viewports": ["Desktop Chrome", "Chrome responsive preview: 375 by 800 CSS pixels"],
+  "checks": [
+    "FanDuel CAR moneyline +160 to +175 records an upward payout move with the previous price",
+    "FanDuel CAR moneyline +175 to +145 records a downward payout move",
+    "A +3.5 to +4 spread change is labeled as a line change and kept separate from the other book's +3.5 line",
+    "A suspended FanDuel quote is labeled Paused and cannot win Best Price",
+    "Reopening is an availability change, not a payout arrow",
+    "Simulated FanDuel failure labels the source stale and excludes its prices from Best Price",
+    "Recovery and an interrupted SSE connection return to connected status without inventing additional price moves",
+    "Price history shows the observed changes and gaps, with the tab-local history limitation visible",
+    "The DraftKings view and decimal odds load correctly from ?view=draftkings&odds=decimal",
+    "The FanDuel view and American odds load correctly from ?view=fanduel&odds=american",
+    "Search filters the board and a fresh unfiltered page shows all 29 games",
+    "Final accessible quote description includes Higher payout, previously +145 after +145 to +175",
+    "At 375px width, source cards, filters, recent moves, quote cards and the history chart fit the viewport"
+  ],
+  "limits": [
+    "Fixture changes establish deterministic UI behavior, not actual live-game performance or provider latency",
+    "Responsive preview is not a physical mobile-device test",
+    "This manual record supplements automated presentation, source-state and integration tests"
+  ]
+}

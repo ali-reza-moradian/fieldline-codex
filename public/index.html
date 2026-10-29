@@ -12,6 +12,7 @@
     <script type="module" src="/app.js"></script>
   </head>
   <body>
+    <a class="skip-link" href="#board">Skip to odds</a>
     <header class="topbar">
       <a class="wordmark" href="/" aria-label="Fieldline home"
         ><span class="brand-icon">↗</span> fieldline<span class="brand-dot"
@@ -26,13 +27,13 @@
     <main>
       <section class="intro">
         <div>
-          <div class="eyebrow">THE ODDS, SIDE BY SIDE</div>
+          <div class="eyebrow">ONTARIO · FULL GAME · INCLUDES OVERTIME</div>
           <h1>NFL <span>odds board.</span></h1>
-          <p>DraftKings and FanDuel. One board, always updating.</p>
+          <p>Two books, the same bet. Find the better price.</p>
         </div>
         <div class="intro-stat">
           <strong id="game-count">—</strong><span>games on the board</span
-          ><small>Full game · Includes overtime</small>
+          ><small>Live and pregame</small>
         </div>
       </section>
       <section class="source-grid" aria-label="Source health">
@@ -59,7 +60,7 @@
               <option value="all">All games</option>
               <option value="pregame">Pregame</option>
               <option value="live">Live now</option>
-            </select>
+            </select><label class="format-field"><span>Odds</span><select id="odds-format" aria-label="Odds format"><option value="american">American</option><option value="decimal">Decimal</option></select></label>
           </div>
         </div>
         <div class="board-caption">
@@ -87,11 +88,16 @@
             Prices and availability can vary by region.
           </p>
         </aside>
+        <details class="activity" id="activity">
+          <summary><strong>Recent moves <span id="move-count">0</span></strong><span>Since this page opened</span></summary>
+          <div id="recent-moves"><p>No changes observed yet. This tab starts with current prices.</p></div>
+        </details>
+        <div class="history-hint">Select any price to explore its history in this tab.</div>
         <div class="table-head" aria-hidden="true">
           <span>MATCHUP / TORONTO TIME</span><span>MONEYLINE</span
           ><span>SPREAD</span><span>TOTAL</span>
         </div>
-        <div id="board" aria-label="NFL odds comparison">
+        <div id="board" aria-label="NFL odds comparison" tabindex="-1">
           <div class="empty-state">
             <span class="loading-line"></span>
             <h2>Connecting to the books</h2>

@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { once } from "node:events";
 import { FanDuel, FanDuelState, FD_DISCOVERY, FD_PRICES, selectFanDuelMarkets } from "../src/adapters/fanduel.js";
-import { fetchJson } from "../src/http.js";
+import { fetchJson, UpstreamError } from "../src/http.js";
 import { OddsStore } from "../src/store.js";
 import { createApp } from "../src/server.js";
 import { makeGame, makeQuote } from "../src/model.js";
@@ -269,7 +269,7 @@ test("FanDuel stop aborts pending HTTP work and prevents late publication", asyn
 });
 
 test("FanDuel honors an upstream Retry-After before retrying a failed batch", { timeout: 6000 }, async () => {
-  const f = await fixture({ pollMs: 1000 });
+  const f = await fixture({ pollMs: 250 });
   let failing = true;
   f.setPrices((_entry, fallback) => failing
     ? { status: 429, headers: { "Retry-After": "2" }, data: { error: "slow down" } }
@@ -280,7 +280,7 @@ test("FanDuel honors an upstream Retry-After before retrying a failed batch", { 
     const before = f.requests.length;
     failing = false;
     await pause(1250);
-    assert.equal(f.requests.length, before, "the one-second fallback interval cannot override two-second Retry-After");
+    assert.equal(f.requests.length, before, "the 250ms fallback interval cannot override two-second Retry-After");
     await until(() => f.store.datasets.fanduel.quotes.length === 174, "price polling should recover after Retry-After", 2500);
     assert.equal(f.store.sources.fanduel.status, "healthy");
   } finally { await f.close(); }
@@ -309,7 +309,7 @@ test("FanDuel keeps live push flowing through slow and failed HTTP reconciliatio
   } finally { await f.close(); }
 });
 
-test("FanDuel catches HTTP-only changes on the default one-second cadence while push stays verified", async () => {
+test("FanDuel catches HTTP-only changes on the default 250ms cadence while push stays verified", async () => {
   const f = await fixture({ pollMs: undefined, verificationMs: undefined });
   try {
     await f.start();
@@ -320,7 +320,7 @@ test("FanDuel catches HTTP-only changes on the default one-second cadence while 
     await until(() => boardPrice(f.store) === -139,
       "a healthy but silent push feed must not delay an HTTP-only change for five seconds", 1700);
     assert.equal(f.collector.pushReady(), true, "HTTP continues even while push is verified");
-    assert.equal(f.store.sources.fanduel.pollMs, 1000);
+    assert.equal(f.store.sources.fanduel.pollMs, 250);
   } finally { await f.close(); }
 });
 
@@ -385,12 +385,16 @@ test("a partial FanDuel reconciliation clears push verification without renewing
       { receivedAt: Date.now(), kind: "poll", durationMs: 1, decodedBytes: 100 });
     assert.equal((await fetch(healthUrl)).status, 200);
     const lastComplete = f.collector.lastFullPollAt;
+    const successfulCycles = f.collector.pollingCounters.successfulCycles;
     now += 1000;
     f.setPrices((_entry, fallback) => ({ data: fallback().data.filter(m => m.marketId !== allPrices[0].marketId) }));
     await f.collector.tick();
     assert.equal(f.collector.pushReady(), false);
     assert.equal(f.collector.lastFullPollAt, lastComplete, "HTTP 200 with missing markets cannot renew the complete-board lease");
     assert.equal(f.collector.lastPollAt, now, "record the partial response separately from a complete response");
+    assert.equal(f.collector.pollingCounters.partialCycles, 1);
+    assert.equal(f.collector.pollingCounters.successfulCycles, successfulCycles);
+    assert.equal(f.collector.pollingCounters.failedCycles, 0, "incomplete HTTP success is a partial cycle, not an HTTP failure");
     assert.equal(f.store.sources.fanduel.channels.push.verified, false);
     const response = await fetch(healthUrl);
     const health = await response.json();
@@ -523,4 +527,351 @@ test("readiness requires both populated fresh complete books while liveness rema
     app.store.details("fanduel", { coverage: { requested: 1, returned: 1, batches: 1, missingIds: [] } });
     assert.equal((await read("/api/health")).status, 200);
   } finally { await app.shutdown(); }
+});
+
+// An injected monotonic scheduler makes the speed/rate tests independent of
+// network timing and the host's event-loop load. Responses are recorded Ontario
+// payloads; only the timing, failures and specified prices are simulated.
+const ontarioDiscovery = JSON.parse(readFileSync(new URL("./fixtures/fanduel-ontario-discovery.json", import.meta.url)));
+const ontarioPrices = JSON.parse(readFileSync(new URL("./fixtures/fanduel-ontario-prices.json", import.meta.url)));
+async function settle() { for (let i = 0; i < 30; i++) await Promise.resolve(); }
+function pacedFixture(options = {}) {
+  let now = 0, timerId = 0, active = 0, maxActive = 0, handler;
+  const timers = new Map(), requests = [], discoveries = [], store = new OddsStore();
+  const epoch = Date.parse("2026-10-29T00:30:00Z");
+  const scheduler = {
+    now: () => now,
+    setTimeout(callback, delay) { const id = ++timerId; timers.set(id, { at: now + delay, callback }); return id; },
+    clearTimeout(id) { timers.delete(id); },
+    async advance(ms) {
+      const target = now + ms;
+      for (;;) {
+        const next = [...timers].filter(([, timer]) => timer.at <= target).sort((a, b) => a[1].at - b[1].at)[0];
+        if (!next) break;
+        now = next[1].at; timers.delete(next[0]); next[1].callback(); await settle();
+      }
+      now = target; await settle();
+    },
+  };
+  const collector = new FanDuel(store, {
+    clock: () => epoch + now, scheduler,
+    pushFactory: () => ({ start() {}, stop() {}, setMarketIds() {} }),
+    fetcher: async (url, init) => {
+      const result = data => ({ data, receivedAt: epoch + now, durationMs: 0, decodedBytes: 100 });
+      if (url === FD_DISCOVERY) { discoveries.push(now); return result(ontarioDiscovery); }
+      assert.equal(url, FD_PRICES);
+      assert.equal(init.headers["X-Sportsbook-Region"], "ON");
+      const ids = JSON.parse(init.body).marketIds;
+      requests.push({ at: now, ids });
+      active++; maxActive = Math.max(maxActive, active);
+      try {
+        const data = ontarioPrices.filter(m => ids.includes(m.marketId));
+        return result(handler ? await handler(data, init) : data);
+      } finally { active--; }
+    },
+    ...options,
+  });
+  return { collector, store, scheduler, requests, discoveries,
+    clock: () => epoch + now,
+    get active() { return active; }, get maxActive() { return maxActive; }, get timers() { return timers.size; },
+    setPrices(next) { handler = next; },
+    async start() { collector.start(); await settle(); },
+  };
+}
+
+test("FanDuel defaults to 250ms and floors faster configurations without changing complete Ontario batching", async () => {
+  for (const pollMs of [undefined, 1, 249, 250, 500, 1000]) {
+    const f = pacedFixture({ pollMs });
+    const interval = Math.max(250, pollMs ?? 250);
+    try {
+      await f.start();
+      assert.equal(f.collector.pollMs, interval);
+      assert.equal(f.collector.verificationMs, interval);
+      assert.equal(f.store.datasets.fanduel.games.length, 29);
+      assert.equal(f.store.datasets.fanduel.quotes.length, 174);
+      assert.deepEqual(f.requests.map(r => r.ids.length), [70, 17]);
+      assert.deepEqual(f.collector.coverage, { requested: 87, returned: 87, batches: 2, missingIds: [] });
+      await f.scheduler.advance(interval - 1);
+      assert.equal(f.requests.length, 2, "a normal successful cycle must not start before its configured floor");
+      await f.scheduler.advance(1);
+      assert.deepEqual(f.requests.map(r => r.at), [0, 0, interval, interval]);
+      assert.ok(f.maxActive >= 1 && f.maxActive <= 2);
+    } finally { f.collector.stop(); }
+    assert.equal(f.timers, 0, "stop clears the faster recurring timer");
+  }
+});
+
+test("FanDuel uses start-to-start 250ms pacing, not an additional 250ms after each response", async () => {
+  const f = pacedFixture({ pollMs: 250 });
+  f.setPrices(data => new Promise(resolve => f.scheduler.setTimeout(() => resolve(data), 90)));
+  try {
+    await f.start();
+    await f.scheduler.advance(90);
+    assert.equal(f.store.datasets.fanduel.quotes.length, 174);
+    await f.scheduler.advance(159);
+    assert.equal(f.requests.length, 2);
+    await f.scheduler.advance(1);
+    assert.deepEqual(f.requests.map(r => r.at), [0, 0, 250, 250]);
+    await f.scheduler.advance(90);
+  } finally { f.collector.stop(); }
+});
+
+test("FanDuel 250ms polling never overlaps slow batch cycles or catches up missed cycles in a burst", async () => {
+  const f = pacedFixture({ pollMs: 250 });
+  const hold = deferred();
+  try {
+    await f.start();
+    f.setPrices(async data => { await hold.promise; return data; });
+    await f.scheduler.advance(250);
+    const task = f.collector.inFlight;
+    assert.equal(f.active, 2);
+    assert.equal(f.collector.pollingCounters.cyclesStarted, 2);
+    assert.equal(f.collector.pollingCounters.successfulCycles, 1);
+    for (let i = 0; i < 10; i++) assert.equal(f.collector.tick(), task);
+    await f.scheduler.advance(1000);
+    assert.equal(f.requests.length, 4, "four elapsed intervals cannot start another cycle while a response is pending");
+    f.setPrices(undefined); hold.resolve(); await settle();
+    await f.scheduler.advance(0);
+    assert.equal(f.requests.length, 6, "one next cycle resumes after completion, without replaying missed intervals");
+    assert.deepEqual(f.requests.map(r => r.at), [0, 0, 250, 250, 1250, 1250]);
+    assert.equal(f.maxActive, 2);
+    assert.equal(f.store.datasets.fanduel.quotes.length, 174);
+    assert.equal(f.collector.pollingCounters.cyclesStarted, 3);
+    assert.equal(f.collector.pollingCounters.successfulCycles, 3);
+    assert.equal(f.collector.pollingCounters.failedCycles, 0);
+  } finally { hold.resolve(); f.collector.stop(); await settle(); }
+});
+
+test("FanDuel 250ms cadence cannot shorten 429 Retry-After, even when push requests an immediate baseline", async () => {
+  const f = pacedFixture({ pollMs: 250 });
+  try {
+    await f.start();
+    f.setPrices(() => { throw new UpstreamError("HTTP429", 429, 2000); });
+    await f.scheduler.advance(250);
+    const before = f.requests.length;
+    assert.equal(f.collector.nextAllowedPollAt, f.clock() + 2000);
+    const failureAt = f.clock();
+    assert.deepEqual(f.collector.pollingCounters, { cyclesStarted: 2, successfulCycles: 1,
+      failedCycles: 1, partialCycles: 0, rateLimitedCycles: 1,
+      lastFailureAt: failureAt, lastFailureStatus: 429 });
+    f.setPrices(undefined);
+    f.collector.onPushState({ status: "subscribed", generation: 1, subscribedMarkets: 87,
+      lastConfirmedAt: f.clock(), error: null, counters: {} });
+    f.collector.onPushMarkets([{ marketId: "unknown-market", runnerDetails: [] }], {
+      generation: 1, receivedAt: f.clock(),
+    });
+    await f.scheduler.advance(1999);
+    assert.equal(f.requests.length, before);
+    await f.scheduler.advance(1);
+    assert.equal(f.requests.length, before + 2);
+    assert.equal(f.store.datasets.fanduel.quotes.length, 174);
+    assert.equal(f.collector.pushReady(), true);
+    const observed = f.store.sources.fanduel.channels.polling;
+    assert.equal(observed.cyclesStarted, 3);
+    assert.equal(observed.successfulCycles, 2);
+    assert.equal(observed.failedCycles, 1, "a successful retry must not erase a transient failure");
+    assert.equal(observed.rateLimitedCycles, 1, "a successful retry must not erase a transient429");
+    assert.equal(observed.lastFailureAt, failureAt);
+    assert.equal(observed.lastFailureStatus, 429);
+    f.collector.stop();
+    await f.start();
+    assert.deepEqual(f.collector.pollingCounters, { cyclesStarted: 1, successfulCycles: 1,
+      failedCycles: 0, partialCycles: 0, rateLimitedCycles: 0, lastFailureAt: null, lastFailureStatus: null });
+  } finally { f.collector.stop(); }
+});
+
+test("FanDuel 250ms success cadence retains at least one-second ordinary failure backoff", async () => {
+  const f = pacedFixture({ pollMs: 250 });
+  try {
+    await f.start();
+    f.setPrices(() => { throw new UpstreamError("HTTP503", 503); });
+    await f.scheduler.advance(250);
+    const before = f.requests.length, delay = f.collector.nextAllowedPollAt - f.clock();
+    assert.ok(delay >= 1000 && delay <= 1200);
+    await f.scheduler.advance(999);
+    assert.equal(f.requests.length, before);
+  } finally { f.collector.stop(); }
+});
+
+test("FanDuel retains a discovery429 in cumulative counters even when current-catalogue prices succeed", async () => {
+  let discoveries = 0;
+  const f = pacedFixture({ pollMs: 250, discoveryMs: 250, fetcher: async (url, init) => {
+    const result = data => ({ data, receivedAt: Date.now(), durationMs: 0, decodedBytes: 100 });
+    if (url === FD_DISCOVERY) {
+      if (++discoveries > 1) throw new UpstreamError("Discovery HTTP429", 429, 2000);
+      return result(ontarioDiscovery);
+    }
+    const ids = JSON.parse(init.body).marketIds;
+    return result(ontarioPrices.filter(m => ids.includes(m.marketId)));
+  } });
+  try {
+    await f.start();
+    await f.scheduler.advance(250);
+    assert.equal(f.store.datasets.fanduel.quotes.length, 174);
+    assert.equal(f.store.sources.fanduel.status, "healthy");
+    const counters = f.store.sources.fanduel.channels.polling;
+    assert.equal(counters.cyclesStarted, 2);
+    assert.equal(counters.successfulCycles, 1);
+    assert.equal(counters.failedCycles, 1);
+    assert.equal(counters.rateLimitedCycles, 1);
+    assert.equal(counters.lastFailureStatus, 429);
+    assert.equal(counters.lastFailureAt, f.clock());
+  } finally { f.collector.stop(); }
+});
+
+test("unknown FanDuel push markets cannot shorten the discovery endpoint Retry-After", async () => {
+  let discoveries = 0;
+  const f = pacedFixture({ pollMs: 250, discoveryMs: 250, fetcher: async (url, init) => {
+    const result = data => ({ data, receivedAt: Date.now(), durationMs: 0, decodedBytes: 100 });
+    if (url === FD_DISCOVERY) {
+      if (++discoveries > 1) throw new UpstreamError("Discovery HTTP429", 429, 60000);
+      return result(ontarioDiscovery);
+    }
+    const ids = JSON.parse(init.body).marketIds;
+    return result(ontarioPrices.filter(m => ids.includes(m.marketId)));
+  } });
+  try {
+    await f.start();
+    f.collector.onPushState({ status: "subscribed", generation: 1, subscribedMarkets: 87,
+      lastConfirmedAt: f.clock(), error: null, counters: {} });
+    await f.scheduler.advance(0);
+    await f.scheduler.advance(250);
+    assert.equal(discoveries, 2);
+    const allowedAt = f.clock() + 60000;
+    assert.equal(f.collector.nextDiscoveryAt, allowedAt);
+    f.collector.onPushMarkets([{ marketId: "unknown-market", runnerDetails: [] }], {
+      generation: 1, receivedAt: f.clock(),
+    });
+    assert.equal(f.collector.nextDiscoveryAt, allowedAt, "a push cannot erase the source's explicit retry deadline");
+    await f.scheduler.advance(59999);
+    assert.equal(discoveries, 2);
+    assert.equal(f.collector.coverage.returned, 87, "normal price requests continue using the existing catalogue");
+    await f.scheduler.advance(1);
+    assert.equal(discoveries, 3, "discovery resumes only when its own Retry-After expires");
+    assert.equal(f.collector.pollingCounters.rateLimitedCycles, 2);
+  } finally { f.collector.stop(); }
+});
+
+test("FanDuel startup waits for discovery backoff without replacing the source failure or polling an absent catalogue", async () => {
+  let discoveries = 0, priceRequests = 0;
+  const f = pacedFixture({ pollMs: 250, fetcher: async (url, init) => {
+    const result = data => ({ data, receivedAt: Date.now(), durationMs: 0, decodedBytes: 100 });
+    if (url === FD_DISCOVERY) {
+      if (++discoveries === 1) throw new UpstreamError("Discovery HTTP503", 503);
+      return result(ontarioDiscovery);
+    }
+    priceRequests++;
+    const ids = JSON.parse(init.body).marketIds;
+    return result(ontarioPrices.filter(m => ids.includes(m.marketId)));
+  } });
+  try {
+    await f.start();
+    assert.equal(discoveries, 1);
+    assert.equal(priceRequests, 0);
+    assert.equal(f.collector.pollError, "Discovery HTTP503");
+    const delay = f.collector.discoveryRetryAt - f.clock();
+    assert.ok(delay >= 10000);
+    assert.ok(f.collector.nextAllowedPollAt >= f.collector.discoveryRetryAt);
+    await f.collector.tick();
+    await f.scheduler.advance(delay - 1);
+    assert.equal(discoveries, 1);
+    assert.equal(priceRequests, 0);
+    await f.scheduler.advance(1);
+    assert.equal(discoveries, 2);
+    assert.equal(priceRequests, 2);
+    assert.equal(f.collector.discoveryRetryAt, 0);
+    assert.equal(f.store.datasets.fanduel.quotes.length, 174);
+    assert.equal(f.collector.pollingCounters.cyclesStarted, 2);
+    assert.equal(f.collector.pollingCounters.failedCycles, 1);
+    assert.equal(f.collector.pollingCounters.successfulCycles, 1);
+  } finally { f.collector.stop(); }
+});
+
+test("FanDuel publishes push immediately during a 250ms poll and prevents the older response rolling it back", async () => {
+  const f = pacedFixture({ pollMs: 250 });
+  const hold = deferred();
+  try {
+    await f.start();
+    f.collector.onPushState({ status: "subscribed", generation: 1, subscribedMarkets: 87,
+      lastConfirmedAt: f.clock(), error: null, counters: {} });
+    await f.scheduler.advance(0);
+    assert.equal(f.collector.pushReady(), true);
+    f.setPrices(async data => { await hold.promise; return data; });
+    await f.scheduler.advance(250);
+    const row = structuredClone(ontarioPrices[0]);
+    row.updatedAt = new Date(f.clock()).toISOString();
+    row.runnerDetails[0].winRunnerOdds.americanDisplayOdds.americanOddsInt = -137;
+    const sourceId = `${row.marketId}:${row.runnerDetails[0].selectionId}`;
+    f.collector.onPushMarkets([row], { generation: 1, receivedAt: f.clock(), decodedBytes: 500 });
+    assert.equal(f.store.datasets.fanduel.quotes.find(q => q.sourceId === sourceId).american, -137);
+    assert.equal(f.active, 2, "push publication does not wait for either HTTP batch");
+    hold.resolve(); await settle();
+    assert.equal(f.store.datasets.fanduel.quotes.find(q => q.sourceId === sourceId).american, -137);
+    assert.equal(f.collector.state.counters.pollOverwritesPrevented, 1);
+  } finally { hold.resolve(); f.collector.stop(); await settle(); }
+});
+
+test("FanDuel rediscovery cannot publish stale embedded prices over the current price response", async () => {
+  const f = pacedFixture({ pollMs: 250, discoveryMs: 250 });
+  const row = structuredClone(ontarioPrices[0]);
+  row.runnerDetails[0].winRunnerOdds.americanDisplayOdds.americanOddsInt = -143;
+  const sourceId = `${row.marketId}:${row.runnerDetails[0].selectionId}`;
+  f.setPrices(data => data.map(m => m.marketId === row.marketId ? row : m));
+  try {
+    await f.start();
+    await f.scheduler.advance(1000);
+    assert.equal(f.store.datasets.fanduel.quotes.find(q => q.sourceId === sourceId).american, -143);
+    assert.equal(f.store.sources.fanduel.priceChanges, 0, "five metadata discoveries must not cause old-price/new-price flashes");
+    assert.equal(f.requests.length, 10);
+    assert.equal(f.collector.coverage.returned, 87);
+  } finally { f.collector.stop(); }
+});
+
+test("unknown FanDuel push markets cannot postpone an already scheduled price poll until rediscovery", async () => {
+  const f = pacedFixture({ pollMs: 250 });
+  try {
+    await f.start();
+    f.collector.onPushState({ status: "subscribed", generation: 1, subscribedMarkets: 87,
+      lastConfirmedAt: f.clock(), error: null, counters: {} });
+    await f.scheduler.advance(0);
+    const before = f.requests.length;
+    f.collector.onPushMarkets([{ marketId: "unknown-market", runnerDetails: [] }], {
+      generation: 1, receivedAt: f.clock(),
+    });
+    assert.equal(f.collector.nextDiscoveryAt, f.clock() + 10000);
+    await f.scheduler.advance(249);
+    assert.equal(f.requests.length, before);
+    await f.scheduler.advance(1);
+    assert.equal(f.requests.length, before + 2, "the ordinary 250ms price deadline must survive a later discovery request");
+    await f.scheduler.advance(9750);
+    assert.deepEqual(f.discoveries, [0, 10000], "the catalogue is refreshed at its own deadline while prices keep flowing");
+    assert.equal(f.requests.length, before + 80);
+    assert.equal(f.collector.coverage.returned, 87);
+  } finally { f.collector.stop(); }
+});
+
+test("unknown FanDuel push markets during an in-flight poll cannot override the next ordinary deadline", async () => {
+  const f = pacedFixture({ pollMs: 250 }), hold = deferred();
+  try {
+    await f.start();
+    f.collector.onPushState({ status: "subscribed", generation: 1, subscribedMarkets: 87,
+      lastConfirmedAt: f.clock(), error: null, counters: {} });
+    await f.scheduler.advance(0);
+    f.setPrices(async data => { await hold.promise; return data; });
+    await f.scheduler.advance(250);
+    const before = f.requests.length;
+    f.collector.onPushMarkets([{ marketId: "unknown-market", runnerDetails: [] }], {
+      generation: 1, receivedAt: f.clock(),
+    });
+    assert.equal(f.active, 2);
+    assert.equal(f.collector.nextDiscoveryAt, f.clock() + 9750);
+    f.setPrices(undefined); hold.resolve(); await settle();
+    await f.scheduler.advance(249);
+    assert.equal(f.requests.length, before);
+    await f.scheduler.advance(1);
+    assert.equal(f.requests.length, before + 2, "a pending ten-second rediscovery must not replace the next 250ms price cycle");
+    assert.equal(f.maxActive, 2);
+    assert.deepEqual(f.discoveries, [0]);
+    assert.equal(f.collector.coverage.returned, 87);
+  } finally { hold.resolve(); f.collector.stop(); await settle(); }
 });

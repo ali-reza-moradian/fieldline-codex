@@ -139,16 +139,23 @@ export async function fetchFanDuelPrices(ids, { fetcher = fetchJson, signal, bat
 }
 
 export class FanDuel {
-  constructor(sink, { pollMs = 1000, verificationMs = 1000, discoveryMs = 60000,
+  constructor(sink, { pollMs = process.env.FD_POLL_MS ?? 250, verificationMs = pollMs, discoveryMs = 60000,
     fetcher = fetchJson, pushFactory = options => new FanDuelPush(options),
-    clock = Date.now, pushOptions = {}, reconcileMaxAgeMs = 30000 } = {}) {
+    clock = Date.now, pushOptions = {}, reconcileMaxAgeMs = 30000,
+    scheduler = { now: () => performance.now(), setTimeout, clearTimeout } } = {}) {
     this.sink = sink;
-    this.pollMs = Math.max(1000, pollMs);
-    this.verificationMs = Math.max(this.pollMs, verificationMs);
+    if (!Number.isFinite(Number(pollMs)) || !Number.isFinite(Number(verificationMs)))
+      throw new Error("FanDuel poll intervals must be finite milliseconds");
+    // Four complete cycles/second at most during regular successful polling.
+    // Longer intervals remain available to reduce traffic; failures retain the
+    // previous one-second minimum backoff independently of the success cadence.
+    this.pollMs = Math.max(250, Number(pollMs));
+    this.verificationMs = Math.max(this.pollMs, Number(verificationMs));
     this.reconcileMaxAgeMs = Math.max(this.verificationMs, reconcileMaxAgeMs);
     this.discoveryMs = discoveryMs;
     this.fetcher = fetcher;
     this.clock = clock;
+    this.scheduler = scheduler;
     this.state = new FanDuelState({ now: clock });
     this.pushState = { status: "disconnected", generation: 0, subscribedMarkets: 0 };
     this.push = pushFactory({ ...pushOptions, region: FD_REGION,
@@ -170,7 +177,12 @@ export class FanDuel {
     this.lastPollAt = null;
     this.catalog = null;
     this.nextDiscoveryAt = 0;
+    this.discoveryRetryAt = 0;
     this.nextAllowedPollAt = 0;
+    this.timerAt = null;
+    this.pendingTickAt = null;
+    this.pollingCounters = { cyclesStarted: 0, successfulCycles: 0, failedCycles: 0,
+      partialCycles: 0, rateLimitedCycles: 0, lastFailureAt: null, lastFailureStatus: null };
     this.state = new FanDuelState({ now: this.clock });
     this.sink.details?.("fanduel", { status: "connecting", lastConfirmedAt: null, error: null });
     this.push.start();
@@ -180,7 +192,9 @@ export class FanDuel {
     this.stopped = true;
     this.runId = (this.runId ?? 0) + 1;
     this.controller?.abort();
-    clearTimeout(this.timer);
+    this.scheduler.clearTimeout(this.timer);
+    this.timer = null;
+    this.timerAt = null;
     this.inFlight = null;
     this.pendingTickAt = null;
     this.push.stop();
@@ -201,18 +215,24 @@ export class FanDuel {
       transport: this.pushReady() ? "Live push · polling backup" : "Polling fallback · reconnecting live feed",
       pollMs: this.interval(), coverage: this.coverage ?? null,
       channels: { push: { ...this.pushState, verified: this.pushReady(), ordering: { ...this.state.counters } },
-        polling: { intervalMs: this.interval(), lastSuccessAt: this.lastPollAt ?? null,
+        polling: { ...this.pollingCounters, intervalMs: this.interval(), lastSuccessAt: this.lastPollAt ?? null,
           lastCompleteAt: this.lastFullPollAt ?? null, error: this.pollError ?? null },
         discovery: { lastSuccessAt: this.discoveredAt ?? null, error: this.discoveryError ?? null } },
     });
   }
   queueTick(delay = 0) {
     if (this.stopped) return;
-    const at = Math.max(this.clock() + delay, this.nextAllowedPollAt);
+    const now = this.clock();
+    let at = Math.max(now + delay, this.nextAllowedPollAt);
     if (this.inFlight) { this.pendingTickAt = Math.min(this.pendingTickAt ?? Infinity, at); return; }
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => { this.timer = null; void this.tick(); },
-      Math.max(delay, this.nextAllowedPollAt - this.clock(), 0));
+    // Discovery has its own deadline. A request to check it later must never
+    // postpone an already scheduled price poll; rate-limit deadlines still win.
+    at = Math.max(this.nextAllowedPollAt, Math.min(at, this.timerAt ?? Infinity));
+    if (this.timer != null && at === this.timerAt) return;
+    this.scheduler.clearTimeout(this.timer);
+    this.timerAt = at;
+    this.timer = this.scheduler.setTimeout(() => { this.timer = null; this.timerAt = null; void this.tick(); },
+      Math.max(at - now, 0));
   }
   onPushState(state) {
     if (this.stopped) return;
@@ -242,8 +262,9 @@ export class FanDuel {
       const result = this.state.applyPush(markets, timing, this.catalog);
       if (result.unknown) {
         this.verifiedEpoch = null;
-        this.nextDiscoveryAt = Math.min(this.nextDiscoveryAt,
-          Math.max(this.clock() + 1000, (this.discoveredAt ?? 0) + 10000));
+        this.nextDiscoveryAt = Math.max(this.discoveryRetryAt,
+          Math.min(this.nextDiscoveryAt,
+            Math.max(this.clock() + 1000, (this.discoveredAt ?? 0) + 10000)));
         this.queueTick(Math.max(0, this.nextDiscoveryAt - this.clock()));
       }
       if (result.accepted && this.hasBaseline &&
@@ -266,13 +287,16 @@ export class FanDuel {
     if (this.stopped) return Promise.resolve();
     if (this.inFlight) return this.inFlight;
     if (this.clock() < this.nextAllowedPollAt) { this.queueTick(); return Promise.resolve(); }
-    clearTimeout(this.timer);
+    this.scheduler.clearTimeout(this.timer);
+    this.timer = null;
+    this.timerAt = null;
     const runId = this.runId;
     const task = this.runTick(runId).finally(() => {
       if (this.inFlight !== task) return;
       this.inFlight = null;
       if (this.stopped || runId !== this.runId) return;
-      const delay = this.pendingTickAt != null ? Math.max(0, this.pendingTickAt - this.clock()) : this.nextDelay;
+      const delay = Math.min(this.nextDelay,
+        this.pendingTickAt != null ? Math.max(0, this.pendingTickAt - this.clock()) : Infinity);
       this.pendingTickAt = null;
       this.queueTick(delay);
     });
@@ -280,7 +304,22 @@ export class FanDuel {
     return this.inFlight;
   }
   async runTick(runId) {
-    const began = performance.now();
+    const began = this.scheduler.now();
+    // A cycle includes optional discovery and the complete group of price
+    // requests. Any error classifies it as failed, including discovery errors
+    // recovered using the current catalogue; a cycle is counted only once.
+    this.pollingCounters.cyclesStarted++;
+    let cycleFailed = false, cycleRateLimited = false;
+    const recordFailure = error => {
+      if (!cycleFailed) this.pollingCounters.failedCycles++;
+      cycleFailed = true;
+      if (error?.status === 429 && !cycleRateLimited) {
+        this.pollingCounters.rateLimitedCycles++;
+        cycleRateLimited = true;
+      }
+      this.pollingCounters.lastFailureAt = this.clock();
+      this.pollingCounters.lastFailureStatus = Number(error?.status) || null;
+    };
     const signal = AbortSignal.any([this.controller.signal, AbortSignal.timeout(10000)]);
     try {
       if (!this.catalog || this.clock() >= this.nextDiscoveryAt) {
@@ -290,13 +329,16 @@ export class FanDuel {
           this.catalog = selectFanDuelMarkets(result.data);
           this.discoveredAt = this.clock();
           this.nextDiscoveryAt = this.clock() + this.discoveryMs;
+          this.discoveryRetryAt = 0;
           this.discoveryError = null;
           this.state.prune(this.catalog);
           this.push.setMarketIds(Object.keys(this.catalog.markets));
         } catch (error) {
           if (this.stopped || runId !== this.runId) return;
+          recordFailure(error);
           this.discoveryError = error.message;
-          this.nextDiscoveryAt = this.clock() + Math.max(10000, retryDelay(1, error, 10000));
+          this.discoveryRetryAt = this.clock() + Math.max(10000, retryDelay(1, error, 10000));
+          this.nextDiscoveryAt = this.discoveryRetryAt;
           if (!this.catalog) throw error;
         }
       }
@@ -316,15 +358,24 @@ export class FanDuel {
           this.verifiedEpoch = this.pushEpoch;
       } else this.verifiedEpoch = null;
       this.publish({ ...result, data: undefined, kind: "poll", pollMs: this.interval() });
+      if (!cycleFailed) {
+        if (result.coverage.missingIds.length) this.pollingCounters.partialCycles++;
+        else this.pollingCounters.successfulCycles++;
+      }
       this.failures = 0;
       this.nextAllowedPollAt = 0;
-      this.nextDelay = Math.max(0, this.interval() - (performance.now() - began));
+      // Start-to-start pacing, with no overlap or accumulated catch-up cycles.
+      this.nextDelay = Math.max(0, this.interval() - (this.scheduler.now() - began));
       this.details();
     } catch (error) {
       if (this.stopped || runId !== this.runId) return;
+      recordFailure(error);
       this.pollError = error.message;
       if (!this.pushReady()) this.sink.failure("fanduel", error);
-      this.nextDelay = retryDelay(this.failures = (this.failures || 0) + 1, error, this.pollMs);
+      this.nextDelay = Math.max(
+        retryDelay(this.failures = (this.failures || 0) + 1, error, Math.max(1000, this.pollMs)),
+        this.catalog ? 0 : this.discoveryRetryAt - this.clock(),
+      );
       this.nextAllowedPollAt = this.clock() + this.nextDelay;
       this.details();
     }

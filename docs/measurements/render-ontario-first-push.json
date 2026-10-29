@@ -1,0 +1,154 @@
+{
+  "version": "f8650e64b9dcf94cb721e9faee083b30fb3b666e",
+  "base": "https://fieldline-codex.onrender.com",
+  "region": "Ontario",
+  "observationStart": "2026-10-29T02:21:17.782Z",
+  "observationEnd": "2026-10-29T02:26:17.782Z",
+  "environment": "Render Ohio; public stream observed remotely. No development-machine source relay.",
+  "changedPriceEvents": [
+    {
+      "market": "moneyline",
+      "game": "2026-10-29|CAR|GB",
+      "side": "home",
+      "fromOdds": -190,
+      "toOdds": -200,
+      "timing": {
+        "book": "fanduel",
+        "kind": "push",
+        "receivedAt": 1793240623413,
+        "normalizedAt": 1793240623418,
+        "processingMs": 2.118894999846816,
+        "requestMs": null,
+        "sourceCreatedAt": null,
+        "sourcePublishedAt": null,
+        "sourceUpdatedAt": 1793240623000,
+        "decodedBytes": 576,
+        "priceChanges": 1,
+        "phases": [
+          "pregame"
+        ]
+      }
+    },
+    {
+      "market": "moneyline",
+      "game": "2026-10-29|CAR|GB",
+      "side": "away",
+      "fromOdds": 160,
+      "toOdds": 168,
+      "timing": {
+        "book": "fanduel",
+        "kind": "push",
+        "receivedAt": 1793240637019,
+        "normalizedAt": 1793240637025,
+        "processingMs": 4.8208429999649525,
+        "requestMs": null,
+        "sourceCreatedAt": null,
+        "sourcePublishedAt": null,
+        "sourceUpdatedAt": 1793240636000,
+        "decodedBytes": 577,
+        "priceChanges": 1,
+        "phases": [
+          "pregame"
+        ]
+      }
+    }
+  ],
+  "finalSources": {
+    "draftkings": {
+      "book": "draftkings",
+      "status": "healthy",
+      "lastConfirmedAt": 1793240788247,
+      "lastDataAt": 1793240759841,
+      "lastChangeAt": 1793240103902,
+      "staleAfterMs": 25000,
+      "error": null,
+      "warnings": [],
+      "updates": 101,
+      "priceChanges": 2,
+      "games": 29,
+      "quotes": 174,
+      "transport": "WebSocket \u00b7 JSON deltas",
+      "region": "Ontario",
+      "requestMs": 1596.72222100012,
+      "decodedBytes": 155466,
+      "pollMs": null,
+      "lastErrorAt": 1793239196510
+    },
+    "fanduel": {
+      "book": "fanduel",
+      "status": "healthy",
+      "lastConfirmedAt": 1793240792569,
+      "lastDataAt": 1793240792568,
+      "lastChangeAt": 1793240637020,
+      "staleAfterMs": 10000,
+      "error": null,
+      "warnings": [],
+      "updates": 3397,
+      "priceChanges": 2,
+      "games": 29,
+      "quotes": 174,
+      "transport": "Live push \u00b7 polling backup",
+      "region": "Ontario",
+      "endpoints": {
+        "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+        "prices": "https://smp.on.sportsbook.fanduel.ca"
+      },
+      "pollMs": 1000,
+      "coverage": {
+        "requested": 87,
+        "returned": 87,
+        "batches": 2,
+        "missingIds": []
+      },
+      "channels": {
+        "push": {
+          "status": "subscribed",
+          "lastConfirmedAt": 1793240789033,
+          "lastDataAt": 1793240637019,
+          "error": null,
+          "generation": 1,
+          "subscribedMarkets": 87,
+          "region": "on",
+          "origin": "https://sportsbook.fanduel.ca",
+          "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+          "lastProtocolAt": 1793240759077,
+          "protocolTimeoutMs": 120000,
+          "counters": {
+            "connections": 1,
+            "reconnects": 0,
+            "messages": 61,
+            "markets": 2,
+            "invalidFrames": 0,
+            "configReads": 1,
+            "authErrors": 0
+          },
+          "verified": true,
+          "ordering": {
+            "accepted": 2,
+            "duplicates": 0,
+            "outOfOrder": 0,
+            "unknown": 0,
+            "pollOverwritesPrevented": 0
+          }
+        },
+        "polling": {
+          "intervalMs": 1000,
+          "lastSuccessAt": 1793240792568,
+          "lastCompleteAt": 1793240792568,
+          "error": null
+        },
+        "discovery": {
+          "lastSuccessAt": 1793240753845,
+          "error": null
+        }
+      },
+      "requestMs": 52.139545999933034,
+      "decodedBytes": 101304
+    }
+  },
+  "limits": [
+    "Two correlated pregame moneyline updates on one game; not a broad latency distribution or an in-game observation.",
+    "Both changed-price messages came from the actual Ontario push path. Source timestamps have whole-second precision and unmeasured clock skew.",
+    "No browser-paint or absolute bookmaker-change timing is established by these records."
+  ]
+}

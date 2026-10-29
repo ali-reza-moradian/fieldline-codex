@@ -15,6 +15,7 @@ export function createApp({
   const files = new Map([
     ["/", ["../public/index.html", "text/html; charset=utf-8"]],
     ["/app.js", ["../public/app.js", "text/javascript; charset=utf-8"]],
+    ["/presentation.js", ["../public/presentation.js", "text/javascript; charset=utf-8"]],
     ["/style.css", ["../public/style.css", "text/css; charset=utf-8"]],
     ["/model.js", ["./model.js", "text/javascript; charset=utf-8"]],
   ]);
@@ -113,9 +114,8 @@ export function createApp({
         } catch {
           return json(400, { error: "Invalid JSON" });
         }
-        return json(metrics.recordBrowser(sample) ? 202 : 400, {
-          accepted: true,
-        });
+        const accepted = metrics.recordBrowser(sample);
+        return json(accepted ? 202 : 400, { accepted });
       }
       if (req.method !== "GET" || !files.has(url.pathname))
         return json(404, { error: "Not found" });
