@@ -1,0 +1,908 @@
+{
+  "recordedAt": "2026-10-29T03:30:29.004Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "version": "13652285ee3682b97acf2ad8a7ea6b00e8d1bad8",
+  "environment": "One Render Ohio native Node/Python service, both sources Ontario; remote SSE observer on the development Mac, no development-machine collector relay",
+  "method": "Two fixed 300-second remote SSE observations, with baseline and 15-second matching grace. Runtime metadata spans are longer than 300 seconds; cycle differences below use those explicitly timestamped spans.",
+  "windows": [
+    {
+      "startUTC": "2026-10-29T03:12:51.666Z",
+      "endUTC": "2026-10-29T03:17:51.666Z",
+      "scheduledSeconds": 300,
+      "runtimeBefore": {
+        "version": "13652285ee3682b97acf2ad8a7ea6b00e8d1bad8",
+        "startedAt": 1793243427824
+      },
+      "runtimeAfter": {
+        "version": "13652285ee3682b97acf2ad8a7ea6b00e8d1bad8",
+        "startedAt": 1793243427824
+      },
+      "metadataBeforeAt": "2026-10-29T03:12:48.425Z",
+      "metadataAfterAt": "2026-10-29T03:18:07.364Z",
+      "sourcesBefore": {
+        "draftkings": {
+          "region": "Ontario",
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "transport": "WebSocket · JSON deltas",
+          "pollMs": null
+        },
+        "fanduel": {
+          "region": "Ontario",
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "transport": "Live push · polling backup",
+          "coverage": {
+            "requested": 87,
+            "returned": 87,
+            "batches": 2,
+            "missingIds": []
+          },
+          "endpoints": {
+            "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+            "prices": "https://smp.on.sportsbook.fanduel.ca"
+          },
+          "pollMs": 250,
+          "push": {
+            "status": "subscribed",
+            "lastConfirmedAt": 1793243563770,
+            "lastDataAt": null,
+            "error": null,
+            "generation": 1,
+            "subscribedMarkets": 87,
+            "region": "on",
+            "origin": "https://sportsbook.fanduel.ca",
+            "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+            "lastProtocolAt": 1793243551263,
+            "protocolTimeoutMs": 120000,
+            "counters": {
+              "connections": 1,
+              "reconnects": 0,
+              "messages": 5,
+              "markets": 0,
+              "invalidFrames": 0,
+              "configReads": 1,
+              "authErrors": 0
+            },
+            "verified": true,
+            "ordering": {
+              "accepted": 0,
+              "duplicates": 0,
+              "outOfOrder": 0,
+              "unknown": 0,
+              "pollOverwritesPrevented": 0
+            }
+          },
+          "polling": {
+            "cyclesStarted": 544,
+            "successfulCycles": 544,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 250,
+            "lastSuccessAt": 1793243568515,
+            "lastCompleteAt": 1793243568515,
+            "error": null
+          },
+          "discovery": {
+            "lastSuccessAt": 1793243551028,
+            "error": null
+          }
+        }
+      },
+      "sourcesAfter": {
+        "draftkings": {
+          "region": "Ontario",
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "transport": "WebSocket · JSON deltas",
+          "pollMs": null
+        },
+        "fanduel": {
+          "region": "Ontario",
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "transport": "Live push · polling backup",
+          "coverage": {
+            "requested": 87,
+            "returned": 87,
+            "batches": 2,
+            "missingIds": []
+          },
+          "endpoints": {
+            "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+            "prices": "https://smp.on.sportsbook.fanduel.ca"
+          },
+          "pollMs": 250,
+          "push": {
+            "status": "subscribed",
+            "lastConfirmedAt": 1793243884476,
+            "lastDataAt": null,
+            "error": null,
+            "generation": 1,
+            "subscribedMarkets": 87,
+            "region": "on",
+            "origin": "https://sportsbook.fanduel.ca",
+            "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+            "lastProtocolAt": 1793243851265,
+            "protocolTimeoutMs": 120000,
+            "counters": {
+              "connections": 1,
+              "reconnects": 0,
+              "messages": 10,
+              "markets": 0,
+              "invalidFrames": 0,
+              "configReads": 1,
+              "authErrors": 0
+            },
+            "verified": true,
+            "ordering": {
+              "accepted": 0,
+              "duplicates": 0,
+              "outOfOrder": 0,
+              "unknown": 0,
+              "pollOverwritesPrevented": 0
+            }
+          },
+          "polling": {
+            "cyclesStarted": 1806,
+            "successfulCycles": 1806,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 250,
+            "lastSuccessAt": 1793243887171,
+            "lastCompleteAt": 1793243887171,
+            "error": null
+          },
+          "discovery": {
+            "lastSuccessAt": 1793243853424,
+            "error": null
+          }
+        }
+      },
+      "completedPriceCyclesAcrossMetadataSpan": 1262,
+      "failedCyclesAcrossMetadataSpan": 0,
+      "partialCyclesAcrossMetadataSpan": 0,
+      "rateLimitedCyclesAcrossMetadataSpan": 0,
+      "changedPriceMessages": 0,
+      "streamErrors": [],
+      "largestDeliveryGap": {
+        "observerGapMs": 14461.815833,
+        "overlapsMainWindowMs": 3826.99649999995,
+        "resumesInGrace": true,
+        "precedingServerSentAt": 1793243867945,
+        "followingServerSentAt": 1793243868198,
+        "serverBoundaryGapMs": 253
+      },
+      "observerEventLoopDelayMs": {
+        "mean": 10.886807341510917,
+        "p99": 11.444223,
+        "max": 119.013375
+      },
+      "cumulativeSourceMeasurementsAtEnd": {
+        "draftkings": {
+          "pregame": {
+            "acquisitionRequestMs": {
+              "n": 8,
+              "p50": 2084.1,
+              "p95": 9398.37,
+              "max": 9398.37
+            },
+            "processingMs": {
+              "n": 8,
+              "p50": 1.64,
+              "p95": 4.42,
+              "max": 4.42
+            },
+            "feedCreatedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceFeedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPricePushUpdatedToBackendUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceMessages": 0,
+            "backendToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "pushUpdatedToPaintUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "clockUncertaintyMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "decodedPayloadBytes": {
+              "n": 8,
+              "p50": 155466,
+              "p95": 155466,
+              "max": 155466
+            }
+          },
+          "live": {
+            "acquisitionRequestMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "processingMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceFeedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPricePushUpdatedToBackendUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceMessages": 0,
+            "backendToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "pushUpdatedToPaintUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "clockUncertaintyMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "decodedPayloadBytes": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            }
+          }
+        },
+        "fanduel": {
+          "pregame": {
+            "acquisitionRequestMs": {
+              "n": 1806,
+              "p50": 129.77,
+              "p95": 136.87,
+              "max": 1697.09
+            },
+            "processingMs": {
+              "n": 1806,
+              "p50": 1.67,
+              "p95": 2.98,
+              "max": 175.75
+            },
+            "feedCreatedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceFeedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPricePushUpdatedToBackendUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceMessages": 0,
+            "backendToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "pushUpdatedToPaintUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "clockUncertaintyMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "decodedPayloadBytes": {
+              "n": 1806,
+              "p50": 101338,
+              "p95": 101338,
+              "max": 101338
+            }
+          },
+          "live": {
+            "acquisitionRequestMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "processingMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceFeedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPricePushUpdatedToBackendUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceMessages": 0,
+            "backendToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "pushUpdatedToPaintUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "clockUncertaintyMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "decodedPayloadBytes": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "startUTC": "2026-10-29T03:19:01.746Z",
+      "endUTC": "2026-10-29T03:24:01.746Z",
+      "scheduledSeconds": 300,
+      "runtimeBefore": {
+        "version": "13652285ee3682b97acf2ad8a7ea6b00e8d1bad8",
+        "startedAt": 1793243427824
+      },
+      "runtimeAfter": {
+        "version": "13652285ee3682b97acf2ad8a7ea6b00e8d1bad8",
+        "startedAt": 1793243427824
+      },
+      "metadataBeforeAt": "2026-10-29T03:18:58.246Z",
+      "metadataAfterAt": "2026-10-29T03:24:17.450Z",
+      "sourcesBefore": {
+        "draftkings": {
+          "region": "Ontario",
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "transport": "WebSocket · JSON deltas",
+          "pollMs": null
+        },
+        "fanduel": {
+          "region": "Ontario",
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "transport": "Live push · polling backup",
+          "coverage": {
+            "requested": 87,
+            "returned": 87,
+            "batches": 2,
+            "missingIds": []
+          },
+          "endpoints": {
+            "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+            "prices": "https://smp.on.sportsbook.fanduel.ca"
+          },
+          "pollMs": 250,
+          "push": {
+            "status": "subscribed",
+            "lastConfirmedAt": 1793243934770,
+            "lastDataAt": null,
+            "error": null,
+            "generation": 1,
+            "subscribedMarkets": 87,
+            "region": "on",
+            "origin": "https://sportsbook.fanduel.ca",
+            "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+            "lastProtocolAt": 1793243911263,
+            "protocolTimeoutMs": 120000,
+            "counters": {
+              "connections": 1,
+              "reconnects": 0,
+              "messages": 11,
+              "markets": 0,
+              "invalidFrames": 0,
+              "configReads": 1,
+              "authErrors": 0
+            },
+            "verified": true,
+            "ordering": {
+              "accepted": 0,
+              "duplicates": 0,
+              "outOfOrder": 0,
+              "unknown": 0,
+              "pollOverwritesPrevented": 0
+            }
+          },
+          "polling": {
+            "cyclesStarted": 2008,
+            "successfulCycles": 2008,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 250,
+            "lastSuccessAt": 1793243938302,
+            "lastCompleteAt": 1793243938302,
+            "error": null
+          },
+          "discovery": {
+            "lastSuccessAt": 1793243913724,
+            "error": null
+          }
+        }
+      },
+      "sourcesAfter": {
+        "draftkings": {
+          "region": "Ontario",
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "transport": "WebSocket · JSON deltas",
+          "pollMs": null
+        },
+        "fanduel": {
+          "region": "Ontario",
+          "status": "healthy",
+          "games": 29,
+          "quotes": 174,
+          "transport": "Live push · polling backup",
+          "coverage": {
+            "requested": 87,
+            "returned": 87,
+            "batches": 2,
+            "missingIds": []
+          },
+          "endpoints": {
+            "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+            "prices": "https://smp.on.sportsbook.fanduel.ca"
+          },
+          "pollMs": 250,
+          "push": {
+            "status": "subscribed",
+            "lastConfirmedAt": 1793244256864,
+            "lastDataAt": null,
+            "error": null,
+            "generation": 1,
+            "subscribedMarkets": 87,
+            "region": "on",
+            "origin": "https://sportsbook.fanduel.ca",
+            "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+            "lastProtocolAt": 1793244211321,
+            "protocolTimeoutMs": 120000,
+            "counters": {
+              "connections": 1,
+              "reconnects": 0,
+              "messages": 16,
+              "markets": 0,
+              "invalidFrames": 0,
+              "configReads": 1,
+              "authErrors": 0
+            },
+            "verified": true,
+            "ordering": {
+              "accepted": 0,
+              "duplicates": 0,
+              "outOfOrder": 0,
+              "unknown": 0,
+              "pollOverwritesPrevented": 0
+            }
+          },
+          "polling": {
+            "cyclesStarted": 3278,
+            "successfulCycles": 3278,
+            "failedCycles": 0,
+            "partialCycles": 0,
+            "rateLimitedCycles": 0,
+            "lastFailureAt": null,
+            "lastFailureStatus": null,
+            "intervalMs": 250,
+            "lastSuccessAt": 1793244257194,
+            "lastCompleteAt": 1793244257194,
+            "error": null
+          },
+          "discovery": {
+            "lastSuccessAt": 1793244215222,
+            "error": null
+          }
+        }
+      },
+      "completedPriceCyclesAcrossMetadataSpan": 1270,
+      "failedCyclesAcrossMetadataSpan": 0,
+      "partialCyclesAcrossMetadataSpan": 0,
+      "rateLimitedCyclesAcrossMetadataSpan": 0,
+      "changedPriceMessages": 0,
+      "streamErrors": [],
+      "largestDeliveryGap": {
+        "observerGapMs": 589.8547090000066,
+        "overlapsMainWindowMs": 589.8547090000066,
+        "resumesInGrace": false,
+        "precedingServerSentAt": 1793244160782,
+        "followingServerSentAt": 1793244161110,
+        "serverBoundaryGapMs": 328
+      },
+      "observerEventLoopDelayMs": {
+        "mean": 10.874734662572502,
+        "p99": 11.436031,
+        "max": 49.283071
+      },
+      "cumulativeSourceMeasurementsAtEnd": {
+        "draftkings": {
+          "pregame": {
+            "acquisitionRequestMs": {
+              "n": 14,
+              "p50": 2084.1,
+              "p95": 9398.37,
+              "max": 9398.37
+            },
+            "processingMs": {
+              "n": 15,
+              "p50": 2.32,
+              "p95": 90.9,
+              "max": 90.9
+            },
+            "feedCreatedToBackendMs": {
+              "n": 1,
+              "p50": 66,
+              "p95": 66,
+              "max": 66
+            },
+            "changedPriceFeedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPricePushUpdatedToBackendUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceMessages": 0,
+            "backendToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "pushUpdatedToPaintUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "clockUncertaintyMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "decodedPayloadBytes": {
+              "n": 15,
+              "p50": 155466,
+              "p95": 155466,
+              "max": 155466
+            }
+          },
+          "live": {
+            "acquisitionRequestMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "processingMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceFeedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPricePushUpdatedToBackendUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceMessages": 0,
+            "backendToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "pushUpdatedToPaintUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "clockUncertaintyMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "decodedPayloadBytes": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            }
+          }
+        },
+        "fanduel": {
+          "pregame": {
+            "acquisitionRequestMs": {
+              "n": 3278,
+              "p50": 129.62,
+              "p95": 136.85,
+              "max": 1697.09
+            },
+            "processingMs": {
+              "n": 3278,
+              "p50": 1.74,
+              "p95": 3.08,
+              "max": 175.75
+            },
+            "feedCreatedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceFeedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPricePushUpdatedToBackendUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceMessages": 0,
+            "backendToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "pushUpdatedToPaintUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "clockUncertaintyMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "decodedPayloadBytes": {
+              "n": 3278,
+              "p50": 101338,
+              "p95": 101338,
+              "max": 101338
+            }
+          },
+          "live": {
+            "acquisitionRequestMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "processingMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceFeedToBackendMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPricePushUpdatedToBackendUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "changedPriceMessages": 0,
+            "backendToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "feedCreatedToPaintMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "pushUpdatedToPaintUpperBoundMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "clockUncertaintyMs": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            },
+            "decodedPayloadBytes": {
+              "n": 0,
+              "p50": null,
+              "p95": null,
+              "max": null
+            }
+          }
+        }
+      }
+    }
+  ],
+  "findings": {
+    "successfulPriceCyclesAcrossBothMetadataSpans": 2532,
+    "changedPriceMessages": 0,
+    "failedCycles": 0,
+    "partialCycles": 0,
+    "rateLimitedCycles": 0,
+    "deliveryCaveat": "The first observation contained a 14.462-second receive gap beginning in its final 3.827 seconds and ending during the 15-second grace. The server timestamp boundary was only 253 ms; 127 buffered status messages spanning 14.505 seconds of server time arrived over 295 ms. Collector cycle counts kept advancing. This points to delay after server serialization, not a 14-second collection pause; the precise network/proxy/transport layer is unresolved."
+  },
+  "limits": [
+    "No changed-price sample occurred, so these runs establish neither price-change delivery latency nor browser-paint latency.",
+    "Healthy reported source state and zero source failures do not imply uninterrupted low-latency stream delivery.",
+    "Subscription acknowledgement and keepalives are not changed-price push samples.",
+    "Request/processing percentiles accumulate since process start and are not bookmaker-change-to-screen measurements.",
+    "These were pregame observations. Actual in-game behavior and long-term rate-limit/uptime performance remain unverified."
+  ]
+}

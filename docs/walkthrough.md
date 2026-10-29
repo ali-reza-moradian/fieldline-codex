@@ -72,6 +72,10 @@ After the Ontario migration, independent checks matched all 174 FanDuel quotes a
 
 A later [Ontario observation](measurements/render-ontario-first-push.json), at 10:21–10:26 p.m. Toronto time on October 28, did receive actual FanDuel price pushes through the public stream: Green Bay's moneyline moved from −190 to −200 and Carolina's from +160 to +168. Store processing took about 2.12 and 4.82 ms. This proves the Ontario push path delivered changed prices; it does not measure bookmaker-to-screen latency. The two updates were on one pregame game, before the quarter-second polling change. The current local test suite now passes 86 tests, including scheduling, presentation, source gaps and reconnect-history cases; the 65-test migration result is historical.
 
+The UI and quarter-second checks are now deployed as `1365228`. The [new deployment report](measurements/render-ui-speed-deployment-verification.json) confirms both Ontario feeds and identical boards for two viewers; fresh independent source checks again matched all 348 quotes. All 86 automated tests passed. Browser replay checks exercised payout arrows, separate line and availability changes, stale-source exclusion, reconnects and history at desktop and 375px widths. The new reports describe this release; the older measurements above retain their original settings and limitations.
+
+The [post-deployment observation](measurements/render-ui-speed-pregame-observation.json) ran two fixed five-minute windows. Across their baseline and grace metadata spans, 2,532 complete FanDuel checks succeeded without failures, partial responses or rate limits. Neither window contained a price change, so they cannot establish actual change-delivery speed. One receive gap crossed the end of the first window; the server continued collecting and sending timestamped status messages, which reached the observer later in a burst. The delivery layer causing that delay is still unresolved. This is why a configured quarter-second interval is not a promise that every viewer sees every update within a quarter-second.
+
 ## Demo sequence
 
 1. Run `npm ci` and `npm start`, then open `http://localhost:3210`.
