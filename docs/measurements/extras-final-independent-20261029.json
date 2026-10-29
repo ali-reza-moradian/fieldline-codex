@@ -1,0 +1,922 @@
+{
+  "startedAt": "2026-10-29T20:24:54.282Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "expectedCommit": "b14c22f",
+  "methodology": "Two cloud SSE viewers; separately fetch and parse logged-out Ontario raw sources on the observer Mac. These observer reads are validation only; no prices are sent into the cloud app. Compare every quoted outcome, with up to three bounded raw attempts.",
+  "limits": "HTTP observations are asynchronous. Report unresolved changes as mismatches, not proof of a scraper error. Full-game/overtime checks use recognized raw market types and explicit period metadata; house participation/early-exit settlement policies are not proven identical. This is not an update-latency benchmark.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "finishedAt": "2026-10-29T20:25:15.427Z",
+      "comparisons": [
+        {
+          "gameId": "2026-10-29:CAR:GB",
+          "book": "draftkings",
+          "cloudConfirmedAt": 1793305500032,
+          "rawFirstObservedAt": 1793305505964,
+          "rawLastObservedAt": 1793305506877,
+          "observationGapMs": -6388.5,
+          "cloudCoverage": {
+            "complete": true,
+            "categories": {
+              "alt-spread": {
+                "markets": 1,
+                "rows": 94,
+                "observedAt": 1793305500032
+              },
+              "alt-total": {
+                "markets": 1,
+                "rows": 92,
+                "observedAt": 1793305500232
+              },
+              "td": {
+                "markets": 1,
+                "rows": 29,
+                "observedAt": 1793305500412
+              },
+              "pass-yds": {
+                "markets": 2,
+                "rows": 54,
+                "observedAt": 1793305500684
+              },
+              "rush-yds": {
+                "markets": 7,
+                "rows": 71,
+                "observedAt": 1793305500831
+              },
+              "rec-yds": {
+                "markets": 16,
+                "rows": 212,
+                "observedAt": 1793305501031
+              },
+              "receptions": {
+                "markets": 16,
+                "rows": 100,
+                "observedAt": 1793305501231
+              }
+            },
+            "markets": 44,
+            "rows": 652
+          },
+          "rawRows": 652,
+          "cloudRows": 652,
+          "matchedRows": 652,
+          "counts": {
+            "alt-spread": {
+              "raw": 94,
+              "cloud": 94,
+              "matched": 94
+            },
+            "alt-total": {
+              "raw": 92,
+              "cloud": 92,
+              "matched": 92
+            },
+            "td": {
+              "raw": 29,
+              "cloud": 29,
+              "matched": 29
+            },
+            "pass-yds": {
+              "raw": 54,
+              "cloud": 54,
+              "matched": 54
+            },
+            "rush-yds": {
+              "raw": 71,
+              "cloud": 71,
+              "matched": 71
+            },
+            "rec-yds": {
+              "raw": 212,
+              "cloud": 212,
+              "matched": 212
+            },
+            "receptions": {
+              "raw": 100,
+              "cloud": 100,
+              "matched": 100
+            }
+          },
+          "samples": {
+            "alt-spread": [
+              {
+                "name": "Carolina Panthers",
+                "line": -20.5,
+                "american": 1280,
+                "decimal": 13.8,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942663N2050_3"
+              },
+              {
+                "name": "Green Bay Packers",
+                "line": 20.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942663P2050_1"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 25.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942663O2550_1"
+              },
+              {
+                "name": "Under",
+                "line": 25.5,
+                "american": 1260,
+                "decimal": 13.6,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942663U2550_3"
+              }
+            ],
+            "td": [
+              {
+                "name": "Josh Jacobs",
+                "line": null,
+                "american": -145,
+                "decimal": 1.68965518,
+                "suspended": false,
+                "sourceSelectionId": "0QA382678835#2336139995_13L88808Q1724494599Q20"
+              },
+              {
+                "name": "Chuba Hubbard",
+                "line": null,
+                "american": -115,
+                "decimal": 1.86956522,
+                "suspended": false,
+                "sourceSelectionId": "0QA382678835#2336140023_13L88808Q1850190615Q20"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Bryce Young",
+                "line": 170,
+                "american": -1320,
+                "decimal": 1.07575758,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675504#2336121533_13L88808Q1-1394528295Q20"
+              },
+              {
+                "name": "Bryce Young",
+                "line": 180,
+                "american": -870,
+                "decimal": 1.11494253,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675504#2336121548_13L88808Q1-2069844962Q20"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "Trevor Etienne",
+                "line": 10,
+                "american": -107,
+                "decimal": 1.93457944,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675092#2336121495_13L88808Q1713919674Q20"
+              },
+              {
+                "name": "Trevor Etienne",
+                "line": 15,
+                "american": 167,
+                "decimal": 2.67,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675092#2336121575_13L88808Q11708874668Q20"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Jonnu Smith",
+                "line": 3,
+                "american": -113,
+                "decimal": 1.88495576,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674912#2336405430_13L88808Q1-1604825724Q20"
+              },
+              {
+                "name": "Jonnu Smith",
+                "line": 10,
+                "american": 166,
+                "decimal": 2.66,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674912#2336119695_13L88808Q1-563917321Q20"
+              }
+            ],
+            "receptions": [
+              {
+                "name": "Christian Watson",
+                "line": 3,
+                "american": -860,
+                "decimal": 1.11627907,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674867#2336119493_13L88808Q1-1007188401Q20"
+              },
+              {
+                "name": "Christian Watson",
+                "line": 4,
+                "american": -304,
+                "decimal": 1.32894737,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674867#2336119500_13L88808Q11124471851Q20"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        },
+        {
+          "gameId": "2026-10-29:CAR:GB",
+          "book": "fanduel",
+          "cloudConfirmedAt": 1793305511236,
+          "rawFirstObservedAt": 1793305505949,
+          "rawLastObservedAt": 1793305505949,
+          "observationGapMs": 5287,
+          "cloudCoverage": {
+            "complete": true,
+            "requested": 44,
+            "returned": 44,
+            "missingMarketIds": [],
+            "missingRunnerIds": [],
+            "categories": {
+              "alt-spread": {
+                "rows": 102,
+                "observedAt": 1793305511236
+              },
+              "alt-total": {
+                "rows": 116,
+                "observedAt": 1793305511236
+              },
+              "td": {
+                "rows": 29,
+                "observedAt": 1793305511236
+              },
+              "pass-yds": {
+                "rows": 19,
+                "observedAt": 1793305511236
+              },
+              "rush-yds": {
+                "rows": 50,
+                "observedAt": 1793305511236
+              },
+              "rec-yds": {
+                "rows": 146,
+                "observedAt": 1793305511236
+              },
+              "receptions": {
+                "rows": 89,
+                "observedAt": 1793305511236
+              }
+            },
+            "rows": 551
+          },
+          "rawRows": 551,
+          "cloudRows": 551,
+          "matchedRows": 551,
+          "counts": {
+            "receptions": {
+              "raw": 89,
+              "cloud": 89,
+              "matched": 89
+            },
+            "rec-yds": {
+              "raw": 146,
+              "cloud": 146,
+              "matched": 146
+            },
+            "pass-yds": {
+              "raw": 19,
+              "cloud": 19,
+              "matched": 19
+            },
+            "td": {
+              "raw": 29,
+              "cloud": 29,
+              "matched": 29
+            },
+            "alt-spread": {
+              "raw": 102,
+              "cloud": 102,
+              "matched": 102
+            },
+            "alt-total": {
+              "raw": 116,
+              "cloud": 116,
+              "matched": 116
+            },
+            "rush-yds": {
+              "raw": 50,
+              "cloud": 50,
+              "matched": 50
+            }
+          },
+          "samples": {
+            "receptions": [
+              {
+                "name": "Christian Watson",
+                "line": 3,
+                "american": -900,
+                "decimal": 1.111111111111111,
+                "suspended": false,
+                "sourceSelectionId": "61447958"
+              },
+              {
+                "name": "Christian Watson",
+                "line": 4,
+                "american": -310,
+                "decimal": 1.32258064516129,
+                "suspended": false,
+                "sourceSelectionId": "61447939"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Christian Watson",
+                "line": 25,
+                "american": -1600,
+                "decimal": 1.0625,
+                "suspended": false,
+                "sourceSelectionId": "48614480"
+              },
+              {
+                "name": "Christian Watson",
+                "line": 30,
+                "american": -1000,
+                "decimal": 1.1,
+                "suspended": false,
+                "sourceSelectionId": "73484469"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Jordan Love",
+                "line": 175,
+                "american": -1450,
+                "decimal": 1.068965517241379,
+                "suspended": false,
+                "sourceSelectionId": "64185975"
+              },
+              {
+                "name": "Jordan Love",
+                "line": 200,
+                "american": -650,
+                "decimal": 1.153846153846154,
+                "suspended": false,
+                "sourceSelectionId": "41618204"
+              }
+            ],
+            "td": [
+              {
+                "name": "Josh Jacobs",
+                "line": null,
+                "american": -150,
+                "decimal": 1.666666666666667,
+                "suspended": false,
+                "sourceSelectionId": "16602542"
+              },
+              {
+                "name": "Chuba Hubbard",
+                "line": null,
+                "american": -110,
+                "decimal": 1.909090909090909,
+                "suspended": false,
+                "sourceSelectionId": "22502305"
+              }
+            ],
+            "alt-spread": [
+              {
+                "name": "Carolina Panthers",
+                "line": 29.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "16250620"
+              },
+              {
+                "name": "Carolina Panthers",
+                "line": 28.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "16250621"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 20.5,
+                "american": -50000,
+                "decimal": 1.002,
+                "suspended": false,
+                "sourceSelectionId": "12213256"
+              },
+              {
+                "name": "Over",
+                "line": 21.5,
+                "american": -50000,
+                "decimal": 1.002,
+                "suspended": false,
+                "sourceSelectionId": "12235570"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "MarShawn Lloyd",
+                "line": 5,
+                "american": -750,
+                "decimal": 1.133333333333333,
+                "suspended": false,
+                "sourceSelectionId": "102305115"
+              },
+              {
+                "name": "MarShawn Lloyd",
+                "line": 10,
+                "american": -280,
+                "decimal": 1.357142857142857,
+                "suspended": false,
+                "sourceSelectionId": "102305108"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        },
+        {
+          "gameId": "2026-11-01:BAL:BUF",
+          "book": "draftkings",
+          "cloudConfirmedAt": 1793305503899,
+          "rawFirstObservedAt": 1793305507172,
+          "rawLastObservedAt": 1793305508035,
+          "observationGapMs": -3704.5,
+          "cloudCoverage": {
+            "complete": true,
+            "categories": {
+              "alt-spread": {
+                "markets": 1,
+                "rows": 90,
+                "observedAt": 1793305503899
+              },
+              "alt-total": {
+                "markets": 1,
+                "rows": 96,
+                "observedAt": 1793305504044
+              },
+              "td": {
+                "markets": 1,
+                "rows": 28,
+                "observedAt": 1793305504188
+              },
+              "pass-yds": {
+                "markets": 2,
+                "rows": 54,
+                "observedAt": 1793305504313
+              },
+              "rush-yds": {
+                "markets": 6,
+                "rows": 78,
+                "observedAt": 1793305504633
+              },
+              "rec-yds": {
+                "markets": 16,
+                "rows": 209,
+                "observedAt": 1793305504822
+              },
+              "receptions": {
+                "markets": 16,
+                "rows": 95,
+                "observedAt": 1793305505093
+              }
+            },
+            "markets": 43,
+            "rows": 650
+          },
+          "rawRows": 650,
+          "cloudRows": 650,
+          "matchedRows": 650,
+          "counts": {
+            "alt-spread": {
+              "raw": 90,
+              "cloud": 90,
+              "matched": 90
+            },
+            "alt-total": {
+              "raw": 96,
+              "cloud": 96,
+              "matched": 96
+            },
+            "td": {
+              "raw": 28,
+              "cloud": 28,
+              "matched": 28
+            },
+            "pass-yds": {
+              "raw": 54,
+              "cloud": 54,
+              "matched": 54
+            },
+            "rush-yds": {
+              "raw": 78,
+              "cloud": 78,
+              "matched": 78
+            },
+            "rec-yds": {
+              "raw": 209,
+              "cloud": 209,
+              "matched": 209
+            },
+            "receptions": {
+              "raw": 95,
+              "cloud": 95,
+              "matched": 95
+            }
+          },
+          "samples": {
+            "alt-spread": [
+              {
+                "name": "Baltimore Ravens",
+                "line": -18.5,
+                "american": 1260,
+                "decimal": 13.6,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942683N1850_3"
+              },
+              {
+                "name": "Buffalo Bills",
+                "line": 18.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942683P1850_1"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 31.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942683O3150_1"
+              },
+              {
+                "name": "Under",
+                "line": 31.5,
+                "american": 1300,
+                "decimal": 14,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942683U3150_3"
+              }
+            ],
+            "td": [
+              {
+                "name": "Derrick Henry",
+                "line": null,
+                "american": -245,
+                "decimal": 1.40816327,
+                "suspended": false,
+                "sourceSelectionId": "0QA382689796#2336199139_13L88808Q1-660534674Q20"
+              },
+              {
+                "name": "James Cook",
+                "line": null,
+                "american": -175,
+                "decimal": 1.57142858,
+                "suspended": false,
+                "sourceSelectionId": "0QA382689796#2336199125_13L88808Q11826828834Q20"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Josh Allen",
+                "line": 170,
+                "american": -1300,
+                "decimal": 1.07692308,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688329#2336192863_13L88808Q1-1394528295Q20"
+              },
+              {
+                "name": "Josh Allen",
+                "line": 180,
+                "american": -880,
+                "decimal": 1.11363637,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688329#2336192957_13L88808Q1-2069844962Q20"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "Ray Davis",
+                "line": 5,
+                "american": -113,
+                "decimal": 1.88495576,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688076#2339359461_13L88808Q1-1128929880Q20"
+              },
+              {
+                "name": "Ray Davis",
+                "line": 10,
+                "american": 193,
+                "decimal": 2.93,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688076#2336192475_13L88808Q1713919674Q20"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Dalton Kincaid",
+                "line": 10,
+                "american": -1860,
+                "decimal": 1.05376345,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688050#2336191957_13L88808Q1-563917321Q20"
+              },
+              {
+                "name": "Dalton Kincaid",
+                "line": 15,
+                "american": -950,
+                "decimal": 1.10526316,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688050#2336191973_13L88808Q1-347953252Q20"
+              }
+            ],
+            "receptions": [
+              {
+                "name": "Ty Johnson",
+                "line": 2,
+                "american": -228,
+                "decimal": 1.4385965,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688053#2336191923_13L88808Q1-78964909Q20"
+              },
+              {
+                "name": "Ty Johnson",
+                "line": 3,
+                "american": 127,
+                "decimal": 2.27,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688053#2336191938_13L88808Q1-1007188401Q20"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        },
+        {
+          "gameId": "2026-11-01:BAL:BUF",
+          "book": "fanduel",
+          "cloudConfirmedAt": 1793305500737,
+          "rawFirstObservedAt": 1793305506146,
+          "rawLastObservedAt": 1793305506146,
+          "observationGapMs": -5409,
+          "cloudCoverage": {
+            "complete": true,
+            "requested": 43,
+            "returned": 43,
+            "missingMarketIds": [],
+            "missingRunnerIds": [],
+            "categories": {
+              "alt-spread": {
+                "rows": 102,
+                "observedAt": 1793305500737
+              },
+              "alt-total": {
+                "rows": 116,
+                "observedAt": 1793305500737
+              },
+              "td": {
+                "rows": 28,
+                "observedAt": 1793305500737
+              },
+              "pass-yds": {
+                "rows": 19,
+                "observedAt": 1793305500737
+              },
+              "rush-yds": {
+                "rows": 53,
+                "observedAt": 1793305500737
+              },
+              "rec-yds": {
+                "rows": 161,
+                "observedAt": 1793305500737
+              },
+              "receptions": {
+                "rows": 91,
+                "observedAt": 1793305500737
+              }
+            },
+            "rows": 570
+          },
+          "rawRows": 570,
+          "cloudRows": 570,
+          "matchedRows": 570,
+          "counts": {
+            "receptions": {
+              "raw": 91,
+              "cloud": 91,
+              "matched": 91
+            },
+            "rush-yds": {
+              "raw": 53,
+              "cloud": 53,
+              "matched": 53
+            },
+            "rec-yds": {
+              "raw": 161,
+              "cloud": 161,
+              "matched": 161
+            },
+            "alt-spread": {
+              "raw": 102,
+              "cloud": 102,
+              "matched": 102
+            },
+            "alt-total": {
+              "raw": 116,
+              "cloud": 116,
+              "matched": 116
+            },
+            "td": {
+              "raw": 28,
+              "cloud": 28,
+              "matched": 28
+            },
+            "pass-yds": {
+              "raw": 19,
+              "cloud": 19,
+              "matched": 19
+            }
+          },
+          "samples": {
+            "receptions": [
+              {
+                "name": "Josh Palmer",
+                "line": 1,
+                "american": -300,
+                "decimal": 1.333333333333333,
+                "suspended": false,
+                "sourceSelectionId": "61712802"
+              },
+              {
+                "name": "Josh Palmer",
+                "line": 2,
+                "american": 162,
+                "decimal": 2.62,
+                "suspended": false,
+                "sourceSelectionId": "61712818"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "Josh Allen",
+                "line": 15,
+                "american": -1000,
+                "decimal": 1.1,
+                "suspended": false,
+                "sourceSelectionId": "73618538"
+              },
+              {
+                "name": "Josh Allen",
+                "line": 20,
+                "american": -470,
+                "decimal": 1.212765957446809,
+                "suspended": false,
+                "sourceSelectionId": "73618522"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Rashod Bateman",
+                "line": 5,
+                "american": -1100,
+                "decimal": 1.090909090909091,
+                "suspended": false,
+                "sourceSelectionId": "73458261"
+              },
+              {
+                "name": "Rashod Bateman",
+                "line": 10,
+                "american": -450,
+                "decimal": 1.222222222222222,
+                "suspended": false,
+                "sourceSelectionId": "73458260"
+              }
+            ],
+            "alt-spread": [
+              {
+                "name": "Baltimore Ravens",
+                "line": 29.5,
+                "american": -20000,
+                "decimal": 1.005,
+                "suspended": false,
+                "sourceSelectionId": "15845920"
+              },
+              {
+                "name": "Baltimore Ravens",
+                "line": 28.5,
+                "american": -20000,
+                "decimal": 1.005,
+                "suspended": false,
+                "sourceSelectionId": "15845921"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 26.5,
+                "american": -50000,
+                "decimal": 1.002,
+                "suspended": false,
+                "sourceSelectionId": "12213239"
+              },
+              {
+                "name": "Over",
+                "line": 27.5,
+                "american": -20000,
+                "decimal": 1.005,
+                "suspended": false,
+                "sourceSelectionId": "12197205"
+              }
+            ],
+            "td": [
+              {
+                "name": "Derrick Henry",
+                "line": null,
+                "american": -240,
+                "decimal": 1.416666666666667,
+                "suspended": false,
+                "sourceSelectionId": "8776315"
+              },
+              {
+                "name": "Josh Allen",
+                "line": null,
+                "american": -170,
+                "decimal": 1.588235294117647,
+                "suspended": false,
+                "sourceSelectionId": "12399650"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Lamar Jackson",
+                "line": 150,
+                "american": -1450,
+                "decimal": 1.068965517241379,
+                "suspended": false,
+                "sourceSelectionId": "38176637"
+              },
+              {
+                "name": "Lamar Jackson",
+                "line": 175,
+                "american": -600,
+                "decimal": 1.166666666666667,
+                "suspended": false,
+                "sourceSelectionId": "64124348"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "versionBefore": "b14c22fb79007a24e6be7099d9cb7693eb4c5fc9",
+  "games": [
+    {
+      "id": "2026-10-29:CAR:GB",
+      "away": {
+        "id": "CAR",
+        "name": "Carolina Panthers"
+      },
+      "home": {
+        "id": "GB",
+        "name": "Green Bay Packers"
+      },
+      "startsAt": "2026-10-30T00:15:00.000Z",
+      "dkId": "34118182",
+      "fdId": "36215311"
+    },
+    {
+      "id": "2026-11-01:BAL:BUF",
+      "away": {
+        "id": "BAL",
+        "name": "Baltimore Ravens"
+      },
+      "home": {
+        "id": "BUF",
+        "name": "Buffalo Bills"
+      },
+      "startsAt": "2026-11-01T18:00:00.000Z",
+      "dkId": "34118214",
+      "fdId": "36215313"
+    }
+  ],
+  "versionAfter": "b14c22fb79007a24e6be7099d9cb7693eb4c5fc9",
+  "pass": true,
+  "finishedAt": "2026-10-29T20:25:15.522Z",
+  "durationMs": 21240
+}

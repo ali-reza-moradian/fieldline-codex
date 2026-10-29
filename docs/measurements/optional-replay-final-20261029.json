@@ -1,0 +1,416 @@
+{
+  "generatedAt": "2026-10-29T20:00:13.977Z",
+  "version": {
+    "gitHead": "8f0148c28544a87aaf11dbfb33daa8a10d8e8b54",
+    "dirty": false,
+    "sourceSha256": "0c657e8dd68103832ba267f0a6752418561639d733080a80dd7069401f8b9c8b",
+    "node": "v24.18.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "config": {
+    "updatesPerTrial": 500,
+    "intervalMs": 32,
+    "pairedRounds": 2,
+    "mainGames": 16,
+    "extraGames": 2,
+    "extraRowsPerBookPerGame": 700,
+    "extraPollMs": 15000,
+    "historyPoints": 150000,
+    "historySeries": 50,
+    "historySpanHours": 48,
+    "checkpointPerActiveTrial": 1,
+    "historyQueryEveryUpdates": 50
+  },
+  "scope": "Synthetic current-code control vs optional features; loopback server-to-SSE-consumer latency. Identical complete price sequence verified in every trial. No upstream/WAN or browser paint comparison.",
+  "limitations": [
+    "Source collection is represented by validated synthetic worker results; no bookmaker HTTP traffic is performed.",
+    "Main SSE JSON parsing runs in the benchmark process. Extras viewers drain bytes without rendering.",
+    "Synthetic extra-result processing runs immediately before a scheduled main update; scheduledToSseMs includes that competing work, while loopbackSseMs begins at store.update.",
+    "Database network, actual restart restore, and operating-system scheduling on production hosts are not measured.",
+    "Checkpoint serialization and history queries run in enabled trials; database writes are stubbed.",
+    "Memory uses one sequential process without forced garbage collection; peak heap is descriptive, not a controlled memory delta."
+  ],
+  "trials": [
+    {
+      "trial": 1,
+      "optionalFeatures": false,
+      "measuredUpdates": 500,
+      "priceDigest": "df683e7f6931f083adcee063339bb2d8ec6f80ac316ffa3604cac7b31ec53ab2",
+      "elapsedMs": 15968.6605,
+      "storeCallMs": {
+        "n": 500,
+        "mean": 0.9943,
+        "p50": 0.9215,
+        "p95": 1.8233,
+        "p99": 2.1608,
+        "max": 3.9198
+      },
+      "loopbackSseMs": {
+        "n": 500,
+        "mean": 1.3701,
+        "p50": 1.2606,
+        "p95": 2.3027,
+        "p99": 2.9407,
+        "max": 10.9414
+      },
+      "scheduledToSseMs": {
+        "n": 500,
+        "mean": 1.153,
+        "p50": 1.0733,
+        "p95": 2.3819,
+        "p99": 3.2429,
+        "max": 11.469
+      },
+      "scheduledUpdateLatenessMs": {
+        "n": 500,
+        "mean": 0.117,
+        "p50": 0,
+        "p95": 0.5673,
+        "p99": 0.7668,
+        "max": 4.4382
+      },
+      "eventLoopDelayMs": {
+        "mean": 1.1613,
+        "p50": 1.1581,
+        "p95": 1.3384,
+        "p99": 2.6767,
+        "max": 12.2716
+      },
+      "cpuMs": {
+        "user": 853.215,
+        "system": 192.893
+      },
+      "eventLoopUtilization": 0.0717,
+      "memoryBytes": {
+        "beforeHeap": 11968080,
+        "peakHeap": 16295472,
+        "peakRss": 91242496
+      },
+      "mainSseBytes": 2340723,
+      "extrasSseBytes": 0,
+      "extras": null,
+      "history": null
+    },
+    {
+      "trial": 2,
+      "optionalFeatures": true,
+      "measuredUpdates": 500,
+      "priceDigest": "df683e7f6931f083adcee063339bb2d8ec6f80ac316ffa3604cac7b31ec53ab2",
+      "elapsedMs": 15968.6192,
+      "storeCallMs": {
+        "n": 500,
+        "mean": 1.0834,
+        "p50": 0.9888,
+        "p95": 1.6786,
+        "p99": 1.997,
+        "max": 20.7872
+      },
+      "loopbackSseMs": {
+        "n": 500,
+        "mean": 1.4278,
+        "p50": 1.3088,
+        "p95": 2.1315,
+        "p99": 3.0639,
+        "max": 21.3655
+      },
+      "scheduledToSseMs": {
+        "n": 500,
+        "mean": 1.2208,
+        "p50": 0.9863,
+        "p95": 2.6488,
+        "p99": 5.0725,
+        "max": 21.4588
+      },
+      "scheduledUpdateLatenessMs": {
+        "n": 500,
+        "mean": 0.1113,
+        "p50": 0,
+        "p95": 0.6138,
+        "p99": 0.9122,
+        "max": 5.2545
+      },
+      "eventLoopDelayMs": {
+        "mean": 1.1722,
+        "p50": 1.1592,
+        "p95": 1.3343,
+        "p99": 2.7935,
+        "max": 22.3642
+      },
+      "cpuMs": {
+        "user": 1003.173,
+        "system": 206.259
+      },
+      "eventLoopUtilization": 0.083,
+      "memoryBytes": {
+        "beforeHeap": 49996664,
+        "peakHeap": 68589328,
+        "peakRss": 186826752
+      },
+      "mainSseBytes": 2340683,
+      "extrasSseBytes": 1987986,
+      "extras": {
+        "snapshots": 8,
+        "failures": 0,
+        "workerRestarts": 0,
+        "upstreamBytes": 1600000,
+        "activeGames": 2,
+        "viewers": 2,
+        "pollMs": 15000,
+        "staleAfterMs": 45000,
+        "region": "Ontario",
+        "isolatedProcess": true,
+        "injectedPollCycles": 2,
+        "collectorProcessSimulated": true
+      },
+      "history": {
+        "initialImport": {
+          "loadedSeries": 50,
+          "loadedPoints": 150000,
+          "rejectedPoints": 0,
+          "limits": {
+            "maxSeries": 1024,
+            "maxPointsPerSeries": 3000,
+            "maxTotalPoints": 150000,
+            "pendingEvents": 0,
+            "queueOverflows": 0,
+            "clockRollbacks": 0,
+            "evictedSeries": 0,
+            "evictedPoints": 0,
+            "invalidImports": 0,
+            "note": "Actual server observations only. History can be shorter than the selected window after startup, gaps, or capacity eviction. Restored history never restores live eligibility."
+          }
+        },
+        "limits": {
+          "maxSeries": 1024,
+          "maxPointsPerSeries": 3000,
+          "maxTotalPoints": 150000,
+          "pendingEvents": 1,
+          "queueOverflows": 0,
+          "clockRollbacks": 0,
+          "evictedSeries": 1,
+          "evictedPoints": 3000,
+          "invalidImports": 0,
+          "note": "Actual server observations only. History can be shorter than the selected window after startup, gaps, or capacity eviction. Restored history never restores live eligibility."
+        },
+        "checkpointBytes": 10162554,
+        "checkpointRows": 241,
+        "checkpointElapsedMs": 61.3515,
+        "historyQueries": 10,
+        "totalQueryMs": 24.4611
+      }
+    },
+    {
+      "trial": 3,
+      "optionalFeatures": true,
+      "measuredUpdates": 500,
+      "priceDigest": "df683e7f6931f083adcee063339bb2d8ec6f80ac316ffa3604cac7b31ec53ab2",
+      "elapsedMs": 15968.3469,
+      "storeCallMs": {
+        "n": 500,
+        "mean": 0.9143,
+        "p50": 0.8329,
+        "p95": 1.7106,
+        "p99": 2.3242,
+        "max": 8.1036
+      },
+      "loopbackSseMs": {
+        "n": 500,
+        "mean": 1.2194,
+        "p50": 1.1125,
+        "p95": 2.1395,
+        "p99": 3.1022,
+        "max": 8.3789
+      },
+      "scheduledToSseMs": {
+        "n": 500,
+        "mean": 0.9489,
+        "p50": 0.7809,
+        "p95": 2.1532,
+        "p99": 5.3575,
+        "max": 17.6092
+      },
+      "scheduledUpdateLatenessMs": {
+        "n": 500,
+        "mean": 0.0244,
+        "p50": 0,
+        "p95": 0.1349,
+        "p99": 0.2368,
+        "max": 3.1496
+      },
+      "eventLoopDelayMs": {
+        "mean": 1.1582,
+        "p50": 1.1561,
+        "p95": 1.282,
+        "p99": 2.5006,
+        "max": 17.7439
+      },
+      "cpuMs": {
+        "user": 852.882,
+        "system": 186.467
+      },
+      "eventLoopUtilization": 0.0723,
+      "memoryBytes": {
+        "beforeHeap": 96895160,
+        "peakHeap": 105186752,
+        "peakRss": 214515712
+      },
+      "mainSseBytes": 2340711,
+      "extrasSseBytes": 1987986,
+      "extras": {
+        "snapshots": 8,
+        "failures": 0,
+        "workerRestarts": 0,
+        "upstreamBytes": 1600000,
+        "activeGames": 2,
+        "viewers": 2,
+        "pollMs": 15000,
+        "staleAfterMs": 45000,
+        "region": "Ontario",
+        "isolatedProcess": true,
+        "injectedPollCycles": 2,
+        "collectorProcessSimulated": true
+      },
+      "history": {
+        "initialImport": {
+          "loadedSeries": 50,
+          "loadedPoints": 150000,
+          "rejectedPoints": 0,
+          "limits": {
+            "maxSeries": 1024,
+            "maxPointsPerSeries": 3000,
+            "maxTotalPoints": 150000,
+            "pendingEvents": 0,
+            "queueOverflows": 0,
+            "clockRollbacks": 0,
+            "evictedSeries": 0,
+            "evictedPoints": 0,
+            "invalidImports": 0,
+            "note": "Actual server observations only. History can be shorter than the selected window after startup, gaps, or capacity eviction. Restored history never restores live eligibility."
+          }
+        },
+        "limits": {
+          "maxSeries": 1024,
+          "maxPointsPerSeries": 3000,
+          "maxTotalPoints": 150000,
+          "pendingEvents": 0,
+          "queueOverflows": 0,
+          "clockRollbacks": 0,
+          "evictedSeries": 1,
+          "evictedPoints": 3000,
+          "invalidImports": 0,
+          "note": "Actual server observations only. History can be shorter than the selected window after startup, gaps, or capacity eviction. Restored history never restores live eligibility."
+        },
+        "checkpointBytes": 10162554,
+        "checkpointRows": 241,
+        "checkpointElapsedMs": 62.9186,
+        "historyQueries": 10,
+        "totalQueryMs": 17.3184
+      }
+    },
+    {
+      "trial": 4,
+      "optionalFeatures": false,
+      "measuredUpdates": 500,
+      "priceDigest": "df683e7f6931f083adcee063339bb2d8ec6f80ac316ffa3604cac7b31ec53ab2",
+      "elapsedMs": 15967.792,
+      "storeCallMs": {
+        "n": 500,
+        "mean": 1.0424,
+        "p50": 0.8977,
+        "p95": 1.7908,
+        "p99": 2.8571,
+        "max": 17.9495
+      },
+      "loopbackSseMs": {
+        "n": 500,
+        "mean": 1.3322,
+        "p50": 1.1897,
+        "p95": 2.2215,
+        "p99": 3.6541,
+        "max": 18.2081
+      },
+      "scheduledToSseMs": {
+        "n": 500,
+        "mean": 1.1383,
+        "p50": 0.8857,
+        "p95": 2.3627,
+        "p99": 5.0776,
+        "max": 26.7373
+      },
+      "scheduledUpdateLatenessMs": {
+        "n": 500,
+        "mean": 0.1732,
+        "p50": 0,
+        "p95": 0.5119,
+        "p99": 2.2415,
+        "max": 26.1864
+      },
+      "eventLoopDelayMs": {
+        "mean": 1.1629,
+        "p50": 1.1571,
+        "p95": 1.2984,
+        "p99": 2.7525,
+        "max": 27.263
+      },
+      "cpuMs": {
+        "user": 694.824,
+        "system": 194.809
+      },
+      "eventLoopUtilization": 0.0698,
+      "memoryBytes": {
+        "beforeHeap": 36233976,
+        "peakHeap": 60555688,
+        "peakRss": 194166784
+      },
+      "mainSseBytes": 2340681,
+      "extrasSseBytes": 0,
+      "extras": null,
+      "history": null
+    }
+  ],
+  "aggregate": {
+    "disabled": {
+      "loopbackSseMs": {
+        "n": 1000,
+        "mean": 1.3511,
+        "p50": 1.2205,
+        "p95": 2.2746,
+        "p99": 3.4536,
+        "max": 18.2081
+      },
+      "storeCallMs": {
+        "n": 1000,
+        "mean": 1.0184,
+        "p50": 0.9072,
+        "p95": 1.7943,
+        "p99": 2.4989,
+        "max": 17.9495
+      }
+    },
+    "enabled": {
+      "loopbackSseMs": {
+        "n": 1000,
+        "mean": 1.3236,
+        "p50": 1.2256,
+        "p95": 2.1395,
+        "p99": 3.1022,
+        "max": 21.3655
+      },
+      "storeCallMs": {
+        "n": 1000,
+        "mean": 0.9988,
+        "p50": 0.9081,
+        "p95": 1.694,
+        "p99": 2.0833,
+        "max": 20.7872
+      }
+    },
+    "enabledMinusDisabledMs": {
+      "loopbackMean": -0.0275,
+      "loopbackP95": -0.1351,
+      "storeMean": -0.0196,
+      "storeP95": -0.1003
+    }
+  }
+}

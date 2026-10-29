@@ -1,0 +1,3487 @@
+{
+  "startedAt": "2026-10-29T20:01:30.312Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "expectedCommit": "8f0148c",
+  "methodology": "Two cloud SSE viewers; separately fetch and parse logged-out Ontario raw sources on the observer Mac. These observer reads are validation only; no prices are sent into the cloud app. Compare every quoted outcome, with up to three bounded raw attempts.",
+  "limits": "HTTP observations are asynchronous. Report unresolved changes as mismatches, not proof of a scraper error. Full-game/overtime checks use recognized raw market types and explicit period metadata; house participation/early-exit settlement policies are not proven identical. This is not an update-latency benchmark.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "finishedAt": "2026-10-29T20:02:41.488Z",
+      "comparisons": [
+        {
+          "gameId": "2026-10-29:CAR:GB",
+          "book": "draftkings",
+          "cloudConfirmedAt": 1793304145879,
+          "rawFirstObservedAt": 1793304127793,
+          "rawLastObservedAt": 1793304128522,
+          "observationGapMs": 17721.5,
+          "cloudCoverage": {
+            "complete": true,
+            "categories": {
+              "alt-spread": {
+                "markets": 1,
+                "rows": 94,
+                "observedAt": 1793304145879
+              },
+              "alt-total": {
+                "markets": 1,
+                "rows": 92,
+                "observedAt": 1793304148280
+              },
+              "td": {
+                "markets": 1,
+                "rows": 29,
+                "observedAt": 1793304150281
+              },
+              "pass-yds": {
+                "markets": 2,
+                "rows": 53,
+                "observedAt": 1793304154580
+              },
+              "rush-yds": {
+                "markets": 7,
+                "rows": 73,
+                "observedAt": 1793304156890
+              },
+              "rec-yds": {
+                "markets": 16,
+                "rows": 213,
+                "observedAt": 1793304159081
+              },
+              "receptions": {
+                "markets": 16,
+                "rows": 100,
+                "observedAt": 1793304161080
+              }
+            },
+            "markets": 44,
+            "rows": 654
+          },
+          "rawRows": 657,
+          "cloudRows": 654,
+          "matchedRows": 610,
+          "counts": {
+            "alt-spread": {
+              "raw": 94,
+              "cloud": 94,
+              "matched": 94
+            },
+            "alt-total": {
+              "raw": 92,
+              "cloud": 92,
+              "matched": 92
+            },
+            "td": {
+              "raw": 29,
+              "cloud": 29,
+              "matched": 29
+            },
+            "pass-yds": {
+              "raw": 54,
+              "cloud": 53,
+              "matched": 48
+            },
+            "rush-yds": {
+              "raw": 73,
+              "cloud": 73,
+              "matched": 73
+            },
+            "rec-yds": {
+              "raw": 215,
+              "cloud": 213,
+              "matched": 179
+            },
+            "receptions": {
+              "raw": 100,
+              "cloud": 100,
+              "matched": 95
+            }
+          },
+          "samples": {
+            "alt-spread": [
+              {
+                "name": "Carolina Panthers",
+                "line": -20.5,
+                "american": 1280,
+                "decimal": 13.8,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942663N2050_3"
+              },
+              {
+                "name": "Green Bay Packers",
+                "line": 20.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942663P2050_1"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 25.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942663O2550_1"
+              },
+              {
+                "name": "Under",
+                "line": 25.5,
+                "american": 1260,
+                "decimal": 13.6,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942663U2550_3"
+              }
+            ],
+            "td": [
+              {
+                "name": "Josh Jacobs",
+                "line": null,
+                "american": -145,
+                "decimal": 1.68965518,
+                "suspended": false,
+                "sourceSelectionId": "0QA382678835#2336139995_13L88808Q1724494599Q20"
+              },
+              {
+                "name": "Chuba Hubbard",
+                "line": null,
+                "american": -115,
+                "decimal": 1.86956522,
+                "suspended": false,
+                "sourceSelectionId": "0QA382678835#2336140023_13L88808Q1850190615Q20"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Bryce Young",
+                "line": 170,
+                "american": -1320,
+                "decimal": 1.07575758,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675504#2336121533_13L88808Q1-1394528295Q20"
+              },
+              {
+                "name": "Bryce Young",
+                "line": 180,
+                "american": -870,
+                "decimal": 1.11494253,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675504#2336121548_13L88808Q1-2069844962Q20"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "Trevor Etienne",
+                "line": 10,
+                "american": -107,
+                "decimal": 1.93457944,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675092#2336121495_13L88808Q1713919674Q20"
+              },
+              {
+                "name": "Trevor Etienne",
+                "line": 15,
+                "american": 167,
+                "decimal": 2.67,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675092#2336121575_13L88808Q11708874668Q20"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Jonnu Smith",
+                "line": 3,
+                "american": -113,
+                "decimal": 1.88495576,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674912#2336405430_13L88808Q1-1604825724Q20"
+              },
+              {
+                "name": "Jonnu Smith",
+                "line": 10,
+                "american": 159,
+                "decimal": 2.59,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674912#2336119695_13L88808Q1-563917321Q20"
+              }
+            ],
+            "receptions": [
+              {
+                "name": "Christian Watson",
+                "line": 3,
+                "american": -860,
+                "decimal": 1.11627907,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674867#2336119493_13L88808Q1-1007188401Q20"
+              },
+              {
+                "name": "Christian Watson",
+                "line": 4,
+                "american": -304,
+                "decimal": 1.32894737,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674867#2336119500_13L88808Q11124471851Q20"
+              }
+            ]
+          },
+          "mismatches": [
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|230|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|230|gte",
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 230,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675504#2336121990_13L88808Q1253970529Q20",
+                "sourceMarketId": "382675504",
+                "suspended": false,
+                "american": -199,
+                "decimal": 1.50251257,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 230,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -198,
+                "decimal": 1.50505051,
+                "protection": "early_exit",
+                "observedAt": 1793304154580
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|240|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|240|gte",
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 240,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675504#2336122062_13L88808Q1465809616Q20",
+                "sourceMarketId": "382675504",
+                "suspended": false,
+                "american": -155,
+                "decimal": 1.6451613,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 240,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -154,
+                "decimal": 1.64935065,
+                "protection": "early_exit",
+                "observedAt": 1793304154580
+              }
+            },
+            {
+              "category": "missing",
+              "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|254|gte",
+              "kind": "pass-yds",
+              "name": "Bryce Young",
+              "line": 254,
+              "sourceSelectionId": "0QA382675504#2339266597_13L88808Q1640862277Q20"
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|320|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|320|gte",
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 320,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675504#2336122437_13L88808Q1-255816587Q20",
+                "sourceMarketId": "382675504",
+                "suspended": false,
+                "american": 402,
+                "decimal": 5.02,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 320,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 403,
+                "decimal": 5.03,
+                "protection": "early_exit",
+                "observedAt": 1793304154580
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|330|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|330|gte",
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 330,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675504#2336122465_13L88808Q11555396191Q20",
+                "sourceMarketId": "382675504",
+                "suspended": false,
+                "american": 501,
+                "decimal": 6.01,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 330,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 503,
+                "decimal": 6.03,
+                "protection": "early_exit",
+                "observedAt": 1793304154580
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|390|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|pass-yds|bryceyoung|390|gte",
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 390,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675504#2336147538_13L88808Q1-2047917122Q20",
+                "sourceMarketId": "382675504",
+                "suspended": false,
+                "american": 1760,
+                "decimal": 18.6,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "pass-yds",
+                "subject": "bryceyoung",
+                "name": "Bryce Young",
+                "line": 390,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 1740,
+                "decimal": 18.4,
+                "protection": "early_exit",
+                "observedAt": 1793304154580
+              }
+            },
+            {
+              "category": "missing",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|4|gte",
+              "kind": "rec-yds",
+              "name": "Bo Melton",
+              "line": 4,
+              "sourceSelectionId": "0QA382675412#2341819622_13L88808Q1-341945404Q20"
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|15|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|15|gte",
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 15,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675412#2336120237_13L88808Q1-347953252Q20",
+                "sourceMarketId": "382675412",
+                "suspended": false,
+                "american": 184,
+                "decimal": 2.84,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 15,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 186,
+                "decimal": 2.86,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|20|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|20|gte",
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 20,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675412#2336120285_13L88808Q11649361331Q20",
+                "sourceMarketId": "382675412",
+                "suspended": false,
+                "american": 267,
+                "decimal": 3.67,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 20,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 270,
+                "decimal": 3.7,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|25|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|25|gte",
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 25,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675412#2336120415_13L88808Q144673524Q20",
+                "sourceMarketId": "382675412",
+                "suspended": false,
+                "american": 372,
+                "decimal": 4.72,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 25,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 373,
+                "decimal": 4.73,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|30|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|30|gte",
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 30,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675412#2336120472_13L88808Q1628754404Q20",
+                "sourceMarketId": "382675412",
+                "suspended": false,
+                "american": 487,
+                "decimal": 5.87,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 30,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 488,
+                "decimal": 5.88,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|60|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|60|gte",
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 60,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675412#2338730680_13L88808Q1338230796Q20",
+                "sourceMarketId": "382675412",
+                "suspended": false,
+                "american": 1900,
+                "decimal": 20,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "bomelton",
+                "name": "Bo Melton",
+                "line": 60,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 1920,
+                "decimal": 20.2,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|10|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|10|gte",
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 10,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675620#2337336157_13L88808Q1-563917321Q20",
+                "sourceMarketId": "382675620",
+                "suspended": false,
+                "american": -3200,
+                "decimal": 1.03125,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 10,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -3300,
+                "decimal": 1.03030304,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|20|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|20|gte",
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 20,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675620#2336122265_13L88808Q11649361331Q20",
+                "sourceMarketId": "382675620",
+                "suspended": false,
+                "american": -960,
+                "decimal": 1.10416667,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 20,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -970,
+                "decimal": 1.10309279,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|30|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|30|gte",
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 30,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675620#2336122392_13L88808Q1628754404Q20",
+                "sourceMarketId": "382675620",
+                "suspended": false,
+                "american": -465,
+                "decimal": 1.21505377,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 30,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -466,
+                "decimal": 1.21459228,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|40|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|40|gte",
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 40,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675620#2336122443_13L88808Q1627513418Q20",
+                "sourceMarketId": "382675620",
+                "suspended": false,
+                "american": -259,
+                "decimal": 1.38610039,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 40,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -260,
+                "decimal": 1.38461539,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|50|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|50|gte",
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 50,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675620#2336122496_13L88808Q11993669656Q20",
+                "sourceMarketId": "382675620",
+                "suspended": false,
+                "american": -159,
+                "decimal": 1.62893082,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 50,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -160,
+                "decimal": 1.625,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|70|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|70|gte",
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 70,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675620#2336122580_13L88808Q1-2016709064Q20",
+                "sourceMarketId": "382675620",
+                "suspended": false,
+                "american": 144,
+                "decimal": 2.44,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 70,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 143,
+                "decimal": 2.43,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|90|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|90|gte",
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 90,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675620#2336122657_13L88808Q157084223Q20",
+                "sourceMarketId": "382675620",
+                "suspended": false,
+                "american": 299,
+                "decimal": 3.99,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 90,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 298,
+                "decimal": 3.98,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|110|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|matthewgolden|110|gte",
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 110,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675620#2336122716_13L88808Q11776581571Q20",
+                "sourceMarketId": "382675620",
+                "suspended": false,
+                "american": 583,
+                "decimal": 6.83,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 110,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 584,
+                "decimal": 6.84,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "missing",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|15|gte",
+              "kind": "rec-yds",
+              "name": "Tetairoa McMillan",
+              "line": 15,
+              "sourceSelectionId": "0QA382675691#2336121755_13L88808Q1-347953252Q20"
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|20|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|20|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 20,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336121821_13L88808Q11649361331Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": -1400,
+                "decimal": 1.07142858,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 20,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -2100,
+                "decimal": 1.04761905,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|25|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|25|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 25,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336121912_13L88808Q144673524Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": -1000,
+                "decimal": 1.1,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 25,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -1340,
+                "decimal": 1.07462687,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|30|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|30|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 30,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336121930_13L88808Q1628754404Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": -730,
+                "decimal": 1.13698631,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 30,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -930,
+                "decimal": 1.10752689,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|40|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|40|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 40,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336121997_13L88808Q1627513418Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": -426,
+                "decimal": 1.23474179,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 40,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -495,
+                "decimal": 1.20202021,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|50|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|50|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 50,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122025_13L88808Q11993669656Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": -271,
+                "decimal": 1.3690037,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 50,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -295,
+                "decimal": 1.33898306,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|60|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|60|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 60,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122159_13L88808Q1338230796Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": -182,
+                "decimal": 1.54945055,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 60,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -190,
+                "decimal": 1.52631579,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|70|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|70|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 70,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122202_13L88808Q1-2016709064Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": -128,
+                "decimal": 1.78125,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 70,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -129,
+                "decimal": 1.7751938,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|74|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|74|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 74,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336448640_13L88808Q1-308032525Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": -111,
+                "decimal": 1.90090091,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 74,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -110,
+                "decimal": 1.90909091,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|80|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|80|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 80,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122263_13L88808Q11271577035Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 109,
+                "decimal": 2.09,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 80,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 112,
+                "decimal": 2.12,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|90|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|90|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 90,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122292_13L88808Q157084223Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 151,
+                "decimal": 2.51,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 90,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 159,
+                "decimal": 2.59,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|100|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|100|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 100,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122357_13L88808Q11757535264Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 208,
+                "decimal": 3.08,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 100,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 224,
+                "decimal": 3.24,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|110|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|110|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 110,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122367_13L88808Q11776581571Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 282,
+                "decimal": 3.82,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 110,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 314,
+                "decimal": 4.14,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|120|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|120|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 120,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122396_13L88808Q1-2036699519Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 380,
+                "decimal": 4.8,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 120,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 428,
+                "decimal": 5.28,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|130|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|130|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 130,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122447_13L88808Q1-545753065Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 502,
+                "decimal": 6.02,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 130,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 595,
+                "decimal": 6.95,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|140|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|140|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 140,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122498_13L88808Q11861959271Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 680,
+                "decimal": 7.8,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 140,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 820,
+                "decimal": 9.2,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|150|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|150|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 150,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336122519_13L88808Q11550558023Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 920,
+                "decimal": 10.2,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 150,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 1140,
+                "decimal": 12.4,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|160|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|160|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 160,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336144147_13L88808Q1-329990294Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 1220,
+                "decimal": 13.2,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 160,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 1580,
+                "decimal": 16.8,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|170|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|170|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 170,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336145145_13L88808Q118187946Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 1620,
+                "decimal": 17.2,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 170,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 2100,
+                "decimal": 22,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|180|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|180|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 180,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336443458_13L88808Q1-1251639520Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 2100,
+                "decimal": 22,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 180,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 2800,
+                "decimal": 29,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|190|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|190|gte",
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 190,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675691#2336447696_13L88808Q1124304952Q20",
+                "sourceMarketId": "382675691",
+                "suspended": false,
+                "american": 2800,
+                "decimal": 29,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "rec-yds",
+                "subject": "tetairoamcmillan",
+                "name": "Tetairoa McMillan",
+                "line": 190,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 3600,
+                "decimal": 37,
+                "protection": "early_exit",
+                "observedAt": 1793304159081
+              }
+            },
+            {
+              "category": "missing",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|tetairoamcmillan|200|gte",
+              "kind": "rec-yds",
+              "name": "Tetairoa McMillan",
+              "line": 200,
+              "sourceSelectionId": "0QA382675691#2341298937_13L88808Q1-2111813119Q20"
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|3|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|3|gte",
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 3,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675591#2336122035_13L88808Q1-1007188401Q20",
+                "sourceMarketId": "382675591",
+                "suspended": false,
+                "american": -600,
+                "decimal": 1.16666667,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 3,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -610,
+                "decimal": 1.16393443,
+                "protection": "early_exit",
+                "observedAt": 1793304161080
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|4|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|4|gte",
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 4,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675591#2336122092_13L88808Q11124471851Q20",
+                "sourceMarketId": "382675591",
+                "suspended": false,
+                "american": -248,
+                "decimal": 1.40322581,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 4,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": -249,
+                "decimal": 1.40160643,
+                "protection": "early_exit",
+                "observedAt": 1793304161080
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|7|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|7|gte",
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 7,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675591#2336122246_13L88808Q11495395552Q20",
+                "sourceMarketId": "382675591",
+                "suspended": false,
+                "american": 290,
+                "decimal": 3.9,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 7,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 289,
+                "decimal": 3.89,
+                "protection": "early_exit",
+                "observedAt": 1793304161080
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|8|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|8|gte",
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 8,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675591#2336122332_13L88808Q1-1412470928Q20",
+                "sourceMarketId": "382675591",
+                "suspended": false,
+                "american": 525,
+                "decimal": 6.25,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 8,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 523,
+                "decimal": 6.23,
+                "protection": "early_exit",
+                "observedAt": 1793304161080
+              }
+            },
+            {
+              "category": "price_or_availability",
+              "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|9|gte",
+              "fields": [
+                "american",
+                "decimal"
+              ],
+              "expected": {
+                "key": "2026-10-29:CAR:GB|full_game|receptions|matthewgolden|9|gte",
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 9,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "sourceSelectionId": "0QA382675591#2336122344_13L88808Q1-1736336334Q20",
+                "sourceMarketId": "382675591",
+                "suspended": false,
+                "american": 900,
+                "decimal": 10,
+                "protection": "early_exit"
+              },
+              "actual": {
+                "kind": "receptions",
+                "subject": "matthewgolden",
+                "name": "Matthew Golden",
+                "line": 9,
+                "period": "full_game",
+                "rules": "including_overtime",
+                "thresholdOperator": "gte",
+                "suspended": false,
+                "american": 890,
+                "decimal": 9.9,
+                "protection": "early_exit",
+                "observedAt": 1793304161080
+              }
+            },
+            {
+              "category": "extra",
+              "key": "2026-10-29:CAR:GB|full_game|rec-yds|bomelton|5|gte",
+              "kind": "rec-yds",
+              "name": "Bo Melton",
+              "line": 5,
+              "possibleRawLinesForSameSubject": [
+                4,
+                10,
+                15,
+                20,
+                25,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80
+              ]
+            }
+          ],
+          "pass": false
+        },
+        {
+          "gameId": "2026-10-29:CAR:GB",
+          "book": "fanduel",
+          "cloudConfirmedAt": 1793304158480,
+          "rawFirstObservedAt": 1793304127808,
+          "rawLastObservedAt": 1793304127808,
+          "observationGapMs": 30672,
+          "cloudCoverage": {
+            "complete": true,
+            "requested": 44,
+            "returned": 44,
+            "missingMarketIds": [],
+            "missingRunnerIds": [],
+            "categories": {
+              "alt-spread": {
+                "rows": 102,
+                "observedAt": 1793304158480
+              },
+              "alt-total": {
+                "rows": 116,
+                "observedAt": 1793304158480
+              },
+              "td": {
+                "rows": 29,
+                "observedAt": 1793304158480
+              },
+              "pass-yds": {
+                "rows": 19,
+                "observedAt": 1793304158480
+              },
+              "rush-yds": {
+                "rows": 50,
+                "observedAt": 1793304158480
+              },
+              "rec-yds": {
+                "rows": 146,
+                "observedAt": 1793304158480
+              },
+              "receptions": {
+                "rows": 89,
+                "observedAt": 1793304158480
+              }
+            },
+            "rows": 551
+          },
+          "rawRows": 551,
+          "cloudRows": 551,
+          "matchedRows": 551,
+          "counts": {
+            "receptions": {
+              "raw": 89,
+              "cloud": 89,
+              "matched": 89
+            },
+            "rec-yds": {
+              "raw": 146,
+              "cloud": 146,
+              "matched": 146
+            },
+            "pass-yds": {
+              "raw": 19,
+              "cloud": 19,
+              "matched": 19
+            },
+            "td": {
+              "raw": 29,
+              "cloud": 29,
+              "matched": 29
+            },
+            "alt-spread": {
+              "raw": 102,
+              "cloud": 102,
+              "matched": 102
+            },
+            "alt-total": {
+              "raw": 116,
+              "cloud": 116,
+              "matched": 116
+            },
+            "rush-yds": {
+              "raw": 50,
+              "cloud": 50,
+              "matched": 50
+            }
+          },
+          "samples": {
+            "receptions": [
+              {
+                "name": "Christian Watson",
+                "line": 3,
+                "american": -900,
+                "decimal": 1.111111111111111,
+                "suspended": false,
+                "sourceSelectionId": "61447958"
+              },
+              {
+                "name": "Christian Watson",
+                "line": 4,
+                "american": -310,
+                "decimal": 1.32258064516129,
+                "suspended": false,
+                "sourceSelectionId": "61447939"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Christian Watson",
+                "line": 25,
+                "american": -1600,
+                "decimal": 1.0625,
+                "suspended": false,
+                "sourceSelectionId": "48614480"
+              },
+              {
+                "name": "Christian Watson",
+                "line": 30,
+                "american": -1000,
+                "decimal": 1.1,
+                "suspended": false,
+                "sourceSelectionId": "73484469"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Jordan Love",
+                "line": 175,
+                "american": -1450,
+                "decimal": 1.068965517241379,
+                "suspended": false,
+                "sourceSelectionId": "64185975"
+              },
+              {
+                "name": "Jordan Love",
+                "line": 200,
+                "american": -650,
+                "decimal": 1.153846153846154,
+                "suspended": false,
+                "sourceSelectionId": "41618204"
+              }
+            ],
+            "td": [
+              {
+                "name": "Josh Jacobs",
+                "line": null,
+                "american": -150,
+                "decimal": 1.666666666666667,
+                "suspended": false,
+                "sourceSelectionId": "16602542"
+              },
+              {
+                "name": "Chuba Hubbard",
+                "line": null,
+                "american": -110,
+                "decimal": 1.909090909090909,
+                "suspended": false,
+                "sourceSelectionId": "22502305"
+              }
+            ],
+            "alt-spread": [
+              {
+                "name": "Carolina Panthers",
+                "line": 29.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "16250620"
+              },
+              {
+                "name": "Carolina Panthers",
+                "line": 28.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "16250621"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 20.5,
+                "american": -50000,
+                "decimal": 1.002,
+                "suspended": false,
+                "sourceSelectionId": "12213256"
+              },
+              {
+                "name": "Over",
+                "line": 21.5,
+                "american": -50000,
+                "decimal": 1.002,
+                "suspended": false,
+                "sourceSelectionId": "12235570"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "MarShawn Lloyd",
+                "line": 5,
+                "american": -750,
+                "decimal": 1.133333333333333,
+                "suspended": false,
+                "sourceSelectionId": "102305115"
+              },
+              {
+                "name": "MarShawn Lloyd",
+                "line": 10,
+                "american": -280,
+                "decimal": 1.357142857142857,
+                "suspended": false,
+                "sourceSelectionId": "102305108"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        },
+        {
+          "gameId": "2026-11-01:BAL:BUF",
+          "book": "draftkings",
+          "cloudConfirmedAt": 1793304129892,
+          "rawFirstObservedAt": 1793304128640,
+          "rawLastObservedAt": 1793304129384,
+          "observationGapMs": 880,
+          "cloudCoverage": {
+            "complete": true,
+            "categories": {
+              "alt-spread": {
+                "markets": 1,
+                "rows": 90,
+                "observedAt": 1793304129892
+              },
+              "alt-total": {
+                "markets": 1,
+                "rows": 96,
+                "observedAt": 1793304131892
+              },
+              "td": {
+                "markets": 1,
+                "rows": 28,
+                "observedAt": 1793304134290
+              },
+              "pass-yds": {
+                "markets": 2,
+                "rows": 54,
+                "observedAt": 1793304136281
+              },
+              "rush-yds": {
+                "markets": 6,
+                "rows": 78,
+                "observedAt": 1793304138688
+              },
+              "rec-yds": {
+                "markets": 16,
+                "rows": 209,
+                "observedAt": 1793304140981
+              },
+              "receptions": {
+                "markets": 16,
+                "rows": 94,
+                "observedAt": 1793304143780
+              }
+            },
+            "markets": 43,
+            "rows": 649
+          },
+          "rawRows": 649,
+          "cloudRows": 649,
+          "matchedRows": 649,
+          "counts": {
+            "alt-spread": {
+              "raw": 90,
+              "cloud": 90,
+              "matched": 90
+            },
+            "alt-total": {
+              "raw": 96,
+              "cloud": 96,
+              "matched": 96
+            },
+            "td": {
+              "raw": 28,
+              "cloud": 28,
+              "matched": 28
+            },
+            "pass-yds": {
+              "raw": 54,
+              "cloud": 54,
+              "matched": 54
+            },
+            "rush-yds": {
+              "raw": 78,
+              "cloud": 78,
+              "matched": 78
+            },
+            "rec-yds": {
+              "raw": 209,
+              "cloud": 209,
+              "matched": 209
+            },
+            "receptions": {
+              "raw": 94,
+              "cloud": 94,
+              "matched": 94
+            }
+          },
+          "samples": {
+            "alt-spread": [
+              {
+                "name": "Baltimore Ravens",
+                "line": -18.5,
+                "american": 1260,
+                "decimal": 13.6,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942683N1850_3"
+              },
+              {
+                "name": "Buffalo Bills",
+                "line": 18.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942683P1850_1"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 31.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942683O3150_1"
+              },
+              {
+                "name": "Under",
+                "line": 31.5,
+                "american": 1300,
+                "decimal": 14,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942683U3150_3"
+              }
+            ],
+            "td": [
+              {
+                "name": "Derrick Henry",
+                "line": null,
+                "american": -245,
+                "decimal": 1.40816327,
+                "suspended": false,
+                "sourceSelectionId": "0QA382689796#2336199139_13L88808Q1-660534674Q20"
+              },
+              {
+                "name": "James Cook",
+                "line": null,
+                "american": -175,
+                "decimal": 1.57142858,
+                "suspended": false,
+                "sourceSelectionId": "0QA382689796#2336199125_13L88808Q11826828834Q20"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Josh Allen",
+                "line": 170,
+                "american": -1300,
+                "decimal": 1.07692308,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688329#2336192863_13L88808Q1-1394528295Q20"
+              },
+              {
+                "name": "Josh Allen",
+                "line": 180,
+                "american": -880,
+                "decimal": 1.11363637,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688329#2336192957_13L88808Q1-2069844962Q20"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "Ray Davis",
+                "line": 5,
+                "american": -113,
+                "decimal": 1.88495576,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688076#2339359461_13L88808Q1-1128929880Q20"
+              },
+              {
+                "name": "Ray Davis",
+                "line": 10,
+                "american": 193,
+                "decimal": 2.93,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688076#2336192475_13L88808Q1713919674Q20"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Dalton Kincaid",
+                "line": 10,
+                "american": -1860,
+                "decimal": 1.05376345,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688050#2336191957_13L88808Q1-563917321Q20"
+              },
+              {
+                "name": "Dalton Kincaid",
+                "line": 15,
+                "american": -950,
+                "decimal": 1.10526316,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688050#2336191973_13L88808Q1-347953252Q20"
+              }
+            ],
+            "receptions": [
+              {
+                "name": "Ty Johnson",
+                "line": 2,
+                "american": -228,
+                "decimal": 1.4385965,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688053#2336191923_13L88808Q1-78964909Q20"
+              },
+              {
+                "name": "Ty Johnson",
+                "line": 3,
+                "american": 127,
+                "decimal": 2.27,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688053#2336191938_13L88808Q1-1007188401Q20"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        },
+        {
+          "gameId": "2026-11-01:BAL:BUF",
+          "book": "fanduel",
+          "cloudConfirmedAt": 1793304138184,
+          "rawFirstObservedAt": 1793304127935,
+          "rawLastObservedAt": 1793304127935,
+          "observationGapMs": 10249,
+          "cloudCoverage": {
+            "complete": true,
+            "requested": 43,
+            "returned": 43,
+            "missingMarketIds": [],
+            "missingRunnerIds": [],
+            "categories": {
+              "alt-spread": {
+                "rows": 102,
+                "observedAt": 1793304138184
+              },
+              "alt-total": {
+                "rows": 116,
+                "observedAt": 1793304138184
+              },
+              "td": {
+                "rows": 28,
+                "observedAt": 1793304138184
+              },
+              "pass-yds": {
+                "rows": 19,
+                "observedAt": 1793304138184
+              },
+              "rush-yds": {
+                "rows": 53,
+                "observedAt": 1793304138184
+              },
+              "rec-yds": {
+                "rows": 162,
+                "observedAt": 1793304138184
+              },
+              "receptions": {
+                "rows": 91,
+                "observedAt": 1793304138184
+              }
+            },
+            "rows": 571
+          },
+          "rawRows": 571,
+          "cloudRows": 571,
+          "matchedRows": 571,
+          "counts": {
+            "receptions": {
+              "raw": 91,
+              "cloud": 91,
+              "matched": 91
+            },
+            "rush-yds": {
+              "raw": 53,
+              "cloud": 53,
+              "matched": 53
+            },
+            "rec-yds": {
+              "raw": 162,
+              "cloud": 162,
+              "matched": 162
+            },
+            "alt-spread": {
+              "raw": 102,
+              "cloud": 102,
+              "matched": 102
+            },
+            "alt-total": {
+              "raw": 116,
+              "cloud": 116,
+              "matched": 116
+            },
+            "td": {
+              "raw": 28,
+              "cloud": 28,
+              "matched": 28
+            },
+            "pass-yds": {
+              "raw": 19,
+              "cloud": 19,
+              "matched": 19
+            }
+          },
+          "samples": {
+            "receptions": [
+              {
+                "name": "Josh Palmer",
+                "line": 1,
+                "american": -300,
+                "decimal": 1.333333333333333,
+                "suspended": false,
+                "sourceSelectionId": "61712802"
+              },
+              {
+                "name": "Josh Palmer",
+                "line": 2,
+                "american": 162,
+                "decimal": 2.62,
+                "suspended": false,
+                "sourceSelectionId": "61712818"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "Josh Allen",
+                "line": 15,
+                "american": -1000,
+                "decimal": 1.1,
+                "suspended": false,
+                "sourceSelectionId": "73618538"
+              },
+              {
+                "name": "Josh Allen",
+                "line": 20,
+                "american": -470,
+                "decimal": 1.212765957446809,
+                "suspended": false,
+                "sourceSelectionId": "73618522"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Rashod Bateman",
+                "line": 5,
+                "american": -1100,
+                "decimal": 1.090909090909091,
+                "suspended": false,
+                "sourceSelectionId": "73458261"
+              },
+              {
+                "name": "Rashod Bateman",
+                "line": 10,
+                "american": -450,
+                "decimal": 1.222222222222222,
+                "suspended": false,
+                "sourceSelectionId": "73458260"
+              }
+            ],
+            "alt-spread": [
+              {
+                "name": "Baltimore Ravens",
+                "line": 29.5,
+                "american": -20000,
+                "decimal": 1.005,
+                "suspended": false,
+                "sourceSelectionId": "15845920"
+              },
+              {
+                "name": "Baltimore Ravens",
+                "line": 28.5,
+                "american": -20000,
+                "decimal": 1.005,
+                "suspended": false,
+                "sourceSelectionId": "15845921"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 26.5,
+                "american": -50000,
+                "decimal": 1.002,
+                "suspended": false,
+                "sourceSelectionId": "12213239"
+              },
+              {
+                "name": "Over",
+                "line": 27.5,
+                "american": -20000,
+                "decimal": 1.005,
+                "suspended": false,
+                "sourceSelectionId": "12197205"
+              }
+            ],
+            "td": [
+              {
+                "name": "Derrick Henry",
+                "line": null,
+                "american": -240,
+                "decimal": 1.416666666666667,
+                "suspended": false,
+                "sourceSelectionId": "8776315"
+              },
+              {
+                "name": "Josh Allen",
+                "line": null,
+                "american": -170,
+                "decimal": 1.588235294117647,
+                "suspended": false,
+                "sourceSelectionId": "12399650"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Lamar Jackson",
+                "line": 150,
+                "american": -1450,
+                "decimal": 1.068965517241379,
+                "suspended": false,
+                "sourceSelectionId": "38176637"
+              },
+              {
+                "name": "Lamar Jackson",
+                "line": 175,
+                "american": -600,
+                "decimal": 1.166666666666667,
+                "suspended": false,
+                "sourceSelectionId": "64124348"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "finishedAt": "2026-10-29T20:03:46.382Z",
+      "comparisons": [
+        {
+          "gameId": "2026-10-29:CAR:GB",
+          "book": "draftkings",
+          "cloudConfirmedAt": 1793304209990,
+          "rawFirstObservedAt": 1793304193412,
+          "rawLastObservedAt": 1793304194803,
+          "observationGapMs": 15882.5,
+          "cloudCoverage": {
+            "complete": true,
+            "categories": {
+              "alt-spread": {
+                "markets": 1,
+                "rows": 94,
+                "observedAt": 1793304209990
+              },
+              "alt-total": {
+                "markets": 1,
+                "rows": 92,
+                "observedAt": 1793304214480
+              },
+              "td": {
+                "markets": 1,
+                "rows": 29,
+                "observedAt": 1793304217189
+              },
+              "pass-yds": {
+                "markets": 2,
+                "rows": 54,
+                "observedAt": 1793304219580
+              },
+              "rush-yds": {
+                "markets": 7,
+                "rows": 73,
+                "observedAt": 1793304221893
+              },
+              "rec-yds": {
+                "markets": 16,
+                "rows": 213,
+                "observedAt": 1793304224181
+              },
+              "receptions": {
+                "markets": 16,
+                "rows": 100,
+                "observedAt": 1793304226279
+              }
+            },
+            "markets": 44,
+            "rows": 655
+          },
+          "rawRows": 655,
+          "cloudRows": 655,
+          "matchedRows": 655,
+          "counts": {
+            "alt-spread": {
+              "raw": 94,
+              "cloud": 94,
+              "matched": 94
+            },
+            "alt-total": {
+              "raw": 92,
+              "cloud": 92,
+              "matched": 92
+            },
+            "td": {
+              "raw": 29,
+              "cloud": 29,
+              "matched": 29
+            },
+            "pass-yds": {
+              "raw": 54,
+              "cloud": 54,
+              "matched": 54
+            },
+            "rush-yds": {
+              "raw": 73,
+              "cloud": 73,
+              "matched": 73
+            },
+            "rec-yds": {
+              "raw": 213,
+              "cloud": 213,
+              "matched": 213
+            },
+            "receptions": {
+              "raw": 100,
+              "cloud": 100,
+              "matched": 100
+            }
+          },
+          "samples": {
+            "alt-spread": [
+              {
+                "name": "Carolina Panthers",
+                "line": -20.5,
+                "american": 1280,
+                "decimal": 13.8,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942663N2050_3"
+              },
+              {
+                "name": "Green Bay Packers",
+                "line": 20.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942663P2050_1"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 25.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942663O2550_1"
+              },
+              {
+                "name": "Under",
+                "line": 25.5,
+                "american": 1260,
+                "decimal": 13.6,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942663U2550_3"
+              }
+            ],
+            "td": [
+              {
+                "name": "Josh Jacobs",
+                "line": null,
+                "american": -145,
+                "decimal": 1.68965518,
+                "suspended": false,
+                "sourceSelectionId": "0QA382678835#2336139995_13L88808Q1724494599Q20"
+              },
+              {
+                "name": "Chuba Hubbard",
+                "line": null,
+                "american": -115,
+                "decimal": 1.86956522,
+                "suspended": false,
+                "sourceSelectionId": "0QA382678835#2336140023_13L88808Q1850190615Q20"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Bryce Young",
+                "line": 170,
+                "american": -1320,
+                "decimal": 1.07575758,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675504#2336121533_13L88808Q1-1394528295Q20"
+              },
+              {
+                "name": "Bryce Young",
+                "line": 180,
+                "american": -870,
+                "decimal": 1.11494253,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675504#2336121548_13L88808Q1-2069844962Q20"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "Trevor Etienne",
+                "line": 10,
+                "american": -107,
+                "decimal": 1.93457944,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675092#2336121495_13L88808Q1713919674Q20"
+              },
+              {
+                "name": "Trevor Etienne",
+                "line": 15,
+                "american": 167,
+                "decimal": 2.67,
+                "suspended": false,
+                "sourceSelectionId": "0QA382675092#2336121575_13L88808Q11708874668Q20"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Jonnu Smith",
+                "line": 3,
+                "american": -113,
+                "decimal": 1.88495576,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674912#2336405430_13L88808Q1-1604825724Q20"
+              },
+              {
+                "name": "Jonnu Smith",
+                "line": 10,
+                "american": 159,
+                "decimal": 2.59,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674912#2336119695_13L88808Q1-563917321Q20"
+              }
+            ],
+            "receptions": [
+              {
+                "name": "Christian Watson",
+                "line": 3,
+                "american": -860,
+                "decimal": 1.11627907,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674867#2336119493_13L88808Q1-1007188401Q20"
+              },
+              {
+                "name": "Christian Watson",
+                "line": 4,
+                "american": -304,
+                "decimal": 1.32894737,
+                "suspended": false,
+                "sourceSelectionId": "0QA382674867#2336119500_13L88808Q11124471851Q20"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        },
+        {
+          "gameId": "2026-10-29:CAR:GB",
+          "book": "fanduel",
+          "cloudConfirmedAt": 1793304218383,
+          "rawFirstObservedAt": 1793304193431,
+          "rawLastObservedAt": 1793304193431,
+          "observationGapMs": 24952,
+          "cloudCoverage": {
+            "complete": true,
+            "requested": 44,
+            "returned": 44,
+            "missingMarketIds": [],
+            "missingRunnerIds": [],
+            "categories": {
+              "alt-spread": {
+                "rows": 102,
+                "observedAt": 1793304218383
+              },
+              "alt-total": {
+                "rows": 116,
+                "observedAt": 1793304218383
+              },
+              "td": {
+                "rows": 29,
+                "observedAt": 1793304218383
+              },
+              "pass-yds": {
+                "rows": 19,
+                "observedAt": 1793304218383
+              },
+              "rush-yds": {
+                "rows": 50,
+                "observedAt": 1793304218383
+              },
+              "rec-yds": {
+                "rows": 146,
+                "observedAt": 1793304218383
+              },
+              "receptions": {
+                "rows": 89,
+                "observedAt": 1793304218383
+              }
+            },
+            "rows": 551
+          },
+          "rawRows": 551,
+          "cloudRows": 551,
+          "matchedRows": 551,
+          "counts": {
+            "receptions": {
+              "raw": 89,
+              "cloud": 89,
+              "matched": 89
+            },
+            "rec-yds": {
+              "raw": 146,
+              "cloud": 146,
+              "matched": 146
+            },
+            "pass-yds": {
+              "raw": 19,
+              "cloud": 19,
+              "matched": 19
+            },
+            "td": {
+              "raw": 29,
+              "cloud": 29,
+              "matched": 29
+            },
+            "alt-spread": {
+              "raw": 102,
+              "cloud": 102,
+              "matched": 102
+            },
+            "alt-total": {
+              "raw": 116,
+              "cloud": 116,
+              "matched": 116
+            },
+            "rush-yds": {
+              "raw": 50,
+              "cloud": 50,
+              "matched": 50
+            }
+          },
+          "samples": {
+            "receptions": [
+              {
+                "name": "Christian Watson",
+                "line": 3,
+                "american": -900,
+                "decimal": 1.111111111111111,
+                "suspended": false,
+                "sourceSelectionId": "61447958"
+              },
+              {
+                "name": "Christian Watson",
+                "line": 4,
+                "american": -310,
+                "decimal": 1.32258064516129,
+                "suspended": false,
+                "sourceSelectionId": "61447939"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Christian Watson",
+                "line": 25,
+                "american": -1600,
+                "decimal": 1.0625,
+                "suspended": false,
+                "sourceSelectionId": "48614480"
+              },
+              {
+                "name": "Christian Watson",
+                "line": 30,
+                "american": -1000,
+                "decimal": 1.1,
+                "suspended": false,
+                "sourceSelectionId": "73484469"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Jordan Love",
+                "line": 175,
+                "american": -1450,
+                "decimal": 1.068965517241379,
+                "suspended": false,
+                "sourceSelectionId": "64185975"
+              },
+              {
+                "name": "Jordan Love",
+                "line": 200,
+                "american": -650,
+                "decimal": 1.153846153846154,
+                "suspended": false,
+                "sourceSelectionId": "41618204"
+              }
+            ],
+            "td": [
+              {
+                "name": "Josh Jacobs",
+                "line": null,
+                "american": -150,
+                "decimal": 1.666666666666667,
+                "suspended": false,
+                "sourceSelectionId": "16602542"
+              },
+              {
+                "name": "Chuba Hubbard",
+                "line": null,
+                "american": -110,
+                "decimal": 1.909090909090909,
+                "suspended": false,
+                "sourceSelectionId": "22502305"
+              }
+            ],
+            "alt-spread": [
+              {
+                "name": "Carolina Panthers",
+                "line": 29.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "16250620"
+              },
+              {
+                "name": "Carolina Panthers",
+                "line": 28.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "16250621"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 20.5,
+                "american": -50000,
+                "decimal": 1.002,
+                "suspended": false,
+                "sourceSelectionId": "12213256"
+              },
+              {
+                "name": "Over",
+                "line": 21.5,
+                "american": -50000,
+                "decimal": 1.002,
+                "suspended": false,
+                "sourceSelectionId": "12235570"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "MarShawn Lloyd",
+                "line": 5,
+                "american": -750,
+                "decimal": 1.133333333333333,
+                "suspended": false,
+                "sourceSelectionId": "102305115"
+              },
+              {
+                "name": "MarShawn Lloyd",
+                "line": 10,
+                "american": -280,
+                "decimal": 1.357142857142857,
+                "suspended": false,
+                "sourceSelectionId": "102305108"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        },
+        {
+          "gameId": "2026-11-01:BAL:BUF",
+          "book": "draftkings",
+          "cloudConfirmedAt": 1793304195089,
+          "rawFirstObservedAt": 1793304194965,
+          "rawLastObservedAt": 1793304196187,
+          "observationGapMs": -487,
+          "cloudCoverage": {
+            "complete": true,
+            "categories": {
+              "alt-spread": {
+                "markets": 1,
+                "rows": 90,
+                "observedAt": 1793304195089
+              },
+              "alt-total": {
+                "markets": 1,
+                "rows": 96,
+                "observedAt": 1793304197084
+              },
+              "td": {
+                "markets": 1,
+                "rows": 28,
+                "observedAt": 1793304199680
+              },
+              "pass-yds": {
+                "markets": 2,
+                "rows": 54,
+                "observedAt": 1793304201380
+              },
+              "rush-yds": {
+                "markets": 6,
+                "rows": 78,
+                "observedAt": 1793304203780
+              },
+              "rec-yds": {
+                "markets": 16,
+                "rows": 209,
+                "observedAt": 1793304205785
+              },
+              "receptions": {
+                "markets": 16,
+                "rows": 94,
+                "observedAt": 1793304207691
+              }
+            },
+            "markets": 43,
+            "rows": 649
+          },
+          "rawRows": 649,
+          "cloudRows": 649,
+          "matchedRows": 649,
+          "counts": {
+            "alt-spread": {
+              "raw": 90,
+              "cloud": 90,
+              "matched": 90
+            },
+            "alt-total": {
+              "raw": 96,
+              "cloud": 96,
+              "matched": 96
+            },
+            "td": {
+              "raw": 28,
+              "cloud": 28,
+              "matched": 28
+            },
+            "pass-yds": {
+              "raw": 54,
+              "cloud": 54,
+              "matched": 54
+            },
+            "rush-yds": {
+              "raw": 78,
+              "cloud": 78,
+              "matched": 78
+            },
+            "rec-yds": {
+              "raw": 209,
+              "cloud": 209,
+              "matched": 209
+            },
+            "receptions": {
+              "raw": 94,
+              "cloud": 94,
+              "matched": 94
+            }
+          },
+          "samples": {
+            "alt-spread": [
+              {
+                "name": "Baltimore Ravens",
+                "line": -18.5,
+                "american": 1260,
+                "decimal": 13.6,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942683N1850_3"
+              },
+              {
+                "name": "Buffalo Bills",
+                "line": 18.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0HC86942683P1850_1"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 31.5,
+                "american": -10000,
+                "decimal": 1.01,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942683O3150_1"
+              },
+              {
+                "name": "Under",
+                "line": 31.5,
+                "american": 1300,
+                "decimal": 14,
+                "suspended": false,
+                "sourceSelectionId": "0OU86942683U3150_3"
+              }
+            ],
+            "td": [
+              {
+                "name": "Derrick Henry",
+                "line": null,
+                "american": -245,
+                "decimal": 1.40816327,
+                "suspended": false,
+                "sourceSelectionId": "0QA382689796#2336199139_13L88808Q1-660534674Q20"
+              },
+              {
+                "name": "James Cook",
+                "line": null,
+                "american": -175,
+                "decimal": 1.57142858,
+                "suspended": false,
+                "sourceSelectionId": "0QA382689796#2336199125_13L88808Q11826828834Q20"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Josh Allen",
+                "line": 170,
+                "american": -1300,
+                "decimal": 1.07692308,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688329#2336192863_13L88808Q1-1394528295Q20"
+              },
+              {
+                "name": "Josh Allen",
+                "line": 180,
+                "american": -880,
+                "decimal": 1.11363637,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688329#2336192957_13L88808Q1-2069844962Q20"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "Ray Davis",
+                "line": 5,
+                "american": -113,
+                "decimal": 1.88495576,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688076#2339359461_13L88808Q1-1128929880Q20"
+              },
+              {
+                "name": "Ray Davis",
+                "line": 10,
+                "american": 193,
+                "decimal": 2.93,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688076#2336192475_13L88808Q1713919674Q20"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Dalton Kincaid",
+                "line": 10,
+                "american": -1860,
+                "decimal": 1.05376345,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688050#2336191957_13L88808Q1-563917321Q20"
+              },
+              {
+                "name": "Dalton Kincaid",
+                "line": 15,
+                "american": -950,
+                "decimal": 1.10526316,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688050#2336191973_13L88808Q1-347953252Q20"
+              }
+            ],
+            "receptions": [
+              {
+                "name": "Ty Johnson",
+                "line": 2,
+                "american": -228,
+                "decimal": 1.4385965,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688053#2336191923_13L88808Q1-78964909Q20"
+              },
+              {
+                "name": "Ty Johnson",
+                "line": 3,
+                "american": 127,
+                "decimal": 2.27,
+                "suspended": false,
+                "sourceSelectionId": "0QA382688053#2336191938_13L88808Q1-1007188401Q20"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        },
+        {
+          "gameId": "2026-11-01:BAL:BUF",
+          "book": "fanduel",
+          "cloudConfirmedAt": 1793304198282,
+          "rawFirstObservedAt": 1793304193647,
+          "rawLastObservedAt": 1793304193647,
+          "observationGapMs": 4635,
+          "cloudCoverage": {
+            "complete": true,
+            "requested": 43,
+            "returned": 43,
+            "missingMarketIds": [],
+            "missingRunnerIds": [],
+            "categories": {
+              "alt-spread": {
+                "rows": 102,
+                "observedAt": 1793304198282
+              },
+              "alt-total": {
+                "rows": 116,
+                "observedAt": 1793304198282
+              },
+              "td": {
+                "rows": 28,
+                "observedAt": 1793304198282
+              },
+              "pass-yds": {
+                "rows": 19,
+                "observedAt": 1793304198282
+              },
+              "rush-yds": {
+                "rows": 53,
+                "observedAt": 1793304198282
+              },
+              "rec-yds": {
+                "rows": 162,
+                "observedAt": 1793304198282
+              },
+              "receptions": {
+                "rows": 91,
+                "observedAt": 1793304198282
+              }
+            },
+            "rows": 571
+          },
+          "rawRows": 571,
+          "cloudRows": 571,
+          "matchedRows": 571,
+          "counts": {
+            "receptions": {
+              "raw": 91,
+              "cloud": 91,
+              "matched": 91
+            },
+            "rush-yds": {
+              "raw": 53,
+              "cloud": 53,
+              "matched": 53
+            },
+            "rec-yds": {
+              "raw": 162,
+              "cloud": 162,
+              "matched": 162
+            },
+            "alt-spread": {
+              "raw": 102,
+              "cloud": 102,
+              "matched": 102
+            },
+            "alt-total": {
+              "raw": 116,
+              "cloud": 116,
+              "matched": 116
+            },
+            "td": {
+              "raw": 28,
+              "cloud": 28,
+              "matched": 28
+            },
+            "pass-yds": {
+              "raw": 19,
+              "cloud": 19,
+              "matched": 19
+            }
+          },
+          "samples": {
+            "receptions": [
+              {
+                "name": "Josh Palmer",
+                "line": 1,
+                "american": -300,
+                "decimal": 1.333333333333333,
+                "suspended": false,
+                "sourceSelectionId": "61712802"
+              },
+              {
+                "name": "Josh Palmer",
+                "line": 2,
+                "american": 162,
+                "decimal": 2.62,
+                "suspended": false,
+                "sourceSelectionId": "61712818"
+              }
+            ],
+            "rush-yds": [
+              {
+                "name": "Josh Allen",
+                "line": 15,
+                "american": -1000,
+                "decimal": 1.1,
+                "suspended": false,
+                "sourceSelectionId": "73618538"
+              },
+              {
+                "name": "Josh Allen",
+                "line": 20,
+                "american": -470,
+                "decimal": 1.212765957446809,
+                "suspended": false,
+                "sourceSelectionId": "73618522"
+              }
+            ],
+            "rec-yds": [
+              {
+                "name": "Rashod Bateman",
+                "line": 5,
+                "american": -1100,
+                "decimal": 1.090909090909091,
+                "suspended": false,
+                "sourceSelectionId": "73458261"
+              },
+              {
+                "name": "Rashod Bateman",
+                "line": 10,
+                "american": -450,
+                "decimal": 1.222222222222222,
+                "suspended": false,
+                "sourceSelectionId": "73458260"
+              }
+            ],
+            "alt-spread": [
+              {
+                "name": "Baltimore Ravens",
+                "line": 29.5,
+                "american": -20000,
+                "decimal": 1.005,
+                "suspended": false,
+                "sourceSelectionId": "15845920"
+              },
+              {
+                "name": "Baltimore Ravens",
+                "line": 28.5,
+                "american": -20000,
+                "decimal": 1.005,
+                "suspended": false,
+                "sourceSelectionId": "15845921"
+              }
+            ],
+            "alt-total": [
+              {
+                "name": "Over",
+                "line": 26.5,
+                "american": -50000,
+                "decimal": 1.002,
+                "suspended": false,
+                "sourceSelectionId": "12213239"
+              },
+              {
+                "name": "Over",
+                "line": 27.5,
+                "american": -20000,
+                "decimal": 1.005,
+                "suspended": false,
+                "sourceSelectionId": "12197205"
+              }
+            ],
+            "td": [
+              {
+                "name": "Derrick Henry",
+                "line": null,
+                "american": -240,
+                "decimal": 1.416666666666667,
+                "suspended": false,
+                "sourceSelectionId": "8776315"
+              },
+              {
+                "name": "Josh Allen",
+                "line": null,
+                "american": -170,
+                "decimal": 1.588235294117647,
+                "suspended": false,
+                "sourceSelectionId": "12399650"
+              }
+            ],
+            "pass-yds": [
+              {
+                "name": "Lamar Jackson",
+                "line": 150,
+                "american": -1450,
+                "decimal": 1.068965517241379,
+                "suspended": false,
+                "sourceSelectionId": "38176637"
+              },
+              {
+                "name": "Lamar Jackson",
+                "line": 175,
+                "american": -600,
+                "decimal": 1.166666666666667,
+                "suspended": false,
+                "sourceSelectionId": "64124348"
+              }
+            ]
+          },
+          "mismatches": [],
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "versionBefore": "8f0148c28544a87aaf11dbfb33daa8a10d8e8b54",
+  "games": [
+    {
+      "id": "2026-10-29:CAR:GB",
+      "away": {
+        "id": "CAR",
+        "name": "Carolina Panthers"
+      },
+      "home": {
+        "id": "GB",
+        "name": "Green Bay Packers"
+      },
+      "startsAt": "2026-10-30T00:15:00.000Z",
+      "dkId": "34118182",
+      "fdId": "36215311"
+    },
+    {
+      "id": "2026-11-01:BAL:BUF",
+      "away": {
+        "id": "BAL",
+        "name": "Baltimore Ravens"
+      },
+      "home": {
+        "id": "BUF",
+        "name": "Buffalo Bills"
+      },
+      "startsAt": "2026-11-01T18:00:00.000Z",
+      "dkId": "34118214",
+      "fdId": "36215313"
+    }
+  ],
+  "versionAfter": "8f0148c28544a87aaf11dbfb33daa8a10d8e8b54",
+  "pass": true,
+  "finishedAt": "2026-10-29T20:03:46.855Z",
+  "durationMs": 136543
+}

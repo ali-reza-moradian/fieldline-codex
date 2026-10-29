@@ -1,0 +1,2819 @@
+{
+  "createdAt": "2026-10-29T20:49:21.829Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "expectedCommit": "4deb501",
+  "requestedWindowMs": 60000,
+  "methodology": "One fixed main SSE observer and two independent extra-market SSE views (CAR–GB and BAL–BUF) on the same cloud instance. All odds collection stays in the cloud. The observer Mac receives public streams and reads metrics only.",
+  "limitations": [
+    "Receive gaps describe delivery of SSE frames, including freshness and heartbeat messages; they are not bookmaker price-change latency.",
+    "A quiet period with no observed price changes cannot establish actual odds-change latency.",
+    "Decoded UTF-8 SSE frame bytes exclude HTTP/TLS overhead and are not a wire-compression measurement.",
+    "Source ages in metric samples use the server-generated time; extra-stream age checks use observer time and may include clock skew.",
+    "This is an observation with extras enabled, not a controlled before/after performance benchmark."
+  ],
+  "readiness": [
+    {
+      "at": "2026-10-29T20:49:22.070Z",
+      "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+      "startedAt": 1793306505804,
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793306925897,
+        "lastSavedAt": 1793306927578,
+        "lastRestoredAt": 1793306515397,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      }
+    },
+    {
+      "at": "2026-10-29T20:49:32.192Z",
+      "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+      "startedAt": 1793306505804,
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793306925897,
+        "lastSavedAt": 1793306927578,
+        "lastRestoredAt": 1793306515397,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      }
+    }
+  ],
+  "metricSamples": [
+    {
+      "generatedAt": 1793306982172,
+      "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+      "startedAt": 1793306505804,
+      "viewers": 3,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 1275,
+          "lastConfirmedAt": 1793306980897,
+          "staleAfterMs": 25000,
+          "priceChanges": 2,
+          "updates": 13,
+          "error": null,
+          "transport": "WebSocket · JSON deltas"
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 76,
+          "lastConfirmedAt": 1793306982096,
+          "staleAfterMs": 10000,
+          "priceChanges": 0,
+          "updates": 1836,
+          "error": null,
+          "transport": "Live push · polling backup"
+        }
+      },
+      "fdPolling": {
+        "cyclesStarted": 1836,
+        "successfulCycles": 1836,
+        "failedCycles": 0,
+        "partialCycles": 0,
+        "rateLimitedCycles": 0,
+        "lastFailureAt": null,
+        "lastFailureStatus": null,
+        "intervalMs": 250,
+        "lastSuccessAt": 1793306982096,
+        "lastCompleteAt": 1793306982096,
+        "error": null
+      },
+      "extras": {
+        "snapshots": 8,
+        "failures": 0,
+        "workerRestarts": 0,
+        "upstreamBytes": 6426147,
+        "activeGames": 2,
+        "viewers": 2,
+        "pollMs": 15000,
+        "staleAfterMs": 45000,
+        "region": "Ontario",
+        "isolatedProcess": true
+      },
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793306925897,
+        "lastSavedAt": 1793306927578,
+        "lastRestoredAt": 1793306515397,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      },
+      "historyQueue": {
+        "pendingEvents": 0,
+        "queueOverflows": 0
+      }
+    },
+    {
+      "generatedAt": 1793306992363,
+      "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+      "startedAt": 1793306505804,
+      "viewers": 4,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 1523,
+          "lastConfirmedAt": 1793306990840,
+          "staleAfterMs": 25000,
+          "priceChanges": 2,
+          "updates": 13,
+          "error": null,
+          "transport": "WebSocket · JSON deltas"
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 227,
+          "lastConfirmedAt": 1793306992136,
+          "staleAfterMs": 10000,
+          "priceChanges": 0,
+          "updates": 1876,
+          "error": null,
+          "transport": "Live push · polling backup"
+        }
+      },
+      "fdPolling": {
+        "cyclesStarted": 1876,
+        "successfulCycles": 1876,
+        "failedCycles": 0,
+        "partialCycles": 0,
+        "rateLimitedCycles": 0,
+        "lastFailureAt": null,
+        "lastFailureStatus": null,
+        "intervalMs": 250,
+        "lastSuccessAt": 1793306992135,
+        "lastCompleteAt": 1793306992135,
+        "error": null
+      },
+      "extras": {
+        "snapshots": 10,
+        "failures": 0,
+        "workerRestarts": 0,
+        "upstreamBytes": 7079761,
+        "activeGames": 2,
+        "viewers": 2,
+        "pollMs": 15000,
+        "staleAfterMs": 45000,
+        "region": "Ontario",
+        "isolatedProcess": true
+      },
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793306985897,
+        "lastSavedAt": 1793306987287,
+        "lastRestoredAt": 1793306515397,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      },
+      "historyQueue": {
+        "pendingEvents": 0,
+        "queueOverflows": 0
+      }
+    },
+    {
+      "generatedAt": 1793307002541,
+      "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+      "startedAt": 1793306505804,
+      "viewers": 3,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 1706,
+          "lastConfirmedAt": 1793307000835,
+          "staleAfterMs": 25000,
+          "priceChanges": 2,
+          "updates": 13,
+          "error": null,
+          "transport": "WebSocket · JSON deltas"
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 2,
+          "lastConfirmedAt": 1793307002539,
+          "staleAfterMs": 10000,
+          "priceChanges": 0,
+          "updates": 1915,
+          "error": null,
+          "transport": "Live push · polling backup"
+        }
+      },
+      "fdPolling": {
+        "cyclesStarted": 1915,
+        "successfulCycles": 1915,
+        "failedCycles": 0,
+        "partialCycles": 0,
+        "rateLimitedCycles": 0,
+        "lastFailureAt": null,
+        "lastFailureStatus": null,
+        "intervalMs": 250,
+        "lastSuccessAt": 1793307002538,
+        "lastCompleteAt": 1793307002538,
+        "error": null
+      },
+      "extras": {
+        "snapshots": 12,
+        "failures": 0,
+        "workerRestarts": 0,
+        "upstreamBytes": 7736187,
+        "activeGames": 2,
+        "viewers": 2,
+        "pollMs": 15000,
+        "staleAfterMs": 45000,
+        "region": "Ontario",
+        "isolatedProcess": true
+      },
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793306985897,
+        "lastSavedAt": 1793306987287,
+        "lastRestoredAt": 1793306515397,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      },
+      "historyQueue": {
+        "pendingEvents": 0,
+        "queueOverflows": 0
+      }
+    },
+    {
+      "generatedAt": 1793307012795,
+      "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+      "startedAt": 1793306505804,
+      "viewers": 3,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 1960,
+          "lastConfirmedAt": 1793307010835,
+          "staleAfterMs": 25000,
+          "priceChanges": 2,
+          "updates": 14,
+          "error": null,
+          "transport": "WebSocket · JSON deltas"
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 275,
+          "lastConfirmedAt": 1793307012520,
+          "staleAfterMs": 10000,
+          "priceChanges": 0,
+          "updates": 1954,
+          "error": null,
+          "transport": "Live push · polling backup"
+        }
+      },
+      "fdPolling": {
+        "cyclesStarted": 1954,
+        "successfulCycles": 1954,
+        "failedCycles": 0,
+        "partialCycles": 0,
+        "rateLimitedCycles": 0,
+        "lastFailureAt": null,
+        "lastFailureStatus": null,
+        "intervalMs": 250,
+        "lastSuccessAt": 1793307012519,
+        "lastCompleteAt": 1793307012519,
+        "error": null
+      },
+      "extras": {
+        "snapshots": 16,
+        "failures": 0,
+        "workerRestarts": 0,
+        "upstreamBytes": 9046227,
+        "activeGames": 2,
+        "viewers": 2,
+        "pollMs": 15000,
+        "staleAfterMs": 45000,
+        "region": "Ontario",
+        "isolatedProcess": true
+      },
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793306985897,
+        "lastSavedAt": 1793306987287,
+        "lastRestoredAt": 1793306515397,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      },
+      "historyQueue": {
+        "pendingEvents": 0,
+        "queueOverflows": 0
+      }
+    },
+    {
+      "generatedAt": 1793307022963,
+      "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+      "startedAt": 1793306505804,
+      "viewers": 3,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 2127,
+          "lastConfirmedAt": 1793307020836,
+          "staleAfterMs": 25000,
+          "priceChanges": 2,
+          "updates": 14,
+          "error": null,
+          "transport": "WebSocket · JSON deltas"
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 87,
+          "lastConfirmedAt": 1793307022876,
+          "staleAfterMs": 10000,
+          "priceChanges": 0,
+          "updates": 1995,
+          "error": null,
+          "transport": "Live push · polling backup"
+        }
+      },
+      "fdPolling": {
+        "cyclesStarted": 1995,
+        "successfulCycles": 1995,
+        "failedCycles": 0,
+        "partialCycles": 0,
+        "rateLimitedCycles": 0,
+        "lastFailureAt": null,
+        "lastFailureStatus": null,
+        "intervalMs": 250,
+        "lastSuccessAt": 1793307022876,
+        "lastCompleteAt": 1793307022876,
+        "error": null
+      },
+      "extras": {
+        "snapshots": 18,
+        "failures": 0,
+        "workerRestarts": 0,
+        "upstreamBytes": 9699841,
+        "activeGames": 2,
+        "viewers": 2,
+        "pollMs": 15000,
+        "staleAfterMs": 45000,
+        "region": "Ontario",
+        "isolatedProcess": true
+      },
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793306985897,
+        "lastSavedAt": 1793306987287,
+        "lastRestoredAt": 1793306515397,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      },
+      "historyQueue": {
+        "pendingEvents": 0,
+        "queueOverflows": 0
+      }
+    },
+    {
+      "generatedAt": 1793307033222,
+      "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+      "startedAt": 1793306505804,
+      "viewers": 3,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 2385,
+          "lastConfirmedAt": 1793307030837,
+          "staleAfterMs": 25000,
+          "priceChanges": 2,
+          "updates": 14,
+          "error": null,
+          "transport": "WebSocket · JSON deltas"
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 2,
+          "lastConfirmedAt": 1793307033220,
+          "staleAfterMs": 10000,
+          "priceChanges": 0,
+          "updates": 2036,
+          "error": null,
+          "transport": "Live push · polling backup"
+        }
+      },
+      "fdPolling": {
+        "cyclesStarted": 2036,
+        "successfulCycles": 2036,
+        "failedCycles": 0,
+        "partialCycles": 0,
+        "rateLimitedCycles": 0,
+        "lastFailureAt": null,
+        "lastFailureStatus": null,
+        "intervalMs": 250,
+        "lastSuccessAt": 1793307033219,
+        "lastCompleteAt": 1793307033219,
+        "error": null
+      },
+      "extras": {
+        "snapshots": 20,
+        "failures": 0,
+        "workerRestarts": 0,
+        "upstreamBytes": 10356267,
+        "activeGames": 2,
+        "viewers": 2,
+        "pollMs": 15000,
+        "staleAfterMs": 45000,
+        "region": "Ontario",
+        "isolatedProcess": true
+      },
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793306985897,
+        "lastSavedAt": 1793306987287,
+        "lastRestoredAt": 1793306515397,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      },
+      "historyQueue": {
+        "pendingEvents": 0,
+        "queueOverflows": 0
+      }
+    },
+    {
+      "generatedAt": 1793307042336,
+      "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+      "startedAt": 1793306505804,
+      "viewers": 3,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 1500,
+          "lastConfirmedAt": 1793307040836,
+          "staleAfterMs": 25000,
+          "priceChanges": 2,
+          "updates": 14,
+          "error": null,
+          "transport": "WebSocket · JSON deltas"
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "ageMs": 29,
+          "lastConfirmedAt": 1793307042307,
+          "staleAfterMs": 10000,
+          "priceChanges": 0,
+          "updates": 2072,
+          "error": null,
+          "transport": "Live push · polling backup"
+        }
+      },
+      "fdPolling": {
+        "cyclesStarted": 2072,
+        "successfulCycles": 2072,
+        "failedCycles": 0,
+        "partialCycles": 0,
+        "rateLimitedCycles": 0,
+        "lastFailureAt": null,
+        "lastFailureStatus": null,
+        "intervalMs": 250,
+        "lastSuccessAt": 1793307042305,
+        "lastCompleteAt": 1793307042305,
+        "error": null
+      },
+      "extras": {
+        "snapshots": 24,
+        "failures": 0,
+        "workerRestarts": 0,
+        "upstreamBytes": 11666307,
+        "activeGames": 2,
+        "viewers": 2,
+        "pollMs": 15000,
+        "staleAfterMs": 45000,
+        "region": "Ontario",
+        "isolatedProcess": true
+      },
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793306985897,
+        "lastSavedAt": 1793306987287,
+        "lastRestoredAt": 1793306515397,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      },
+      "historyQueue": {
+        "pendingEvents": 0,
+        "queueOverflows": 0
+      }
+    }
+  ],
+  "extraEvents": [
+    {
+      "gameId": "2026-10-29:CAR:GB",
+      "at": 1793306988810,
+      "type": "snapshot",
+      "bytes": 302035,
+      "rows": 723,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306978296,
+          "ageAtPublishMs": 10401,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 5706.191274000001,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306988650,
+          "ageAtPublishMs": 47,
+          "complete": true,
+          "rows": 551,
+          "requestMs": 155.1398909999989,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-10-29:CAR:GB",
+      "at": 1793306989744,
+      "type": "snapshot",
+      "bytes": 302036,
+      "rows": 723,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306988694,
+          "ageAtPublishMs": 1006,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1194.6750929999998,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306988650,
+          "ageAtPublishMs": 1050,
+          "complete": true,
+          "rows": 551,
+          "requestMs": 155.1398909999989,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-11-01:BAL:BUF",
+      "at": 1793306992975,
+      "type": "snapshot",
+      "bytes": 305278,
+      "rows": 734,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306979567,
+          "ageAtPublishMs": 13429,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 2597.5018499999996,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306992971,
+          "ageAtPublishMs": 25,
+          "complete": true,
+          "rows": 568,
+          "requestMs": 75.07824800000162,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-11-01:BAL:BUF",
+      "at": 1793306996270,
+      "type": "snapshot",
+      "bytes": 305278,
+      "rows": 734,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306994418,
+          "ageAtPublishMs": 1881,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1893.3545520000007,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306992971,
+          "ageAtPublishMs": 3328,
+          "complete": true,
+          "rows": 568,
+          "requestMs": 75.07824800000162,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-10-29:CAR:GB",
+      "at": 1793307003827,
+      "type": "snapshot",
+      "bytes": 302037,
+      "rows": 723,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306988694,
+          "ageAtPublishMs": 15001,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1194.6750929999998,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307003597,
+          "ageAtPublishMs": 98,
+          "complete": true,
+          "rows": 551,
+          "requestMs": 101.11925999999949,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-10-29:CAR:GB",
+      "at": 1793307005112,
+      "type": "snapshot",
+      "bytes": 302037,
+      "rows": 723,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307003896,
+          "ageAtPublishMs": 1103,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1398.4916879999982,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307003597,
+          "ageAtPublishMs": 1402,
+          "complete": true,
+          "rows": 551,
+          "requestMs": 101.11925999999949,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-11-01:BAL:BUF",
+      "at": 1793307008052,
+      "type": "snapshot",
+      "bytes": 305279,
+      "rows": 734,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793306994418,
+          "ageAtPublishMs": 13603,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1893.3545520000007,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307008012,
+          "ageAtPublishMs": 9,
+          "complete": true,
+          "rows": 568,
+          "requestMs": 117.14150700000027,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-11-01:BAL:BUF",
+      "at": 1793307010672,
+      "type": "snapshot",
+      "bytes": 305278,
+      "rows": 734,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307009526,
+          "ageAtPublishMs": 1173,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1392.592300000004,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307008012,
+          "ageAtPublishMs": 2687,
+          "complete": true,
+          "rows": 568,
+          "requestMs": 117.14150700000027,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-10-29:CAR:GB",
+      "at": 1793307018945,
+      "type": "snapshot",
+      "bytes": 302037,
+      "rows": 723,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307003896,
+          "ageAtPublishMs": 14807,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1398.4916879999982,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307018628,
+          "ageAtPublishMs": 75,
+          "complete": true,
+          "rows": 551,
+          "requestMs": 196.60274299999583,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-10-29:CAR:GB",
+      "at": 1793307020108,
+      "type": "snapshot",
+      "bytes": 302037,
+      "rows": 723,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307018702,
+          "ageAtPublishMs": 1292,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1396.4803279999978,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307018628,
+          "ageAtPublishMs": 1366,
+          "complete": true,
+          "rows": 551,
+          "requestMs": 196.60274299999583,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-11-01:BAL:BUF",
+      "at": 1793307023071,
+      "type": "snapshot",
+      "bytes": 305278,
+      "rows": 734,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307009526,
+          "ageAtPublishMs": 13572,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1392.592300000004,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307022996,
+          "ageAtPublishMs": 102,
+          "complete": true,
+          "rows": 568,
+          "requestMs": 103.14749599999777,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-11-01:BAL:BUF",
+      "at": 1793307026163,
+      "type": "snapshot",
+      "bytes": 305279,
+      "rows": 734,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307024421,
+          "ageAtPublishMs": 1773,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1792.0670379999938,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307022996,
+          "ageAtPublishMs": 3198,
+          "complete": true,
+          "rows": 568,
+          "requestMs": 103.14749599999777,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-10-29:CAR:GB",
+      "at": 1793307033814,
+      "type": "snapshot",
+      "bytes": 302037,
+      "rows": 723,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307018702,
+          "ageAtPublishMs": 14997,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1396.4803279999978,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307033595,
+          "ageAtPublishMs": 104,
+          "complete": true,
+          "rows": 551,
+          "requestMs": 101.75279299999966,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-10-29:CAR:GB",
+      "at": 1793307035311,
+      "type": "snapshot",
+      "bytes": 302039,
+      "rows": 723,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307033694,
+          "ageAtPublishMs": 1501,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1595.6741879999972,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307033595,
+          "ageAtPublishMs": 1600,
+          "complete": true,
+          "rows": 551,
+          "requestMs": 101.75279299999966,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-11-01:BAL:BUF",
+      "at": 1793307037990,
+      "type": "snapshot",
+      "bytes": 305278,
+      "rows": 734,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307024421,
+          "ageAtPublishMs": 13578,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1792.0670379999938,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307037971,
+          "ageAtPublishMs": 28,
+          "complete": true,
+          "rows": 568,
+          "requestMs": 95.22046899999987,
+          "error": null
+        }
+      }
+    },
+    {
+      "gameId": "2026-11-01:BAL:BUF",
+      "at": 1793307040567,
+      "type": "snapshot",
+      "bytes": 305279,
+      "rows": 734,
+      "sources": {
+        "draftkings": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307039455,
+          "ageAtPublishMs": 1145,
+          "complete": true,
+          "rows": 650,
+          "requestMs": 1090.156381000008,
+          "error": null
+        },
+        "fanduel": {
+          "status": "healthy",
+          "region": "Ontario",
+          "lastConfirmedAt": 1793307037971,
+          "ageAtPublishMs": 2629,
+          "complete": true,
+          "rows": 568,
+          "requestMs": 95.22046899999987,
+          "error": null
+        }
+      }
+    }
+  ],
+  "games": [
+    {
+      "id": "2026-10-29:CAR:GB",
+      "away": "Carolina Panthers",
+      "home": "Green Bay Packers",
+      "startsAt": "2026-10-30T00:15:00.000Z"
+    },
+    {
+      "id": "2026-11-01:BAL:BUF",
+      "away": "Baltimore Ravens",
+      "home": "Buffalo Bills",
+      "startsAt": "2026-11-01T18:00:00.000Z"
+    }
+  ],
+  "before": {
+    "generatedAt": 1793306982172,
+    "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+    "startedAt": 1793306505804,
+    "viewers": 3,
+    "sources": {
+      "draftkings": {
+        "status": "healthy",
+        "region": "Ontario",
+        "ageMs": 1275,
+        "lastConfirmedAt": 1793306980897,
+        "staleAfterMs": 25000,
+        "priceChanges": 2,
+        "updates": 13,
+        "error": null,
+        "transport": "WebSocket · JSON deltas"
+      },
+      "fanduel": {
+        "status": "healthy",
+        "region": "Ontario",
+        "ageMs": 76,
+        "lastConfirmedAt": 1793306982096,
+        "staleAfterMs": 10000,
+        "priceChanges": 0,
+        "updates": 1836,
+        "error": null,
+        "transport": "Live push · polling backup"
+      }
+    },
+    "fdPolling": {
+      "cyclesStarted": 1836,
+      "successfulCycles": 1836,
+      "failedCycles": 0,
+      "partialCycles": 0,
+      "rateLimitedCycles": 0,
+      "lastFailureAt": null,
+      "lastFailureStatus": null,
+      "intervalMs": 250,
+      "lastSuccessAt": 1793306982096,
+      "lastCompleteAt": 1793306982096,
+      "error": null
+    },
+    "extras": {
+      "snapshots": 8,
+      "failures": 0,
+      "workerRestarts": 0,
+      "upstreamBytes": 6426147,
+      "activeGames": 2,
+      "viewers": 2,
+      "pollMs": 15000,
+      "staleAfterMs": 45000,
+      "region": "Ontario",
+      "isolatedProcess": true
+    },
+    "storage": {
+      "enabled": true,
+      "state": "ready",
+      "available": true,
+      "pending": false,
+      "saveIntervalMs": 60000,
+      "lastAttemptAt": 1793306925897,
+      "lastSavedAt": 1793306927578,
+      "lastRestoredAt": 1793306515397,
+      "lastFailureAt": null,
+      "savedSeries": 348,
+      "restoredSeries": 348,
+      "rejectedRows": 0,
+      "message": "Historical observations only; restored data never makes a live price eligible."
+    },
+    "historyQueue": {
+      "pendingEvents": 0,
+      "queueOverflows": 0
+    }
+  },
+  "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+  "instanceStartedAt": 1793306505804,
+  "windowStartedAt": "2026-10-29T20:49:42.126Z",
+  "windowFinishedAt": "2026-10-29T20:50:42.127Z",
+  "actualWindowElapsedMs": 60002.088459000006,
+  "after": {
+    "generatedAt": 1793307042336,
+    "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+    "startedAt": 1793306505804,
+    "viewers": 3,
+    "sources": {
+      "draftkings": {
+        "status": "healthy",
+        "region": "Ontario",
+        "ageMs": 1500,
+        "lastConfirmedAt": 1793307040836,
+        "staleAfterMs": 25000,
+        "priceChanges": 2,
+        "updates": 14,
+        "error": null,
+        "transport": "WebSocket · JSON deltas"
+      },
+      "fanduel": {
+        "status": "healthy",
+        "region": "Ontario",
+        "ageMs": 29,
+        "lastConfirmedAt": 1793307042307,
+        "staleAfterMs": 10000,
+        "priceChanges": 0,
+        "updates": 2072,
+        "error": null,
+        "transport": "Live push · polling backup"
+      }
+    },
+    "fdPolling": {
+      "cyclesStarted": 2072,
+      "successfulCycles": 2072,
+      "failedCycles": 0,
+      "partialCycles": 0,
+      "rateLimitedCycles": 0,
+      "lastFailureAt": null,
+      "lastFailureStatus": null,
+      "intervalMs": 250,
+      "lastSuccessAt": 1793307042305,
+      "lastCompleteAt": 1793307042305,
+      "error": null
+    },
+    "extras": {
+      "snapshots": 24,
+      "failures": 0,
+      "workerRestarts": 0,
+      "upstreamBytes": 11666307,
+      "activeGames": 2,
+      "viewers": 2,
+      "pollMs": 15000,
+      "staleAfterMs": 45000,
+      "region": "Ontario",
+      "isolatedProcess": true
+    },
+    "storage": {
+      "enabled": true,
+      "state": "ready",
+      "available": true,
+      "pending": false,
+      "saveIntervalMs": 60000,
+      "lastAttemptAt": 1793306985897,
+      "lastSavedAt": 1793306987287,
+      "lastRestoredAt": 1793306515397,
+      "lastFailureAt": null,
+      "savedSeries": 348,
+      "restoredSeries": 348,
+      "rejectedRows": 0,
+      "message": "Historical observations only; restored data never makes a live price eligible."
+    },
+    "historyQueue": {
+      "pendingEvents": 0,
+      "queueOverflows": 0
+    }
+  },
+  "main": {
+    "contentEncoding": null,
+    "frames": 241,
+    "decodedFrameBytes": 171003,
+    "receiveGapsMs": {
+      "n": 240,
+      "min": 0.12412500000209548,
+      "p50": 248.6287500000035,
+      "p95": 501.65149999999994,
+      "max": 603.1777500000026
+    },
+    "maxGapIncludingWindowEdgesMs": 603.1777500000026,
+    "perEvent": {
+      "snapshot": {
+        "frames": 1,
+        "decodedFrameBytes": 110733,
+        "receiveGapsMs": {
+          "n": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "max": null
+        }
+      },
+      "freshness": {
+        "frames": 210,
+        "decodedFrameBytes": 58800,
+        "receiveGapsMs": {
+          "n": 209,
+          "min": 128.44854199999827,
+          "p50": 251.6814579999991,
+          "p95": 507.3690830000123,
+          "max": 603.1777500000026
+        }
+      },
+      "heartbeat": {
+        "frames": 30,
+        "decodedFrameBytes": 1470,
+        "receiveGapsMs": {
+          "n": 29,
+          "min": 1902.8839580000058,
+          "p50": 1999.1577079999988,
+          "p95": 2031.0069999999978,
+          "max": 2101.0639999999985
+        }
+      }
+    },
+    "framesTimeline": [
+      {
+        "type": "snapshot",
+        "receivedAt": 1793306982197,
+        "elapsedMs": 71.58500000000276,
+        "bytes": 110733
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306982236,
+        "elapsedMs": 110.52545900000041,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306982485,
+        "elapsedMs": 359.585750000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306982738,
+        "elapsedMs": 612.3811249999999,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306982990,
+        "elapsedMs": 863.8575840000012,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306983250,
+        "elapsedMs": 1124.1448750000018,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793306983439,
+        "elapsedMs": 1313.294417000001,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306983506,
+        "elapsedMs": 1380.2665000000015,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306983798,
+        "elapsedMs": 1672.2788340000006,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306983989,
+        "elapsedMs": 1863.5086250000022,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306984245,
+        "elapsedMs": 2119.143084000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306984499,
+        "elapsedMs": 2373.345459,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306984746,
+        "elapsedMs": 2620.2517920000028,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306985007,
+        "elapsedMs": 2881.2092090000006,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306985246,
+        "elapsedMs": 3120.3441250000033,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793306985435,
+        "elapsedMs": 3309.4528340000033,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306985488,
+        "elapsedMs": 3362.3042920000007,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306985738,
+        "elapsedMs": 3611.930292000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306985997,
+        "elapsedMs": 3871.149709000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306986243,
+        "elapsedMs": 4117.221375000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306986494,
+        "elapsedMs": 4367.877667000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306986995,
+        "elapsedMs": 4869.529167000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306987248,
+        "elapsedMs": 5122.362334000001,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793306987438,
+        "elapsedMs": 5311.710000000003,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306987498,
+        "elapsedMs": 5371.932375,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306987998,
+        "elapsedMs": 5871.687334000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306988538,
+        "elapsedMs": 6412.161875000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306989087,
+        "elapsedMs": 6961.567917,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306989335,
+        "elapsedMs": 7208.748125000002,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793306989436,
+        "elapsedMs": 7310.0165000000015,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306989586,
+        "elapsedMs": 7459.774500000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306989841,
+        "elapsedMs": 7714.8427090000005,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306990087,
+        "elapsedMs": 7960.8630840000005,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306990339,
+        "elapsedMs": 8213.178417000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306990587,
+        "elapsedMs": 8461.154959000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306990893,
+        "elapsedMs": 8767.210167000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306991119,
+        "elapsedMs": 8993.060375000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306991363,
+        "elapsedMs": 9237.354459000002,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793306991438,
+        "elapsedMs": 9312.711000000003,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306991620,
+        "elapsedMs": 9494.502584000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306991867,
+        "elapsedMs": 9741.089209000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306992121,
+        "elapsedMs": 9994.846000000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306992366,
+        "elapsedMs": 10239.837167000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306992652,
+        "elapsedMs": 10526.203500000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306992864,
+        "elapsedMs": 10738.709125000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306993387,
+        "elapsedMs": 11261.604792000002,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793306993452,
+        "elapsedMs": 11326.656584,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306993888,
+        "elapsedMs": 11761.860292000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306994173,
+        "elapsedMs": 12046.785125000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306994390,
+        "elapsedMs": 12263.837584,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306994637,
+        "elapsedMs": 12511.159042000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306994887,
+        "elapsedMs": 12760.796708999998,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306995356,
+        "elapsedMs": 13230.292084000004,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793306995437,
+        "elapsedMs": 13311.256750000004,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306995587,
+        "elapsedMs": 13460.925709,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306995836,
+        "elapsedMs": 13710.563417000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306996256,
+        "elapsedMs": 14130.284292,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306996384,
+        "elapsedMs": 14258.732833999999,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306996635,
+        "elapsedMs": 14509.080334000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306996933,
+        "elapsedMs": 14807.341709000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306997158,
+        "elapsedMs": 15031.942917000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306997390,
+        "elapsedMs": 15264.755542000003,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793306997442,
+        "elapsedMs": 15316.390834000002,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306997643,
+        "elapsedMs": 15516.829084,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306997884,
+        "elapsedMs": 15758.173334000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306998137,
+        "elapsedMs": 16011.416834,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306998385,
+        "elapsedMs": 16258.820458999999,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306998636,
+        "elapsedMs": 16510.639,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306998885,
+        "elapsedMs": 16759.177625,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306999138,
+        "elapsedMs": 17012.223959,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306999387,
+        "elapsedMs": 17261.493209000004,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793306999441,
+        "elapsedMs": 17315.111584000002,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306999738,
+        "elapsedMs": 17612.066209,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793306999985,
+        "elapsedMs": 17858.885834000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307000240,
+        "elapsedMs": 18113.946709,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307000500,
+        "elapsedMs": 18374.246000000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307000741,
+        "elapsedMs": 18615.288709000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307000985,
+        "elapsedMs": 18859.250625000004,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307001437,
+        "elapsedMs": 19311.531584,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307001539,
+        "elapsedMs": 19413.293292,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307002085,
+        "elapsedMs": 19958.969,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307002361,
+        "elapsedMs": 20235.311250000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307002594,
+        "elapsedMs": 20468.128,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307002838,
+        "elapsedMs": 20712.378334000005,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307003092,
+        "elapsedMs": 20966.772417000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307003342,
+        "elapsedMs": 21215.951042000004,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307003442,
+        "elapsedMs": 21315.982584,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307003642,
+        "elapsedMs": 21516.638750000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307004185,
+        "elapsedMs": 22059.557042000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307004445,
+        "elapsedMs": 22319.380667,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307004697,
+        "elapsedMs": 22571.062125,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307004943,
+        "elapsedMs": 22817.224209000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307005193,
+        "elapsedMs": 23067.446417000003,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307005440,
+        "elapsedMs": 23314.687084,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307005449,
+        "elapsedMs": 23323.719500000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307005698,
+        "elapsedMs": 23572.449834000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307005993,
+        "elapsedMs": 23866.980625,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307006199,
+        "elapsedMs": 24073.222000000005,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307006446,
+        "elapsedMs": 24320.731584000005,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307006709,
+        "elapsedMs": 24583.303375,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307006991,
+        "elapsedMs": 24865.119125,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307007202,
+        "elapsedMs": 25076.656042,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307007443,
+        "elapsedMs": 25317.35075,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307007473,
+        "elapsedMs": 25347.541667,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307007695,
+        "elapsedMs": 25569.430875000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307007948,
+        "elapsedMs": 25822.253,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307008489,
+        "elapsedMs": 26363.565125000005,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307008733,
+        "elapsedMs": 26607.741334000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307008997,
+        "elapsedMs": 26871.199334,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307009241,
+        "elapsedMs": 27115.006000000005,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307009464,
+        "elapsedMs": 27338.391834,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307009493,
+        "elapsedMs": 27367.144709000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307009740,
+        "elapsedMs": 27614.584,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307009988,
+        "elapsedMs": 27862.359875,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307010241,
+        "elapsedMs": 28115.066667000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307010492,
+        "elapsedMs": 28365.956292,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307010743,
+        "elapsedMs": 28616.985209000002,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307010999,
+        "elapsedMs": 28873.807292,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307011260,
+        "elapsedMs": 29134.402125000004,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307011455,
+        "elapsedMs": 29328.978667,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307011495,
+        "elapsedMs": 29369.121458999998,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307011744,
+        "elapsedMs": 29618.143584,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307011991,
+        "elapsedMs": 29865.661792000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307012253,
+        "elapsedMs": 30127.109834,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307012646,
+        "elapsedMs": 30520.555709000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307012846,
+        "elapsedMs": 30720.351417,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307013117,
+        "elapsedMs": 30991.440875000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307013352,
+        "elapsedMs": 31226.335875,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307013439,
+        "elapsedMs": 31313.397167,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307013590,
+        "elapsedMs": 31464.205625,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307013910,
+        "elapsedMs": 31784.679375000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307014094,
+        "elapsedMs": 31968.527792000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307014341,
+        "elapsedMs": 32215.215208999998,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307014629,
+        "elapsedMs": 32503.663792000003,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307014844,
+        "elapsedMs": 32718.2775,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307015096,
+        "elapsedMs": 32970.088417000006,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307015355,
+        "elapsedMs": 33229.213334,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307015440,
+        "elapsedMs": 33314.142875000005,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307015593,
+        "elapsedMs": 33467.898209000006,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307015895,
+        "elapsedMs": 33769.26558400001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307016096,
+        "elapsedMs": 33970.253,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307016352,
+        "elapsedMs": 34226.549667,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307016593,
+        "elapsedMs": 34467.469042,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307016840,
+        "elapsedMs": 34714.576334,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307017144,
+        "elapsedMs": 35018.663417,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307017446,
+        "elapsedMs": 35320.555416999996,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307017446,
+        "elapsedMs": 35320.752834,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307017639,
+        "elapsedMs": 35513.568375,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307017891,
+        "elapsedMs": 35765.39270900001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307018142,
+        "elapsedMs": 36016.194959,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307018388,
+        "elapsedMs": 36262.90087500001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307018646,
+        "elapsedMs": 36520.069124999995,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307018916,
+        "elapsedMs": 36790.03112500001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307019139,
+        "elapsedMs": 37013.521209,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307019388,
+        "elapsedMs": 37262.149959,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307019437,
+        "elapsedMs": 37311.331584,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307019646,
+        "elapsedMs": 37520.267209,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307019947,
+        "elapsedMs": 37821.376833999995,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307020190,
+        "elapsedMs": 38064.757333999994,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307020443,
+        "elapsedMs": 38317.780667,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307020693,
+        "elapsedMs": 38567.298708999995,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307020968,
+        "elapsedMs": 38842.21933400001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307021194,
+        "elapsedMs": 39068.538417,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307021538,
+        "elapsedMs": 39412.395584,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307021538,
+        "elapsedMs": 39412.519709,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307021785,
+        "elapsedMs": 39659.108792,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307022044,
+        "elapsedMs": 39918.257,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307022286,
+        "elapsedMs": 40160.037792,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307022536,
+        "elapsedMs": 40410.535124999995,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307023050,
+        "elapsedMs": 40924.153209,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307023284,
+        "elapsedMs": 41158.985209000006,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307023441,
+        "elapsedMs": 41315.279542000004,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307023537,
+        "elapsedMs": 41411.763458999994,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307024045,
+        "elapsedMs": 41919.13254200001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307024537,
+        "elapsedMs": 42411.586666999996,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307024786,
+        "elapsedMs": 42660.538334,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307025043,
+        "elapsedMs": 42917.529459,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307025328,
+        "elapsedMs": 43202.730417,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307025440,
+        "elapsedMs": 43314.43725,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307025541,
+        "elapsedMs": 43415.713791999995,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307026144,
+        "elapsedMs": 44018.891542,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307026387,
+        "elapsedMs": 44261.763416999995,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307026637,
+        "elapsedMs": 44511.987875000006,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307027145,
+        "elapsedMs": 45019.198000000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307027390,
+        "elapsedMs": 45264.861292,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307027453,
+        "elapsedMs": 45327.66479200001,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307027644,
+        "elapsedMs": 45518.69845900001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307027891,
+        "elapsedMs": 45765.92787500001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307028391,
+        "elapsedMs": 46265.446834,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307028892,
+        "elapsedMs": 46766.300875,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307029143,
+        "elapsedMs": 47017.566000000006,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307029441,
+        "elapsedMs": 47315.394209000006,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307029649,
+        "elapsedMs": 47523.37704200001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307029890,
+        "elapsedMs": 47764.68283400001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307030145,
+        "elapsedMs": 48019.82950000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307030649,
+        "elapsedMs": 48523.98645900001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307030894,
+        "elapsedMs": 48768.182084,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307031219,
+        "elapsedMs": 49093.22450000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307031398,
+        "elapsedMs": 49272.186375000005,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307031472,
+        "elapsedMs": 49346.401209,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307031902,
+        "elapsedMs": 49776.438125,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307032208,
+        "elapsedMs": 50082.37645900001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307032401,
+        "elapsedMs": 50275.581584,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307032645,
+        "elapsedMs": 50519.901834000004,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307032905,
+        "elapsedMs": 50779.41266700001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307033395,
+        "elapsedMs": 51269.643584000005,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307033445,
+        "elapsedMs": 51320.106750000006,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307033643,
+        "elapsedMs": 51517.932084,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307033893,
+        "elapsedMs": 51767.55358400001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307034245,
+        "elapsedMs": 52119.74870900001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307034489,
+        "elapsedMs": 52363.780792000005,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307034741,
+        "elapsedMs": 52615.263042000006,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307035053,
+        "elapsedMs": 52927.39762500001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307035240,
+        "elapsedMs": 53114.52045900001,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307035441,
+        "elapsedMs": 53315.265709,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307035734,
+        "elapsedMs": 53608.480500000005,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307036022,
+        "elapsedMs": 53896.85075000001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307036234,
+        "elapsedMs": 54108.762959,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307036485,
+        "elapsedMs": 54359.460334,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307036753,
+        "elapsedMs": 54627.407792,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307036994,
+        "elapsedMs": 54868.8125,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307037257,
+        "elapsedMs": 55131.67308400001,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307037446,
+        "elapsedMs": 55320.479542,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307037740,
+        "elapsedMs": 55615.010375,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307038249,
+        "elapsedMs": 56123.378500000006,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307038634,
+        "elapsedMs": 56508.361584,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307038799,
+        "elapsedMs": 56673.850292,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307039033,
+        "elapsedMs": 56908.102084,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307039285,
+        "elapsedMs": 57159.538667,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307039443,
+        "elapsedMs": 57317.9795,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307039535,
+        "elapsedMs": 57409.275334000005,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307039785,
+        "elapsedMs": 57659.443375,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307040037,
+        "elapsedMs": 57911.400542,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307040338,
+        "elapsedMs": 58212.880959,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307040637,
+        "elapsedMs": 58511.5245,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307040899,
+        "elapsedMs": 58773.78520900001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307041141,
+        "elapsedMs": 59015.38712500001,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307041392,
+        "elapsedMs": 59267.03308400001,
+        "bytes": 280
+      },
+      {
+        "type": "heartbeat",
+        "receivedAt": 1793307041467,
+        "elapsedMs": 59341.228667,
+        "bytes": 49
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307041646,
+        "elapsedMs": 59520.477375,
+        "bytes": 280
+      },
+      {
+        "type": "freshness",
+        "receivedAt": 1793307041893,
+        "elapsedMs": 59767.36079200001,
+        "bytes": 280
+      }
+    ]
+  },
+  "fdPollingDelta": {
+    "cyclesStarted": 236,
+    "successfulCycles": 236,
+    "failedCycles": 0,
+    "partialCycles": 0,
+    "rateLimitedCycles": 0,
+    "metricsWindowMs": 60164,
+    "successfulCyclesPerSecond": 3.922611528488797
+  },
+  "extrasDelta": {
+    "snapshots": 16,
+    "failures": 0,
+    "workerRestarts": 0,
+    "upstreamBytes": 5240160
+  },
+  "extrasRequestSampling": "Distinct source confirmations whose oldest-response timestamp falls within the measured window; carried-forward baseline observations are excluded.",
+  "extrasRequests": {
+    "2026-10-29:CAR:GB": {
+      "draftkings": {
+        "observations": 4,
+        "requestMs": {
+          "n": 4,
+          "min": 1194.6750929999998,
+          "p50": 1396.4803279999978,
+          "p95": 1595.6741879999972,
+          "max": 1595.6741879999972
+        },
+        "rows": {
+          "n": 4,
+          "min": 650,
+          "p50": 650,
+          "p95": 650,
+          "max": 650
+        }
+      },
+      "fanduel": {
+        "observations": 4,
+        "requestMs": {
+          "n": 4,
+          "min": 101.11925999999949,
+          "p50": 101.75279299999966,
+          "p95": 196.60274299999583,
+          "max": 196.60274299999583
+        },
+        "rows": {
+          "n": 4,
+          "min": 551,
+          "p50": 551,
+          "p95": 551,
+          "max": 551
+        }
+      }
+    },
+    "2026-11-01:BAL:BUF": {
+      "draftkings": {
+        "observations": 4,
+        "requestMs": {
+          "n": 4,
+          "min": 1090.156381000008,
+          "p50": 1392.592300000004,
+          "p95": 1893.3545520000007,
+          "max": 1893.3545520000007
+        },
+        "rows": {
+          "n": 4,
+          "min": 650,
+          "p50": 650,
+          "p95": 650,
+          "max": 650
+        }
+      },
+      "fanduel": {
+        "observations": 4,
+        "requestMs": {
+          "n": 4,
+          "min": 75.07824800000162,
+          "p50": 95.22046899999987,
+          "p95": 117.14150700000027,
+          "max": 117.14150700000027
+        },
+        "rows": {
+          "n": 4,
+          "min": 568,
+          "p50": 568,
+          "p95": 568,
+          "max": 568
+        }
+      }
+    }
+  },
+  "mainSourceAgeMs": {
+    "draftkings": {
+      "n": 7,
+      "min": 1275,
+      "p50": 1706,
+      "p95": 2385,
+      "max": 2385
+    },
+    "fanduel": {
+      "n": 7,
+      "min": 2,
+      "p50": 76,
+      "p95": 275,
+      "max": 275
+    }
+  },
+  "priceChangeCounts": {
+    "draftkings": 0,
+    "fanduel": 0
+  },
+  "quietPriceWindow": true,
+  "failures": [],
+  "pass": true,
+  "finishedAt": "2026-10-29T20:50:42.294Z"
+}

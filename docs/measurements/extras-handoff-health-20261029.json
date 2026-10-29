@@ -1,0 +1,59 @@
+{
+  "observedAt": "2026-10-29T20:56:50.260Z",
+  "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+  "health": {
+    "ready": true,
+    "books": {
+      "draftkings": {
+        "region": "Ontario",
+        "fresh": true,
+        "complete": true,
+        "games": 29,
+        "quotes": 174,
+        "ageMs": 9273,
+        "pushVerified": null
+      },
+      "fanduel": {
+        "region": "Ontario",
+        "fresh": true,
+        "complete": true,
+        "games": 29,
+        "quotes": 174,
+        "ageMs": 77,
+        "pushVerified": true
+      }
+    },
+    "version": "4deb501dd30d4eea88762cc91b2dd302e658017a"
+  },
+  "history": {
+    "enabled": true,
+    "state": "ready",
+    "available": true,
+    "pending": false,
+    "saveIntervalMs": 60000,
+    "lastAttemptAt": 1793307405899,
+    "lastSavedAt": 1793307407210,
+    "lastRestoredAt": 1793306515397,
+    "lastFailureAt": null,
+    "savedSeries": 348,
+    "restoredSeries": 348,
+    "rejectedRows": 0,
+    "message": "Historical observations only; restored data never makes a live price eligible."
+  },
+  "extras": {
+    "snapshots": 44,
+    "failures": 0,
+    "workerRestarts": 0,
+    "upstreamBytes": 20118637,
+    "activeGames": 0,
+    "viewers": 0,
+    "pollMs": 15000,
+    "staleAfterMs": 45000,
+    "region": "Ontario",
+    "isolatedProcess": true
+  },
+  "limits": [
+    "Readiness at this observation; not a perpetual availability guarantee.",
+    "Optional data and history collection run in the cloud. Main source health excludes optional-feed status by design."
+  ]
+}

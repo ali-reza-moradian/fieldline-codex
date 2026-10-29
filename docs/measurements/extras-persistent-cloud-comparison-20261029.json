@@ -1,0 +1,1102 @@
+{
+  "createdAt": "2026-10-29T20:43:32.118Z",
+  "base": "https://fieldline-codex.onrender.com",
+  "expectedVersion": "4deb501",
+  "method": "Same cloud instance: 60s extras closed, 60s after two extra-market games become healthy, 60s closed again. Main SSE and 10s metric sampling are identical. Cloud-clock calibration precedes each measured phase; source health and SSE silence are checked each second.",
+  "limitations": [
+    "Sequential windows cannot remove upstream/network variation or prove causal zero overhead.",
+    "FanDuel completed polling cycles per second measure collector throughput, not bookmaker-change latency, push latency or browser paint.",
+    "SSE receive gaps include freshness and heartbeats and are transport continuity measurements only.",
+    "This run tests availability and error counters; independent quote-by-quote verification is a separate test.",
+    "No finite sample proves permanent zero overhead or 100% accuracy.",
+    "History persistence remains enabled in every phase; checkpoint timing is recorded but not controlled."
+  ],
+  "trials": [
+    {
+      "mode": "closed-before",
+      "startedAt": "2026-10-29T20:43:33.079Z",
+      "clockCalibration": {
+        "serverAt": 1793306612861,
+        "midpoint": 715.0204795,
+        "rttMs": 67.64145900000005
+      },
+      "before": {
+        "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+        "startedAt": 1793306505804,
+        "generatedAt": 1793306613106,
+        "sources": {
+          "draftkings": {
+            "book": "draftkings",
+            "status": "healthy",
+            "lastConfirmedAt": 1793306610631,
+            "lastDataAt": 1793306582895,
+            "lastChangeAt": null,
+            "staleAfterMs": 25000,
+            "error": null,
+            "warnings": [],
+            "updates": 4,
+            "priceChanges": 0,
+            "games": 29,
+            "quotes": 174,
+            "transport": "WebSocket · JSON deltas",
+            "region": "Ontario",
+            "lastErrorAt": 1793306519106,
+            "requestMs": 2300.3700510000053,
+            "decodedBytes": 155487,
+            "pollMs": null
+          },
+          "fanduel": {
+            "book": "fanduel",
+            "status": "healthy",
+            "lastConfirmedAt": 1793306612884,
+            "lastDataAt": 1793306612882,
+            "lastChangeAt": null,
+            "staleAfterMs": 10000,
+            "error": null,
+            "warnings": [],
+            "updates": 387,
+            "priceChanges": 0,
+            "games": 29,
+            "quotes": 174,
+            "transport": "Live push · polling backup",
+            "region": "Ontario",
+            "endpoints": {
+              "discovery": "https://sbapi.on.sportsbook.fanduel.ca",
+              "prices": "https://smp.on.sportsbook.fanduel.ca"
+            },
+            "pollMs": 250,
+            "coverage": {
+              "requested": 87,
+              "returned": 87,
+              "batches": 2,
+              "missingIds": []
+            },
+            "channels": {
+              "push": {
+                "status": "subscribed",
+                "lastConfirmedAt": 1793306608242,
+                "lastDataAt": null,
+                "error": null,
+                "generation": 1,
+                "subscribedMarkets": 87,
+                "region": "on",
+                "origin": "https://sportsbook.fanduel.ca",
+                "endpoint": "https://pir.on.sportsbook.fanduel.ca/graphql",
+                "lastProtocolAt": 1793306570303,
+                "protocolTimeoutMs": 120000,
+                "counters": {
+                  "connections": 1,
+                  "reconnects": 0,
+                  "messages": 4,
+                  "markets": 0,
+                  "invalidFrames": 0,
+                  "configReads": 1,
+                  "authErrors": 0
+                },
+                "verified": true,
+                "ordering": {
+                  "accepted": 0,
+                  "duplicates": 0,
+                  "outOfOrder": 0,
+                  "unknown": 0,
+                  "pollOverwritesPrevented": 0
+                }
+              },
+              "polling": {
+                "cyclesStarted": 387,
+                "successfulCycles": 387,
+                "failedCycles": 0,
+                "partialCycles": 0,
+                "rateLimitedCycles": 0,
+                "lastFailureAt": null,
+                "lastFailureStatus": null,
+                "intervalMs": 250,
+                "lastSuccessAt": 1793306612883,
+                "lastCompleteAt": 1793306612883,
+                "error": null
+              },
+              "discovery": {
+                "lastSuccessAt": 1793306570299,
+                "error": null
+              }
+            },
+            "requestMs": 131.5881010000012,
+            "decodedBytes": 101299
+          }
+        },
+        "notes": [
+          "Browser samples are client-reported estimates after two animation frames, corrected using /api/time. Inspect clock uncertainty.",
+          "DraftKings createdTime is the provider feed timestamp, not a verified trading-engine change timestamp. Cross-host clock skew can affect it.",
+          "FanDuel push updatedAt has whole-second precision. Its age is an upper-bound estimate with up to about 999ms quantization plus unmeasured provider clock skew; HTTP prices have no change timestamp.",
+          "FanDuel uses immediate push alongside 250ms HTTP checks, continuing HTTP if push is unavailable. Nominal polling wait averages half the interval only for uniformly timed changes without delays; this is not a measured end-to-end guarantee or a maximum price age.",
+          "Live rows with n=0 mean not measured; pregame results must not be presented as live results."
+        ],
+        "measurements": {
+          "draftkings": {
+            "pregame": {
+              "acquisitionRequestMs": {
+                "n": 2,
+                "p50": 2300.37,
+                "p95": 2334.1,
+                "max": 2334.1
+              },
+              "processingMs": {
+                "n": 4,
+                "p50": 2.32,
+                "p95": 99.29,
+                "max": 99.29
+              },
+              "feedCreatedToBackendMs": {
+                "n": 2,
+                "p50": 135,
+                "p95": 330,
+                "max": 330
+              },
+              "changedPriceFeedToBackendMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPricePushUpdatedToBackendUpperBoundMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPriceMessages": 0,
+              "backendToPaintMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "feedCreatedToPaintMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "pushUpdatedToPaintUpperBoundMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "clockUncertaintyMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "decodedPayloadBytes": {
+                "n": 4,
+                "p50": 955,
+                "p95": 155487,
+                "max": 155487
+              }
+            },
+            "live": {
+              "acquisitionRequestMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "processingMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "feedCreatedToBackendMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPriceFeedToBackendMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPricePushUpdatedToBackendUpperBoundMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPriceMessages": 0,
+              "backendToPaintMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "feedCreatedToPaintMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "pushUpdatedToPaintUpperBoundMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "clockUncertaintyMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "decodedPayloadBytes": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              }
+            }
+          },
+          "fanduel": {
+            "pregame": {
+              "acquisitionRequestMs": {
+                "n": 387,
+                "p50": 128.62,
+                "p95": 206.92,
+                "max": 603.79
+              },
+              "processingMs": {
+                "n": 387,
+                "p50": 1.8,
+                "p95": 46.65,
+                "max": 197.6
+              },
+              "feedCreatedToBackendMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPriceFeedToBackendMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPricePushUpdatedToBackendUpperBoundMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPriceMessages": 0,
+              "backendToPaintMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "feedCreatedToPaintMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "pushUpdatedToPaintUpperBoundMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "clockUncertaintyMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "decodedPayloadBytes": {
+                "n": 387,
+                "p50": 101299,
+                "p95": 101299,
+                "max": 101299
+              }
+            },
+            "live": {
+              "acquisitionRequestMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "processingMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "feedCreatedToBackendMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPriceFeedToBackendMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPricePushUpdatedToBackendUpperBoundMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "changedPriceMessages": 0,
+              "backendToPaintMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "feedCreatedToPaintMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "pushUpdatedToPaintUpperBoundMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "clockUncertaintyMs": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              },
+              "decodedPayloadBytes": {
+                "n": 0,
+                "p50": null,
+                "p95": null,
+                "max": null
+              }
+            }
+          }
+        },
+        "viewers": 3,
+        "extras": {
+          "snapshots": 4,
+          "failures": 0,
+          "workerRestarts": 0,
+          "upstreamBytes": 3213977,
+          "activeGames": 0,
+          "viewers": 0,
+          "pollMs": 15000,
+          "staleAfterMs": 45000,
+          "region": "Ontario",
+          "isolatedProcess": true
+        },
+        "history": {
+          "maxSeries": 1024,
+          "maxPointsPerSeries": 3000,
+          "maxTotalPoints": 150000,
+          "pendingEvents": 0,
+          "queueOverflows": 0,
+          "clockRollbacks": 0,
+          "evictedSeries": 0,
+          "evictedPoints": 0,
+          "invalidImports": 0,
+          "note": "Actual server observations only. History can be shorter than the selected window after startup, gaps, or capacity eviction. Restored history never restores live eligibility.",
+          "retentionHours": 48,
+          "storage": {
+            "enabled": true,
+            "state": "ready",
+            "available": true,
+            "pending": false,
+            "saveIntervalMs": 60000,
+            "lastAttemptAt": 1793306565895,
+            "lastSavedAt": 1793306570514,
+            "lastRestoredAt": 1793306515397,
+            "lastFailureAt": null,
+            "savedSeries": 348,
+            "restoredSeries": 348,
+            "rejectedRows": 0,
+            "message": "Historical observations only; restored data never makes a live price eligible."
+          }
+        }
+      },
+      "samples": [
+        {
+          "at": 1793306623220,
+          "sourceAges": {
+            "draftkings": 2589,
+            "fanduel": 88
+          },
+          "extras": {
+            "snapshots": 4,
+            "failures": 0,
+            "workerRestarts": 0,
+            "upstreamBytes": 3213977,
+            "activeGames": 0,
+            "viewers": 0,
+            "pollMs": 15000,
+            "staleAfterMs": 45000,
+            "region": "Ontario",
+            "isolatedProcess": true
+          },
+          "storage": {
+            "enabled": true,
+            "state": "ready",
+            "available": true,
+            "pending": false,
+            "saveIntervalMs": 60000,
+            "lastAttemptAt": 1793306565895,
+            "lastSavedAt": 1793306570514,
+            "lastRestoredAt": 1793306515397,
+            "lastFailureAt": null,
+            "savedSeries": 348,
+            "restoredSeries": 348,
+            "rejectedRows": 0,
+            "message": "Historical observations only; restored data never makes a live price eligible."
+          }
+        }
+      ],
+      "frames": [
+        {
+          "type": "freshness",
+          "elapsedMs": 155.725458,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 398.8419580000001,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 647.880458,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 893.097167,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 1146.2956670000003,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 1283.835458,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 1395.7552920000003,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 1644.301042,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 1910.3105,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 2163.843792,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 2397.324917,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 2652.199375,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 2912.066875,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 3144.633958,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 3285.0581669999997,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 3396.9249999999997,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 3643.6708750000003,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 3896.0218330000002,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 4153.288042,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 4398.660583,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 4644.457292,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 4894.628583,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 5145.340208,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 5282.189917,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 5402.801708,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 5648.806291999999,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 5921.083167,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 6148.9647079999995,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 6495.2492919999995,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 6645.914583,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 6896.133792,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 7145.005208,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 7284.324833000001,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 7396.041292,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 7643.939917,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 7895.251667,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 8143.723458,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 8396.008958,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 8650.130874999999,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 8895.368333,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 9272.574958,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 9287.11775,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 9528.92875,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 9774.709583,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 10026.284292,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 10282.9885,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 10735.152291999999,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 10784.655958,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 11060.666333,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 11275.868457999999,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 11282.245542,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 11524.155832999999,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 11775.958042,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 12023.532874999999,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 12272.573,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 12523.839208,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 12772.027917,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 13028.4465,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 13278.518417,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 13373.849833,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 13528.192667,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 13779.373042,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 14029.911042,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 14284.091666999999,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 14539.276458,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 14780.103625,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 15029.714417,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 15279.283542,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 15374.162792,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 15534.328791999998,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 15779.123875,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 16032.106249999999,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 16278.844917,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 16534.522417,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 16778.501625,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 17028.122333000003,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 17353.577833000003,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 17372.6895,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 17826.986417,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 18073.996750000002,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 18325.7945,
+          "bytes": 269,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 18592.86975,
+          "bytes": 271,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 18829.79475,
+          "bytes": 271,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 19075.665375,
+          "bytes": 271,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 19332.517083000002,
+          "bytes": 271,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "heartbeat",
+          "elapsedMs": 19372.685375,
+          "bytes": 49,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 19578.616167,
+          "bytes": 271,
+          "book": null,
+          "priceChanges": null
+        },
+        {
+          "type": "freshness",
+          "elapsedMs": 20130.130125,
+          "bytes": 271,
+          "book": null,
+          "priceChanges": null
+        }
+      ],
+      "extraRequests": []
+    }
+  ],
+  "pass": false,
+  "instanceStartedAt": 1793306505804,
+  "version": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+  "initialMainViewers": 3,
+  "games": [
+    "2026-10-29:CAR:GB",
+    "2026-11-01:BAL:BUF"
+  ],
+  "error": "AssertionError [ERR_ASSERTION]: Main viewer count changed during the controlled observation\n\n4 !== 3\n\n    at check (file:///Users/alireza/Documents/ChatGPT/FindingNewJob/betstamp-nfl-odds/scripts/observe-extras-cloud.js:81:10)\n    at file:///Users/alireza/Documents/ChatGPT/FindingNewJob/betstamp-nfl-odds/scripts/observe-extras-cloud.js:114:42\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)",
+  "observersClosed": true,
+  "finishedAt": "2026-10-29T20:43:53.403Z"
+}

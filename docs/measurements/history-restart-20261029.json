@@ -1,0 +1,391 @@
+{
+  "kind": "after-restart",
+  "base": "https://fieldline-codex.onrender.com",
+  "beforeFile": "tmp/history-before-restart-20261029.json",
+  "previousProcess": {
+    "version": "8f0148c28544a87aaf11dbfb33daa8a10d8e8b54",
+    "startedAt": 1793304368084,
+    "lastSavedAt": 1793304975899
+  },
+  "initial": {
+    "observedAt": "2026-10-29T20:24:19.515Z",
+    "version": "b14c22fb79007a24e6be7099d9cb7693eb4c5fc9",
+    "ready": true,
+    "startedAt": 1793305427133,
+    "storage": {
+      "enabled": true,
+      "state": "ready",
+      "available": true,
+      "pending": false,
+      "saveIntervalMs": 60000,
+      "lastAttemptAt": 1793305428039,
+      "lastSavedAt": 1793305441095,
+      "lastRestoredAt": 1793305434739,
+      "lastFailureAt": null,
+      "savedSeries": 348,
+      "restoredSeries": 348,
+      "rejectedRows": 0,
+      "message": "Historical observations only; restored data never makes a live price eligible."
+    },
+    "limits": {
+      "maxSeries": 1024,
+      "maxPointsPerSeries": 3000,
+      "maxTotalPoints": 150000,
+      "pendingEvents": 0,
+      "queueOverflows": 0,
+      "clockRollbacks": 0,
+      "evictedSeries": 0,
+      "evictedPoints": 0,
+      "invalidImports": 0,
+      "note": "Actual server observations only. History can be shorter than the selected window after startup, gaps, or capacity eviction. Restored history never restores live eligibility.",
+      "retentionHours": 48,
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793305428039,
+        "lastSavedAt": 1793305441095,
+        "lastRestoredAt": 1793305434739,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      }
+    }
+  },
+  "final": {
+    "observedAt": "2026-10-29T20:24:19.681Z",
+    "version": "b14c22fb79007a24e6be7099d9cb7693eb4c5fc9",
+    "ready": true,
+    "startedAt": 1793305427133,
+    "storage": {
+      "enabled": true,
+      "state": "ready",
+      "available": true,
+      "pending": false,
+      "saveIntervalMs": 60000,
+      "lastAttemptAt": 1793305428039,
+      "lastSavedAt": 1793305441095,
+      "lastRestoredAt": 1793305434739,
+      "lastFailureAt": null,
+      "savedSeries": 348,
+      "restoredSeries": 348,
+      "rejectedRows": 0,
+      "message": "Historical observations only; restored data never makes a live price eligible."
+    },
+    "limits": {
+      "maxSeries": 1024,
+      "maxPointsPerSeries": 3000,
+      "maxTotalPoints": 150000,
+      "pendingEvents": 0,
+      "queueOverflows": 0,
+      "clockRollbacks": 0,
+      "evictedSeries": 0,
+      "evictedPoints": 0,
+      "invalidImports": 0,
+      "note": "Actual server observations only. History can be shorter than the selected window after startup, gaps, or capacity eviction. Restored history never restores live eligibility.",
+      "retentionHours": 48,
+      "storage": {
+        "enabled": true,
+        "state": "ready",
+        "available": true,
+        "pending": false,
+        "saveIntervalMs": 60000,
+        "lastAttemptAt": 1793305428039,
+        "lastSavedAt": 1793305441095,
+        "lastRestoredAt": 1793305434739,
+        "lastFailureAt": null,
+        "savedSeries": 348,
+        "restoredSeries": 348,
+        "rejectedRows": 0,
+        "message": "Historical observations only; restored data never makes a live price eligible."
+      }
+    }
+  },
+  "game": {
+    "id": "2026-11-01:BAL:BUF",
+    "away": {
+      "id": "BAL",
+      "name": "Baltimore Ravens"
+    },
+    "home": {
+      "id": "BUF",
+      "name": "Buffalo Bills"
+    },
+    "startsAt": "2026-11-01T18:00:00.000Z"
+  },
+  "checks": [
+    {
+      "book": "fanduel",
+      "market": "moneyline",
+      "side": "away",
+      "expectedPoint": {
+        "at": 1793304372084,
+        "american": 142,
+        "decimal": 2.42,
+        "line": null
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305430538,
+        "american": 142,
+        "decimal": 2.42,
+        "line": null,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "draftkings",
+      "market": "moneyline",
+      "side": "away",
+      "expectedPoint": {
+        "at": 1793304378490,
+        "american": 142,
+        "decimal": 2.42,
+        "line": null
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305440634,
+        "american": 142,
+        "decimal": 2.42,
+        "line": null,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "fanduel",
+      "market": "moneyline",
+      "side": "home",
+      "expectedPoint": {
+        "at": 1793304372084,
+        "american": -168,
+        "decimal": 1.5952380952380953,
+        "line": null
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305430538,
+        "american": -168,
+        "decimal": 1.5952380952380953,
+        "line": null,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "draftkings",
+      "market": "moneyline",
+      "side": "home",
+      "expectedPoint": {
+        "at": 1793304378490,
+        "american": -170,
+        "decimal": 1.5882352941176472,
+        "line": null
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305440634,
+        "american": -170,
+        "decimal": 1.5882352941176472,
+        "line": null,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "fanduel",
+      "market": "spread",
+      "side": "away",
+      "expectedPoint": {
+        "at": 1793304372084,
+        "american": -108,
+        "decimal": 1.925925925925926,
+        "line": 3
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305430538,
+        "american": -108,
+        "decimal": 1.925925925925926,
+        "line": 3,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "draftkings",
+      "market": "spread",
+      "side": "away",
+      "expectedPoint": {
+        "at": 1793304378490,
+        "american": -108,
+        "decimal": 1.925925925925926,
+        "line": 3
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305440634,
+        "american": -108,
+        "decimal": 1.925925925925926,
+        "line": 3,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "fanduel",
+      "market": "spread",
+      "side": "home",
+      "expectedPoint": {
+        "at": 1793304372084,
+        "american": -112,
+        "decimal": 1.8928571428571428,
+        "line": -3
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305430538,
+        "american": -112,
+        "decimal": 1.8928571428571428,
+        "line": -3,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "draftkings",
+      "market": "spread",
+      "side": "home",
+      "expectedPoint": {
+        "at": 1793304378490,
+        "american": -112,
+        "decimal": 1.8928571428571428,
+        "line": -3
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305440634,
+        "american": -112,
+        "decimal": 1.8928571428571428,
+        "line": -3,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "fanduel",
+      "market": "total",
+      "side": "over",
+      "expectedPoint": {
+        "at": 1793304372084,
+        "american": -106,
+        "decimal": 1.9433962264150944,
+        "line": 54.5
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305430538,
+        "american": -106,
+        "decimal": 1.9433962264150944,
+        "line": 54.5,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "draftkings",
+      "market": "total",
+      "side": "over",
+      "expectedPoint": {
+        "at": 1793304378490,
+        "american": -110,
+        "decimal": 1.9090909090909092,
+        "line": 54.5
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305440634,
+        "american": -110,
+        "decimal": 1.9090909090909092,
+        "line": 54.5,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "fanduel",
+      "market": "total",
+      "side": "under",
+      "expectedPoint": {
+        "at": 1793304372084,
+        "american": -114,
+        "decimal": 1.8771929824561404,
+        "line": 54.5
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305430538,
+        "american": -114,
+        "decimal": 1.8771929824561404,
+        "line": 54.5,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    },
+    {
+      "book": "draftkings",
+      "market": "total",
+      "side": "under",
+      "expectedPoint": {
+        "at": 1793304378490,
+        "american": -110,
+        "decimal": 1.9090909090909092,
+        "line": 54.5
+      },
+      "restoredExactPoint": true,
+      "predatesNewProcess": true,
+      "newBaseline": {
+        "at": 1793305440634,
+        "american": -110,
+        "decimal": 1.9090909090909092,
+        "line": 54.5,
+        "breakBefore": true
+      },
+      "separateFreshBaseline": true,
+      "retentionHours": 48
+    }
+  ],
+  "passed": true,
+  "limits": [
+    "Verifies exact persisted observations and a separate fresh baseline across one process restart, for six main selections at both books on one game.",
+    "Does not prove 48 elapsed hours of collection, uninterrupted storage availability, or absence of checkpoint-interval loss."
+  ]
+}

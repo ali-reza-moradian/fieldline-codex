@@ -1,0 +1,24 @@
+{
+  "observedAt": "2026-10-29T20:41:45.678Z",
+  "runtimeCommit": "4deb501dd30d4eea88762cc91b2dd302e658017a",
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "command": "npm test",
+  "tests": 223,
+  "passed": 223,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 11155.211916,
+  "outputSha256": "fdf8f3843c59eac21da6a6d52d71918db9dc534394051f6137a911102e6c936e",
+  "additionalChecks": [
+    "Persistent Python process and connection reuse across multiple requests",
+    "New prices replace prior data; cancellation retires the old process generation",
+    "Timeout, HTTP 429, unexpected exit, idle cleanup and permanent close",
+    "Worker-owned client reused across polls and closed on stop; native/injected transport unaffected"
+  ],
+  "limits": [
+    "Tests use fixtures and local HTTP/WebSocket servers. Independent public source checks are recorded separately.",
+    "No finite test suite proves perpetual accuracy or zero resource cost."
+  ]
+}

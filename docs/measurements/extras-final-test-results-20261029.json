@@ -1,0 +1,24 @@
+{
+  "observedAt": "2026-10-29T20:28:58.183Z",
+  "runtimeCommit": "b14c22fb79007a24e6be7099d9cb7693eb4c5fc9",
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "command": "npm test",
+  "tests": 212,
+  "passed": 212,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 11385.126167,
+  "scope": [
+    "Main HTTP and push collectors; batching, reconnect ordering, suspension and stale exclusion",
+    "Extra source identity, inclusive thresholds, completeness, 429 handling and cancellation",
+    "Batch transport connection reuse, body limits, verified TLS and actual timeout",
+    "History retention, checkpoint recovery, queue bounds and gaps",
+    "Analytics same-contract eligibility and UI controls/stream handling"
+  ],
+  "limits": [
+    "Automated fixtures and local HTTP/WebSocket tests; independent live checks are recorded separately.",
+    "No finite suite proves perpetual accuracy or absence of future endpoint changes."
+  ]
+}

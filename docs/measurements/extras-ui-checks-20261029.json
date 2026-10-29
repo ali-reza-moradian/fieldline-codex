@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-29",
+  "method": "Manual native Chrome interaction through accessibility controls and screenshots; no browser JavaScript injection.",
+  "publicUrl": "https://fieldline-codex.onrender.com/",
+  "checks": [
+    {"runtime": "8f0148c", "surface": "public desktop", "result": "Both Ontario source cards connected; extra panel showed current prices for both books, alternate spreads and best-identical-line labels."},
+    {"runtime": "8f0148c", "surface": "public desktop", "result": "Market selector exposed alternate spreads, alternate totals, touchdowns, passing yards, rushing yards, receiving yards and receptions."},
+    {"runtime": "8f0148c", "surface": "public desktop", "result": "Passing-yards selection showed inclusive N+ labels, separate-contract wording, DraftKings early-exit protection and FanDuel Bet Protect. Searching Jordan filtered to Jordan Love."},
+    {"runtime": "8f0148c", "surface": "Chrome responsive preview, 375 x 800 CSS pixels", "result": "Main board and preference controls fit the narrow viewport; toolbar wrapped and main price cells remained readable. This was a visual board-layout check, not a full mobile interaction suite."},
+    {"runtime": "8f0148c", "surface": "local development browser", "result": "Favorites filter, saved dark/compact preferences, comparison grid, available-history chart and keyboard-help dialog were exercised."},
+    {"runtime": "b14c22f", "surface": "public desktop after reload", "result": "D and C toggled dark and compact controls; selecting Comparison grid rendered separate book columns and same-line comparison headings."},
+    {"runtime": "b14c22f", "surface": "public desktop after reload", "result": "Market estimates opened with same-line margin, fair-chance and EV values, plus explicit assumptions about settled win/loss, exclusions, and non-guaranteed arbitrage candidates."}
+  ],
+  "limits": [
+    "These are the controls and layouts directly observed; the report does not claim every browser, device or interaction was tested.",
+    "The 375-pixel check predates b14c22f; the stylesheet did not change between those releases. Later UI changes covered labels, ranking guards and scroll/focus preservation.",
+    "Persistent history is verified independently by the cloud restart report, rather than inferred from a chart screenshot.",
+    "These checks do not measure bookmaker-to-screen or visible price-change latency."
+  ]
+}
