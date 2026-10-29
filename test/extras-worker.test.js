@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { ExtrasWorker } from '../src/extras-worker.js';
 import { UpstreamError } from '../src/http.js';
+import { readFile } from 'node:fs/promises';
+import { makeGame } from '../src/model.js';
 
 const flush = async () => { for (let i = 0; i < 12; i++) await Promise.resolve(); };
 function harness() {
@@ -128,4 +130,65 @@ test('stopping aborts requests, clears timers, ignores further commands, and sup
   await flush(); h.watch('B'); await h.advance(100000);
   assert.equal(h.calls.length, 2); assert.equal(h.sent.length, 0);
   assert.equal(h.worker.games.size, 0); assert.equal(h.timers.size, 0);
+});
+
+test('the default curl worker shares one transport client across polls and closes it exactly once', async () => {
+  const previous = process.env.DK_HTTP_TRANSPORT;
+  process.env.DK_HTTP_TRANSPORT = 'curl';
+  const fixture = JSON.parse(await readFile(new URL('./fixtures/extras-ontario.json', import.meta.url)));
+  let now = Date.now(), created = 0, fetched = 0, closed = 0;
+  const timers = new Map(), sent = [], client = { fetch: async requests => {
+    fetched++; return requests.map(r => ({ id: r.id, data: fixture.draftkings[r.id], receivedAt: now }));
+  }, close: () => closed++ };
+  const worker = new ExtrasWorker({ send: m => sent.push(m), now: () => now,
+    batchClientFactory: () => { created++; return client; },
+    schedule: (fn, ms) => { timers.set(fn, now+ms); return fn; }, cancel: fn => timers.delete(fn) });
+  try {
+    const game = makeGame('draftkings', '34118182', 'CAR', 'GB', '2026-10-30T00:15:00Z');
+    worker.command({ type: 'watch', gameId: game.id, generation: 1, sourceGames: { draftkings: game } });
+    await flush();
+    assert.equal(fetched, 1); assert.equal(sent[0].data.rows.length, 14);
+    now += 15000;
+    for (const [fn, due] of [...timers]) if (due <= now) { timers.delete(fn); fn(); }
+    await flush();
+    assert.equal(created, 1); assert.equal(fetched, 2);
+    assert.equal(sent.filter(m => m.type === 'result').length, 2);
+    worker.stop(); worker.stop(); assert.equal(closed, 1);
+  } finally {
+    worker.stop(); if (previous === undefined) delete process.env.DK_HTTP_TRANSPORT; else process.env.DK_HTTP_TRANSPORT = previous;
+  }
+});
+
+test('native and injected-fetch workers never create a Python transport client', () => {
+  const previous = process.env.DK_HTTP_TRANSPORT;
+  try {
+    process.env.DK_HTTP_TRANSPORT = 'native';
+    const native = new ExtrasWorker({ send() {}, batchClientFactory: () => { throw new Error('must not create'); } });
+    native.stop();
+    process.env.DK_HTTP_TRANSPORT = 'curl';
+    const injected = new ExtrasWorker({ send() {}, fetchers: { draftkings: async () => ({}) },
+      batchClientFactory: () => { throw new Error('must not create'); } });
+    injected.stop();
+  } finally {
+    if (previous === undefined) delete process.env.DK_HTTP_TRANSPORT; else process.env.DK_HTTP_TRANSPORT = previous;
+  }
+});
+
+test('worker stop aborts a pending default-transport batch and closes its client', async () => {
+  const previous = process.env.DK_HTTP_TRANSPORT;
+  process.env.DK_HTTP_TRANSPORT = 'curl';
+  let signal, closed = 0; const sent = [], deferred = Promise.withResolvers();
+  const worker = new ExtrasWorker({ send: m => sent.push(m), batchClientFactory: () => ({
+    fetch: (requests, options) => { signal = options.signal; return deferred.promise; }, close: () => closed++,
+  }) });
+  try {
+    const game = makeGame('draftkings', '34118182', 'CAR', 'GB', '2026-10-30T00:15:00Z');
+    worker.command({ type: 'watch', gameId: game.id, generation: 1, sourceGames: { draftkings: game } });
+    await flush(); worker.stop();
+    assert.equal(signal.aborted, true); assert.equal(closed, 1);
+    deferred.reject(new DOMException('Canceled', 'AbortError')); await flush();
+    assert.equal(sent.length, 0);
+  } finally {
+    worker.stop(); if (previous === undefined) delete process.env.DK_HTTP_TRANSPORT; else process.env.DK_HTTP_TRANSPORT = previous;
+  }
 });

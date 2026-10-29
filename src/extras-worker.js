@@ -1,11 +1,19 @@
 import { fileURLToPath } from 'node:url';
-import { fetchDraftKingsExtras, fetchFanDuelExtras } from './extras/sources.js';
+import { fetchDraftKingsExtras, fetchFanDuelExtras, draftKingsExtrasUsesCurl } from './extras/sources.js';
+import { CurlJsonBatchClient } from './curl-batch-http.js';
 
 // Optional markets run in a separate process. There is one request sequence per
 // book, shared by every viewer; opening more browsers cannot multiply polling.
 export class ExtrasWorker {
-  constructor({ send, fetchers = { draftkings: fetchDraftKingsExtras, fanduel: fetchFanDuelExtras },
+  constructor({ send, fetchers, batchClientFactory = () => new CurlJsonBatchClient(),
     now = Date.now, schedule = setTimeout, cancel = clearTimeout, pollMs = 15000 } = {}) {
+    if (!fetchers) {
+      this.batchClient = draftKingsExtrasUsesCurl() ? batchClientFactory() : null;
+      fetchers = {
+        draftkings: (game, options) => fetchDraftKingsExtras(game, { ...options, batchClient: this.batchClient }),
+        fanduel: fetchFanDuelExtras,
+      };
+    }
     Object.assign(this, { send, fetchers, now, schedule, cancel, pollMs });
     this.games = new Map(); this.running = new Map(); this.timers = new Map(); this.cooldowns = new Map(); this.stopped = false;
   }
@@ -67,10 +75,12 @@ export class ExtrasWorker {
       });
   }
   stop() {
+    if (this.stopped) return;
     this.stopped = true; this.games.clear();
     for (const job of this.running.values()) job.controller.abort();
     for (const timer of this.timers.values()) this.cancel(timer);
     this.timers.clear();
+    this.batchClient?.close();
   }
 }
 
@@ -79,4 +89,6 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   process.on('message', message => worker.command(message));
   process.on('disconnect', () => { worker.stop(); process.exit(0); });
   process.once('SIGTERM', () => { worker.stop(); process.exit(0); });
+  process.once('SIGINT', () => { worker.stop(); process.exit(0); });
+  process.once('exit', () => worker.stop());
 }

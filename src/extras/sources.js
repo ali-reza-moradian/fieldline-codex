@@ -26,14 +26,14 @@ function boundedSignal(signal) {
   const timeout = AbortSignal.timeout(30000);
   return signal ? AbortSignal.any([signal, timeout]) : timeout;
 }
-function dkUsesCurl() {
+export function draftKingsExtrasUsesCurl() {
   return (process.env.DK_HTTP_TRANSPORT ?? (process.env.RENDER === "true" ? "curl" : "native")) === "curl";
 }
 
 // No mutable price state is kept here. The caller publishes a complete snapshot
 // only if its request generation still owns the event. Failure leaves no partial
 // object that could accidentally refresh a previous price's observation time.
-export async function fetchDraftKingsExtras(game, { signal, fetcher, batchFetcher } = {}) {
+export async function fetchDraftKingsExtras(game, { signal, fetcher, batchFetcher, batchClient } = {}) {
   validateExtraGame(game);
   const began = performance.now(), requestStartedAt = Date.now(), snapshots = [], categories = {}, joinedSignal = boundedSignal(signal);
   let decodedBytes = 0, markets = 0;
@@ -44,7 +44,8 @@ export async function fetchDraftKingsExtras(game, { signal, fetcher, batchFetche
     markets += parsed.markets;
     decodedBytes += response.decodedBytes ?? 0;
   };
-  const batch = batchFetcher ?? (!fetcher && dkUsesCurl() ? fetchCurlJsonBatch : null);
+  const batch = batchFetcher ?? (!fetcher && draftKingsExtrasUsesCurl() ?
+    (batchClient ? batchClient.fetch.bind(batchClient) : fetchCurlJsonBatch) : null);
   if (batch) {
     joinedSignal.throwIfAborted();
     const requests = DK_EXTRA_CATEGORIES.map(category => ({ id: category.id, url: draftKingsExtrasUrl(game, category) }));
