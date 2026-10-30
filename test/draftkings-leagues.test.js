@@ -80,6 +80,75 @@ test("recorded Ontario college, FCS and CFL entities retain main lines, sides an
   state.replace(copy); assert.equal(state.normalize().quotes.find(q => q.sourceId === selection.id).suspended, true);
 });
 
+test("recorded Ontario in-play primary markets retain all twelve real college prices", () => {
+  const live = fixture("draftkings-ontario-live-college"), state = new DraftKingsState();
+  state.replace(live); const result = state.normalize();
+  assert.equal(result.games.length, 2); assert.equal(result.quotes.length, 12);
+  assert.ok(result.games.every(game => game.live && game.league === "ncaaf"));
+  assert.deepEqual(result.warnings, []);
+  for (const game of result.games) assert.equal(result.quotes.filter(q => q.gameId === game.id).length, 6);
+  for (const q of result.quotes) {
+    const selection = live.selections.find(s => s.id === q.sourceId);
+    const market = live.markets.find(m => m.id === selection.marketId);
+    assert.equal(q.market, market.name.toLowerCase());
+    assert.equal(q.side, selection.outcomeType.toLowerCase());
+    assert.equal(q.line, q.market === "moneyline" ? null : selection.points);
+    assert.equal(q.american, Number(selection.displayOdds.american.replace("−", "-")));
+    assert.equal(q.period, "full_game");
+  }
+  const selection = live.selections[0];
+  const delta = { add: { events: [], markets: [], selections: [] },
+    change: { events: [], markets: [], selections: [{ id: selection.id, isSuspended: true }] },
+    remove: { events: [], markets: [], selections: [] } };
+  state.apply(delta);
+  assert.equal(state.normalize().quotes.find(q => q.sourceId === selection.id).suspended, true);
+  delta.change.selections = [{ id: selection.id, isSuspended: false, displayOdds: { american: "+255" } }];
+  state.apply(delta);
+  const reopened = state.normalize().quotes.find(q => q.sourceId === selection.id);
+  assert.equal(reopened.suspended, false); assert.equal(reopened.american, 255);
+});
+
+test("kickoff market replacement preserves game identity and removes the pregame contracts", () => {
+  const live = fixture("draftkings-ontario-live-college"), state = new DraftKingsState();
+  state.replace(raw);
+  const before = state.normalize(), eventIds = new Set(live.events.map(e => e.id));
+  const removedMarkets = new Set(raw.markets.filter(m => eventIds.has(m.eventId)).map(m => m.id));
+  const removedSelections = new Set(raw.selections.filter(s => removedMarkets.has(s.marketId)).map(s => s.id));
+  state.apply({ add: { events: [], markets: live.markets, selections: live.selections },
+    change: { events: live.events, markets: [], selections: [] },
+    remove: { events: [], markets: [...removedMarkets], selections: [...removedSelections] } });
+  const after = state.normalize();
+  assert.deepEqual(after.games.map(g => g.id), before.games.map(g => g.id));
+  assert.equal(after.quotes.length, before.quotes.length);
+  assert.ok(after.quotes.every(q => !removedSelections.has(q.sourceId)));
+  for (const event of live.events) {
+    const game = after.games.find(g => g.sourceId === event.id);
+    assert.equal(game.live, true);
+    assert.equal(after.quotes.filter(q => q.gameId === game.id).length, 6);
+  }
+  assert.deepEqual(after.warnings, []);
+});
+
+test("live types require explicit primary full-game identity and never admit a half or unknown period", () => {
+  const live = fixture("draftkings-ontario-live-college");
+  for (const mutate of [
+    market => { market.marketType.id = "1_2"; },
+    market => { market.subcategoryId = "9999"; },
+    market => { market.name = "1st Quarter Moneyline"; },
+    market => { market.marketType.name = "1st Half Moneyline"; },
+    market => { market.tags = market.tags.filter(tag => tag !== "PrimaryMarket"); },
+  ]) {
+    const data = structuredClone(live), changed = data.markets.find(m => m.marketType.id === "1_39");
+    mutate(changed);
+    const excluded = new Set(data.selections.filter(s => s.marketId === changed.id).map(s => s.id));
+    const state = new DraftKingsState(); state.replace(data);
+    const result = state.normalize();
+    assert.equal(result.quotes.length, 10);
+    assert.ok(result.quotes.every(q => !excluded.has(q.sourceId)));
+    if (changed.marketType.id === "1_2") assert.match(result.warnings.join(" "), /Unsupported DraftKings primary market/);
+  }
+});
+
 test("every subscription and snapshot keeps Ontario and a verified league/category", () => {
   for (const { sourceId } of DRAFTKINGS_LEAGUES) {
     const url = new URL(snapshotUrl(sourceId)), sub = subscription("test", sourceId);

@@ -26,6 +26,31 @@ export function sortGames(games, { favorites = new Set(), sort = 'kickoff', anal
     return Number(b.live) - Number(a.live) || Date.parse(a.startsAt) - Date.parse(b.startsAt) || a.id.localeCompare(b.id);
   });
 }
+/** Event discovery is distinct from receiving fresh, usable main prices. */
+export function mainPriceCoverage(game, sources, options) {
+  const slots = ['moneyline:away', 'moneyline:home', 'spread:away', 'spread:home', 'total:over', 'total:under'];
+  return Object.fromEntries(['draftkings', 'fanduel'].map(book => {
+    const fresh = sourceFresh(sources?.[book], options);
+    let received = 0, active = 0, paused = 0;
+    for (const slot of slots) {
+      const quotes = (game.quotes ?? []).filter(q => q.book === book && q.gameId === game.id &&
+        q.period === 'full_game' && `${q.market}:${q.side}` === slot && !q.missing);
+      if (quotes.length) received++;
+      if (quotes.length !== 1) continue;
+      const q = quotes[0];
+      if (q.suspended) { paused++; continue; }
+      const validOdds = Number.isFinite(q.american) && Math.abs(q.american) >= 100;
+      const decimal = validOdds ? q.american > 0 ? 1 + q.american / 100 : 1 + 100 / -q.american : null;
+      if (fresh && !q.stale && validOdds && (q.market === 'moneyline' ? q.line == null : Number.isFinite(q.line)) &&
+          (q.decimal == null || (Number.isFinite(q.decimal) && Math.abs(q.decimal - decimal) < 1e-8))) active++;
+    }
+    const label = !received ? 'No current prices received' : !fresh ? 'Prices stale; excluded'
+      : active ? `${active}/6 current${paused ? ` · ${paused} paused` : ''}`
+      : paused === received ? `${paused} paused` : 'No usable current prices';
+    return [book, { received, active, paused, fresh, label }];
+  }));
+}
+
 export const validExtraKinds = ['alt-spread', 'alt-total', 'td', 'pass-yds', 'rush-yds', 'rec-yds', 'receptions'];
 export function extraLineLabel(row) {
   if (row.line == null) return '';

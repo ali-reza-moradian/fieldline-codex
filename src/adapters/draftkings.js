@@ -206,11 +206,28 @@ export class DraftKingsState {
       }
     }
     const types = { "1_0": "moneyline", "2_0": "spread", "3_0": "total" };
+    // Ontario replaces pregame market IDs at kickoff. These explicitly observed
+    // live types still describe the primary full-game contracts in subcategory 4518;
+    // other suffixes can be a half/quarter or another settlement and are excluded.
+    const liveTypes = { "1_39": "moneyline", "2_39": "spread", "3_39": "total" };
+    const kinds = new Map();
+    for (const market of this.markets.values()) {
+      const game = games.get(market.eventId);
+      if (!game || market.subcategoryId !== "4518") continue;
+      const type = market.marketType?.id;
+      let kind = types[type];
+      if (liveTypes[type] && game.live && market.tags?.includes("PrimaryMarket") &&
+          market.name?.toLowerCase() === liveTypes[type] && market.marketType.name?.toLowerCase() === liveTypes[type])
+        kind = liveTypes[type];
+      if (kind) kinds.set(market.id, kind);
+      else if (market.tags?.includes("PrimaryMarket") && ["moneyline", "spread", "total"].includes(market.name?.toLowerCase()))
+        warnings.push(`Unsupported DraftKings primary market ${type ?? "unknown"} for event ${market.eventId}`);
+    }
     for (const s of this.selections.values()) {
       const market = this.markets.get(s.marketId),
         game = games.get(market?.eventId);
-      const kind = types[market?.marketType?.id];
-      if (!game || !kind || market.subcategoryId !== "4518") continue;
+      const kind = kinds.get(market?.id);
+      if (!game || !kind) continue;
       if (kind !== "moneyline" && !s.tags?.includes("MainPointLine")) continue;
       const suspended =
         s.isSuspended === true ||

@@ -1,0 +1,17 @@
+{
+  "capturedAt": "2026-10-29T23:56:54.312Z",
+  "captureTimePrecision": "Local raw-response file write time immediately after successful HTTP200 response",
+  "source": "https://sportsbook-nash.draftkings.com/sites/CA-ON-SB/api/sportscontent/controldata/league/leagueSubcategory/v1/markets?isBatchable=false&templateVars=87637&eventsQuery=%24filter%3DleagueId+eq+%2787637%27+AND+clientMetadata%2FSubcategories%2Fany%28s%3A+s%2FId+eq+%274518%27%29&marketsQuery=%24filter%3DclientMetadata%2FsubCategoryId+eq+%274518%27+AND+tags%2Fall%28t%3A+t+ne+%27SportcastBetBuilder%27%29&include=Events&entity=events",
+  "jurisdiction": "Ontario",
+  "rawSha256": "8a6cb4a5cea69a384904d9480e3e2922e6761174f01f49f2520afef57d846350",
+  "selection": "Two currently started events, all attached main-category markets and selections; content unmodified",
+  "observedLiveMarketTypes": [
+    "1_39",
+    "2_39",
+    "3_39"
+  ],
+  "eventIds": [
+    "34876643",
+    "34876642"
+  ]
+}

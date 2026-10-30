@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { safePreference, parseFavorites, shortcutAction, sortGames, extraOffers, extraLineLabel, HistoryLoader, historyStorageLabel } from '../public/ui-controls.js';
+import { safePreference, parseFavorites, shortcutAction, sortGames, extraOffers, extraLineLabel, HistoryLoader, historyStorageLabel, mainPriceCoverage } from '../public/ui-controls.js';
 import { ExtrasPanel } from '../public/extras-panel.js';
 
 const epoch = 1700000000000;
@@ -205,4 +205,39 @@ test('a suspended extra offer remains excluded across healthy freshness confirma
   const reopened = row({ offers: { draftkings: quote(-110), fanduel: quote(100, { observedAt: epoch + 5000 }) } });
   assert.deepEqual(extraOffers(reopened, freshSources, { now: epoch + 5000, connected: true }).bestBooks, ['fanduel']);
   assert.deepEqual(extraOffers(reopened, freshSources, { now: epoch + 15000, connected: true }).bestBooks, [], 'expired quotes cannot win even with a previously healthy source');
+});
+
+
+test('main price coverage distinguishes event discovery, partial prices, pauses and source expiry', () => {
+  const options = { now: epoch + 100, connected: true };
+  const game = { id: 'live-game', live: true, books: ['draftkings', 'fanduel'], quotes: [] };
+  const full = book => ['moneyline:away', 'moneyline:home', 'spread:away', 'spread:home', 'total:over', 'total:under'].map(slot => {
+    const [market, side] = slot.split(':');
+    return { book, gameId: game.id, market, side, period: 'full_game', line: market === 'moneyline' ? null : 3.5, american: -110 };
+  });
+  game.quotes = full('fanduel');
+  let coverage = mainPriceCoverage(game, sources(), options);
+  assert.equal(coverage.draftkings.active, 0); assert.equal(coverage.draftkings.label, 'No current prices received');
+  assert.equal(coverage.fanduel.active, 6); assert.equal(coverage.fanduel.label, '6/6 current');
+  game.quotes.push(...full('draftkings').slice(0, 2));
+  coverage = mainPriceCoverage(game, sources(), options);
+  assert.equal(coverage.draftkings.label, '2/6 current');
+  game.quotes = full('draftkings').map(q => ({ ...q, suspended: true }));
+  coverage = mainPriceCoverage(game, sources(), options);
+  assert.equal(coverage.draftkings.active, 0); assert.equal(coverage.draftkings.label, '6 paused');
+  game.quotes = full('draftkings');
+  assert.equal(mainPriceCoverage(game, sources(), { ...options, now: epoch + 10000 }).draftkings.active, 0);
+  assert.equal(mainPriceCoverage(game, sources(), { ...options, connected: false }).draftkings.label, 'Prices stale; excluded');
+  assert.equal(mainPriceCoverage(game, sources(), options).draftkings.active, 6, 'fresh recovery restores coverage');
+});
+
+test('main price coverage cannot count duplicate, malformed or other-contract rows as usable prices', () => {
+  const q = { gameId: 'game', book: 'draftkings', market: 'moneyline', side: 'away', period: 'full_game', line: null, american: 150 };
+  const game = { id: 'game', quotes: [q] }, options = { now: epoch + 100, connected: true };
+  assert.equal(mainPriceCoverage(game, sources(), options).draftkings.active, 1);
+  for (const patch of [{ american: 99 }, { decimal: 20 }, { missing: true }, { stale: true }, { period: 'first_half' }, { gameId: 'other' }]) {
+    game.quotes = [{ ...q, ...patch }]; assert.equal(mainPriceCoverage(game, sources(), options).draftkings.active, 0);
+  }
+  game.quotes = [q, { ...q }];
+  assert.equal(mainPriceCoverage(game, sources(), options).draftkings.active, 0);
 });
